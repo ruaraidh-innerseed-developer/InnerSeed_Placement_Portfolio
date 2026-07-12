@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Night Garden — Ruaraidh · ePortfolio</title>
+<style>
+/* ============================================================
+   THE NIGHT GARDEN
+   Design tokens inherited directly from the DevUX Manifestos —
+   the documents and the space that holds them are one world.
+   ============================================================ */
+:root{
+  --night:   #0b110c;   /* sky */
+  --soil:    #121712;   /* the manifestos' exact background */
+  --soil-lo: #0d120d;
+  --card:    #1a2218;   /* the manifestos' note-block */
+  --card-hi: #1f2b1e;
+  --line:    #2e3d2e;   /* their hairline */
+  --sage:    #c8d9be;   /* their body text */
+  --moss:    #8aab7e;   /* their accent */
+  --fern:    #5a7a55;
+  --dim:     #4a6b45;
+  --faint:   #3a4d3a;
+  --moon:    #e9eddb;
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  background:linear-gradient(180deg, var(--night) 0%, var(--soil) 62%, var(--soil-lo) 100%);
+  color:var(--sage);
+  font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight:300; font-size:15px; line-height:1.8;
+  min-height:100vh; overflow-x:hidden;
+}
+
+/* ---------- moon (breathes on an 8s cycle) ---------- */
+.moon{
+  position:fixed; top:64px; right:9%;
+  width:88px; height:88px; border-radius:50%;
+  background:radial-gradient(circle at 38% 34%, var(--moon), #cfd6bd 70%);
+  box-shadow:0 0 60px 18px rgba(233,237,219,.14),
+             0 0 160px 60px rgba(200,217,190,.07);
+  animation:moonbreath 8s ease-in-out infinite;
+  z-index:0; pointer-events:none;
+}
+@keyframes moonbreath{
+  0%,100%{ box-shadow:0 0 60px 18px rgba(233,237,219,.12), 0 0 160px 60px rgba(200,217,190,.05); }
+  50%    { box-shadow:0 0 80px 26px rgba(233,237,219,.20), 0 0 200px 80px rgba(200,217,190,.10); }
+}
+
+/* ---------- fireflies ---------- */
+.firefly{
+  position:fixed; width:4px; height:4px; border-radius:50%;
+  background:#d7e8a8; z-index:0; pointer-events:none;
+  box-shadow:0 0 8px 2px rgba(215,232,168,.55);
+  opacity:0;
+  animation:drift var(--t,26s) ease-in-out var(--d,0s) infinite;
+  left:var(--x); top:var(--y);
+}
+@keyframes drift{
+  0%   { transform:translate(0,0);        opacity:0;  }
+  8%   { opacity:.85; }
+  25%  { transform:translate(40px,-30px); opacity:.25; }
+  45%  { transform:translate(-25px,-60px);opacity:.9;  }
+  65%  { transform:translate(30px,-95px); opacity:.2;  }
+  85%  { transform:translate(-15px,-130px);opacity:.7; }
+  100% { transform:translate(10px,-160px);opacity:0;   }
+}
+
+/* ---------- layout ---------- */
+.garden{ position:relative; z-index:1; max-width:960px; margin:0 auto; padding:4.5rem 2rem 6rem; }
+
+.eyebrow{
+  font-size:11px; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--dim); margin-bottom:1rem;
+}
+h1{
+  font-family:Georgia, serif; font-weight:400;
+  font-size:clamp(2.4rem, 5.5vw, 3.2rem); line-height:1.12;
+  margin-bottom:.6rem;
+}
+h1 em{ font-style:italic; color:var(--moss); }
+.lede{ max-width:56ch; color:var(--fern); margin-bottom:1.6rem; }
+
+.stats{ display:flex; gap:2.4rem; flex-wrap:wrap; margin-bottom:1rem; }
+.stat b{ display:block; font-family:Georgia,serif; font-weight:400; font-size:1.7rem; color:var(--sage); line-height:1.2; }
+.stat span{ font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--faint); }
+
+/* ---------- beds ---------- */
+.bed{ margin-top:5rem; }
+.bed-label{
+  font-size:11px; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--faint); margin-bottom:.4rem;
+}
+.bed-title{ font-family:Georgia,serif; font-weight:400; font-size:1.35rem; color:var(--sage); margin-bottom:1.6rem; }
+.bed-title em{ font-style:italic; color:var(--moss); }
+
+.row{
+  display:flex; align-items:flex-end; gap:clamp(14px, 4vw, 44px);
+  padding:0 10px 0; flex-wrap:wrap;
+  border-bottom:2px solid var(--line);
+  position:relative;
+}
+.row::after{ /* soil beneath the bed */
+  content:""; position:absolute; left:-10px; right:-10px; bottom:-26px; height:24px;
+  background:linear-gradient(180deg, #182015, transparent);
+  border-radius:0 0 40% 40%/0 0 100% 100%;
+  pointer-events:none;
+}
+
+/* ---------- plants ---------- */
+.plant{
+  background:none; border:none; cursor:pointer; color:inherit; font:inherit;
+  display:flex; flex-direction:column; align-items:center; gap:10px;
+  padding:6px 4px 0; position:relative;
+  transition:filter .4s;
+}
+.plant svg{
+  overflow:visible;
+  transform-origin:50% 100%;
+  animation:sway 8s ease-in-out infinite;
+  animation-delay:var(--sd, 0s);
+  transition:filter .4s;
+}
+@keyframes sway{
+  0%,100%{ transform:rotate(-1.1deg); }
+  50%    { transform:rotate(1.3deg); }
+}
+.plant:hover svg, .plant:focus-visible svg{
+  filter:drop-shadow(0 0 14px rgba(138,171,126,.45));
+}
+.plant:focus-visible{ outline:1px solid var(--moss); outline-offset:8px; border-radius:6px; }
+.plant .tag{
+  font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--dim);
+  white-space:nowrap;
+}
+.plant:hover .tag, .plant:focus-visible .tag{ color:var(--moss); }
+.plant .tag b{ display:block; font-weight:400; color:var(--fern); letter-spacing:.06em; text-transform:none; font-size:11px; }
+
+.stem{ stroke:var(--moss); stroke-width:2.4; fill:none; stroke-linecap:round; }
+.leaf{ fill:rgba(138,171,126,.30); stroke:var(--moss); stroke-width:1.4; }
+.bud { fill:rgba(200,217,190,.25); stroke:var(--sage); stroke-width:1.4; }
+.bloom{ fill:rgba(233,237,219,.85); }
+.petal{ fill:rgba(200,217,190,.35); stroke:var(--sage); stroke-width:1.2; }
+.wood{ stroke:#6b5a3a; stroke-width:3; stroke-linecap:round; }
+.tool{ fill:#2a3326; stroke:#8a9b7e; stroke-width:1.6; }
+.paper{ fill:#e9eddb; stroke:#b9c4a4; stroke-width:1.2; }
+.stone{ fill:#232b22; stroke:#4a5a48; stroke-width:1.4; }
+
+/* ---------- reading room ---------- */
+.veil{
+  position:fixed; inset:0; z-index:20;
+  background:rgba(6,10,7,.7); backdrop-filter:blur(4px);
+  display:flex; align-items:flex-end; justify-content:center;
+  opacity:0; pointer-events:none; transition:opacity .4s;
+}
+.veil.open{ opacity:1; pointer-events:auto; }
+.room{
+  width:min(760px, 100%);
+  max-height:86vh; overflow-y:auto;
+  background:var(--card);
+  border:.5px solid var(--line); border-bottom:none;
+  border-radius:18px 18px 0 0;
+  padding:2.4rem 2.6rem 2.6rem;
+  transform:translateY(40px);
+  transition:transform .5s cubic-bezier(.2,.8,.25,1);
+  box-shadow:0 -30px 80px rgba(0,0,0,.5);
+}
+.veil.open .room{ transform:translateY(0); }
+
+.room-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; margin-bottom:.4rem; }
+.room .eyebrow{ margin-bottom:.5rem; }
+.room h2{ font-family:Georgia,serif; font-weight:400; font-size:1.9rem; line-height:1.2; margin-bottom:.35rem; }
+.room h2 em{ font-style:italic; color:var(--moss); }
+.room .date{ font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); margin-bottom:1.1rem; }
+.room .summary{ color:var(--sage); margin-bottom:1.5rem; max-width:60ch; }
+
+.room .inside-label{ font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--faint); margin-bottom:.6rem; }
+.room ul{ list-style:none; margin-bottom:1.8rem; }
+.room li{
+  padding:.5rem 0; border-bottom:.5px solid var(--line);
+  color:var(--fern); font-size:14px;
+}
+.room li::before{ content:"— "; color:var(--faint); }
+
+.actions{ display:flex; gap:12px; flex-wrap:wrap; }
+.btn{
+  font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+  text-decoration:none; cursor:pointer; font-family:inherit;
+  padding:12px 20px; border-radius:24px; transition:all .25s;
+}
+.btn-read{ background:var(--moss); color:#121712; border:1px solid var(--moss); }
+.btn-read:hover, .btn-read:focus-visible{ background:var(--sage); border-color:var(--sage); }
+.btn-dl{ background:none; color:var(--moss); border:1px solid var(--fern); }
+.btn-dl:hover, .btn-dl:focus-visible{ border-color:var(--moss); color:var(--sage); }
+.btn[aria-disabled="true"]{ opacity:.4; pointer-events:none; }
+
+.room-nav{ display:flex; gap:8px; }
+.nav-btn, .close-btn{
+  background:var(--card-hi); border:.5px solid var(--line); color:var(--fern);
+  width:38px; height:38px; border-radius:50%; cursor:pointer;
+  font-size:15px; line-height:1; transition:all .25s;
+}
+.nav-btn:hover, .close-btn:hover, .nav-btn:focus-visible, .close-btn:focus-visible{
+  color:var(--sage); border-color:var(--moss);
+}
+
+footer{
+  margin-top:6rem; font-size:10px; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--faint); text-align:center;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .moon, .firefly, .plant svg{ animation:none; }
+  .veil, .room, .plant, .btn{ transition:none; }
+  .firefly{ opacity:.4; }
+}
+@media (max-width:600px){
+  .moon{ right:-30px; top:30px; width:64px; height:64px; }
+  .room{ padding:1.8rem 1.4rem 2rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="moon" aria-hidden="true"></div>
+<div class="firefly" style="--x:18%; --y:70%; --t:24s; --d:0s"  aria-hidden="true"></div>
+<div class="firefly" style="--x:64%; --y:78%; --t:31s; --d:6s"  aria-hidden="true"></div>
+<div class="firefly" style="--x:42%; --y:64%; --t:27s; --d:12s" aria-hidden="true"></div>
+<div class="firefly" style="--x:82%; --y:72%; --t:35s; --d:3s"  aria-hidden="true"></div>
+<div class="firefly" style="--x:30%; --y:84%; --t:29s; --d:17s" aria-hidden="true"></div>
+
+<main class="garden">
+  <p class="eyebrow">Ruaraidh · ePortfolio · Edinburgh</p>
+  <h1>The <em>Night Garden</em></h1>
+  <p class="lede">A working garden of documents. Everything here was grown over five weeks of
+  UX fieldwork on the InnerSeed Garden app — each plant is a real document at the stage it had
+  reached when it was written. Click a plant to read it here, or take a hard copy home.</p>
+
+  <div class="stats" role="list">
+    <div class="stat" role="listitem"><b>5</b><span>Weekly manifestos</span></div>
+    <div class="stat" role="listitem"><b>49</b><span>Findings logged</span></div>
+    <div class="stat" role="listitem"><b>Phase 1</b><span>Delivered</span></div>
+  </div>
+
+  <!-- ================= BED ONE — THE MANIFESTOS ================= -->
+  <section class="bed" aria-labelledby="bed1">
+    <p class="bed-label">Bed One</p>
+    <h2 class="bed-title" id="bed1">The Manifestos — <em>five weeks, one growing season</em></h2>
+
+    <div class="row">
+      <!-- Week 1 — sprout -->
+      <button class="plant" data-key="w1" style="--sd:0s" aria-haspopup="dialog">
+        <svg width="70" height="66" viewBox="0 0 70 66" role="img" aria-label="Week one — a sprout">
+          <path class="stem" d="M35,66 C35,56 34,50 35,42"/>
+          <path class="leaf" d="M35,48 Q22,44 18,32 Q32,36 35,46 Z"/>
+          <path class="leaf" d="M35,44 Q48,40 52,28 Q38,32 35,42 Z"/>
+        </svg>
+        <span class="tag">Week 1<b>First Exploration</b></span>
+      </button>
+
+      <!-- Week 2 — taller -->
+      <button class="plant" data-key="w2" style="--sd:1.1s" aria-haspopup="dialog">
+        <svg width="76" height="96" viewBox="0 0 76 96" role="img" aria-label="Week two — a young plant">
+          <path class="stem" d="M38,96 C38,80 37,66 38,50 C38,40 39,32 38,24"/>
+          <path class="leaf" d="M38,72 Q24,68 19,55 Q34,59 38,70 Z"/>
+          <path class="leaf" d="M38,58 Q53,54 58,40 Q42,44 38,56 Z"/>
+          <path class="leaf" d="M38,40 Q26,36 22,25 Q35,29 38,38 Z"/>
+        </svg>
+        <span class="tag">Week 2<b>UX Run-Through</b></span>
+      </button>
+
+      <!-- Week 3 — branching -->
+      <button class="plant" data-key="w3" style="--sd:2.3s" aria-haspopup="dialog">
+        <svg width="90" height="126" viewBox="0 0 90 126" role="img" aria-label="Week three — a branching plant">
+          <path class="stem" d="M45,126 C45,104 44,86 45,64 C45,50 46,38 45,26"/>
+          <path class="stem" d="M45,86 C36,76 30,68 28,56"/>
+          <path class="stem" d="M45,70 C55,62 61,54 63,42"/>
+          <path class="leaf" d="M28,58 Q16,52 13,39 Q26,45 29,55 Z"/>
+          <path class="leaf" d="M63,44 Q75,38 78,25 Q65,31 62,41 Z"/>
+          <path class="leaf" d="M45,44 Q32,39 28,27 Q42,32 45,42 Z"/>
+          <path class="leaf" d="M45,32 Q58,27 62,15 Q48,20 45,30 Z"/>
+        </svg>
+        <span class="tag">Week 3<b>Closing the Loop</b></span>
+      </button>
+
+      <!-- Week 4 — budding -->
+      <button class="plant" data-key="w4" style="--sd:0.6s" aria-haspopup="dialog">
+        <svg width="96" height="156" viewBox="0 0 96 156" role="img" aria-label="Week four — a budding plant">
+          <path class="stem" d="M48,156 C48,130 47,108 48,82 C48,62 49,44 48,28"/>
+          <path class="stem" d="M48,108 C38,98 31,90 29,76"/>
+          <path class="stem" d="M48,88 C59,80 66,71 68,57"/>
+          <path class="leaf" d="M29,78 Q16,72 13,58 Q27,64 30,75 Z"/>
+          <path class="leaf" d="M68,59 Q81,53 84,39 Q70,45 67,56 Z"/>
+          <path class="leaf" d="M48,60 Q34,55 30,42 Q45,47 48,58 Z"/>
+          <path class="leaf" d="M48,46 Q62,41 66,28 Q51,33 48,44 Z"/>
+          <ellipse class="bud" cx="48" cy="22" rx="7" ry="10"/>
+        </svg>
+        <span class="tag">Week 4<b>Builder Mode</b></span>
+      </button>
+
+      <!-- Week 5 — in flower -->
+      <button class="plant" data-key="w5" style="--sd:1.7s" aria-haspopup="dialog">
+        <svg width="104" height="186" viewBox="0 0 104 186" role="img" aria-label="Week five — a plant in full flower">
+          <path class="stem" d="M52,186 C52,156 51,130 52,100 C52,76 53,56 52,38"/>
+          <path class="stem" d="M52,132 C41,121 34,112 32,97"/>
+          <path class="stem" d="M52,110 C64,101 71,91 73,76"/>
+          <path class="leaf" d="M32,99 Q18,93 15,78 Q30,84 33,96 Z"/>
+          <path class="leaf" d="M73,78 Q87,72 90,57 Q75,63 72,75 Z"/>
+          <path class="leaf" d="M52,80 Q37,75 33,61 Q49,66 52,78 Z"/>
+          <path class="leaf" d="M52,64 Q67,59 71,45 Q55,50 52,62 Z"/>
+          <g aria-hidden="true">
+            <ellipse class="petal" cx="52" cy="20" rx="6" ry="11"/>
+            <ellipse class="petal" cx="52" cy="20" rx="6" ry="11" transform="rotate(60 52 26)"/>
+            <ellipse class="petal" cx="52" cy="20" rx="6" ry="11" transform="rotate(120 52 26)"/>
+            <ellipse class="petal" cx="52" cy="20" rx="6" ry="11" transform="rotate(180 52 26)"/>
+            <ellipse class="petal" cx="52" cy="20" rx="6" ry="11" transform="rotate(240 52 26)"/>
+            <ellipse class="petal" cx="52" cy="20" rx="6" ry="11" transform="rotate(300 52 26)"/>
+            <circle class="bloom" cx="52" cy="26" r="6"/>
+          </g>
+        </svg>
+        <span class="tag">Week 5<b>Phase 1, Delivered</b></span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ================= BED TWO — THE TOOLSHED ================= -->
+  <section class="bed" aria-labelledby="bed2">
+    <p class="bed-label">Bed Two</p>
+    <h2 class="bed-title" id="bed2">The Toolshed — <em>strategy, schematics &amp; groundwork</em></h2>
+
+    <div class="row">
+      <!-- Content Integration Strategy — vine on trellis -->
+      <button class="plant" data-key="strategy" style="--sd:0.9s" aria-haspopup="dialog">
+        <svg width="96" height="120" viewBox="0 0 96 120" role="img" aria-label="A vine climbing a trellis">
+          <path class="wood" d="M28,120 L28,20 M68,120 L68,20 M18,44 L78,44 M18,76 L78,76"/>
+          <path class="stem" d="M28,120 C36,100 24,88 34,72 C44,58 28,50 40,34 C46,26 54,24 58,18"/>
+          <path class="leaf" d="M34,74 Q22,70 19,58 Q32,63 35,72 Z"/>
+          <path class="leaf" d="M40,36 Q52,32 56,21 Q43,26 40,34 Z"/>
+          <path class="leaf" d="M58,20 Q68,15 71,5 Q59,10 57,18 Z"/>
+        </svg>
+        <span class="tag">Strategy<b>Content Integration</b></span>
+      </button>
+
+      <!-- Tool Schematics — spade in the soil -->
+      <button class="plant" data-key="schematics" style="--sd:2.1s" aria-haspopup="dialog">
+        <svg width="70" height="104" viewBox="0 0 70 104" role="img" aria-label="A spade standing in the soil">
+          <path class="wood" d="M35,10 L35,58"/>
+          <path class="wood" d="M26,10 L44,10"/>
+          <path class="tool" d="M24,58 L46,58 L44,86 Q35,98 26,86 Z"/>
+        </svg>
+        <span class="tag">Schematics<b>The Toolset</b></span>
+      </button>
+
+      <!-- Blueprint — seed packet on a marker stake -->
+      <button class="plant" data-key="blueprint" style="--sd:0.3s" aria-haspopup="dialog">
+        <svg width="70" height="110" viewBox="0 0 70 110" role="img" aria-label="A seed packet pinned to a marker stake">
+          <path class="wood" d="M35,110 L35,52"/>
+          <rect class="paper" x="14" y="14" width="42" height="42" rx="3"/>
+          <path class="stem" d="M35,46 C35,40 34,36 35,31" style="stroke:#5a7a4a; stroke-width:1.8"/>
+          <path class="leaf" d="M35,36 Q29,33 27,27 Q34,29 35,34 Z" style="stroke:#5a7a4a"/>
+          <path class="leaf" d="M35,33 Q41,30 43,24 Q36,26 35,31 Z" style="stroke:#5a7a4a"/>
+        </svg>
+        <span class="tag">Blueprint<b>The Garden Plan</b></span>
+      </button>
+
+      <!-- Appendix — the foundation stone -->
+      <button class="plant" data-key="appendix" style="--sd:1.4s" aria-haspopup="dialog">
+        <svg width="88" height="60" viewBox="0 0 88 60" role="img" aria-label="A foundation stone">
+          <path class="stone" d="M12,60 Q6,38 22,26 Q44,12 66,24 Q84,34 78,60 Z"/>
+          <path d="M30,42 Q44,36 58,42" fill="none" stroke="#3a4d3a" stroke-width="1.2"/>
+        </svg>
+        <span class="tag">Appendix<b>Raw &amp; Background</b></span>
+      </button>
+    </div>
+  </section>
+
+  <footer>Tended by hand · Edinburgh · 2026</footer>
+</main>
+
+<!-- ================= READING ROOM ================= -->
+<div class="veil" id="veil">
+  <div class="room" role="dialog" aria-modal="true" aria-labelledby="room-title">
+    <div class="room-top">
+      <p class="eyebrow" id="room-eyebrow"></p>
+      <div class="room-nav">
+        <button class="nav-btn" id="nav-prev" aria-label="Previous document">←</button>
+        <button class="nav-btn" id="nav-next" aria-label="Next document">→</button>
+        <button class="close-btn" id="room-close" aria-label="Close">✕</button>
+      </div>
+    </div>
+    <h2 id="room-title"></h2>
+    <p class="date" id="room-date"></p>
+    <p class="summary" id="room-summary"></p>
+    <p class="inside-label">What's inside</p>
+    <ul id="room-toc"></ul>
+    <div class="actions">
+      <a class="btn btn-read" id="room-read" href="#" target="_blank" rel="noopener">Read the full document</a>
+      <a class="btn btn-dl" id="room-dl" href="#" download>Take a hard copy</a>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ------------------------------------------------------------------
+   THE CATALOGUE
+   href points at docs/<file> — drop the original HTML files into a
+   docs/ folder beside this page and the buttons come alive.
+   TODO: match Week 2–4 filenames to the real ones, add real files
+   for the Toolshed bed (or leave them "in season soon").
+------------------------------------------------------------------- */
+const DOCS = {
+  w1: {
+    eyebrow:"InnerSeed Garden · UX Development Manifesto · Week 1",
+    title:"First Exploration", em:"Week 1",
+    date:"4 June 2026",
+    summary:"First hands-on session with the app. Initial UX exploration covering the Session Builder, playback, post-session navigation, and early feature ideas. First impression of the Session Builder: clean and beautifully designed.",
+    toc:["Session Builder — first look","The Session Settings modal","Ambient Music card","Preset playback — transport & controls","Post-session navigation","The empty space below the player","Week 1 findings summary"],
+    href:"docs/InnerSeed_DevUX_Manifesto_Week1_4June.html", ready:true
+  },
+  w2: {
+    eyebrow:"InnerSeed Garden · UX Development Manifesto · Week 2",
+    title:"UX Run-Through", em:"Week 2",
+    date:"10–13 June 2026",
+    summary:"Live session notes from the Week 2 run-through — raw observations logged in full, with structured findings and a six-area agenda. Includes the opening-screen five-question audit, live testing of Ethereal Voyager, and the 'threefold consistency' proposal.",
+    toc:["Week 2 agenda — six areas","Opening screen — five-question audit","Running findings log","Preset mode — live testing (Ethereal Voyager)","Favouriting & the Load Session modal","Session Settings modal — structural finding","Proposed solution — threefold consistency"],
+    href:"docs/InnerSeed_DevUX_Manifesto_Week2_13June.html", ready:true
+  },
+  w3: {
+    eyebrow:"InnerSeed Garden · UX Development Manifesto · Week 3",
+    title:"Closing the Loop", em:"Week 3",
+    date:"15–18 June 2026",
+    summary:"Week 3 closes out the remaining Preset mode questions, pins down the metadata anomaly, proposes a cinematic mode for playback, and — via a focus call with Jeroen — finally gets Green House explained. Findings D-22 to D-38.",
+    toc:["Session completion flow","Metadata anomaly — confirmed and pinpointed","Sidebar during playback — towards cinematic mode","Builder mode — first glance","Naming conflict — Green House and Garden","Focus call — Green House, explained","Vision and future direction"],
+    href:"docs/InnerSeed_DevUX_Manifesto_Week3_15June.html", ready:true
+  },
+  w4: {
+    eyebrow:"InnerSeed Garden · UX Development Manifesto · Week 4",
+    title:"Builder Mode — Where the Money Is", em:"Week 4",
+    date:"22 June 2026",
+    summary:"The full audit lens turns onto Builder mode — the app's most distinctive and commercially significant feature. Three compressed columns, an unlabelled transport bar, the Guided Voices gap, and a proposed full-width stacked layout with a session share card.",
+    toc:["Builder mode — first look and orientation","Ambient Music — four functions in one small card","The transport bar — what each icon actually does","Guided Voices — current state and gap","Proposed layout — full-width stacked Builder","Proposed session share card"],
+    href:"docs/InnerSeed_DevUX_Manifesto_Week4_22June.html", ready:true
+  },
+  w5: {
+    eyebrow:"InnerSeed Garden · UX Development Manifesto · Week 5",
+    title:"Phase 1, Delivered", em:"Week 5",
+    date:"July 2026",
+    summary:"The reflections and summary volume. Phase 1 by the numbers, the record week by week, headline outcomes, how the work was done, and the close-out — what carries forward into Phase 2.",
+    toc:["Phase 1 by the numbers","The record, week by week","Headline outcomes","How the work was done","Close-out and what carries forward"],
+    href:"docs/InnerSeed_DEVUX_ManifestoWeek5_Reflections_Summary.html", ready:true
+  },
+  strategy: {
+    eyebrow:"Enter Great Breath × InnerSeed · Strategy",
+    title:"Content Integration Strategy", em:"The Trellis",
+    date:"2026",
+    summary:"[One-paragraph summary goes here — how the content brand and the app grow along the same frame: what climbs where, and in what season.]",
+    toc:["[Section one]","[Section two]","[Section three]"],
+    href:"docs/content-integration-strategy.html", ready:false
+  },
+  schematics: {
+    eyebrow:"InnerSeed Garden · Technical",
+    title:"Tool Schematics", em:"The Toolset",
+    date:"2026",
+    summary:"[Summary goes here — the working tools of the project: what each one does, how they fit the hand, and where they're kept.]",
+    toc:["[Schematic one]","[Schematic two]"],
+    href:"docs/tool-schematics.html", ready:false
+  },
+  blueprint: {
+    eyebrow:"InnerSeed Garden · Planning",
+    title:"The Blueprint", em:"The Garden Plan",
+    date:"2026",
+    summary:"[Summary goes here — the plan the garden was planted to: what goes in which bed, and why.]",
+    toc:["[Section one]","[Section two]"],
+    href:"docs/blueprint.html", ready:false
+  },
+  appendix: {
+    eyebrow:"SSOT · Raw & Background",
+    title:"The Appendix", em:"Foundation Stone",
+    date:"2026",
+    summary:"[Summary goes here — the raw record everything else rests on: sources, background, the single source of truth.]",
+    toc:["[Raw materials]","[Background]"],
+    href:"docs/appendix.html", ready:false
+  }
+};
+
+const ORDER = ["w1","w2","w3","w4","w5","strategy","schematics","blueprint","appendix"];
+
+const veil = document.getElementById('veil');
+const el = id => document.getElementById(id);
+let current = null, lastFocus = null;
+
+function show(key){
+  const d = DOCS[key]; if(!d) return;
+  current = key;
+  el('room-eyebrow').textContent = d.eyebrow;
+  el('room-title').textContent = d.title;
+  el('room-date').textContent = d.date;
+  el('room-summary').textContent = d.summary;
+  const toc = el('room-toc'); toc.innerHTML = '';
+  d.toc.forEach(t => { const li = document.createElement('li'); li.textContent = t; toc.appendChild(li); });
+  const read = el('room-read'), dl = el('room-dl');
+  read.href = d.href; dl.href = d.href;
+  read.setAttribute('aria-disabled', d.ready ? 'false' : 'true');
+  dl.setAttribute('aria-disabled',  d.ready ? 'false' : 'true');
+  dl.textContent = d.ready ? 'Take a hard copy' : 'In season soon';
+}
+
+function open(key, trigger){
+  lastFocus = trigger || document.activeElement;
+  show(key);
+  veil.classList.add('open');
+  el('room-close').focus();
+}
+function close(){
+  veil.classList.remove('open');
+  if(lastFocus){ lastFocus.focus(); lastFocus = null; }
+  current = null;
+}
+function step(dir){
+  if(!current) return;
+  const i = ORDER.indexOf(current);
+  show(ORDER[(i + dir + ORDER.length) % ORDER.length]);
+}
+
+document.querySelectorAll('.plant').forEach(p =>
+  p.addEventListener('click', () => open(p.dataset.key, p)));
+el('room-close').addEventListener('click', close);
+el('nav-prev').addEventListener('click', () => step(-1));
+el('nav-next').addEventListener('click', () => step(1));
+veil.addEventListener('click', e => { if(e.target === veil) close(); });
+document.addEventListener('keydown', e => {
+  if(!veil.classList.contains('open')) return;
+  if(e.key === 'Escape') close();
+  if(e.key === 'ArrowLeft') step(-1);
+  if(e.key === 'ArrowRight') step(1);
+});
+</script>
+</body>
+</html>
