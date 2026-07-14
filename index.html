@@ -131,10 +131,18 @@ h1 em{ font-style:italic; color:var(--moss); }
   border:1px solid var(--line);
   box-shadow:0 30px 70px rgba(0,0,0,.55), inset 0 0 0 1px rgba(233,237,219,.04);
 }
-.video-frame video{ width:100%; height:100%; object-fit:cover; display:block; background:#0d120d; }
+.video-frame .video-still{ width:100%; height:100%; object-fit:cover; display:block; background:#0d120d; }
 .video-frame::before{ /* glass sheen */
   content:""; position:absolute; inset:0; z-index:2; pointer-events:none;
   background:linear-gradient(155deg, rgba(233,237,219,.10) 0%, transparent 30%, transparent 70%, rgba(0,0,0,.25) 100%);
+}
+.upload-cue{
+  position:absolute; z-index:3; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:64px; height:64px; border-radius:50%;
+  background:rgba(11,17,12,.45); backdrop-filter:blur(6px);
+  border:1px solid rgba(233,237,219,.25);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--moon); opacity:.85;
 }
 .frame-tag{
   position:absolute; left:14px; bottom:14px; z-index:3;
@@ -433,11 +441,18 @@ footer{
           <path class="leaf" d="M35,48 Q22,44 18,32 Q32,36 35,46 Z"/>
           <path class="leaf" d="M35,44 Q48,40 52,28 Q38,32 35,42 Z"/>
         </svg>
-        <video controls preload="metadata" poster="assets/intro-poster.svg" playsinline>
-          <!-- Drop the iPhone 16E recording in as assets/intro.mp4 — this element is already wired to it. -->
-          <source src="assets/intro.mp4" type="video/mp4">
-        </video>
-        <span class="frame-tag">Founder's-eye view · unlisted</span>
+        <!--
+          Reserved space for the intro video (iPhone 16E), not yet uploaded.
+          When ready, replace this <img> with:
+            <video controls preload="metadata" poster="assets/intro-poster.svg" playsinline>
+              <source src="assets/intro.mp4" type="video/mp4">
+            </video>
+        -->
+        <img src="assets/intro-poster.svg" alt="Reserved space for the intro video" class="video-still">
+        <div class="upload-cue" aria-hidden="true">
+          <svg width="34" height="34" viewBox="0 0 34 34"><circle cx="17" cy="17" r="16" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M17,23 L17,10 M11,15 L17,9 L23,15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span class="frame-tag">Video space reserved · not yet planted</span>
         <svg class="vine-corner br" viewBox="0 0 70 66" aria-hidden="true">
           <path class="stem" d="M35,66 C35,56 34,50 35,42"/>
           <path class="leaf" d="M35,48 Q22,44 18,32 Q32,36 35,46 Z"/>
