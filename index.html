@@ -23,6 +23,9 @@
   --dim:     #4a6b45;
   --faint:   #3a4d3a;
   --moon:    #e9eddb;
+  --gold:    #d8b36a;   /* lantern highlight — reserved for the GLP / flagship items */
+  --gold-dim:#8a6f3a;
+  --glass:   rgba(233,237,219,.05);
 }
 
 *{ margin:0; padding:0; box-sizing:border-box; }
@@ -69,8 +72,35 @@ body{
   100% { transform:translate(10px,-160px);opacity:0;   }
 }
 
+/* ---------- ambient grain (subtle, gives the "shot on glass" depth) ---------- */
+.grain{
+  position:fixed; inset:0; z-index:2; pointer-events:none; opacity:.035; mix-blend-mode:overlay;
+}
+
+/* ---------- side path nav ---------- */
+.sidenav{
+  position:fixed; right:22px; top:50%; transform:translateY(-50%);
+  z-index:30; display:flex; flex-direction:column; gap:20px;
+}
+.sidenav a{
+  width:9px; height:9px; border-radius:50%; display:block; position:relative;
+  background:var(--faint); border:1px solid var(--fern); transition:all .35s;
+}
+.sidenav a::after{
+  content:attr(data-label); position:absolute; right:20px; top:50%; transform:translateY(-50%);
+  font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--fern);
+  white-space:nowrap; opacity:0; transition:opacity .3s; pointer-events:none;
+}
+.sidenav a:hover::after, .sidenav a.active::after{ opacity:1; color:var(--sage); }
+.sidenav a.active{ background:var(--moss); box-shadow:0 0 10px 3px rgba(138,171,126,.5); transform:scale(1.15); }
+@media (max-width:900px){ .sidenav{ display:none; } }
+
+/* ---------- reveal-on-scroll ---------- */
+.reveal{ opacity:0; transform:translateY(28px); transition:opacity .9s ease, transform .9s ease; }
+.reveal.in{ opacity:1; transform:none; }
+
 /* ---------- layout ---------- */
-.garden{ position:relative; z-index:1; max-width:960px; margin:0 auto; padding:4.5rem 2rem 6rem; }
+.garden{ position:relative; z-index:1; max-width:1040px; margin:0 auto; padding:4.5rem 2rem 6rem; }
 
 .eyebrow{
   font-size:11px; letter-spacing:.2em; text-transform:uppercase;
@@ -88,14 +118,53 @@ h1 em{ font-style:italic; color:var(--moss); }
 .stat b{ display:block; font-family:Georgia,serif; font-weight:400; font-size:1.7rem; color:var(--sage); line-height:1.2; }
 .stat span{ font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--faint); }
 
+/* ---------- ROOT — hero: video + 500-word field note ---------- */
+.hero-grid{
+  display:grid; grid-template-columns:minmax(220px,320px) 1fr; gap:clamp(1.6rem,4vw,3.4rem);
+  align-items:start; margin-top:3.2rem;
+}
+@media (max-width:820px){ .hero-grid{ grid-template-columns:1fr; } }
+
+.video-frame{
+  position:relative; width:100%; aspect-ratio:9/16; border-radius:22px;
+  overflow:hidden; background:var(--soil-lo);
+  border:1px solid var(--line);
+  box-shadow:0 30px 70px rgba(0,0,0,.55), inset 0 0 0 1px rgba(233,237,219,.04);
+}
+.video-frame video{ width:100%; height:100%; object-fit:cover; display:block; background:#0d120d; }
+.video-frame::before{ /* glass sheen */
+  content:""; position:absolute; inset:0; z-index:2; pointer-events:none;
+  background:linear-gradient(155deg, rgba(233,237,219,.10) 0%, transparent 30%, transparent 70%, rgba(0,0,0,.25) 100%);
+}
+.frame-tag{
+  position:absolute; left:14px; bottom:14px; z-index:3;
+  font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--moon);
+  background:rgba(11,17,12,.55); backdrop-filter:blur(6px);
+  padding:6px 10px; border-radius:20px; border:1px solid rgba(233,237,219,.15);
+}
+.vine-corner{ position:absolute; z-index:3; pointer-events:none; filter:url(#softshadow); }
+.vine-corner.tl{ top:-14px; left:-18px; width:70px; transform:rotate(-8deg); }
+.vine-corner.br{ bottom:-18px; right:-16px; width:78px; transform:rotate(174deg); }
+
+.prose{ max-width:66ch; }
+.prose p{ margin-bottom:1.15rem; color:var(--sage); }
+.prose p:first-of-type::first-letter{
+  font-family:Georgia,serif; font-size:3.4em; float:left; line-height:.82; padding:.05em .09em 0 0;
+  color:var(--moss);
+}
+.prose .word-note{
+  margin-top:.6rem; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--faint);
+}
+
 /* ---------- beds ---------- */
-.bed{ margin-top:5rem; }
+.bed{ margin-top:6rem; }
 .bed-label{
   font-size:11px; letter-spacing:.2em; text-transform:uppercase;
   color:var(--faint); margin-bottom:.4rem;
 }
-.bed-title{ font-family:Georgia,serif; font-weight:400; font-size:1.35rem; color:var(--sage); margin-bottom:1.6rem; }
+.bed-title{ font-family:Georgia,serif; font-weight:400; font-size:1.35rem; color:var(--sage); margin-bottom:.7rem; }
 .bed-title em{ font-style:italic; color:var(--moss); }
+.bed-lede{ max-width:64ch; color:var(--fern); font-size:14px; margin-bottom:2rem; }
 
 .row{
   display:flex; align-items:flex-end; gap:clamp(14px, 4vw, 44px);
@@ -110,18 +179,25 @@ h1 em{ font-style:italic; color:var(--moss); }
   pointer-events:none;
 }
 
-/* ---------- plants ---------- */
+/* ---------- plants (embedded, not flat: gradients + grounded shadow) ---------- */
 .plant{
   background:none; border:none; cursor:pointer; color:inherit; font:inherit;
   display:flex; flex-direction:column; align-items:center; gap:10px;
   padding:6px 4px 0; position:relative;
   transition:filter .4s;
 }
+.plant::after{ /* grounding shadow — the "embedded" cue */
+  content:""; position:absolute; left:50%; bottom:-4px; width:64%; height:12px;
+  transform:translateX(-50%);
+  background:radial-gradient(ellipse at center, rgba(0,0,0,.55), transparent 72%);
+  filter:blur(1.5px); pointer-events:none;
+}
 .plant svg{
   overflow:visible;
   transform-origin:50% 100%;
   animation:sway 8s ease-in-out infinite;
   animation-delay:var(--sd, 0s);
+  filter:url(#softshadow);
   transition:filter .4s;
 }
 @keyframes sway{
@@ -129,7 +205,7 @@ h1 em{ font-style:italic; color:var(--moss); }
   50%    { transform:rotate(1.3deg); }
 }
 .plant:hover svg, .plant:focus-visible svg{
-  filter:drop-shadow(0 0 14px rgba(138,171,126,.45));
+  filter:url(#softshadow) drop-shadow(0 0 14px rgba(138,171,126,.5));
 }
 .plant:focus-visible{ outline:1px solid var(--moss); outline-offset:8px; border-radius:6px; }
 .plant .tag{
@@ -138,20 +214,35 @@ h1 em{ font-style:italic; color:var(--moss); }
 }
 .plant:hover .tag, .plant:focus-visible .tag{ color:var(--moss); }
 .plant .tag b{ display:block; font-weight:400; color:var(--fern); letter-spacing:.06em; text-transform:none; font-size:11px; }
+.plant .tag i{ display:block; font-style:normal; color:var(--gold-dim); letter-spacing:.1em; font-size:9px; margin-top:2px; }
 
 .stem{ stroke:var(--moss); stroke-width:2.4; fill:none; stroke-linecap:round; }
-.leaf{ fill:rgba(138,171,126,.30); stroke:var(--moss); stroke-width:1.4; }
-.bud { fill:rgba(200,217,190,.25); stroke:var(--sage); stroke-width:1.4; }
-.bloom{ fill:rgba(233,237,219,.85); }
-.petal{ fill:rgba(200,217,190,.35); stroke:var(--sage); stroke-width:1.2; }
-.wood{ stroke:#6b5a3a; stroke-width:3; stroke-linecap:round; }
-.tool{ fill:#2a3326; stroke:#8a9b7e; stroke-width:1.6; }
-.paper{ fill:#e9eddb; stroke:#b9c4a4; stroke-width:1.2; }
-.stone{ fill:#232b22; stroke:#4a5a48; stroke-width:1.4; }
+.leaf{ fill:url(#leafGrad); stroke:var(--moss); stroke-width:1.4; }
+.bud { fill:url(#budGrad); stroke:var(--sage); stroke-width:1.4; }
+.bloom{ fill:url(#bloomGrad); }
+.petal{ fill:url(#petalGrad); stroke:var(--sage); stroke-width:1.2; }
+.wood{ stroke:url(#woodGrad); stroke-width:3; stroke-linecap:round; }
+.tool{ fill:url(#toolGrad); stroke:#8a9b7e; stroke-width:1.6; }
+.paper{ fill:url(#paperGrad); stroke:#b9c4a4; stroke-width:1.2; }
+.stone{ fill:url(#stoneGrad); stroke:#4a5a48; stroke-width:1.4; }
+.seed{ fill:url(#goldGrad); filter:url(#softshadow); }
+
+/* ---------- GLP / flagship callout ---------- */
+.callout{
+  margin-top:1.4rem; padding:1.2rem 1.4rem; border-radius:14px;
+  background:linear-gradient(160deg, rgba(216,179,106,.08), var(--glass));
+  border:1px solid rgba(216,179,106,.3);
+}
+.callout .callout-label{
+  font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--gold);
+  margin-bottom:.5rem;
+}
+.callout p{ color:var(--sage); font-size:13.5px; margin-bottom:.6rem; }
+.callout p:last-child{ margin-bottom:0; }
 
 /* ---------- reading room ---------- */
 .veil{
-  position:fixed; inset:0; z-index:20;
+  position:fixed; inset:0; z-index:40;
   background:rgba(6,10,7,.7); backdrop-filter:blur(4px);
   display:flex; align-items:flex-end; justify-content:center;
   opacity:0; pointer-events:none; transition:opacity .4s;
@@ -175,7 +266,7 @@ h1 em{ font-style:italic; color:var(--moss); }
 .room h2{ font-family:Georgia,serif; font-weight:400; font-size:1.9rem; line-height:1.2; margin-bottom:.35rem; }
 .room h2 em{ font-style:italic; color:var(--moss); }
 .room .date{ font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); margin-bottom:1.1rem; }
-.room .summary{ color:var(--sage); margin-bottom:1.5rem; max-width:60ch; }
+.room .summary p{ color:var(--sage); margin-bottom:.9rem; max-width:64ch; }
 
 .room .inside-label{ font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--faint); margin-bottom:.6rem; }
 .room ul{ list-style:none; margin-bottom:1.8rem; }
@@ -207,6 +298,34 @@ h1 em{ font-style:italic; color:var(--moss); }
   color:var(--sage); border-color:var(--moss);
 }
 
+/* ---------- RETURN — closing clearing: photo + trail markers ---------- */
+.clearing{ margin-top:6rem; }
+.return-grid{ display:grid; grid-template-columns:280px 1fr; gap:clamp(1.6rem,4vw,3rem); align-items:start; margin-top:1rem; }
+@media (max-width:760px){ .return-grid{ grid-template-columns:1fr; } }
+
+.polaroid{
+  background:#e9eddb; padding:14px 14px 46px; border-radius:4px;
+  transform:rotate(-3deg);
+  box-shadow:0 24px 50px rgba(0,0,0,.5);
+}
+.polaroid img{ width:100%; display:block; border-radius:1px; }
+.polaroid figcaption{
+  margin-top:12px; text-align:center; font-family:Georgia,serif; font-style:italic;
+  color:#2a3326; font-size:13px;
+}
+
+.trail-markers{ list-style:none; }
+.trail-markers li{ padding:.75rem 0; border-bottom:.5px solid var(--line); display:flex; align-items:center; gap:12px; }
+.trail-markers .stake{
+  width:8px; height:8px; border-radius:50%; background:var(--moss); flex:none;
+  box-shadow:0 0 6px 1px rgba(138,171,126,.5);
+}
+.trail-markers a{ color:var(--sage); text-decoration:none; font-size:14px; transition:color .2s; }
+.trail-markers a:hover{ color:var(--moss); }
+.trail-markers li.placeholder{ color:var(--faint); font-size:14px; }
+.trail-markers li.placeholder .stake{ background:none; border:1px dashed var(--faint); box-shadow:none; }
+.trail-markers li.placeholder em{ color:var(--dim); font-style:normal; margin-left:6px; }
+
 footer{
   margin-top:6rem; font-size:10px; letter-spacing:.2em; text-transform:uppercase;
   color:var(--faint); text-align:center;
@@ -216,6 +335,7 @@ footer{
   .moon, .firefly, .plant svg{ animation:none; }
   .veil, .room, .plant, .btn{ transition:none; }
   .firefly{ opacity:.4; }
+  .reveal{ opacity:1!important; transform:none!important; transition:none!important; }
 }
 @media (max-width:600px){
   .moon{ right:-30px; top:30px; width:64px; height:64px; }
@@ -225,6 +345,55 @@ footer{
 </head>
 <body>
 
+<!-- ================= SHARED SVG DEFS — the "embedded, not flat" gradients ================= -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <radialGradient id="leafGrad" cx="35%" cy="28%" r="75%">
+      <stop offset="0%" stop-color="#b9d1ab"/>
+      <stop offset="55%" stop-color="#7a9c6d"/>
+      <stop offset="100%" stop-color="#3f5a3a"/>
+    </radialGradient>
+    <radialGradient id="bloomGrad" cx="35%" cy="28%" r="75%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="60%" stop-color="#e9eddb"/>
+      <stop offset="100%" stop-color="#b9c4a4"/>
+    </radialGradient>
+    <radialGradient id="petalGrad" cx="35%" cy="28%" r="75%">
+      <stop offset="0%" stop-color="#dfe8d2"/>
+      <stop offset="70%" stop-color="#a9c09a"/>
+      <stop offset="100%" stop-color="#5a7a55"/>
+    </radialGradient>
+    <radialGradient id="budGrad" cx="35%" cy="28%" r="75%">
+      <stop offset="0%" stop-color="#eef1e2"/>
+      <stop offset="100%" stop-color="#9fb593"/>
+    </radialGradient>
+    <linearGradient id="woodGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8a6f45"/>
+      <stop offset="100%" stop-color="#4d3c22"/>
+    </linearGradient>
+    <radialGradient id="stoneGrad" cx="30%" cy="22%" r="80%">
+      <stop offset="0%" stop-color="#3a463a"/>
+      <stop offset="100%" stop-color="#171d17"/>
+    </radialGradient>
+    <radialGradient id="toolGrad" cx="35%" cy="28%" r="75%">
+      <stop offset="0%" stop-color="#3f4a3a"/>
+      <stop offset="100%" stop-color="#1c221a"/>
+    </radialGradient>
+    <radialGradient id="paperGrad" cx="35%" cy="18%" r="90%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#d8dfc4"/>
+    </radialGradient>
+    <radialGradient id="goldGrad" cx="35%" cy="25%" r="80%">
+      <stop offset="0%" stop-color="#f3e2b0"/>
+      <stop offset="100%" stop-color="#a9812f"/>
+    </radialGradient>
+    <filter id="softshadow" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+</svg>
+
+<div class="grain" aria-hidden="true"></div>
 <div class="moon" aria-hidden="true"></div>
 <div class="firefly" style="--x:18%; --y:70%; --t:24s; --d:0s"  aria-hidden="true"></div>
 <div class="firefly" style="--x:64%; --y:78%; --t:31s; --d:6s"  aria-hidden="true"></div>
@@ -232,23 +401,97 @@ footer{
 <div class="firefly" style="--x:82%; --y:72%; --t:35s; --d:3s"  aria-hidden="true"></div>
 <div class="firefly" style="--x:30%; --y:84%; --t:29s; --d:17s" aria-hidden="true"></div>
 
-<main class="garden">
-  <p class="eyebrow">Ruaraidh · ePortfolio · Edinburgh</p>
-  <h1>The <em>Night Garden</em></h1>
-  <p class="lede">A working garden of documents. Everything here was grown over five weeks of
-  UX fieldwork on the InnerSeed Garden app — each plant is a real document at the stage it had
-  reached when it was written. Click a plant to read it here, or take a hard copy home.</p>
+<nav class="sidenav" aria-label="Section path">
+  <a href="#root" data-label="Root" class="active"></a>
+  <a href="#manifestos" data-label="Manifestos"></a>
+  <a href="#strategy" data-label="Strategy"></a>
+  <a href="#vault" data-label="Vault"></a>
+  <a href="#return" data-label="Return"></a>
+</nav>
 
-  <div class="stats" role="list">
-    <div class="stat" role="listitem"><b>5</b><span>Weekly manifestos</span></div>
-    <div class="stat" role="listitem"><b>49</b><span>Findings logged</span></div>
-    <div class="stat" role="listitem"><b>Phase 1</b><span>Delivered</span></div>
-  </div>
+<main class="garden">
+
+  <!-- ================= ROOT — hero, video intro, the 500-word note ================= -->
+  <section id="root">
+    <p class="eyebrow">Ruaraidh · ePortfolio · Edinburgh ⇄ Enschede</p>
+    <h1>The <em>Night Garden</em></h1>
+    <p class="lede">A working garden of documents, grown over five weeks of UX fieldwork on the InnerSeed
+    Garden app for InnerSeed Developers. Everything below is planted in the order it was written — start
+    with the video, then walk the beds in sequence: Root, Rise, Return.</p>
+
+    <div class="stats" role="list">
+      <div class="stat" role="listitem"><b>5</b><span>Weekly manifestos</span></div>
+      <div class="stat" role="listitem"><b>49</b><span>Findings logged</span></div>
+      <div class="stat" role="listitem"><b>Phase 1</b><span>Delivered</span></div>
+      <div class="stat" role="listitem"><b>1</b><span>Garden Lab Proposal</span></div>
+    </div>
+
+    <div class="hero-grid reveal">
+      <div class="video-frame">
+        <svg class="vine-corner tl" viewBox="0 0 70 66" aria-hidden="true">
+          <path class="stem" d="M35,66 C35,56 34,50 35,42"/>
+          <path class="leaf" d="M35,48 Q22,44 18,32 Q32,36 35,46 Z"/>
+          <path class="leaf" d="M35,44 Q48,40 52,28 Q38,32 35,42 Z"/>
+        </svg>
+        <video controls preload="metadata" poster="assets/intro-poster.svg" playsinline>
+          <!-- Drop the iPhone 16E recording in as assets/intro.mp4 — this element is already wired to it. -->
+          <source src="assets/intro.mp4" type="video/mp4">
+        </video>
+        <span class="frame-tag">Founder's-eye view · unlisted</span>
+        <svg class="vine-corner br" viewBox="0 0 70 66" aria-hidden="true">
+          <path class="stem" d="M35,66 C35,56 34,50 35,42"/>
+          <path class="leaf" d="M35,48 Q22,44 18,32 Q32,36 35,46 Z"/>
+          <path class="leaf" d="M35,44 Q48,40 52,28 Q38,32 35,42 Z"/>
+        </svg>
+      </div>
+
+      <div class="prose">
+        <p>For five weeks between June and July 2026 I worked as the UX Development placement for InnerSeed
+        Developers, auditing InnerSeed Garden — a breathwork and meditation app — end to end: Preset mode,
+        Builder mode, the settings that hide in plain sight, the empty states nobody had looked at twice.
+        The brief was simple to state and hard to do well. Sit with the app exactly as a first-time user
+        would. Write down what actually happens — the confusion, the small delight, the moment of not
+        knowing what a cog icon does — before letting myself interpret any of it. Only then turn the raw
+        material into something a developer could act on.</p>
+
+        <p>That discipline produced forty-nine structured findings, D-01 to D-49, plus five carried over
+        from the very first session, filed week by week and reviewed with InnerSeed's founder, Jeroen, in a
+        running focus call from his studio in Enschede. Some of it was small and immediate — a label
+        missing from a settings cog, a "No favourite tracks yet" message that reads like an error rather
+        than an invitation. Some of it reached further: consolidating three disconnected mode-switchers into
+        one navigation model, tracing a Dutch-language bug across five separate surfaces back to a single
+        cause, and naming a feature the app already had but no one could find — personal Spotify playlist
+        import — as a commercial differentiator no competitor in the category was offering.</p>
+
+        <p>What I learned had less to do with any single finding and more with the method underneath all of
+        them. Nielsen's heuristics and Norman's affordances and signifiers are easy to recite and hard to
+        apply under the pressure of a real product, a real founder and a real deadline — you have to hold
+        the theory lightly enough to let the evidence lead, and firmly enough that "I just don't like it"
+        never gets to stand in for a finding. I learned to protect a first impression like evidence, because
+        it is one: you only get to not-know an interface once. And working with Jeroen taught me the
+        harder, more valuable half of the job — translating a usability observation into something a
+        founder with a market to win can actually use, in language that moves budget and attention rather
+        than just describing a screen.</p>
+
+        <p>Phase 1 closed formally on 27 June 2026 with the desktop audit complete and three Phase 2
+        workstreams agreed — a User Testing System, a Brand Book, and a Content Marketing Strategy. That
+        handover is where the rest of this page picks up. Below sit the five weekly Manifestos, already
+        filed in the docs folder and linked in full; the Content Integration Strategy this placement made
+        room for; the Seed Vault, the Garden Lab Proposal, and some honest field notes on what the work
+        actually asked of me; and, at the end, the paper trail — everything this garden grew from.</p>
+
+        <p class="word-note">A note written for this page, not lifted from the manifestos — roughly 500 words, on request.</p>
+      </div>
+    </div>
+  </section>
 
   <!-- ================= BED ONE — THE MANIFESTOS ================= -->
-  <section class="bed" aria-labelledby="bed1">
-    <p class="bed-label">Bed One</p>
+  <section class="bed reveal" id="manifestos" aria-labelledby="bed1">
+    <p class="bed-label">Rise · Bed One</p>
     <h2 class="bed-title" id="bed1">The Manifestos — <em>five weeks, one growing season</em></h2>
+    <p class="bed-lede">Each plant below is a real document, filed in <code>docs/</code> at the stage it had
+    reached when it was written. Click one to read it here, or take a hard copy home — the manifestos speak
+    for themselves and aren't rewritten on this page.</p>
 
     <div class="row">
       <!-- Week 1 — sprout -->
@@ -326,54 +569,153 @@ footer{
     </div>
   </section>
 
-  <!-- ================= BED TWO — THE TOOLSHED ================= -->
-  <section class="bed" aria-labelledby="bed2">
-    <p class="bed-label">Bed Two</p>
-    <h2 class="bed-title" id="bed2">The Toolshed — <em>strategy, schematics &amp; groundwork</em></h2>
+  <!-- ================= BED TWO — THE TRELLIS: CONTENT INTEGRATION STRATEGY ================= -->
+  <section class="bed reveal" id="strategy" aria-labelledby="bed2">
+    <p class="bed-label">Rise · Bed Two</p>
+    <h2 class="bed-title" id="bed2">The Trellis — <em>the Content Integration Strategy</em></h2>
+    <p class="bed-lede">Agreed with Jeroen as Phase 2's flagship deliverable, structured here in five parts so
+    it reads as one thing from two directions at once: a working document InnerSeed can build from, and a
+    piece of applied marketing strategy a university placement assessor can follow start to finish.</p>
 
     <div class="row">
-      <!-- Content Integration Strategy — vine on trellis -->
-      <button class="plant" data-key="strategy" style="--sd:0.9s" aria-haspopup="dialog">
-        <svg width="96" height="120" viewBox="0 0 96 120" role="img" aria-label="A vine climbing a trellis">
-          <path class="wood" d="M28,120 L28,20 M68,120 L68,20 M18,44 L78,44 M18,76 L78,76"/>
-          <path class="stem" d="M28,120 C36,100 24,88 34,72 C44,58 28,50 40,34 C46,26 54,24 58,18"/>
-          <path class="leaf" d="M34,74 Q22,70 19,58 Q32,63 35,72 Z"/>
-          <path class="leaf" d="M40,36 Q52,32 56,21 Q43,26 40,34 Z"/>
-          <path class="leaf" d="M58,20 Q68,15 71,5 Q59,10 57,18 Z"/>
+      <!-- Part 1 — Brand Voice & Positioning -->
+      <button class="plant" data-key="voice" style="--sd:0.4s" aria-haspopup="dialog">
+        <svg width="70" height="110" viewBox="0 0 70 110" role="img" aria-label="A single flower — brand voice">
+          <path class="stem" d="M35,110 C35,90 34,72 35,54"/>
+          <path class="leaf" d="M35,80 Q22,76 18,64 Q32,68 35,78 Z"/>
+          <path class="leaf" d="M35,66 Q48,62 52,50 Q38,54 35,64 Z"/>
+          <g aria-hidden="true">
+            <ellipse class="petal" cx="35" cy="34" rx="6" ry="11"/>
+            <ellipse class="petal" cx="35" cy="34" rx="6" ry="11" transform="rotate(72 35 40)"/>
+            <ellipse class="petal" cx="35" cy="34" rx="6" ry="11" transform="rotate(144 35 40)"/>
+            <ellipse class="petal" cx="35" cy="34" rx="6" ry="11" transform="rotate(216 35 40)"/>
+            <ellipse class="petal" cx="35" cy="34" rx="6" ry="11" transform="rotate(288 35 40)"/>
+            <circle class="bloom" cx="35" cy="40" r="6"/>
+          </g>
         </svg>
-        <span class="tag">Strategy<b>Content Integration</b></span>
+        <span class="tag">Part One<b>Brand Voice &amp; Positioning</b></span>
       </button>
 
-      <!-- Tool Schematics — spade in the soil -->
-      <button class="plant" data-key="schematics" style="--sd:2.1s" aria-haspopup="dialog">
-        <svg width="70" height="104" viewBox="0 0 70 104" role="img" aria-label="A spade standing in the soil">
-          <path class="wood" d="M35,10 L35,58"/>
-          <path class="wood" d="M26,10 L44,10"/>
-          <path class="tool" d="M24,58 L46,58 L44,86 Q35,98 26,86 Z"/>
+      <!-- Part 2 — Channel & Content Framework -->
+      <button class="plant" data-key="channels" style="--sd:1.6s" aria-haspopup="dialog">
+        <svg width="90" height="120" viewBox="0 0 90 120" role="img" aria-label="A branching vine — channel framework">
+          <path class="stem" d="M45,120 C45,100 44,84 45,64 C45,50 46,40 45,30"/>
+          <path class="stem" d="M45,84 C36,76 30,68 28,58"/>
+          <path class="stem" d="M45,68 C55,61 61,54 63,44"/>
+          <path class="leaf" d="M28,60 Q16,55 13,43 Q26,48 29,58 Z"/>
+          <path class="leaf" d="M63,46 Q75,41 78,29 Q65,34 62,44 Z"/>
+          <path class="leaf" d="M45,46 Q32,42 28,31 Q42,35 45,44 Z"/>
         </svg>
-        <span class="tag">Schematics<b>The Toolset</b></span>
+        <span class="tag">Part Two<b>Channel &amp; Content Framework</b></span>
       </button>
 
-      <!-- Blueprint — seed packet on a marker stake -->
-      <button class="plant" data-key="blueprint" style="--sd:0.3s" aria-haspopup="dialog">
+      <!-- Part 3 — Sales Development Process Manual (flagship) -->
+      <button class="plant" data-key="sales" style="--sd:0.9s" aria-haspopup="dialog">
+        <svg width="70" height="130" viewBox="0 0 70 130" role="img" aria-label="A trellis ladder — the sales process manual">
+          <path class="wood" d="M25,130 L25,20 M45,130 L45,20"/>
+          <path class="wood" d="M25,100 L45,100 M25,76 L45,76 M25,52 L45,52 M25,28 L45,28"/>
+          <path class="stem" d="M35,130 C33,110 37,90 33,70 C30,54 38,40 35,20"/>
+          <path class="leaf" d="M35,72 Q24,68 21,57 Q32,61 35,70 Z"/>
+          <path class="leaf" d="M35,44 Q46,40 49,29 Q38,33 35,42 Z"/>
+        </svg>
+        <span class="tag">Part Three<b>Sales Development Process Manual</b><i>Flagship</i></span>
+      </button>
+
+      <!-- Part 4 — Editorial Production & Asset Calendar -->
+      <button class="plant" data-key="editorial" style="--sd:2.1s" aria-haspopup="dialog">
+        <svg width="80" height="140" viewBox="0 0 80 140" role="img" aria-label="A vine with evenly spaced buds — a production calendar">
+          <path class="stem" d="M40,140 C40,116 39,96 40,74 C40,54 41,36 40,18"/>
+          <ellipse class="bud" cx="40" cy="108" rx="5" ry="7"/>
+          <ellipse class="bud" cx="40" cy="80" rx="5" ry="7"/>
+          <ellipse class="bud" cx="40" cy="52" rx="5" ry="7"/>
+          <ellipse class="bud" cx="40" cy="24" rx="5" ry="7"/>
+          <path class="leaf" d="M40,96 Q28,92 25,80 Q37,85 40,94 Z"/>
+          <path class="leaf" d="M40,64 Q52,60 55,48 Q43,52 40,62 Z"/>
+        </svg>
+        <span class="tag">Part Four<b>Editorial Production &amp; Asset Calendar</b></span>
+      </button>
+
+      <!-- Part 5 — Measurement & the Feedback Loop -->
+      <button class="plant" data-key="measurement" style="--sd:0.2s" aria-haspopup="dialog">
+        <svg width="110" height="90" viewBox="0 0 110 90" role="img" aria-label="A vine forming a closed loop — the measurement loop">
+          <path class="stem" d="M20,60 C10,40 30,20 50,35 C65,46 65,64 50,66 C35,68 30,50 45,42 C58,35 72,40 80,55 C88,68 78,80 65,72"/>
+          <path class="leaf" d="M28,45 Q18,40 16,28 Q28,32 30,43 Z"/>
+          <path class="leaf" d="M72,58 Q84,54 87,42 Q75,46 71,56 Z"/>
+        </svg>
+        <span class="tag">Part Five<b>Measurement &amp; the Feedback Loop</b></span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ================= BED THREE — SEED VAULT, FIELD NOTES & THE GARDEN LAB PROPOSAL ================= -->
+  <section class="bed reveal" id="vault" aria-labelledby="bed3">
+    <p class="bed-label">Return · Bed Three</p>
+    <h2 class="bed-title" id="bed3">The Seed Vault — <em>what's stored, what's honest, what's next</em></h2>
+    <p class="bed-lede">Supporting material that doesn't belong inside a weekly manifesto but earns its
+    place beside one: ideas parked for later, a proposal for where the work would have gone next, and some
+    unvarnished notes on what five weeks of solo audit work actually asked of me.</p>
+
+    <div class="row">
+      <!-- Seed Vault -->
+      <button class="plant" data-key="vaultdoc" style="--sd:1.3s" aria-haspopup="dialog">
+        <svg width="110" height="80" viewBox="0 0 110 80" role="img" aria-label="A stone vault with a glowing seed">
+          <path class="stone" d="M8,80 L8,45 Q8,35 20,33 L90,33 Q102,35 102,45 L102,80 Z"/>
+          <path d="M8,45 Q55,25 102,45" fill="none" stroke="#4a5a48" stroke-width="1.6"/>
+          <circle class="seed" cx="55" cy="52" r="7"/>
+        </svg>
+        <span class="tag">Vault<b>The Seed Vault</b></span>
+      </button>
+
+      <!-- Garden Lab Proposal -->
+      <button class="plant" data-key="glp" style="--sd:0.5s" aria-haspopup="dialog">
         <svg width="70" height="110" viewBox="0 0 70 110" role="img" aria-label="A seed packet pinned to a marker stake">
-          <path class="wood" d="M35,110 L35,52"/>
-          <rect class="paper" x="14" y="14" width="42" height="42" rx="3"/>
-          <path class="stem" d="M35,46 C35,40 34,36 35,31" style="stroke:#5a7a4a; stroke-width:1.8"/>
-          <path class="leaf" d="M35,36 Q29,33 27,27 Q34,29 35,34 Z" style="stroke:#5a7a4a"/>
-          <path class="leaf" d="M35,33 Q41,30 43,24 Q36,26 35,31 Z" style="stroke:#5a7a4a"/>
+          <path class="wood" d="M35,110 L35,50"/>
+          <g transform="rotate(-5 35 34)">
+            <rect class="paper" x="13" y="12" width="44" height="44" rx="3"/>
+            <path d="M15,26 L55,26" stroke="#b9c4a4" stroke-width="1" opacity=".7"/>
+            <circle cx="35" cy="42" r="5" fill="url(#goldGrad)"/>
+            <circle cx="24" cy="46" r="2.6" fill="url(#goldGrad)" opacity=".85"/>
+            <circle cx="46" cy="47" r="2.2" fill="url(#goldGrad)" opacity=".85"/>
+          </g>
         </svg>
-        <span class="tag">Blueprint<b>The Garden Plan</b></span>
+        <span class="tag">Proposal<b>The Garden Lab Proposal</b><i>GLP</i></span>
       </button>
 
-      <!-- Appendix — the foundation stone -->
-      <button class="plant" data-key="appendix" style="--sd:1.4s" aria-haspopup="dialog">
-        <svg width="88" height="60" viewBox="0 0 88 60" role="img" aria-label="A foundation stone">
-          <path class="stone" d="M12,60 Q6,38 22,26 Q44,12 66,24 Q84,34 78,60 Z"/>
-          <path d="M30,42 Q44,36 58,42" fill="none" stroke="#3a4d3a" stroke-width="1.2"/>
+      <!-- Field Notes -->
+      <button class="plant" data-key="fieldnotes" style="--sd:1.9s" aria-haspopup="dialog">
+        <svg width="100" height="76" viewBox="0 0 100 76" role="img" aria-label="An open notebook with a pressed leaf">
+          <path class="paper" d="M8,10 L48,6 L48,70 L8,74 Z"/>
+          <path class="paper" d="M92,10 L52,6 L52,70 L92,74 Z"/>
+          <path d="M14,20 L42,17 M14,28 L42,25 M14,36 L42,33" stroke="#9aa88a" stroke-width="1.2" fill="none"/>
+          <path class="leaf" d="M70,20 Q80,26 78,38 Q66,34 66,24 Z" transform="rotate(15 72 28)"/>
         </svg>
-        <span class="tag">Appendix<b>Raw &amp; Background</b></span>
+        <span class="tag">Field Notes<b>What the Work Asked of Me</b></span>
       </button>
+    </div>
+  </section>
+
+  <!-- ================= RETURN — closing clearing: appendix, links, photo ================= -->
+  <section class="clearing reveal" id="return" aria-labelledby="return-title">
+    <p class="bed-label">Return · The Appendix</p>
+    <h2 class="bed-title" id="return-title">Everything This Garden Grew From</h2>
+    <p class="bed-lede">The paper trail. A photo instead of a headshot — this placement happened mostly at
+    a laptop, in the evening, and that felt more honest than a suit — plus every path back to a source.</p>
+
+    <div class="return-grid">
+      <figure class="polaroid">
+        <img src="assets/photo-placeholder.svg" alt="Illustrated placeholder — working at the laptop in the evening" id="chillPhoto">
+        <figcaption>Most evenings, this was the view — Edinburgh</figcaption>
+      </figure>
+
+      <ul class="trail-markers">
+        <li><a href="https://innerseed.garden" target="_blank" rel="noopener"><span class="stake"></span>InnerSeed Garden — the app itself</a></li>
+        <li><a href="#manifestos"><span class="stake"></span>The five weekly Manifestos — Bed One, above</a></li>
+        <li><a href="#strategy"><span class="stake"></span>The Content Integration Strategy — Bed Two, above</a></li>
+        <li><a href="#vault"><span class="stake"></span>The Seed Vault, GLP &amp; Field Notes — Bed Three, above</a></li>
+        <li class="placeholder"><span class="stake"></span>Google Drive — the single source of truth <em>(add link)</em></li>
+        <li class="placeholder"><span class="stake"></span>LinkedIn <em>(add link)</em></li>
+        <li><a href="mailto:ruaraidh.innerseed@gmail.com"><span class="stake"></span>Get in touch</a></li>
+      </ul>
     </div>
   </section>
 
@@ -393,7 +735,11 @@ footer{
     </div>
     <h2 id="room-title"></h2>
     <p class="date" id="room-date"></p>
-    <p class="summary" id="room-summary"></p>
+    <div class="summary" id="room-summary"></div>
+    <div class="callout" id="room-callout" style="display:none">
+      <p class="callout-label" id="room-callout-label"></p>
+      <div id="room-callout-body"></div>
+    </div>
     <p class="inside-label">What's inside</p>
     <ul id="room-toc"></ul>
     <div class="actions">
@@ -406,17 +752,19 @@ footer{
 <script>
 /* ------------------------------------------------------------------
    THE CATALOGUE
-   href points at docs/<file> — drop the original HTML files into a
-   docs/ folder beside this page and the buttons come alive.
-   TODO: match Week 2–4 filenames to the real ones, add real files
-   for the Toolshed bed (or leave them "in season soon").
+   Manifestos (w1–w5) point straight at the real files already filed
+   in docs/ — that content is authored there and only linked here.
+   Strategy, Vault, GLP and Field Notes are new documents this page
+   introduces; their full write-ups are still to be filed in docs/,
+   so they read here first and pick up a Read/Download link once
+   filed (set ready:true and add the href when that file exists).
 ------------------------------------------------------------------- */
 const DOCS = {
   w1: {
     eyebrow:"InnerSeed Garden · UX Development Manifesto · Week 1",
     title:"First Exploration", em:"Week 1",
     date:"4 June 2026",
-    summary:"First hands-on session with the app. Initial UX exploration covering the Session Builder, playback, post-session navigation, and early feature ideas. First impression of the Session Builder: clean and beautifully designed.",
+    summary:["First hands-on session with the app. Initial UX exploration covering the Session Builder, playback, post-session navigation, and early feature ideas. First impression of the Session Builder: clean and beautifully designed."],
     toc:["Session Builder — first look","The Session Settings modal","Ambient Music card","Preset playback — transport & controls","Post-session navigation","The empty space below the player","Week 1 findings summary"],
     href:"docs/InnerSeed_DevUX_Manifesto_Week1_4June.html", ready:true
   },
@@ -424,7 +772,7 @@ const DOCS = {
     eyebrow:"InnerSeed Garden · UX Development Manifesto · Week 2",
     title:"UX Run-Through", em:"Week 2",
     date:"10–13 June 2026",
-    summary:"Live session notes from the Week 2 run-through — raw observations logged in full, with structured findings and a six-area agenda. Includes the opening-screen five-question audit, live testing of Ethereal Voyager, and the 'threefold consistency' proposal.",
+    summary:["Live session notes from the Week 2 run-through — raw observations logged in full, with structured findings and a six-area agenda. Includes the opening-screen five-question audit, live testing of Ethereal Voyager, and the 'threefold consistency' proposal."],
     toc:["Week 2 agenda — six areas","Opening screen — five-question audit","Running findings log","Preset mode — live testing (Ethereal Voyager)","Favouriting & the Load Session modal","Session Settings modal — structural finding","Proposed solution — threefold consistency"],
     href:"docs/InnerSeed_DevUX_Manifesto_Week2_13June.html", ready:true
   },
@@ -432,7 +780,7 @@ const DOCS = {
     eyebrow:"InnerSeed Garden · UX Development Manifesto · Week 3",
     title:"Closing the Loop", em:"Week 3",
     date:"15–18 June 2026",
-    summary:"Week 3 closes out the remaining Preset mode questions, pins down the metadata anomaly, proposes a cinematic mode for playback, and — via a focus call with Jeroen — finally gets Green House explained. Findings D-22 to D-38.",
+    summary:["Week 3 closes out the remaining Preset mode questions, pins down the metadata anomaly, proposes a cinematic mode for playback, and — via a focus call with Jeroen — finally gets Green House explained. Findings D-22 to D-38."],
     toc:["Session completion flow","Metadata anomaly — confirmed and pinpointed","Sidebar during playback — towards cinematic mode","Builder mode — first glance","Naming conflict — Green House and Garden","Focus call — Green House, explained","Vision and future direction"],
     href:"docs/InnerSeed_DevUX_Manifesto_Week3_15June.html", ready:true
   },
@@ -440,7 +788,7 @@ const DOCS = {
     eyebrow:"InnerSeed Garden · UX Development Manifesto · Week 4",
     title:"Builder Mode — Where the Money Is", em:"Week 4",
     date:"22 June 2026",
-    summary:"The full audit lens turns onto Builder mode — the app's most distinctive and commercially significant feature. Three compressed columns, an unlabelled transport bar, the Guided Voices gap, and a proposed full-width stacked layout with a session share card.",
+    summary:["The full audit lens turns onto Builder mode — the app's most distinctive and commercially significant feature. Three compressed columns, an unlabelled transport bar, the Guided Voices gap, and a proposed full-width stacked layout with a session share card."],
     toc:["Builder mode — first look and orientation","Ambient Music — four functions in one small card","The transport bar — what each icon actually does","Guided Voices — current state and gap","Proposed layout — full-width stacked Builder","Proposed session share card"],
     href:"docs/InnerSeed_DevUX_Manifesto_Week4_22June.html", ready:true
   },
@@ -448,45 +796,90 @@ const DOCS = {
     eyebrow:"InnerSeed Garden · UX Development Manifesto · Week 5",
     title:"Phase 1, Delivered", em:"Week 5",
     date:"July 2026",
-    summary:"The reflections and summary volume. Phase 1 by the numbers, the record week by week, headline outcomes, how the work was done, and the close-out — what carries forward into Phase 2.",
+    summary:["The reflections and summary volume. Phase 1 by the numbers, the record week by week, headline outcomes, how the work was done, and the close-out — what carries forward into Phase 2."],
     toc:["Phase 1 by the numbers","The record, week by week","Headline outcomes","How the work was done","Close-out and what carries forward"],
     href:"docs/InnerSeed_DEVUX_ManifestoWeek5_Reflections_Summary.html", ready:true
   },
-  strategy: {
-    eyebrow:"Enter Great Breath × InnerSeed · Strategy",
-    title:"Content Integration Strategy", em:"The Trellis",
-    date:"2026",
-    summary:"[One-paragraph summary goes here — how the content brand and the app grow along the same frame: what climbs where, and in what season.]",
-    toc:["[Section one]","[Section two]","[Section three]"],
-    href:"docs/content-integration-strategy.html", ready:false
+
+  voice: {
+    eyebrow:"Content Integration Strategy · Part One",
+    title:"Brand Voice & Positioning", em:"The Trellis, Part One",
+    date:"2026 · drafted from Phase 1",
+    summary:["Before a single channel or campaign exists, the brand needs a documented voice — one place that fixes how InnerSeed Garden sounds, in writing, everywhere it speaks. This part turns the founder's own language — Root, Rise, Return, the studio conversations in Enschede, the case for Garden and Green House as more than a breathwork app — into a working tone-of-voice guide and a message hierarchy: what gets said first, what's proof, and what's aspiration. The founder interview filmed in Enschede is the anchor asset the rest of the Brand Book builds around."],
+    toc:["Tone-of-voice guide, drawn from Jeroen's own words","Message hierarchy — proof points before aspiration","Root, Rise, Return as the brand's throughline","The Enschede founder interview — brief and shot list","Do / don't language examples, by channel"],
+    href:"docs/strategy-01-voice.html", ready:false
   },
-  schematics: {
-    eyebrow:"InnerSeed Garden · Technical",
-    title:"Tool Schematics", em:"The Toolset",
-    date:"2026",
-    summary:"[Summary goes here — the working tools of the project: what each one does, how they fit the hand, and where they're kept.]",
-    toc:["[Schematic one]","[Schematic two]"],
-    href:"docs/tool-schematics.html", ready:false
+  channels: {
+    eyebrow:"Content Integration Strategy · Part Two",
+    title:"Channel & Content Framework", em:"The Trellis, Part Two",
+    date:"2026 · drafted from Phase 1",
+    summary:["Where the brand shows up, and what it says there. This part maps InnerSeed Garden's actual product strengths — the Spotify hook, Builder mode's Root/Rise/Return session structure, the Share and Save card — onto a small set of content pillars and the channels best suited to each: owned (app, email, the site), earned (wellness press, partnerships) and paid (only where a budget is proven to convert). Every pillar traces back to an audit finding, not a trend."],
+    toc:["Content pillars mapped to real product features (D-43, D-48)","Owned / earned / paid channel matrix","Campaign template — structure, not one-off copy","Competitive positioning within breathwork & wellness","Sequencing: what launches with mobile, what waits"],
+    href:"docs/strategy-02-channels.html", ready:false
   },
-  blueprint: {
-    eyebrow:"InnerSeed Garden · Planning",
-    title:"The Blueprint", em:"The Garden Plan",
-    date:"2026",
-    summary:"[Summary goes here — the plan the garden was planted to: what goes in which bed, and why.]",
-    toc:["[Section one]","[Section two]"],
-    href:"docs/blueprint.html", ready:false
+  sales: {
+    eyebrow:"Content Integration Strategy · Part Three · Flagship",
+    title:"Sales Development Process Manual", em:"The Trellis, Part Three",
+    date:"2026 · agreed with Jeroen, 27 June",
+    summary:["Agreed with Jeroen as Phase 2's flagship deliverable: the manual that turns marketing attention into a subscriber, step by step. It picks up exactly where the content framework leaves off — a qualified visitor arriving at the app — and specifies what happens next: which in-app moment does the convincing, what a follow-up sequence says and when, and how a lead is qualified, handed off and measured, so growth work has a repeatable process behind it rather than one-off campaigns."],
+    toc:["Lead qualification criteria, defined","The conversion path from content to subscription","Where D-43 (Spotify) and D-48 (Share/Save) do the selling","Handoff points between marketing and product","Templates: outreach, follow-up, re-engagement"],
+    href:"docs/strategy-03-sales-process-manual.html", ready:false
   },
-  appendix: {
-    eyebrow:"SSOT · Raw & Background",
-    title:"The Appendix", em:"Foundation Stone",
-    date:"2026",
-    summary:"[Summary goes here — the raw record everything else rests on: sources, background, the single source of truth.]",
-    toc:["[Raw materials]","[Background]"],
-    href:"docs/appendix.html", ready:false
+  editorial: {
+    eyebrow:"Content Integration Strategy · Part Four",
+    title:"Editorial Production & Asset Calendar", em:"The Trellis, Part Four",
+    date:"2026 · drafted from Phase 1",
+    summary:["The Brand Book and the marketing strategy are only as good as the production rhythm behind them. This part sets a realistic cadence for turning the Enschede founder interview and the Brand Book's visual system into a running calendar of assets — launch content, always-on content, and seasonal moments — with clear ownership between InnerSeed and any outside support, so the Root, Rise, Return story stays consistent as the brand scales."],
+    toc:["Founder-interview cornerstone content — cut-down plan","Always-on vs. launch vs. seasonal content","Production calendar and ownership by asset type","Brand Book visual system, applied to templates","Version control — one source of truth for assets"],
+    href:"docs/strategy-04-editorial-calendar.html", ready:false
+  },
+  measurement: {
+    eyebrow:"Content Integration Strategy · Part Five",
+    title:"Measurement & the Feedback Loop", em:"The Trellis, Part Five",
+    date:"2026 · drafted from Phase 1",
+    summary:["The strategy closes the way the audit opened — by asking what to measure and why, not by installing more dashboards. This part carries the AMEC Activity → Output → Outcome logic used throughout the Manifestos into marketing measurement: a short list of metrics tied directly to findings already logged, reviewed against Jeroen's existing analytics setup rather than replacing it outright."],
+    toc:["AMEC framework, carried over from the audit","Metrics tied to named findings, not vanity numbers","Reviewing (not replacing) the existing analytics setup","Reporting rhythm — activity, output, outcome","Feeding results back into the next content cycle"],
+    href:"docs/strategy-05-measurement.html", ready:false
+  },
+
+  vaultdoc: {
+    eyebrow:"InnerSeed Garden · Ideas Not Yet Planted",
+    title:"The Seed Vault", em:"Ideas Not Yet Planted",
+    date:"Logged throughout Phase 1",
+    summary:[
+      "Not every idea earns a place in Phase 1 or Phase 2 — some simply arrive too early. The Seed Vault is where those ideas are logged rather than lost: brand expansion beyond the current app, international market ambition, retreat and in-person programming, and the longer-range question Jeroen raised directly in the Week 3 focus call — what Garden and Green House could become if breathwork practice moves toward spatial computing, AI-guided sessions, and a subscription model that looks nothing like today's.",
+      "Each entry is kept in the same discipline as the audit itself: dated, attributed, and left un-embellished until its season comes. Nothing here is a commitment. It's a record that the thinking happened, and where to find it again when the timing is right."
+    ],
+    toc:["Brand & international market expansion","Retreat and in-person programming concepts","Spatial computing / AI-guided practice — early notes","Subscription model horizon-scanning","The founder-interview brief, filed in full"],
+    href:"docs/seed-vault.html", ready:false
+  },
+  glp: {
+    eyebrow:"InnerSeed Garden · Forward Brief",
+    title:"The Garden Lab Proposal", em:"GLP — Continuing From Here",
+    date:"Proposed, in light of the 18 June focus call",
+    summary:[
+      "Phase 1 closed with a specific instruction from Jeroen: let the imagination run its due course ahead of Phase 2, and think about what the Garden — and Green House — could become beyond a breathwork app. Had the placement continued past the desktop audit, the next brief was already agreed in outline: a short research sprint into the wider wellness and breathwork market, honest competitor mapping — what's already been tried, what nobody has — and a horizon-scan of where spatial computing, AI-guided practice and subscription wellness are heading over the next five to ten years, tracked back always to whether Garden and Green House have a genuine claim on that future, or should stay focused on what they already do well.",
+      "The output would not have been a speculative pitch deck. It would have been a short, evidenced brief, in the same raw-first, structured-second method as the audit, landing squarely inside Phase 2's Content Marketing Strategy — so that wherever the brand chooses to go next, it goes there deliberately, not by accident."
+    ],
+    toc:["Competitor & market landscape — breathwork and adjacent wellness","Spatial computing and AI-guided practice — a five-to-ten-year horizon","Subscription model evolution — what to track, what to ignore","How the brief would have fed the Content Marketing Strategy","Method: raw-first, structured-second — unchanged from Phase 1"],
+    href:"docs/garden-lab-proposal.html", ready:false
+  },
+  fieldnotes: {
+    eyebrow:"Field Notes · Personal",
+    title:"What the Work Actually Asked of Me", em:"Field Notes",
+    date:"Written on close-out",
+    summary:[
+      "Five weeks of solo desktop audit sounds tidy in a report. It didn't feel tidy at the time. The first real challenge was credibility — building trust as an external reviewer, one focus call at a time, without a team around me to lean on, until the record itself started doing the persuading instead of me.",
+      "The second was resisting the pull to tidy things up too early. The instinct, faced with a messy first impression, is to smooth it into something presentable before anyone else sees it. I had to learn to log the confusion exactly as it happened — a mistap, a wrong assumption, a \"wait, what does this do?\" — and only reach for Nielsen or Norman once that raw reaction was safely on the page. Structure second. Always.",
+      "The third was translation. A founder building a product doesn't want a UX lecture; he wants to know what it's worth. Naming the Spotify panel a named commercial differentiator, not just a discoverability fix, was the moment that translation clicked — the same finding, aimed at a different question.",
+      "None of this required a personal crisis to overcome, and I'd rather not pretend otherwise. It required patience with a slow method inside a fast-moving project, and enough discipline to keep the single-source-of-truth workflow honest across five weeks of change. That's the note I'd leave for whoever does this next: protect the raw data, and let the theory come after."
+    ],
+    toc:["Building credibility solo, one focus call at a time","Protecting raw first impressions from my own instinct to tidy them","Translating usability findings into commercial language","Keeping the SSOT workflow honest over five weeks","A note for whoever does this next"],
+    href:"docs/field-notes.html", ready:false
   }
 };
 
-const ORDER = ["w1","w2","w3","w4","w5","strategy","schematics","blueprint","appendix"];
+const ORDER = ["w1","w2","w3","w4","w5","voice","channels","sales","editorial","measurement","vaultdoc","glp","fieldnotes"];
 
 const veil = document.getElementById('veil');
 const el = id => document.getElementById(id);
@@ -498,13 +891,27 @@ function show(key){
   el('room-eyebrow').textContent = d.eyebrow;
   el('room-title').textContent = d.title;
   el('room-date').textContent = d.date;
-  el('room-summary').textContent = d.summary;
+
+  const summary = el('room-summary'); summary.innerHTML = '';
+  d.summary.forEach(t => { const p = document.createElement('p'); p.textContent = t; summary.appendChild(p); });
+
+  const callout = el('room-callout');
+  if(d.callout){
+    callout.style.display = '';
+    el('room-callout-label').textContent = d.callout.label;
+    const body = el('room-callout-body'); body.innerHTML = '';
+    d.callout.body.forEach(t => { const p = document.createElement('p'); p.textContent = t; body.appendChild(p); });
+  } else {
+    callout.style.display = 'none';
+  }
+
   const toc = el('room-toc'); toc.innerHTML = '';
   d.toc.forEach(t => { const li = document.createElement('li'); li.textContent = t; toc.appendChild(li); });
   const read = el('room-read'), dl = el('room-dl');
   read.href = d.href; dl.href = d.href;
   read.setAttribute('aria-disabled', d.ready ? 'false' : 'true');
   dl.setAttribute('aria-disabled',  d.ready ? 'false' : 'true');
+  read.textContent = d.ready ? 'Read the full document' : 'Filed in season';
   dl.textContent = d.ready ? 'Take a hard copy' : 'In season soon';
 }
 
@@ -537,6 +944,32 @@ document.addEventListener('keydown', e => {
   if(e.key === 'ArrowLeft') step(-1);
   if(e.key === 'ArrowRight') step(1);
 });
+
+/* ------------------------------------------------------------------
+   SCROLL: reveal-on-enter + side-nav active state
+------------------------------------------------------------------- */
+const revealItems = document.querySelectorAll('.reveal');
+if('IntersectionObserver' in window){
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold:0.12, rootMargin:'0px 0px -8% 0px' });
+  revealItems.forEach(item => io.observe(item));
+} else {
+  revealItems.forEach(item => item.classList.add('in'));
+}
+
+const navLinks = document.querySelectorAll('.sidenav a');
+const sections = ["root","manifestos","strategy","vault","return"].map(id => document.getElementById(id));
+if('IntersectionObserver' in window){
+  const navIo = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+      }
+    });
+  }, { threshold:0, rootMargin:'-45% 0px -45% 0px' });
+  sections.forEach(s => { if(s) navIo.observe(s); });
+}
 </script>
 </body>
 </html>

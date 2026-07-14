@@ -1,0 +1,58 @@
+<svg width="720" height="1280" viewBox="0 0 720 1280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder frame — night garden, laptop glow">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0b110c"/>
+      <stop offset="60%" stop-color="#121712"/>
+      <stop offset="100%" stop-color="#0d120d"/>
+    </linearGradient>
+    <radialGradient id="moonG" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#e9eddb"/>
+      <stop offset="70%" stop-color="#cfd6bd"/>
+      <stop offset="100%" stop-color="#cfd6bd" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="screenG" cx="50%" cy="30%" r="80%">
+      <stop offset="0%" stop-color="#dfe8d2"/>
+      <stop offset="100%" stop-color="#8aab7e"/>
+    </radialGradient>
+    <linearGradient id="figG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1f2b1e"/>
+      <stop offset="100%" stop-color="#0d120d"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="720" height="1280" fill="url(#sky)"/>
+  <circle cx="560" cy="180" r="70" fill="url(#moonG)" opacity="0.9"/>
+  <circle cx="560" cy="180" r="34" fill="#e9eddb"/>
+
+  <!-- fireflies -->
+  <circle cx="120" cy="300" r="3" fill="#d7e8a8" opacity="0.8"/>
+  <circle cx="200" cy="420" r="2.4" fill="#d7e8a8" opacity="0.5"/>
+  <circle cx="90" cy="560" r="2.8" fill="#d7e8a8" opacity="0.7"/>
+  <circle cx="620" cy="520" r="2.4" fill="#d7e8a8" opacity="0.6"/>
+
+  <!-- distant foliage silhouette -->
+  <path d="M0,900 Q100,840 180,900 Q260,950 360,890 Q460,830 540,900 Q640,950 720,890 L720,1280 L0,1280 Z" fill="#0d120d"/>
+  <path d="M0,960 Q120,910 240,960 Q380,1010 500,950 Q620,900 720,960 L720,1280 L0,1280 Z" fill="#121712"/>
+
+  <!-- bench + seated figure with laptop glow -->
+  <rect x="230" y="1040" width="260" height="14" rx="6" fill="#2a3326"/>
+  <rect x="250" y="1054" width="16" height="60" fill="#2a3326"/>
+  <rect x="440" y="1054" width="16" height="60" fill="#2a3326"/>
+
+  <path d="M300,1040 C296,980 306,940 340,930 C374,940 384,980 380,1040 Z" fill="url(#figG)"/>
+  <circle cx="340" cy="905" r="26" fill="url(#figG)"/>
+
+  <!-- laptop -->
+  <g transform="translate(300,995)">
+    <path d="M0,30 L80,30 L86,44 L-6,44 Z" fill="#1a2218" stroke="#3a4d3a" stroke-width="1"/>
+    <rect x="6" y="-24" width="68" height="54" rx="2" fill="#1a2218" stroke="#3a4d3a" stroke-width="1"/>
+    <rect x="10" y="-20" width="60" height="46" rx="1" fill="url(#screenG)" opacity="0.9"/>
+  </g>
+
+  <!-- foreground leaf frame corners -->
+  <path d="M0,1280 C40,1180 40,1120 10,1060 C60,1090 80,1150 60,1280 Z" fill="#182015"/>
+  <path d="M720,1280 C680,1170 690,1100 720,1040 C670,1080 650,1160 660,1280 Z" fill="#182015"/>
+  <path d="M0,0 C60,40 70,90 40,140 C10,100 -10,50 0,0 Z" fill="#0d120d" opacity="0.85"/>
+
+  <rect x="0" y="0" width="720" height="1280" fill="none" stroke="#2e3d2e" stroke-width="2"/>
+</svg>
