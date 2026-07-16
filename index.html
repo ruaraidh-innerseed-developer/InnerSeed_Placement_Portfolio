@@ -202,8 +202,10 @@ h1 em{ font-style:italic; color:var(--moss); }
   background:none; border:none; cursor:pointer; color:inherit; font:inherit;
   display:flex; flex-direction:column; align-items:center; gap:10px;
   padding:6px 4px 0; position:relative;
-  transition:filter .4s;
+  opacity:0; transform:translateY(26px) scale(.93);
+  transition:filter .4s, opacity .6s cubic-bezier(.2,.8,.25,1), transform .6s cubic-bezier(.2,.8,.25,1);
 }
+.plant.in{ opacity:1; transform:none; }
 .plant::after{ /* grounding shadow — the "embedded" cue */
   content:""; position:absolute; left:50%; bottom:-4px; width:64%; height:12px;
   transform:translateX(-50%);
@@ -353,7 +355,7 @@ footer{
   .moon, .firefly, .plant svg{ animation:none; }
   .veil, .room, .plant, .btn{ transition:none; }
   .firefly{ opacity:.4; }
-  .reveal{ opacity:1!important; transform:none!important; transition:none!important; }
+  .reveal, .plant{ opacity:1!important; transform:none!important; transition:none!important; }
 }
 @media (max-width:600px){
   .moon{ right:-30px; top:30px; width:64px; height:64px; }
@@ -987,6 +989,25 @@ if('IntersectionObserver' in window){
   revealItems.forEach(item => io.observe(item));
 } else {
   revealItems.forEach(item => item.classList.add('in'));
+}
+
+/* stagger the plants in, one after another, as each row comes into view */
+const plantRows = document.querySelectorAll('.row');
+if('IntersectionObserver' in window){
+  const rowIo = new IntersectionObserver((entries, obs) => {
+    entries.forEach(e => {
+      if(!e.isIntersecting) return;
+      const plants = e.target.querySelectorAll('.plant');
+      plants.forEach((p, i) => {
+        p.style.transitionDelay = (i * 90) + 'ms';
+        p.classList.add('in');
+      });
+      obs.unobserve(e.target);
+    });
+  }, { threshold:0.15, rootMargin:'0px 0px -10% 0px' });
+  plantRows.forEach(row => rowIo.observe(row));
+} else {
+  document.querySelectorAll('.plant').forEach(p => p.classList.add('in'));
 }
 
 const navLinks = document.querySelectorAll('.sidenav a');
