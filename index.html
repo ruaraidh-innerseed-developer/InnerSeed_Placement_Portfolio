@@ -63,24 +63,8 @@ body{
 }
 @media (max-width:900px){ .gardener{ display:none; } }
 
-/* ---------- fireflies ---------- */
-.firefly{
-  position:fixed; width:4px; height:4px; border-radius:50%;
-  background:#d7e8a8; z-index:0; pointer-events:none;
-  box-shadow:0 0 8px 2px rgba(215,232,168,.55);
-  opacity:0;
-  animation:drift var(--t,26s) ease-in-out var(--d,0s) infinite;
-  left:var(--x); top:var(--y);
-}
-@keyframes drift{
-  0%   { transform:translate(0,0);        opacity:0;  }
-  8%   { opacity:.85; }
-  25%  { transform:translate(40px,-30px); opacity:.25; }
-  45%  { transform:translate(-25px,-60px);opacity:.9;  }
-  65%  { transform:translate(30px,-95px); opacity:.2;  }
-  85%  { transform:translate(-15px,-130px);opacity:.7; }
-  100% { transform:translate(10px,-160px);opacity:0;   }
-}
+/* ---------- night sky + life-force canvas (stars, fireflies, spores) ---------- */
+.garden-canvas{ position:fixed; inset:0; z-index:0; pointer-events:none; }
 
 /* ---------- ambient grain (subtle, gives the "shot on glass" depth) ---------- */
 .grain{
@@ -352,9 +336,9 @@ footer{
 }
 
 @media (prefers-reduced-motion: reduce){
-  .moon, .firefly, .plant svg{ animation:none; }
+  .moon, .plant svg{ animation:none; }
   .veil, .room, .plant, .btn{ transition:none; }
-  .firefly{ opacity:.4; }
+  .garden-canvas{ display:none; }
   .reveal, .plant{ opacity:1!important; transform:none!important; transition:none!important; }
 }
 @media (max-width:600px){
@@ -414,13 +398,9 @@ footer{
 </svg>
 
 <div class="grain" aria-hidden="true"></div>
+<canvas class="garden-canvas" id="gardenCanvas" aria-hidden="true"></canvas>
 <div class="moon" aria-hidden="true"></div>
 <img class="gardener" src="assets/ruaraidh-night-garden.png" alt="" aria-hidden="true">
-<div class="firefly" style="--x:18%; --y:70%; --t:24s; --d:0s"  aria-hidden="true"></div>
-<div class="firefly" style="--x:64%; --y:78%; --t:31s; --d:6s"  aria-hidden="true"></div>
-<div class="firefly" style="--x:42%; --y:64%; --t:27s; --d:12s" aria-hidden="true"></div>
-<div class="firefly" style="--x:82%; --y:72%; --t:35s; --d:3s"  aria-hidden="true"></div>
-<div class="firefly" style="--x:30%; --y:84%; --t:29s; --d:17s" aria-hidden="true"></div>
 
 <nav class="sidenav" aria-label="Section path">
   <a href="#root" data-label="Root" class="active"></a>
@@ -977,6 +957,106 @@ document.addEventListener('keydown', e => {
   if(e.key === 'ArrowLeft') step(-1);
   if(e.key === 'ArrowRight') step(1);
 });
+
+/* ------------------------------------------------------------------
+   NIGHT SKY — twinkling stars + small life-force motes rising from
+   the beds, like fireflies and drifting spores. Plain 2D canvas, no
+   WebGL. Skips the animation loop (draws one still frame) under
+   prefers-reduced-motion.
+------------------------------------------------------------------- */
+(function(){
+  const canvas = document.getElementById('gardenCanvas');
+  if(!canvas || !canvas.getContext) return;
+  const ctx = canvas.getContext('2d');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let W = 0, H = 0;
+  function resize(){
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const STAR_COUNT = 80;
+  const stars = Array.from({ length: STAR_COUNT }, () => ({
+    x: Math.random() * W,
+    y: Math.random() * H,
+    r: Math.random() * 1.1 + 0.3,
+    base: Math.random() * 0.35 + 0.12,
+    speed: Math.random() * 0.02 + 0.006,
+    phase: Math.random() * Math.PI * 2
+  }));
+
+  const MOTE_PALETTE = ['215,232,168', '200,217,190', '243,226,176'];
+  function spawnMote(fromBottom){
+    return {
+      x: Math.random() * W,
+      y: fromBottom ? H + Math.random() * 60 : Math.random() * H,
+      r: Math.random() * 1.6 + 1,
+      color: MOTE_PALETTE[Math.floor(Math.random() * MOTE_PALETTE.length)],
+      vy: -(Math.random() * 0.22 + 0.05),
+      wobble: Math.random() * Math.PI * 2,
+      wobbleSpeed: Math.random() * 0.018 + 0.008,
+      wobbleAmp: Math.random() * 0.4 + 0.15,
+      life: 0,
+      maxLife: Math.random() * 500 + 400,
+      base: Math.random() * 0.5 + 0.35
+    };
+  }
+  const MOTE_COUNT = 28;
+  const motes = Array.from({ length: MOTE_COUNT }, () => spawnMote(false));
+
+  let t = 0;
+  function paint(){
+    ctx.clearRect(0, 0, W, H);
+
+    for(const s of stars){
+      const a = s.base + Math.sin(t * s.speed + s.phase) * 0.16;
+      ctx.beginPath();
+      ctx.fillStyle = `rgba(233,237,219,${Math.max(0, a)})`;
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    for(let i = 0; i < motes.length; i++){
+      const m = motes[i];
+      m.life++;
+      m.wobble += m.wobbleSpeed;
+      m.x += Math.sin(m.wobble) * m.wobbleAmp;
+      m.y += m.vy;
+      const lr = m.life / m.maxLife;
+      const fade = lr < 0.12 ? lr / 0.12 : lr > 0.85 ? (1 - lr) / 0.15 : 1;
+      const a = m.base * Math.max(0, fade);
+
+      const glow = ctx.createRadialGradient(m.x, m.y, 0, m.x, m.y, m.r * 5);
+      glow.addColorStop(0, `rgba(${m.color},${a})`);
+      glow.addColorStop(1, `rgba(${m.color},0)`);
+      ctx.fillStyle = glow;
+      ctx.beginPath();
+      ctx.arc(m.x, m.y, m.r * 5, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = `rgba(${m.color},${Math.min(1, a * 1.9)})`;
+      ctx.beginPath();
+      ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
+      ctx.fill();
+
+      if(m.life > m.maxLife || m.y < -30 || m.x < -30 || m.x > W + 30){
+        motes[i] = spawnMote(true);
+      }
+    }
+
+    t++;
+    if(!reduceMotion) requestAnimationFrame(paint);
+  }
+  paint();
+})();
 
 /* ------------------------------------------------------------------
    SCROLL: reveal-on-enter + side-nav active state
