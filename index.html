@@ -834,11 +834,16 @@ const DOCS = {
   },
   sales: {
     eyebrow:"Content Integration Strategy · Part Three · Flagship",
-    title:"Sales Development Process Manual", em:"The Trellis, Part Three",
-    date:"2026 · agreed with Jeroen, 27 June",
-    summary:["Agreed with Jeroen as Phase 2's flagship deliverable: the manual that turns marketing attention into a subscriber, step by step. It picks up exactly where the content framework leaves off — a qualified visitor arriving at the app — and specifies what happens next: which in-app moment does the convincing, what a follow-up sequence says and when, and how a lead is qualified, handed off and measured, so growth work has a repeatable process behind it rather than one-off campaigns."],
-    toc:["Lead qualification criteria, defined","The conversion path from content to subscription","Where D-43 (Spotify) and D-48 (Share/Save) do the selling","Handoff points between marketing and product","Templates: outreach, follow-up, re-engagement"],
-    href:"docs/strategy-03-sales-process-manual.html", ready:false
+    title:"The Flagship Content Integration System", em:"The Trellis, Part Three",
+    date:"Working draft · v5 · 16 July 2026",
+    summary:[
+      "The technical schematic underneath Part Three: the actual machine that turns raw material from two cities — Jeroen in Enschede, Ruaraidh building awareness in Edinburgh from zero while training as a breathwork coach — into content, and eventually into delivery. Five instruments (Claude, Higgsfield, Postiz, MailerLite, the website and Plausible) are profiled individually: what each takes in, what it hands back, and the real API and payload shape passed between them.",
+      "Those five are then mapped as one backbone, input to learning loop, with a shared message bank so two markets stay one brand. Three concrete levels of automation depth are specified without pretending the build choice is already made, and a human approval gate is treated as a real pause in the code — not a policy written down and hoped for."
+    ],
+    toc:["Two cities, one Stack — the starting point","The ideation layer — six renewable sources of what to post","Instrument profiles — Claude, Higgsfield, Postiz, MailerLite, Website + Plausible","The backbone — the whole system mapped end to end","What Claude needs to make this run","Entry points — where raw material enters, and why","Failsafe — where this could break, and what stops it","Automation depth — three levels, a real human gate at every one","Discard log — considered, not adopted"],
+    href:"docs/strategy-03-sales-process-manual.html",
+    pdf:"docs/strategy-03-sales-process-manual.pdf",
+    ready:true
   },
   editorial: {
     eyebrow:"Content Integration Strategy · Part Four",
@@ -923,11 +928,11 @@ function show(key){
   const toc = el('room-toc'); toc.innerHTML = '';
   d.toc.forEach(t => { const li = document.createElement('li'); li.textContent = t; toc.appendChild(li); });
   const read = el('room-read'), dl = el('room-dl');
-  read.href = d.href; dl.href = d.href;
+  read.href = d.href; dl.href = d.pdf || d.href;
   read.setAttribute('aria-disabled', d.ready ? 'false' : 'true');
   dl.setAttribute('aria-disabled',  d.ready ? 'false' : 'true');
   read.textContent = d.ready ? 'Read the full document' : 'Filed in season';
-  dl.textContent = d.ready ? 'Take a hard copy' : 'In season soon';
+  dl.textContent = d.ready ? (d.pdf ? 'Download PDF' : 'Take a hard copy') : 'In season soon';
 }
 
 function open(key, trigger){

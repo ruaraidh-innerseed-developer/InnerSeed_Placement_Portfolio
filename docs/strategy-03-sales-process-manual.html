@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Flagship Content Integration System — InnerSeed Garden</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#f0e8de;--card:#faf7f2;--ink:#1c2b1c;--sage:#8a9a80;--olive:#3d5230;--live:#3ea85a;--rule:#ddd4c8;
+    --input-f:#e3ebf5;--input-s:#5f7fa8;--cis-f:#e8ede0;--cis-s:#3d5230;--bank-f:#f6eddd;--bank-s:#a67424;
+    --output-f:#ede0c8;--output-s:#8a6329;--channel-f:#f5e8e3;--channel-s:#a8674a;--loop-f:#eeedfe;--loop-s:#5f57b8;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.65;padding:56px 24px 80px;}
+  .page{max-width:900px;margin:0 auto;}
+  h1,h2,h3,h4{font-family:'DM Serif Display',serif;font-weight:400;}
+  h1{font-size:2.5rem;line-height:1.15;margin-bottom:10px;}
+  h2{font-size:1.55rem;margin-bottom:14px;}
+  h3{font-size:1.15rem;margin-bottom:8px;color:var(--olive);}
+  h4{font-size:1rem;margin-bottom:4px;color:var(--ink);}
+  .eyebrow{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sage);font-weight:700;margin-bottom:10px;}
+  .meta{color:var(--sage);font-size:.9rem;margin-bottom:6px;display:flex;gap:28px;flex-wrap:wrap;}
+  .meta strong{color:var(--olive);}
+  .header{padding-bottom:32px;border-bottom:1px solid var(--rule);margin-bottom:40px;}
+  .header p.standfirst{margin-top:18px;max-width:700px;}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:30px 34px;margin-bottom:26px;}
+  .card p{margin-bottom:12px;} .card p:last-child{margin-bottom:0;}
+  ul,ol{margin:0 0 12px 22px;} li{margin-bottom:8px;} li:last-child{margin-bottom:0;}
+  .footer{margin-top:44px;padding-top:24px;border-top:1px solid var(--rule);color:var(--sage);font-size:.88rem;text-align:center;}
+  strong{font-weight:700;} em{font-style:italic;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;}
+  @media(max-width:640px){.two-col{grid-template-columns:1fr;}}
+  code{background:rgba(61,82,48,.08);border-radius:4px;padding:1px 6px;font-size:.85em;color:var(--olive);}
+  .index{display:flex;flex-wrap:wrap;gap:8px 10px;margin-top:18px;}
+  .index a{font-size:.75rem;letter-spacing:.04em;color:var(--olive);text-decoration:none;border:1px solid var(--rule);border-radius:20px;padding:5px 14px;background:var(--card);}
+  .city{display:inline-block;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;padding:3px 11px;border-radius:20px;margin-right:6px;}
+  .city-nl{background:#e3ebf5;color:#2c4d7a;border:1px solid #7f9fc7;}
+  .city-uk{background:#f5e8e3;color:#8a4a2c;border:1px solid #c78f6f;}
+  .instrument-profile{background:var(--card);border:1px solid var(--rule);border-radius:16px;padding:32px 34px;margin-bottom:26px;}
+  .inst-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:10px 14px;margin-bottom:6px;}
+  .inst-head .name{font-family:'DM Serif Display',serif;font-size:1.7rem;color:var(--ink);}
+  .seat{display:inline-block;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--olive);background:rgba(61,82,48,.08);border:1px solid var(--rule);border-radius:20px;padding:3px 13px;font-weight:700;}
+  .chip{display:inline-block;font-size:.65rem;letter-spacing:.06em;text-transform:uppercase;padding:3px 11px;border-radius:20px;font-weight:700;}
+  .pc-live{background:#e4f0e4;color:#2c7a44;border:1px solid #3ea85a;}
+  .pc-amber{background:#f5ecd8;color:#8a6414;border:1px solid #b98a2e;}
+  .spec-label{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sage);font-weight:700;margin-bottom:6px;}
+  .suitability-block{margin:14px 0 20px;} .suitability-block p{font-size:1rem;color:#3f4d3a;margin-bottom:0;}
+  .spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 28px;margin-bottom:20px;}
+  @media(max-width:640px){.spec-grid{grid-template-columns:1fr;}}
+  .spec-block{background:var(--bg);border:1px solid var(--rule);border-radius:10px;padding:16px 18px;margin-top:14px;}
+  .spec-block p{font-size:.92rem;color:#3f4d3a;margin-bottom:0;}
+  .interactions{margin-top:16px;background:var(--bg);border:1px solid var(--rule);border-radius:10px;padding:16px 18px;}
+  .interactions .spec-label{color:var(--olive);}
+  .interactions p{font-size:.92rem;color:#3f4d3a;margin-bottom:10px;} .interactions p:last-child{margin-bottom:0;}
+  .payload{background:#1c2b1c;color:#c8d9be;border-radius:8px;padding:14px 16px;margin-top:12px;font-family:ui-monospace,'SF Mono',Consolas,monospace;font-size:.78rem;line-height:1.55;overflow-x:auto;white-space:pre;}
+  .payload .k{color:#9fd6a8;} .payload .s{color:#e8d9a0;} .payload .c{color:#7a8a72;}
+  .example{margin-top:18px;background:#e4f0e4;border:1px solid #3ea85a;border-radius:12px;padding:20px 24px;}
+  .example-tag{display:flex;align-items:center;gap:10px;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:#2c7a44;font-weight:700;margin-bottom:8px;}
+  .example p{font-size:.93rem;color:#2f4a35;margin-bottom:10px;line-height:1.75;} .example p:last-child{margin-bottom:0;}
+  .entry-table{width:100%;border-collapse:collapse;margin-top:8px;}
+  .entry-table th{text-align:left;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);padding:0 14px 10px 0;border-bottom:1px solid var(--rule);font-weight:700;}
+  .entry-table td{padding:14px 14px 14px 0;border-bottom:1px solid var(--rule);font-size:.92rem;color:#3f4d3a;vertical-align:top;}
+  .entry-table tr:last-child td{border-bottom:none;}
+  .entry-table td.src{color:var(--ink);font-weight:700;white-space:nowrap;}
+  .req{border-top:1px solid var(--rule);padding:16px 0;} .req:first-of-type{border-top:none;padding-top:4px;}
+  .req h4{margin-bottom:5px;} .req p{font-size:.94rem;color:#3f4d3a;margin-bottom:0;}
+  .fail-item{margin-bottom:16px;} .fail-item:last-child{margin-bottom:0;}
+  .fail-item .risk{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:#a34a3a;font-weight:700;margin-bottom:3px;}
+  .fail-item p{font-size:.92rem;color:#3f4d3a;}
+  .open-box{border-left:3px solid #b98a2e;background:#f5ecd8;padding:16px 20px;border-radius:0 10px 10px 0;margin-top:10px;}
+  .open-box p{color:#5c4a1e;font-size:.94rem;margin-bottom:0;} .open-box p + p{margin-top:10px;}
+  .idea-card{background:var(--bg);border:1px solid var(--rule);border-radius:10px;padding:18px 20px;}
+  .idea-card h4{color:var(--olive);margin-bottom:6px;} .idea-card p{font-size:.9rem;color:#3f4d3a;margin-bottom:0;}
+  .idea-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;}
+  @media(max-width:640px){.idea-grid{grid-template-columns:1fr;}}
+  .discard{border-left:3px solid var(--sage);background:rgba(138,154,128,.08);padding:14px 20px;border-radius:0 10px 10px 0;margin-top:14px;}
+  .discard h4{color:var(--olive);margin-bottom:4px;}
+  .discard p{color:#4d5a45;font-size:.9rem;margin-bottom:0;}
+  .cc-note{background:#1c2b1c;color:#f0e8de;border-radius:14px;padding:28px 32px;margin-bottom:26px;}
+  .cc-note .eyebrow{color:#8aab7e;} .cc-note h2{color:#f0e8de;} .cc-note p{color:#c8d9be;margin-bottom:12px;font-size:.95rem;}
+  .cc-note pre{background:#121712;border:1px solid #3d5230;border-radius:8px;padding:16px 18px;overflow-x:auto;font-size:.78rem;line-height:1.6;color:#c8d9be;margin:10px 0 16px;font-family:'DM Sans',monospace;}
+  .cc-note code{background:none;color:#e8f0e0;padding:0;}
+
+  /* backbone (merged section) */
+  .glossary{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:26px 30px;margin-bottom:26px;}
+  .glossary dl{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin-top:10px;}
+  .glossary dt{font-weight:700;color:var(--olive);white-space:nowrap;}
+  .glossary dd{color:#3f4d3a;}
+  .legend-row{display:flex;flex-wrap:wrap;gap:10px 18px;margin-bottom:24px;}
+  .legend-row .sw{display:flex;align-items:center;gap:7px;font-size:.82rem;color:#3f4d3a;}
+  .legend-row .dot{width:12px;height:12px;border-radius:4px;display:inline-block;}
+  .flow{display:flex;flex-direction:column;align-items:center;}
+  .stage{width:100%;background:var(--card);border:1px solid var(--rule);border-radius:16px;padding:22px 26px;}
+  .stage-num{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sage);font-weight:700;margin-bottom:4px;}
+  .stage-title{font-family:'DM Serif Display',serif;font-size:1.25rem;margin-bottom:14px;}
+  .item-row{display:flex;flex-wrap:wrap;gap:12px;}
+  .item{flex:1 1 150px;border-radius:10px;padding:12px 16px;font-size:.88rem;font-weight:700;text-align:center;border-width:1px;border-style:solid;}
+  .item .sub{display:block;font-weight:400;font-size:.76rem;margin-top:3px;opacity:.85;}
+  .cat-input{background:var(--input-f);border-color:var(--input-s);color:var(--input-s);}
+  .cat-cis{background:var(--cis-f);border-color:var(--cis-s);color:var(--cis-s);}
+  .cat-bank{background:var(--bank-f);border-color:var(--bank-s);color:var(--bank-s);}
+  .cat-output{background:var(--output-f);border-color:var(--output-s);color:var(--output-s);}
+  .cat-channel{background:var(--channel-f);border-color:var(--channel-s);color:var(--channel-s);}
+  .cat-loop{background:var(--loop-f);border-color:var(--loop-s);color:var(--loop-s);}
+  .pair{display:flex;align-items:stretch;gap:16px;}
+  .pair .item{flex:1;}
+  .linklabel{align-self:center;font-size:.78rem;color:var(--sage);white-space:nowrap;}
+  .down{display:flex;flex-direction:column;align-items:center;padding:8px 0;color:var(--sage);}
+  .gate{margin-top:16px;padding-top:16px;border-top:1px dashed var(--rule);display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;}
+  .gate .diamond{background:var(--cis-f);border:1px solid var(--cis-s);color:var(--cis-s);padding:10px 22px;border-radius:24px;font-size:.85rem;font-weight:700;}
+  .gate .branch{font-size:.78rem;color:#3f4d3a;} .gate .branch strong{color:var(--olive);}
+  .loopback{margin-top:6px;background:var(--loop-f);border:1px dashed var(--loop-s);border-radius:10px;padding:12px 18px;font-size:.85rem;color:var(--loop-s);text-align:center;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="eyebrow">InnerSeed Garden · Content Integration Strategy · Technical Schematic</div>
+    <h1>The Flagship Content Integration System</h1>
+    <div class="meta">
+      <span>Working draft · v5 · <strong>16 July 2026</strong></span>
+      <span>Sits inside <strong>Part Three — Sales Development Process Manual</strong></span>
+      <span>Status · <strong>InnerSeed Developers · Confidential</strong></span>
+    </div>
+    <p class="standfirst">Scope: extending an existing Enschede breathwork practice to the people who'd benefit from it, in Edinburgh and Enschede, through the app. This document is the machine that does the marketing, the content, and — as Ruaraidh trains as a coach — the delivery too: what each instrument takes in, what it hands back, how the five of them pass work between each other, and, from this version on, what the backbone of the whole thing actually looks like end to end.</p>
+    <div class="index">
+      <a href="#starting-point">Starting point</a><a href="#ideation">Ideation layer</a>
+      <a href="#claude">Claude</a><a href="#higgsfield">Higgsfield</a><a href="#postiz">Postiz</a>
+      <a href="#mailerlite">MailerLite</a><a href="#website">Website + Plausible</a>
+      <a href="#backbone">The backbone</a>
+      <a href="#requirements">What Claude needs</a><a href="#entry-points">Entry points</a><a href="#failsafe">Failsafe</a>
+      <a href="#automation">Automation depth</a><a href="#discard">Discard log</a>
+    </div>
+  </div>
+
+  <div class="card" id="starting-point">
+    <div class="eyebrow">Starting point</div>
+    <h2>Zero app awareness, two cities, one Stack</h2>
+    <p>This document treats the app's content system as starting from nothing — no content development system in place, no audience awareness of the app itself — regardless of any personal or social following either founder already has elsewhere. That following is real, but it is not app awareness, and this plan doesn't lean on it.</p>
+    <ul>
+      <li><span class="city city-nl">NL · Enschede</span> <strong>Jeroen</strong> — building app awareness in his home city, extending the breathwork practice already running there.</li>
+      <li><span class="city city-uk">UK · Edinburgh</span> <strong>Ruaraidh</strong> — building app awareness in Edinburgh from zero, training as a breathwork coach alongside the marketing work, so this route grows into actual local delivery, not just promotion.</li>
+    </ul>
+    <p>Two local, B2C-first motions, run in parallel on one shared Stack, the goal in both places the same: reach people who'd genuinely benefit from this, make them aware the app exists, and move them toward it — directly for Breathers, and as the visible proof that makes the B2B2C and App-Shell conversations credible later.</p>
+  </div>
+
+  <div class="card" id="ideation">
+    <div class="eyebrow">Ideation layer</div>
+    <h2>Where ongoing content ideas come from</h2>
+    <p>The Message Bank carries the brand's core voice — the throughline every piece should still sound like. It was never going to survive as the only source of what to post this week. The system needs a separate, renewable ideation layer feeding the Insight hat every cycle.</p>
+    <div class="idea-grid">
+      <div class="idea-card"><h4>App feature stories</h4><p>D-43 (Spotify import) is the first. Every feature that ships from here is another, ready-made and true.</p></div>
+      <div class="idea-card"><h4>Founder and coach practice, behind the scenes</h4><p>Jeroen's own ongoing practice; Ruaraidh's own coach training and his learning curve building this from zero in Edinburgh. Genuine because neither is performed.</p></div>
+      <div class="idea-card"><h4>Local taster sessions</h4><p>Small in-person sessions either founder runs to seed real word of mouth — content and community-building in one act.</p></div>
+      <div class="idea-card"><h4>Category &amp; seasonal hooks</h4><p>The recurring wellness-calendar moments the category leans on — a scaffold, never the whole plan.</p></div>
+      <div class="idea-card"><h4>Early user stories</h4><p>Empty today by definition, but the first real Breather stories become a source the moment they exist.</p></div>
+      <div class="idea-card"><h4>Message bank threads</h4><p>The core voice running through several of the above, not a seventh source competing with them.</p></div>
+    </div>
+  </div>
+
+  <div class="instrument-profile" id="claude">
+    <div class="inst-head"><span class="name">Claude</span><span class="seat">Operating intelligence</span><span class="chip pc-live">In place</span></div>
+    <div class="suitability-block">
+      <div class="spec-label">Suitability profile</div>
+      <p>The only seat touching every stage of the loop, and the only thing standing between "two markets, one brand" and "two markets, two half-related brands." Mechanically, it runs as an agent loop: Claude reasons about what's needed, calls the relevant tool, receives the result, and continues — the same pattern whether that tool is a Higgsfield generation, a Postiz post, or a MailerLite trigger.</p>
+    </div>
+    <div class="spec-grid">
+      <div class="spec-block"><div class="spec-label">Technical input</div><p>Raw material filed in Drive, tagged to its city; standing project context; direct uploads at session start; the ideation sources above.</p></div>
+      <div class="spec-block"><div class="spec-label">Technical output</div><p>Per pass: insight notes; a strategy plan (audience, route, format, channel, city); finished copy plus a structured visual brief object; a quality-checked draft with a pass/hold note.</p></div>
+    </div>
+    <div class="interactions">
+      <div class="spec-label">Interactions — the brief object passed to Higgsfield</div>
+      <div class="payload">{
+  <span class="k">"city"</span>: <span class="s">"edinburgh"</span>, <span class="c">// or "enschede"</span>
+  <span class="k">"route"</span>: <span class="s">"b2c"</span>, <span class="c">// b2c | b2b2c | app_shell</span>
+  <span class="k">"stage"</span>: <span class="s">"awareness"</span>,
+  <span class="k">"format"</span>: <span class="s">"short_video_9x16"</span>,
+  <span class="k">"channel"</span>: <span class="s">"instagram"</span>,
+  <span class="k">"copy"</span>: <span class="s">"..."</span>,
+  <span class="k">"visual_brief"</span>: { <span class="k">"subject"</span>: <span class="s">"..."</span>, <span class="k">"mood"</span>: <span class="s">"..."</span>, <span class="k">"reference_asset"</span>: <span class="s">"drive://..."</span> },
+  <span class="k">"quality_status"</span>: <span class="s">"pending"</span>
+}</div>
+      <p style="margin-top:12px;">Insight and Strategy run per city, never blended. Production and Quality check the object above before it moves. Approved objects route to Higgsfield, then Postiz or MailerLite, each still carrying <code>city</code> and <code>route</code>.</p>
+    </div>
+    <div class="example">
+      <div class="example-tag"><span class="city city-uk">UK · Edinburgh</span> Contextual example</div>
+      <p><strong>Input:</strong> Ruaraidh films a phone clip after a session from his own coach training.</p>
+      <p><strong>Insight:</strong> flags it as a build-from-zero, learning-in-public story — Enschede has no equivalent left to draw on at this stage.</p>
+      <p><strong>Strategy:</strong> B2C awareness, short video, Instagram + a local Edinburgh wellness group, English.</p>
+      <p><strong>Production:</strong> copy in Ruaraidh's own voice, no overstated reach or credentials.</p>
+      <p><strong>Quality:</strong> checks the honesty of the zero-start framing holds.</p>
+    </div>
+  </div>
+
+  <div class="instrument-profile" id="higgsfield">
+    <div class="inst-head"><span class="name">Higgsfield</span><span class="seat">Visual &amp; video production</span><span class="chip pc-live">In place</span></div>
+    <div class="suitability-block">
+      <div class="spec-label">Suitability profile</div>
+      <p>Hosted, multi-model, no local setup — concrete for two founders in two countries with no shared studio. Developer access runs through <code>cloud.higgsfield.ai</code>: REST endpoints plus an official SDK.</p>
+    </div>
+    <div class="spec-grid">
+      <div class="spec-block"><div class="spec-label">Technical input</div><p>The <code>visual_brief</code> object from Claude, plus any real reference asset it points to.</p></div>
+      <div class="spec-block"><div class="spec-label">Technical output</div><p>Generated video/image assets, light-mode native, sized for the destination channel.</p></div>
+    </div>
+    <div class="interactions">
+      <div class="spec-label">Interactions — generation is asynchronous</div>
+      <p><strong>1.</strong> Claude submits the brief as a generation request and receives a job reference back immediately, not a finished asset.</p>
+      <p><strong>2.</strong> Claude (or the orchestration script, if this ever runs outside a chat session) polls the job's status on an interval until it reports complete.</p>
+      <p><strong>3.</strong> The completed asset's URL returns to Claude's Quality hat before either founder sees it. Nothing publishes straight from Higgsfield.</p>
+      <p><strong>Open technical note:</strong> unlike Postiz, no native MCP server is confirmed for Higgsfield — this handoff is a scripted API call today, not a chat-native tool call, until that changes.</p>
+    </div>
+    <div class="example">
+      <div class="example-tag">Contextual example — either city</div>
+      <p>A real ten-second screen recording of the Spotify import (D-43) as the reference asset, paired with a brief calling for "the import treated as a small ceremony, not a settings toggle." Output: a 15-second vertical clip, on-brand regardless of which city's operator requested it.</p>
+    </div>
+  </div>
+
+  <div class="instrument-profile" id="postiz">
+    <div class="inst-head"><span class="name">Postiz</span><span class="seat">Social scheduling &amp; distribution</span><span class="chip pc-amber">Self-hosting pending Jeroen's confirmation</span></div>
+    <div class="suitability-block">
+      <div class="spec-label">Suitability profile</div>
+      <p>Open-source, self-hostable, continuing the owned-over-rented pattern Plausible set. Ships its own CLI and MCP server built specifically so tools like Claude can draft and schedule directly — the single biggest lever for closing "Claude wrote something" to "it went out."</p>
+    </div>
+    <div class="spec-grid">
+      <div class="spec-block"><div class="spec-label">Technical input</div><p>Approved copy, approved asset, target integration ID, city tag, scheduling time — only post-approval.</p></div>
+      <div class="spec-block"><div class="spec-label">Technical output</div><p>Scheduled/published posts; a post ID per post; engagement numbers, readable per city.</p></div>
+    </div>
+    <div class="interactions">
+      <div class="spec-label">Interactions — actual call shape</div>
+      <div class="payload">POST /public/v1/posts
+{
+  <span class="k">"integration_id"</span>: <span class="s">"ig_innerseed_main"</span>,
+  <span class="k">"type"</span>: <span class="s">"schedule"</span>,
+  <span class="k">"content"</span>: <span class="s">"{{copy}}"</span>,
+  <span class="k">"media"</span>: [<span class="s">"{{higgsfield_asset_url}}"</span>],
+  <span class="k">"scheduled_at"</span>: <span class="s">"2026-07-21T09:00:00+02:00"</span>,
+  <span class="k">"tag"</span>: <span class="s">"city:edinburgh,route:b2c"</span>
+}</div>
+      <p style="margin-top:12px;">Rate limit: 90 create-post calls/hour, self-hosted, configurable — schedule in weekly batches rather than under a deadline.</p>
+    </div>
+    <div class="example">
+      <div class="example-tag">Contextual example — both cities, one instance</div>
+      <p>An Edinburgh clip and an Enschede clip schedule separately through the same instance, each tagged, so next week's Insight pass reads two honest, separate answers.</p>
+    </div>
+  </div>
+
+  <div class="instrument-profile" id="mailerlite">
+    <div class="inst-head"><span class="name">MailerLite</span><span class="seat">Email &amp; owned audience</span><span class="chip pc-amber">Setup pending</span></div>
+    <div class="suitability-block">
+      <div class="spec-label">Suitability profile</div>
+      <p>The non-negotiable seat — no algorithm between brand and audience. Full API on the free tier, real automation depth. One audience, segmented by city and language.</p>
+    </div>
+    <div class="spec-grid">
+      <div class="spec-block"><div class="spec-label">Technical input</div><p>Approved copy per route/city; the segment; the trigger — new subscriber, inactivity, manual send.</p></div>
+      <div class="spec-block"><div class="spec-label">Technical output</div><p>Sent sequences/automations; opens, clicks, list growth, per segment.</p></div>
+    </div>
+    <div class="interactions">
+      <div class="spec-label">Interactions — call shape</div>
+      <div class="payload">POST /api/automations/{id}/trigger
+{
+  <span class="k">"subscriber"</span>: <span class="s">"{{email}}"</span>,
+  <span class="k">"segment"</span>: <span class="s">"edinburgh_breather"</span>,
+  <span class="k">"language"</span>: <span class="s">"en"</span>
+}</div>
+    </div>
+    <div class="example">
+      <div class="example-tag"><span class="city city-uk">UK · Edinburgh</span> Contextual example</div>
+      <p>A first Edinburgh sign-up lands in the <code>edinburgh_breather</code> segment and receives an English welcome in Ruaraidh's own voice — no assumed prior relationship to the app.</p>
+    </div>
+  </div>
+
+  <div class="instrument-profile" id="website">
+    <div class="inst-head"><span class="name">Website + Plausible</span><span class="seat">Owned publishing &amp; measurement</span><span class="chip pc-live">In place</span><span class="chip pc-amber">Plausible activation pending</span></div>
+    <div class="suitability-block">
+      <div class="spec-label">Suitability profile</div>
+      <p>The app's own codebase — no third-party publishing tool needed. Plausible answers Control the way the rest of the Stack answers Action: privacy-first, aggregate only, segmentable by locale.</p>
+    </div>
+    <div class="spec-grid">
+      <div class="spec-block"><div class="spec-label">Technical input</div><p>Long-form content from Claude, Dutch or English by market; continuous site traffic.</p></div>
+      <div class="spec-block"><div class="spec-label">Technical output</div><p>Published pages; pageviews, referrers, goal completions, segmentable by locale.</p></div>
+    </div>
+    <div class="example">
+      <div class="example-tag">Contextual example</div>
+      <p>An English article targeting Edinburgh search intent; a Dutch equivalent for Enschede. Plausible reports each apart — which one converts a visit into a session started.</p>
+    </div>
+  </div>
+
+  <!-- BACKBONE -->
+  <div class="card" id="backbone" style="padding:0;background:transparent;border:none;">
+    <div class="eyebrow" style="margin-left:2px;">The backbone</div>
+    <h2 style="margin-left:2px;">The whole system, end to end</h2>
+    <p style="margin:0 0 20px 2px;color:#3f4d3a;">Everything above in one map: where content enters, what happens to it, where it branches, where each tool sits, where it exits, and where measurement closes the loop.</p>
+
+    <div class="glossary">
+      <div class="eyebrow">What each part means</div>
+      <dl>
+        <dt>Inputs</dt><dd>The raw material coming from people or a database.</dd>
+        <dt>Content integration system</dt><dd>The central logic that decides what becomes what.</dd>
+        <dt>Message bank</dt><dd>The shared source of truth for voice, offer, proof, and story.</dd>
+        <dt>Outputs</dt><dd>The actual content products.</dd>
+        <dt>Channels</dt><dd>Where the content is published and used.</dd>
+        <dt>Learning loop</dt><dd>Performance data that improves the next round of content.</dd>
+      </dl>
+    </div>
+
+    <div class="legend-row">
+      <span class="sw"><span class="dot" style="background:var(--input-f);border:1px solid var(--input-s)"></span>Input</span>
+      <span class="sw"><span class="dot" style="background:var(--cis-f);border:1px solid var(--cis-s)"></span>Content integration system</span>
+      <span class="sw"><span class="dot" style="background:var(--bank-f);border:1px solid var(--bank-s)"></span>Message bank</span>
+      <span class="sw"><span class="dot" style="background:var(--output-f);border:1px solid var(--output-s)"></span>Output</span>
+      <span class="sw"><span class="dot" style="background:var(--channel-f);border:1px solid var(--channel-s)"></span>Channel</span>
+      <span class="sw"><span class="dot" style="background:var(--loop-f);border:1px solid var(--loop-s)"></span>Learning loop</span>
+    </div>
+
+    <div class="flow">
+      <div class="stage">
+        <div class="stage-num">01 · Inputs</div>
+        <div class="stage-title">Source material</div>
+        <div class="item-row">
+          <div class="item cat-input">Founders</div>
+          <div class="item cat-input">Coaches</div>
+          <div class="item cat-input">Users</div>
+          <div class="item cat-input">Database</div>
+        </div>
+      </div>
+      <div class="down"><svg width="20" height="34" viewBox="0 0 20 34"><path d="M10 0V26M2 20L10 30L18 20" stroke="#8a9a80" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+      <div class="stage">
+        <div class="stage-num">02 · Content integration system</div>
+        <div class="stage-title">Claude</div>
+        <div class="pair">
+          <div class="item cat-cis">Claude<span class="sub">Planning and conversion layer</span></div>
+          <div class="linklabel">↔ reads and updates</div>
+          <div class="item cat-bank">Message bank<span class="sub">Approved brand and sales messages</span></div>
+        </div>
+      </div>
+      <div class="down"><svg width="20" height="34" viewBox="0 0 20 34"><path d="M10 0V26M2 20L10 30L18 20" stroke="#8a9a80" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+      <div class="stage">
+        <div class="stage-num">03 · Outputs</div>
+        <div class="stage-title">Content products</div>
+        <div class="item-row">
+          <div class="item cat-output">Video brief<span class="sub">→ Higgsfield → Postiz</span></div>
+          <div class="item cat-output">Ad and social copy<span class="sub">→ Postiz</span></div>
+          <div class="item cat-output">Email copy<span class="sub">→ MailerLite</span></div>
+        </div>
+        <div class="gate">
+          <div class="item cat-output" style="flex:0 1 160px;">Higgsfield<span class="sub">Video creation</span></div>
+          <span style="color:var(--sage);">→</span>
+          <div class="diamond">Quality check</div>
+          <div class="branch"><strong>Pass</strong> → next stage &nbsp;·&nbsp; <strong>Hold</strong> → back to Claude</div>
+        </div>
+      </div>
+      <div class="down"><svg width="20" height="34" viewBox="0 0 20 34"><path d="M10 0V26M2 20L10 30L18 20" stroke="#8a9a80" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+      <div class="stage">
+        <div class="stage-num">04 · Channels</div>
+        <div class="stage-title">Distribution tools</div>
+        <div class="item-row">
+          <div class="item cat-channel">Postiz<span class="sub">Social — receives video and ad copy</span></div>
+          <div class="item cat-channel">MailerLite<span class="sub">Email — receives email copy</span></div>
+        </div>
+      </div>
+      <div class="down"><svg width="20" height="34" viewBox="0 0 20 34"><path d="M10 0V26M2 20L10 30L18 20" stroke="#8a9a80" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+      <div class="stage">
+        <div class="stage-title" style="margin-bottom:14px;">Where content lives</div>
+        <div class="item-row">
+          <div class="item cat-channel">Social distribution</div>
+          <div class="item cat-channel">Email distribution</div>
+        </div>
+        <div class="down" style="padding:10px 0;"><svg width="20" height="24" viewBox="0 0 20 24"><path d="M10 0V16M2 10L10 20L18 10" stroke="#8a9a80" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="pair">
+          <div class="item cat-channel">Website<span class="sub">Owned content hub</span></div>
+          <div class="item cat-channel">App<span class="sub">Product experience</span></div>
+        </div>
+      </div>
+      <div class="down"><svg width="20" height="34" viewBox="0 0 20 34"><path d="M10 0V26M2 20L10 30L18 20" stroke="#8a9a80" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+      <div class="stage">
+        <div class="stage-num">05 · Learning loop</div>
+        <div class="stage-title">Optimisation</div>
+        <div class="item-row">
+          <div class="item cat-loop">Plausible<span class="sub">Analytics and measurement</span></div>
+          <div class="item cat-loop">Learning loop<span class="sub">Optimisation based on results</span></div>
+        </div>
+        <div class="loopback">↻ returns to the message bank — every round improves the next</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="requirements">
+    <div class="eyebrow">What Claude needs to make this run</div>
+    <h2>Operating requirements, not caveats</h2>
+    <div class="req"><h4>1 · Standing context, kept current, for both cities</h4><p>The project space stays the working memory for Enschede and Edinburgh alike.</p></div>
+    <div class="req"><h4>2 · Direct tool connections where they genuinely exist</h4><p>Postiz's MCP server is the priority. Higgsfield's handoff stays a scripted API call until an MCP path is confirmed.</p></div>
+    <div class="req"><h4>3 · A written quality standard</h4><p>Brand-voice fit, local-flavour fit, factual accuracy against the live app, fidelity to the message bank, and the standing rule that nothing reads as AI-authored — applied every time.</p></div>
+    <div class="req"><h4>4 · Real material, continuously fed, from both places</h4><p>Footage, screenshots, transcripts, voice notes — the difference between content that sounds like the brand and content that sounds like anyone's.</p></div>
+    <div class="req"><h4>5 · A human-gate protocol, agreed in advance</h4><p>Work queues and waits if neither founder is available — nothing publishes on a timer alone.</p></div>
+  </div>
+
+  <div class="card" id="entry-points">
+    <div class="eyebrow">Openings</div>
+    <h2>Where raw material enters, and why there</h2>
+    <table class="entry-table">
+      <tr><th>Source</th><th>What enters</th><th>Why here</th><th>When</th></tr>
+      <tr><td class="src">Google Drive</td><td>Everything, tagged NL or UK on filing</td><td>What isn't filed doesn't exist to the system</td><td>Continuous</td></tr>
+      <tr><td class="src">Direct session upload</td><td>Footage, screenshots, transcripts</td><td>Insight needs fresh, city-tagged material before a cycle starts</td><td>Start of each session</td></tr>
+      <tr><td class="src">Voice notes</td><td>Message and strategy material</td><td>Some material is better spoken than written first</td><td>Whenever it happens</td></tr>
+      <tr><td class="src">Plausible &amp; channel analytics</td><td>Usage/engagement signal, per city</td><td>Insight needs separable numbers</td><td>Weekly</td></tr>
+      <tr><td class="src">App / local feedback</td><td>Direct comment from either city</td><td>Reveals a messaging gap faster than any dashboard</td><td>Ad hoc</td></tr>
+      <tr><td class="src">Planned taster sessions &amp; filming</td><td>New founder or coach footage, either city</td><td>Both need a growing library of real material</td><td>Scheduled per city</td></tr>
+    </table>
+  </div>
+
+  <div class="card" id="failsafe">
+    <div class="eyebrow">Failsafe</div>
+    <h2>Where this could break, and what stops it</h2>
+    <div class="two-col">
+      <div>
+        <div class="fail-item"><div class="risk">A tool disappears or changes terms</div><p>Every seat is a role, not a loyalty — reviewed as the business grows.</p></div>
+        <div class="fail-item"><div class="risk">Rate limits under pressure</div><p>Postiz's 90/hour cap: batch ahead, don't post under deadline.</p></div>
+        <div class="fail-item"><div class="risk">Quality drifts as volume grows</div><p>The Quality hat checks the standard every time.</p></div>
+      </div>
+      <div>
+        <div class="fail-item"><div class="risk">Two people, two cities, can't keep pace</div><p>The system queues rather than forces speed, in either city.</p></div>
+        <div class="fail-item"><div class="risk">Ideation quietly narrows to one source</div><p>Six sources named on purpose so the message bank doesn't become the only well.</p></div>
+        <div class="fail-item"><div class="risk">Automation outruns oversight</div><p>Publish stays human regardless of how much upstream is automated — see below.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="automation">
+    <div class="eyebrow">Automation depth</div>
+    <h2>How much of this actually runs itself</h2>
+    <p>This isn't a vague choice any more — it has a concrete technical shape, whichever level gets built.</p>
+    <p><strong>The mechanism, regardless of how far this goes:</strong> Claude runs as an agent loop — it reasons about what's needed, calls a tool (Higgsfield, Postiz, MailerLite), receives the result, and continues, the same pattern at every stage. The publish gate is an interrupt: execution actually pauses before distribution, the pending state is saved, and nothing resumes until a real approval comes back — not a polite suggestion to wait, an actual halt.</p>
+    <div class="open-box">
+      <p><strong>Level 1 — Claude in a session, tools connected (lowest build cost).</strong> Ruaraidh or Jeroen opens a session; Postiz is reachable directly via its MCP server; Higgsfield via a scripted call. This is close to what's already running.</p>
+      <p><strong>Level 2 — a lightweight script.</strong> A plain Python loop holding the message history, calling each tool's API directly, with the interrupt pattern implemented as a simple pending-approval flag in a database. Full control, but retries, auth, and error logging are all manual.</p>
+      <p><strong>Level 3 — a structured workflow tool (n8n or LangGraph).</strong> Built-in state persistence and a native interrupt/resume mechanism, at the cost of a steeper setup and, for n8n, a visual workflow to maintain instead of code.</p>
+      <p><strong>Which level, and who builds and maintains it, is Jeroen's call</strong> — it's his infrastructure to run day to day. What this document commits to regardless: the human gate is a real pause, not an assumption, at every level.</p>
+    </div>
+  </div>
+
+  <div class="card" id="discard">
+    <div class="eyebrow">Discard log</div>
+    <h2>Considered, not adopted</h2>
+    <div class="discard">
+      <h4>ComfyUI — a second, heavier visual pipeline</h4>
+      <p>Self-hosted GPU compute and hand-built node graphs, on top of Higgsfield rather than instead of it. Real capability for later — style transfer, upscaling — but adding it before Higgsfield's own handoff is even fully wired up is exactly the complexity the failsafe section warns against. Parked, not rejected.</p>
+    </div>
+    <div class="discard">
+      <h4>Sentry with autonomous error-triage</h4>
+      <p>A genuinely clever pattern — Claude reads its own stack trace and retries or rewrites automatically — but it's solving a reliability problem for infrastructure that doesn't exist yet, and it quietly assumes Slack, which isn't part of the Stack anywhere else. Revisit once there's a real pipeline running long enough to need it.</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    The Flagship Content Integration System · InnerSeed Garden · Content Integration Strategy · Part Three<br>
+    Root · Rise · Return · innerseed.garden · Confidential
+  </div>
+
+</div>
+</body>
+</html>
