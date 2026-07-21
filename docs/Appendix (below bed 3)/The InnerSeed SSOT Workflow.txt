@@ -1,0 +1,11 @@
+The InnerSeed SSOT Workflow:
+Step 1 — You take raw notes
+During any session, focus call, or testing period, you write your own notes in Google Drive. Raw, honest, however they come. These are your hard copy. They never disappear.
+Step 2 — You feed me the notes
+You paste or upload them here. I read them, flesh them out, structure them properly, and build them into the SSOT in the right format — findings, badges, sections, screenshots, everything.
+Step 3 — I display the full document
+Before anything is saved, you see the complete designed document rendered here. You review it, request changes, approve it.
+Step 4 — You download and file it
+Saved as SSOT_Week1_10June.html or whatever the date is, into the correct week folder in Drive.
+Step 5 — You test me
+At the start of a new session, you upload the saved file and ask me to rebuild or continue from it. If I can do it accurately, the system works. If not, we identify the gap and fix the workflow.

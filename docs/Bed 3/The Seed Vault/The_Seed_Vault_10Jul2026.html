@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>The Seed Vault — InnerSeed Garden</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --soil:#0a0d09;
+  --panel:#10140d;
+  --panel-raised:#141a10;
+  --hairline:#1d2417;
+  --text:#d8e0ce;
+  --muted:#73846c;
+  --faint:#475142;
+  --glow:#6fffb0;
+  --ember:#d9a857;
+  --dormant:#3c463a;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--soil);color:var(--text);font-family:'IBM Plex Sans',sans-serif;font-weight:300;font-size:16px;line-height:1.8;}
+.wrap{max-width:760px;margin:0 auto;padding:0 2.2rem 6rem;}
+
+/* ---- cover ---- */
+.cover{padding:5rem 0 4rem;position:relative;}
+.cover::after{content:"";position:absolute;left:50%;bottom:0;width:1px;height:3rem;background:linear-gradient(to bottom,var(--hairline),transparent);}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.28em;text-transform:uppercase;color:var(--faint);text-align:center;margin-bottom:2rem;}
+.eyebrow span{color:var(--ember);}
+h1.title{font-family:'Fraunces',serif;font-optical-sizing:auto;font-weight:500;font-size:clamp(42px,8vw,64px);text-align:center;letter-spacing:-0.01em;color:var(--text);line-height:1.05;margin-bottom:1.6rem;}
+.title em{font-style:italic;font-weight:300;color:var(--glow);}
+.cover-sub{font-size:15px;color:var(--muted);text-align:center;max-width:480px;margin:0 auto;line-height:1.9;}
+.cover-meta{display:flex;justify-content:center;margin-top:2.6rem;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.08em;color:var(--faint);text-transform:uppercase;}
+.cover-meta div{margin:0 1.2rem;}
+.cover-meta b{display:block;color:var(--muted);font-size:11px;letter-spacing:0.04em;margin-top:5px;font-family:'IBM Plex Sans',sans-serif;text-transform:none;}
+
+/* ---- intro / what this is ---- */
+.intro{padding:3.5rem 0 1rem;border-top:0.5px solid var(--hairline);}
+.intro h2{font-family:'Fraunces',serif;font-weight:500;font-size:22px;color:var(--text);margin-bottom:1.1rem;}
+.intro p{font-size:15px;color:var(--muted);margin-bottom:1rem;line-height:1.9;}
+.legend{display:flex;margin-top:1.6rem;flex-wrap:wrap;}
+.legend-item{display:flex;align-items:center;margin-right:1.6rem;margin-bottom:0.5rem;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-right:0.55rem;}
+.dot.dormant{background:var(--dormant);}
+.dot.germinating{background:var(--ember);box-shadow:0 0 8px var(--ember);}
+.dot.planted{background:var(--glow);box-shadow:0 0 10px var(--glow);}
+
+/* ---- the shaft / seed log ---- */
+.shaft{position:relative;margin-top:1rem;}
+.shaft::before{content:"";position:absolute;left:23px;top:6px;bottom:6px;width:1px;background:linear-gradient(to bottom,var(--hairline),var(--faint) 4%,var(--faint) 96%,var(--hairline));}
+.seed{position:relative;padding:3rem 0 3rem 64px;border-bottom:0.5px solid var(--hairline);}
+.seed:last-child{border-bottom:none;}
+.node{position:absolute;left:16px;top:3.1rem;width:15px;height:15px;border-radius:50%;border:1px solid var(--hairline);background:var(--soil);display:flex;align-items:center;justify-content:center;}
+.node::after{content:"";width:7px;height:7px;border-radius:50%;}
+.seed[data-stage="dormant"] .node::after{background:var(--dormant);}
+.seed[data-stage="germinating"] .node::after{background:var(--ember);animation:pulse 4s ease-in-out infinite;}
+.seed[data-stage="planted"] .node::after{background:var(--glow);box-shadow:0 0 8px var(--glow);}
+@keyframes pulse{0%,100%{opacity:0.55;box-shadow:0 0 0px var(--ember);}50%{opacity:1;box-shadow:0 0 9px var(--ember);}}
+.depth{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:var(--faint);text-transform:uppercase;margin-bottom:0.7rem;}
+.stage-tag{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.12em;text-transform:uppercase;padding:2px 9px;border-radius:3px;margin-left:0.6rem;}
+.stage-tag.dormant{color:var(--faint);border:1px solid var(--hairline);}
+.stage-tag.germinating{color:var(--ember);border:1px solid #4a3a22;}
+.stage-tag.planted{color:var(--glow);border:1px solid #1e4a35;}
+.seed h3{font-family:'Fraunces',serif;font-weight:500;font-size:23px;color:var(--text);margin-bottom:0.9rem;line-height:1.3;}
+.seed p{font-size:15px;color:var(--text);opacity:0.88;margin-bottom:0.9rem;line-height:1.85;}
+.seed p:last-child{margin-bottom:0;}
+.seed-quote{font-size:14px;color:var(--muted);font-style:italic;border-left:2px solid var(--hairline);padding-left:1rem;margin:1.1rem 0;line-height:1.85;}
+.seed-tags{margin-top:1.1rem;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--faint);letter-spacing:0.04em;}
+
+/* ---- closing ---- */
+.closing{padding:3.5rem 0 1rem;border-top:0.5px solid var(--hairline);text-align:center;}
+.closing p{font-size:14px;color:var(--muted);max-width:460px;margin:0 auto 0.8rem;line-height:1.9;}
+.closing .signoff{font-family:'Fraunces',serif;font-style:italic;color:var(--glow);font-size:16px;margin-top:1.4rem;}
+.footer{margin-top:3rem;padding-top:1.6rem;border-top:0.5px solid var(--hairline);display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;color:var(--faint);}
+@media print{body{background:var(--soil)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="cover">
+    <p class="eyebrow">InnerSeed Garden &middot; Internal <span>&middot; Confidential</span></p>
+    <h1 class="title">The Seed<br><em>Vault</em></h1>
+    <p class="cover-sub">A held archive for InnerSeed Garden's longer-range thinking — vision, future concepts, and brand direction not yet ready for the open air. Where the UX Development Manifesto deals with the present, this holds what comes after.</p>
+    <div class="cover-meta">
+      <div>Compiled by<b>Ruaraidh</b></div>
+      <div>Opened<b>18 June 2026</b></div>
+      <div>Belongs to<b>InnerSeed Developers</b></div>
+    </div>
+  </div>
+
+  <div class="intro">
+    <h2>What this holds</h2>
+    <p>Every idea logged here is a seed, not a feature. Some will stay buried for a long time. Some are already pushing toward the surface. Each entry carries a stage, so it's always clear what's still just potential and what's becoming real.</p>
+    <div class="legend">
+      <div class="legend-item"><span class="dot dormant"></span>Dormant — logged, not yet explored</div>
+      <div class="legend-item"><span class="dot germinating"></span>Germinating — actively in discussion</div>
+      <div class="legend-item"><span class="dot planted"></span>Planted — adopted into the real roadmap</div>
+    </div>
+  </div>
+
+  <div class="shaft">
+
+    <div class="seed" data-stage="germinating">
+      <div class="node"></div>
+      <div class="depth">Depth 01<span class="stage-tag germinating">Germinating</span></div>
+      <h3>Green House as a connection space</h3>
+      <p>Raised directly by Jeroen on 18 June: Green House is not a navigational artefact or a duplicate of the Garden dashboard. It's meant to be where a user goes once the breath itself isn't enough — a space for connection with people they trust, in the spirit of a men's group, a circle of friends, or a small garden where people gather for talk therapy. Internal work is difficult, and difficult work needs warmth around it.</p>
+      <p>Root, Rise and Return sit underneath this as a philosophy of life, not just a structural pattern: learning and growing, living, and eventually settling and passing on. What's been missing from the app so far is the connection layer of that cycle — Green House is where it's meant to live.</p>
+      <div class="seed-quote">"Like any internal work, it's difficult, so we need hugs, warmth, connection... they are safe spaces, and that's what this is."</div>
+      <div class="seed-tags">Connects to: UX Manifesto Week 3, D-31, D-36</div>
+    </div>
+
+    <div class="seed" data-stage="germinating">
+      <div class="node"></div>
+      <div class="depth">Depth 02<span class="stage-tag germinating">Germinating</span></div>
+      <h3>Kasht — vault as a brand-wide concept</h3>
+      <p>"Kasht" — Dutch for vault, or commitment vault — was raised as the logic behind a subscription: the fee held as an ongoing personal commitment, encouraging return rather than a one-off transaction. The open thought is whether this extends beyond payment into Green House itself: a digital space for the mind where a person invests, grows specific areas of their life, and does work they'd otherwise need a physical space for.</p>
+      <p>Worth holding loosely for now — there's a real idea here, but it hasn't been pressure-tested against how people actually think about subscriptions versus commitment.</p>
+    </div>
+
+    <div class="seed" data-stage="germinating">
+      <div class="node"></div>
+      <div class="depth">Depth 03<span class="stage-tag germinating">Germinating</span></div>
+      <h3>Competitive and market landscape</h3>
+      <p>Agreed direction, now with a significant first finding on the table. The Week 4 Builder mode audit surfaced a Spotify integration buried behind an unlabelled icon — a feature that allows users to bring their own playlists into a breathwork session. Research confirmed that no mainstream wellness competitor currently offers this. Calm uses Spotify for distribution (pushing its own content out). Endel integrates with streaming platforms for its AI-generated soundscapes but does not allow user playlist import. InnerSeed Garden's version — pulling the user's own Spotify library into a live breathwork session — is genuinely distinct.</p>
+      <p>The competitive question is no longer just "where is the open ground" — it's "why is the thing that differentiates us invisible?" Surfacing Spotify as a named, marketed feature is now both a UX priority and a commercial one.</p>
+      <p>Named on the 1 July focus call: <strong>Othership</strong> (othership.us/app) is the only competitor that matters, and the one to watch very closely. The strategic distinction already holds — Othership is a content platform that gives you a session; InnerSeed Garden is a practice tool that lets you build one. That framing is the clearest line of differentiation the brand has, and it now feeds directly into the marketing manual (Depth 12).</p>
+      <div class="seed-quote">"These guys in the states are our only competition, but we need to pay very close attention to them."</div>
+      <div class="seed-tags">Connects to: D-43 · UX Manifesto Week 4 · Depth 07 · Depth 12 · Reference: Madeira's botanical gardens, Funchal indoor spaces</div>
+    </div>
+
+    <div class="seed" data-stage="dormant">
+      <div class="node"></div>
+      <div class="depth">Depth 04<span class="stage-tag dormant">Dormant</span></div>
+      <h3>Spatial computing — "a pair of glasses"</h3>
+      <p>A speculative question rather than a plan: could self-development and breathwork practice happen through wearable, spatial-computing devices rather than a screen at all? Raised alongside the broader direction AI and spatial computing seem to be heading. No view yet on feasibility or fit — logged purely so the question doesn't get lost.</p>
+    </div>
+
+    <div class="seed" data-stage="dormant">
+      <div class="node"></div>
+      <div class="depth">Depth 05<span class="stage-tag dormant">Dormant</span></div>
+      <h3>Where subscription models are heading</h3>
+      <p>A longer-range question about the shape of subscription itself — not just InnerSeed's pricing, but where subscription as a model is generally heading, and what that implies for how a wellness product should structure ongoing commitment five to ten years out.</p>
+    </div>
+
+    <div class="seed" data-stage="dormant">
+      <div class="node"></div>
+      <div class="depth">Depth 06<span class="stage-tag dormant">Dormant</span></div>
+      <h3>Beyond a breathwork app</h3>
+      <p>The biggest open question on the table: where are people actually going to do their breathwork in five or ten years, and could InnerSeed Garden become something broader than a breathwork app entirely? No answer yet, deliberately — this is the seed everything else in this vault is ultimately in service of.</p>
+      <div class="seed-quote">"This is where things get really interesting... there has to be more. What will sell, what can be developed."</div>
+    </div>
+
+    <div class="seed" data-stage="dormant">
+      <div class="node"></div>
+      <div class="depth">Depth 07<span class="stage-tag dormant">Dormant — parked 10 Jul 2026</span></div>
+      <h3>The Garden Lab — the InnerSeed Testing System</h3>
+      <p>The decision was made: ISD will not rely on a single tester working through the app in isolation. Development would be underpinned by a proprietary UX research capability — a testing system designed, owned, and operated by InnerSeed Developers from end to end. On 1 July the concept was named <strong>the Garden Lab</strong>: a backend feedback system, kept in GitHub, built for trials, split testing, and gathering the structured human data that Sentry and Plausible cannot — with a six-slide interactive proposal deck produced in the app's own light-mode design tokens.</p>
+      <p>The system covers participant recruitment and criteria, structured task scenarios built directly from audit findings, a consistent observation and note-taking format, data capture and storage, an analysis framework, and a direct pipeline from findings into development decisions. It is designed to be repeatable — deployable across this app, future apps, new features, and redesigns. Every test generates structured data. That data accumulates. Over time it becomes a picture of how real people use InnerSeed Garden that no amount of solo auditing can replicate.</p>
+      <p><strong>Status — parked, 10 July 2026.</strong> On the 10 July focus call the Garden Lab was formally set aside as Phase 2's flagship document, replaced by the Content Marketing Strategy &amp; Sales Development Process Manual (Depth 12). It is held here as a fully summarised concept and a possible tool to build and implement at a later date, and it enters the Reflective Report as part of the application's future development plan — an extension of the Garden. The six scoping questions it left behind remain the entry point whenever it is revived: what is it made of; where does it live; what does it do when running; who builds it; what is the timeline; and what does done look like.</p>
+      <div class="seed-quote">"Relying on me to do all of the testing is not how we do things at this company. We want to control it, harvest it, use it and manage it for future development."</div>
+      <div class="seed-tags">Connects to: D-04 · D-21 · D-43 · D-46 · D-48 · Depths 08, 09, 12 · GitHub (intended home) · Garden Lab proposal deck (archived) · Jade (independent UX review, complete)</div>
+    </div>
+
+    <div class="seed" data-stage="germinating">
+      <div class="node"></div>
+      <div class="depth">Depth 08<span class="stage-tag germinating">Germinating</span></div>
+      <h3>Mobile as the flagship deployment</h3>
+      <p>Mobile is not just another test environment — it is where the app lives for most users, and it is the first major deployment of the Testing System. The standard has been set clearly: mobile needs to be minted. That means the Testing System's first structured run targets the full Preset and Builder journeys on a touch device, with particular stress on D-04 (hover-only navigation that does not exist on mobile), D-21 (three disconnected navigation systems), and D-46 (Filter mode in Dutch, buried in the transport bar).</p>
+      <p>The proposed full-width stacked Builder layout — three pillars stacked vertically with numbered steps and consistent function panels — is expected to perform significantly better on mobile than the current three-column compressed layout. Mobile is where that proposal either proves itself or gets revised. This is not a deferred nice-to-have. Mobile is the primary screen.</p>
+      <p><em>Holding note, 10 July 2026:</em> with the Garden Lab parked (Depth 07), the structured mobile run is on hold as a testing deployment — but it keeps its place as the system's first job whenever the Lab is revived. Mobile's importance to the product is unchanged.</p>
+      <div class="seed-tags">Connects to: D-04 · D-21 · D-46 · Depth 07 · UX Manifesto Week 4 proposals</div>
+    </div>
+
+    <div class="seed" data-stage="germinating">
+      <div class="node"></div>
+      <div class="depth">Depth 09<span class="stage-tag germinating">Germinating</span></div>
+      <h3>Data ownership — closing the feedback loop</h3>
+      <p>Right now there is no feedback loop between real users and the app. There are no analytics tied to the findings, no structured record of how people navigate, where they drop off, or whether they ever find the features that matter most. The Testing System changes that — but only if the data stays inside ISD.</p>
+      <p>The principle is straightforward: ISD controls the feedback loop. No third-party tools owning the insight. No aggregate numbers without context. All testing data is harvested, stored, and managed internally, feeding directly into development decisions. Key candidate metrics already identified: do users find and use the Spotify integration (D-43), do they discover Share and Save (D-48), do they complete a Builder session or abandon mid-configuration. Analytics implementation details to be confirmed with Jeroen — he referenced an existing implementation during the Week 3 focus call.</p>
+      <p>The longer-range ambition is a closed loop: test → data → action → test again. Each cycle makes the app sharper and gives ISD a growing body of evidence to underpin future product decisions, investment conversations, and feature prioritisation.</p>
+      <div class="seed-tags">Connects to: D-43 · D-48 · Depth 07 · Depth 08 · Analytics framework (to be confirmed with Jeroen)</div>
+    </div>
+
+    <div class="seed" data-stage="planted">
+      <div class="node"></div>
+      <div class="depth">Depth 10<span class="stage-tag planted">Planted</span></div>
+      <h3>Immersion — the product north star</h3>
+      <p>Stated plainly on the 1 July call and adopted as the aim everything else serves: it is not about the app, but about the experience during the breathwork itself. The user should feel fully immersed — taken out of the app entirely. Every Phase 2 design decision, and every claim the marketing makes, answers to this. A session that feels absolutely incredible is the product; the interface is only the doorway to it.</p>
+      <div class="seed-quote">"Making sessions feel absolutely incredible is what we are aiming for here... we want them to feel fully immersed and taken out of the app."</div>
+      <div class="seed-tags">Connects to: Phase 2 UX goal · Depth 03 (practice tool vs content platform) · Depth 12</div>
+    </div>
+
+    <div class="seed" data-stage="germinating">
+      <div class="node"></div>
+      <div class="depth">Depth 11<span class="stage-tag germinating">Germinating</span></div>
+      <h3>The Presence Process as the content and sales formula</h3>
+      <p>Michael Brown's <em>The Presence Process</em> is not just the app's theoretical backbone — it is, in Jeroen's words from the 1 July call, really the content and the sales formula. The work ahead is distillation: simplifying and whittling the material down to the key messages the brand markets from, so that what attracts people to InnerSeed Garden is the same thing that holds them once inside it.</p>
+      <p>This seed now has a home to grow into — it supplies the message layer of the marketing manual (Depth 12), and the founder interview material from Enschede is its natural companion content.</p>
+      <div class="seed-tags">Connects to: Depth 12 · Founder interview (Enschede) · Reflective Report citation</div>
+    </div>
+
+    <div class="seed" data-stage="planted">
+      <div class="node"></div>
+      <div class="depth">Depth 12<span class="stage-tag planted">Planted — 10 Jul 2026</span></div>
+      <h3>The Content Marketing Strategy &amp; Sales Development Process Manual</h3>
+      <p>Decided on the 10 July focus call: Phase 2's flagship document, and the e-portfolio piece, is a combined content marketing strategy and sales development process manual (name to be confirmed). It replaces the Garden Lab as the active build. This is not a strategy paper to be read once — it is designed to be implemented and <em>switched on</em>: an operating toolset for running content development and promotion of the app.</p>
+      <p>It addresses three separate audiences: the breathers — the subscriber base; coaches who use the app within their own site or business model; and coaches who facilitate through the app itself. The two coach models are still to be ironed out. The manual sets out an actionable, step-by-step sales methodology in line with InnerSeed principles, alongside the tools and technology used to generate the content for attraction and promotion.</p>
+      <div class="seed-quote">"The idea here is to create a plan that can be implemented, and switched on as a toolset."</div>
+      <div class="seed-tags">Connects to: Depths 03, 10, 11, 13, 14 · E-portfolio (Assignment 1) · Focus call 10 Jul 2026</div>
+    </div>
+
+    <div class="seed" data-stage="germinating">
+      <div class="node"></div>
+      <div class="depth">Depth 13<span class="stage-tag germinating">Germinating</span></div>
+      <h3>The continuation — beyond the placement</h3>
+      <p>Agreed on 10 July: at the end of the placement there will be a continuation call and initiation period — the point where the manual is put into play and made to work through AI-based tools and practical steps. The working relationship with ISD continues past the module's end date. For the record this vault keeps, that matters twice over: it means the manual is written for real activation rather than assessment, and it marks the placement producing something that outlives it.</p>
+      <div class="seed-tags">Connects to: Depth 12 · CPD Plan · Reflective Report conclusion</div>
+    </div>
+
+    <div class="seed" data-stage="germinating">
+      <div class="node"></div>
+      <div class="depth">Depth 14<span class="stage-tag germinating">Germinating</span></div>
+      <h3>The AI age and the human connection premium</h3>
+      <p>The literature direction for the Reflective Report, set on the 10 July call — and a genuine strategic frame for the business itself. The world is moving into a digital age where AI lets anyone build a business from the ground up with little to no resources or funding. Barriers to entry are collapsing, markets are narrowing, and business owners are reinventing how they plan, operate, and position themselves. The question that follows — "where will we be?" — keeps landing on the same answer: the rising value of human connection.</p>
+      <p>InnerSeed is its own case study here: a two-person company using AI tooling to build and market a product whose entire value is human presence. That tension — AI-powered operations in service of deeply human outcomes — is the story the report's literature should be dug up to support, and the same story the brand can tell in public.</p>
+      <div class="seed-tags">Connects to: Depth 06 (beyond a breathwork app) · Depth 12 · Reflective Report literature review · Dissertation research question (hybrid human–AI coexistence)</div>
+    </div>
+
+  </div>
+
+  <div class="closing">
+    <p>Nothing in this vault is a commitment. It's a place to keep the thinking safe until it's ready to be tested, argued with, or planted properly into the Manifesto and the roadmap it feeds.</p>
+    <p class="signoff">Root. Rise. Return.</p>
+  </div>
+
+  <div class="footer">
+    <span>The Seed Vault &middot; InnerSeed Garden &middot; Internal &amp; Confidential</span>
+    <span>Updated 10 Jul 2026</span>
+  </div>
+
+</div>
+</body></html>

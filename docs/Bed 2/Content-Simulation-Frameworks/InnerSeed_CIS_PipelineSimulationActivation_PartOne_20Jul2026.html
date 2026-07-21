@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pipeline Simulation &amp; Activation — Part One — InnerSeed Garden</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#f0e8de;--card:#faf7f2;--ink:#1c2b1c;--sage:#8a9a80;--olive:#3d5230;--rule:#ddd4c8;--live:#3ea85a;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.6;padding:40px 20px 80px;}
+  .page{max-width:640px;margin:0 auto;}
+  h1{font-family:'DM Serif Display',serif;font-weight:400;font-size:1.9rem;margin-bottom:6px;}
+  .eyebrow{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sage);font-weight:700;margin-bottom:8px;}
+  .disclaimer{
+    background:#f5ecd8;border:1px solid #b98a2e;border-radius:10px;padding:14px 18px;
+    font-size:.85rem;color:#5c4a1e;margin:18px 0 28px;
+  }
+  .btn{
+    background:var(--olive);color:#f0e8de;border:none;border-radius:24px;
+    padding:12px 28px;font-size:.95rem;font-weight:700;cursor:pointer;
+    font-family:'DM Sans',sans-serif;transition:opacity .2s;
+  }
+  .btn:hover{opacity:.88;}
+  .btn:disabled{opacity:.4;cursor:not-allowed;}
+  .btn-row{display:flex;gap:12px;align-items:center;margin-bottom:30px;}
+  .status-pill{font-size:.78rem;color:var(--sage);}
+
+  .stage{
+    display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--rule);
+    opacity:.4;transition:opacity .4s;
+  }
+  .stage.active{opacity:1;}
+  .stage.done{opacity:1;}
+  .stage:last-child{border-bottom:none;}
+
+  .marker{
+    flex:0 0 auto;width:34px;height:34px;border-radius:50%;
+    border:2px solid var(--rule);display:flex;align-items:center;justify-content:center;
+    font-size:.8rem;font-weight:700;color:var(--sage);transition:all .3s;
+  }
+  .stage.active .marker{border-color:var(--olive);color:var(--olive);animation:pulse 1.1s infinite;}
+  .stage.done .marker{border-color:var(--live);background:var(--live);color:#fff;}
+
+  @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.12);}}
+
+  .stage-body{flex:1;}
+  .stage-title{font-family:'DM Serif Display',serif;font-size:1.1rem;margin-bottom:4px;}
+  .stage-detail{font-size:.88rem;color:#3f4d3a;min-height:1.4em;}
+  .stage-detail .live-line{color:var(--olive);font-weight:600;}
+  .mono{
+    font-family:ui-monospace,'SF Mono',Consolas,monospace;font-size:.78rem;
+    background:#1c2b1c;color:#9fd6a8;border-radius:6px;padding:8px 10px;margin-top:8px;
+    display:none;white-space:pre-wrap;
+  }
+  .progress-track{
+    height:6px;background:var(--rule);border-radius:4px;margin-top:8px;overflow:hidden;display:none;
+  }
+  .progress-fill{height:100%;width:0%;background:var(--live);transition:width .3s;}
+
+  .output-card{
+    display:none;margin-top:10px;background:#1c2b1c;border-radius:12px;padding:16px;
+    color:#c8d9be;font-size:.85rem;
+  }
+  .output-phone{
+    width:90px;height:160px;border-radius:14px;margin:0 auto 10px;
+    background:linear-gradient(160deg,#3d5230,#8aab7e 60%,#f0e8de);
+    display:flex;align-items:flex-end;justify-content:center;padding-bottom:10px;
+    font-size:.62rem;color:#f0e8de;text-align:center;border:2px solid #3d5230;
+  }
+  .gate-buttons{display:none;gap:10px;margin-top:12px;}
+  .gate-buttons button{
+    flex:1;border-radius:20px;border:1px solid var(--rule);padding:9px;font-size:.82rem;
+    font-family:'DM Sans',sans-serif;font-weight:700;cursor:pointer;background:var(--bg);
+  }
+  .gate-buttons .approve{border-color:var(--live);color:#215c34;}
+  .gate-buttons .hold{border-color:#b98a2e;color:#8a6414;}
+  .final-banner{
+    display:none;margin-top:20px;background:#e4f0e4;border:1px solid var(--live);
+    border-radius:10px;padding:16px 18px;color:#215c34;font-size:.9rem;text-align:center;
+  }
+
+  /* extension: dual paths, hold state, parameter tags */
+  .btn-row{flex-wrap:wrap;}
+  .btn-alt{background:transparent;color:var(--olive);border:1px solid var(--olive);}
+  .stage.held .marker{border-color:#b98a2e;background:#f5ecd8;color:#8a6414;animation:none;}
+  .stage.skip .marker{border-color:var(--rule);background:var(--bg);color:var(--sage);}
+  .stage.skip{opacity:.78;}
+  .param-tag{display:inline-block;font-size:.66rem;letter-spacing:.04em;color:var(--olive);background:rgba(61,82,48,.08);border:1px solid var(--rule);border-radius:12px;padding:1px 8px;margin-left:6px;vertical-align:middle;white-space:nowrap;}
+
+  /* document shell */
+  h2{font-family:'DM Serif Display',serif;font-weight:400;font-size:1.45rem;margin-bottom:12px;}
+  h4{font-family:'DM Serif Display',serif;font-weight:400;font-size:1rem;margin-bottom:4px;}
+  .meta{color:var(--sage);font-size:.88rem;margin-bottom:6px;display:flex;gap:24px;flex-wrap:wrap;}
+  .meta strong{color:var(--olive);}
+  .header{padding-bottom:26px;border-bottom:1px solid var(--rule);margin-bottom:32px;}
+  .header p.standfirst{margin-top:14px;color:#3f4d3a;}
+  .index{display:flex;flex-wrap:wrap;gap:8px 10px;margin-top:16px;}
+  .index a{font-size:.74rem;letter-spacing:.04em;color:var(--olive);text-decoration:none;border:1px solid var(--rule);border-radius:20px;padding:5px 13px;background:var(--card);}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:26px 30px;margin-bottom:24px;}
+  .card p{margin-bottom:12px;color:#2f3d2c;} .card p:last-child{margin-bottom:0;}
+  .card p strong{color:var(--ink);}
+  .payload{background:#1c2b1c;color:#c8d9be;border-radius:8px;padding:14px 16px;margin:12px 0;font-family:ui-monospace,'SF Mono',Consolas,monospace;font-size:.78rem;line-height:1.6;overflow-x:auto;white-space:pre-wrap;}
+  @media(max-width:640px){ .payload{font-size:.7rem;word-break:break-word;} }
+  code{background:rgba(61,82,48,.08);border-radius:4px;padding:1px 6px;font-size:.85em;color:var(--olive);}
+  .sim-wrap{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:26px 30px;margin-bottom:24px;}
+  .cc-note{background:#1c2b1c;color:#f0e8de;border-radius:14px;padding:24px 28px;margin-bottom:24px;}
+  .cc-note .eyebrow{color:#8aab7e;} .cc-note p{color:#c8d9be;font-size:.92rem;margin-bottom:10px;} .cc-note p:last-child{margin-bottom:0;}
+  .cc-note code{background:none;color:#e8f0e0;padding:0;}
+  .footer{margin-top:36px;padding-top:22px;border-top:1px solid var(--rule);color:var(--sage);font-size:.86rem;text-align:center;}
+  @media(max-width:640px){ code{overflow-wrap:anywhere;word-break:break-all;} }
+</style>
+</head>
+<body>
+<div class="page" style="max-width:820px;">
+
+  <div class="header">
+    <div class="eyebrow">InnerSeed Garden · Content Integration Strategy · Part One</div>
+    <h1 style="font-size:2.2rem;">Pipeline Simulation &amp; Activation</h1>
+    <div class="meta">
+      <span>Working draft · v1 · <strong>20 July 2026</strong></span>
+      <span>Opens the Trellis · Parts <strong>One to Three</strong></span>
+      <span><strong>InnerSeed Developers · Confidential</strong></span>
+    </div>
+    <p class="standfirst">The system Parts Two and Three describe, seen working. First: watch a run, both entry paths, including a quality hold caught and resolved. Then: the short guide to running it for real — accounts, keys, Claude Code, and where the first live run stops on purpose.</p>
+    <div class="index">
+      <a href="#simulate">What this simulates</a><a href="#sim">Run it</a><a href="#milestones">Milestones</a><a href="#prereqs">Prerequisites</a><a href="#setup">Desktop setup</a><a href="#rules">House rules</a>
+    </div>
+  </div>
+
+  <div class="card" id="simulate">
+    <div class="eyebrow">What this simulates</div>
+    <h2>The pipeline, on a timer</h2>
+    <p>A timed mock-up of the Flagship's loop — Drive, Claude, Higgsfield, quality, gate — with the same pauses a real run would have. It calls no real API or account. Two entry paths, per the completion parameters: <strong>new footage</strong> runs the full generation sequence and passes Quality cleanly; <strong>archived asset</strong> pulls the March Reel back out of Drive, skips generation (the asset already exists), and stages a Quality hold — the stale "from April" caption line — showing the hold-with-instructions loop before it passes on re-check.</p>
+    <p>This page supersedes the earlier single-path simulation ("First Example"), which is retained in Drive as sealed history. The same engine also appears inside Part Two, in context with the Instagram walkthrough; this page is the canonical, standalone version.</p>
+  </div>
+
+  <div class="sim-wrap" id="sim">
+
+
+  <div class="disclaimer">
+    Simulated timing, not a live account. No Higgsfield or Drive connection exists yet.
+  </div>
+
+  <div class="btn-row">
+    <button class="btn" id="runNewBtn" onclick="runPipeline('new')">▶ Run: new footage</button>
+    <button class="btn btn-alt" id="runArchiveBtn" onclick="runPipeline('archive')">▶ Run: archived asset</button>
+    <span class="status-pill" id="statusPill">Ready</span>
+  </div>
+
+  <div id="stages">
+    <div class="stage" data-stage="0">
+      <div class="marker">1</div>
+      <div class="stage-body">
+        <div class="stage-title">Fetch from Drive</div>
+        <div class="stage-detail" id="detail0">Waiting to start.</div>
+        <div class="mono" id="mono0"></div>
+      </div>
+    </div>
+    <div class="stage" data-stage="1">
+      <div class="marker">2</div>
+      <div class="stage-body">
+        <div class="stage-title">Claude — Insight &amp; brief</div>
+        <div class="stage-detail" id="detail1"></div>
+        <div class="mono" id="mono1"></div>
+      </div>
+    </div>
+    <div class="stage" data-stage="2">
+      <div class="marker">3</div>
+      <div class="stage-body">
+        <div class="stage-title">Higgsfield — generation</div>
+        <div class="stage-detail" id="detail2"></div>
+        <div class="mono" id="mono2"></div>
+      </div>
+    </div>
+    <div class="stage" data-stage="3">
+      <div class="marker">4</div>
+      <div class="stage-body">
+        <div class="stage-title">Generating (polling)</div>
+        <div class="stage-detail" id="detail3"></div>
+        <div class="progress-track" id="progressTrack"><div class="progress-fill" id="progressFill"></div></div>
+      </div>
+    </div>
+    <div class="stage" data-stage="4">
+      <div class="marker">5</div>
+      <div class="stage-body">
+        <div class="stage-title">Output ready</div>
+        <div class="stage-detail" id="detail4"></div>
+        <div class="output-card" id="outputCard">
+          <div id="outputBody"></div>
+        </div>
+      </div>
+    </div>
+    <div class="stage" data-stage="5">
+      <div class="marker">6</div>
+      <div class="stage-body">
+        <div class="stage-title">Quality check</div>
+        <div class="stage-detail" id="detail5"></div>
+        <div class="mono" id="mono5"></div>
+      </div>
+    </div>
+    <div class="stage" data-stage="6">
+      <div class="marker">7</div>
+      <div class="stage-body">
+        <div class="stage-title">Human gate</div>
+        <div class="stage-detail" id="detail6"></div>
+        <div class="gate-buttons" id="gateButtons">
+          <button class="approve" onclick="approve()">✓ Approve</button>
+          <button class="hold" onclick="hold()">✕ Hold</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="final-banner" id="finalBanner"></div>
+
+
+
+  </div>
+
+  <div class="card" id="milestones">
+    <div class="eyebrow">Activation</div>
+    <h2>The three milestones</h2>
+    <p><strong>M1 — First real run.</strong> The pipeline executes end-to-end on the desktop and stops, by design, at <code>READY FOR APPROVAL</code> — a real Higgsfield clip URL in the pending record. That stop is success: Claude's finish line is ready-for-approval, never published.</p>
+    <p><strong>M2 — The archive path, for real.</strong> Same pipeline, archived input: the March Reel caption goes through Insight, Quality holds on the stale dated line, returns the fix, passes on re-check. The simulation's second path, no longer simulated.</p>
+    <p><strong>M3 — The gate goes live.</strong> <code>approve</code> actually schedules through Postiz. Blocked until the Postiz self-hosting decision — not wired before then, on purpose.</p>
+  </div>
+
+  <div class="card" id="prereqs">
+    <div class="eyebrow">Before starting</div>
+    <h2>The human prerequisites</h2>
+    <p><strong>1 · Higgsfield account and API key.</strong> Does not exist yet — the one true blocker for M1, and the first real spend decision on the visual seat. Created at cloud.higgsfield.ai, key noted, pricing terms read.</p>
+    <p><strong>2 · Anthropic API key.</strong> The script's internal quality pass calls the API directly — separate from the Claude Code login.</p>
+    <p><strong>3 · The D-43 screen recording,</strong> saved locally as <code>d43_reference.mp4</code> in the project folder. For M1 a local file replaces the Drive fetch entirely — the simplest honest path.</p>
+    <p><strong>4 · Postiz — not yet.</strong> Every <code>POSTIZ_*</code> variable stays unset for M1 and M2. The script structurally cannot publish without them, which is exactly right.</p>
+  </div>
+
+  <div class="card" id="setup">
+    <div class="eyebrow">Desktop setup</div>
+    <h2>Running it through Claude Code</h2>
+    <p>One project folder — <code>~/innerseed-pipeline</code> — holding the runnable counterpart to this page, <code>InnerSeed_CIS_Level2_PipelineReference_19Jul2026.py</code>, the two master documents for context, and the local reference recording. <code>git init</code>, keys in a <code>.env</code> that never gets committed, then <code>claude</code> in that folder and this first instruction:</p>
+    <div class="payload">Read InnerSeed_CIS_Level2_PipelineReference_19Jul2026.py and skim both HTML
+masters for context. Before running anything: (1) verify the Higgsfield endpoint
+shapes in the script against Higgsfield's current developer docs and correct any
+drift; (2) replace the drive_download step with reading the local file
+d43_reference.mp4; (3) load keys from .env. Then run the new-footage path:
+python InnerSeed_CIS_Level2_PipelineReference_19Jul2026.py run --input new
+Stop at READY FOR APPROVAL. Do not install, configure, or call Postiz.
+Show me the pending record and the clip URL when done.</div>
+    <p><strong>M1 success check:</strong> a file appears in <code>pending_approvals/</code>, the terminal reads <code>READY FOR APPROVAL</code>, and the clip URL opens and plays. Watching that clip is the human gate doing its job — <code>approve</code> stays unrun.</p>
+  </div>
+
+  <div class="card" id="rules">
+    <div class="eyebrow">House rules</div>
+    <h2>Unchanged at every level of automation</h2>
+    <p>Every pass ends pass-or-hold. A hold always returns with instructions, never silence. Old content gets the same Insight pass as new. Publishing requires an approval record to <em>exist</em> — a missing approval means a stopped pipeline, not a published mistake. And the quality bar includes reading as human-authored, every time.</p>
+  </div>
+
+  <div class="cc-note">
+    <div class="eyebrow">For Claude Code — Night Garden integration</div>
+    <p>This page is <strong>Part One</strong> of the three-part Trellis, replacing the former Brand Voice &amp; Positioning slot. Place it as the first Phase 2 plant, with Part Two (Channel &amp; Content Framework) and Part Three (the Flagship) alongside. Where any older note embedded in those documents conflicts with the site brief accompanying this file, the brief wins.</p>
+  </div>
+
+  <div class="footer">
+    Pipeline Simulation &amp; Activation · Part One · InnerSeed Garden · Content Integration Strategy<br>
+    Root · Rise · Return · innerseed.garden · Confidential
+  </div>
+
+</div>
+<script>
+const wait = ms => new Promise(r => setTimeout(r, ms));
+const $ = id => document.getElementById(id);
+
+function setStage(i, state){
+  const el = document.querySelector(`.stage[data-stage="${i}"]`);
+  el.classList.remove('active','done','held','skip');
+  if(state) el.classList.add(state);
+  const m = el.querySelector('.marker');
+  if(state === 'done') m.textContent = '✓';
+  else if(state === 'skip') m.textContent = '–';
+  else if(state === 'held') m.textContent = '!';
+}
+
+function resetSim(){
+  for(let i=0;i<7;i++){
+    const el = document.querySelector(`.stage[data-stage="${i}"]`);
+    el.classList.remove('active','done','held','skip');
+    el.querySelector('.marker').textContent = (i+1);
+    const d = $('detail'+i); if(d) d.innerHTML = (i===0 ? 'Waiting to start.' : '');
+  }
+  ['mono0','mono1','mono2','mono5'].forEach(id => { const m=$(id); if(m){ m.style.display='none'; m.textContent=''; } });
+  $('progressTrack').style.display='none'; $('progressFill').style.width='0%';
+  $('outputCard').style.display='none';
+  $('gateButtons').style.display='none';
+  $('finalBanner').style.display='none';
+}
+
+function detail(i, text){ $('detail'+i).innerHTML = text; }
+function showMono(i, text){ const m = $('mono'+i); m.style.display='block'; m.textContent = text; }
+function lockButtons(lock){ $('runNewBtn').disabled = lock; $('runArchiveBtn').disabled = lock; }
+
+async function runPipeline(mode){
+  resetSim();
+  lockButtons(true);
+  $('statusPill').textContent = 'Running…';
+
+  if(mode === 'archive'){ await runArchive(); } else { await runNew(); }
+
+  setStage(6,'active');
+  detail(6,'Awaiting approval from Jeroen and Ruaraidh. <span class="param-tag">Parameter 4 · finish line is ready-for-approval</span>');
+  $('gateButtons').style.display='flex';
+  $('statusPill').textContent = 'Waiting on human gate';
+  lockButtons(false);
+}
+
+async function runNew(){
+  setStage(0,'active');
+  detail(0,'Connecting to Google Drive…');
+  await wait(900);
+  detail(0,'<span class="live-line">Found: d43_reference.mp4</span> — new screen recording, first time through the loop');
+  showMono(0,`GET /drive/v3/files/1a2B3c... → 200 OK
+contentType: video/mp4  size: 8.4MB`);
+  await wait(1000);
+  setStage(0,'done');
+
+  setStage(1,'active');
+  detail(1,'Insight: unused footage of the one feature the March Reel promised — assigned to B2C Consideration.');
+  await wait(900);
+  showMono(1,`task: generate_video
+subject: personal Spotify playlist woven into a guided session
+mood: unhurried, evening tone, continuation of the March Reel
+brand_cues: [light-mode palette, "a moment for you"]`);
+  await wait(1100);
+  setStage(1,'done');
+
+  setStage(2,'active');
+  detail(2,'Uploading reference asset…');
+  showMono(2,'POST /v1/assets → asset_url: cdn.higgsfield.ai/a91f...');
+  await wait(900);
+  detail(2,'Submitting generation request…');
+  showMono(2,`POST /v1/generate
+model: image_to_video  aspect_ratio: 9:16
+→ generation_id: gen_7f3d2a1`);
+  await wait(900);
+  setStage(2,'done');
+
+  setStage(3,'active');
+  $('progressTrack').style.display='block';
+  const fill = $('progressFill');
+  const steps = [[15,'queued'],[35,'processing'],[60,'processing'],[85,'rendering'],[100,'completed']];
+  for(const [pct,label] of steps){
+    fill.style.width = pct+'%';
+    detail(3,`GET /v1/generate/gen_7f3d2a1 → status: <span class="live-line">${label}</span>`);
+    await wait(700);
+  }
+  setStage(3,'done');
+
+  setStage(4,'active');
+  detail(4,'Generated clip returned.');
+  $('outputBody').innerHTML = '<div class="output-phone">a moment<br>for you</div><div>15s · 9:16 · light-mode palette<br>reference: d43_reference.mp4</div>';
+  $('outputCard').style.display='block';
+  await wait(800);
+  setStage(4,'done');
+
+  setStage(5,'active');
+  detail(5,'Checking brand fit, factual accuracy, line placement… <span class="param-tag">Parameter 2 · ends pass or hold</span>');
+  await wait(1200);
+  detail(5,'<span class="live-line">Pass</span> — nothing held. <span class="param-tag">Parameter 2 · ends pass or hold</span>');
+  setStage(5,'done');
+}
+
+async function runArchive(){
+  setStage(0,'active');
+  detail(0,'Connecting to Google Drive…');
+  await wait(900);
+  detail(0,'<span class="live-line">Found: reel_2026-03-15.mp4 + caption.txt</span> — archived post, re-entering the loop');
+  showMono(0,`GET /drive/v3/files/9zY8x... → 200 OK  (reel_2026-03-15.mp4)
+GET /drive/v3/files/9zY8y... → 200 OK  (caption.txt)`);
+  await wait(1000);
+  setStage(0,'done');
+
+  setStage(1,'active');
+  detail(1,'Old content gets the same Insight pass as new — the question is what it is useful for now, not what it was for in March. <span class="param-tag">Parameter 5</span>');
+  await wait(1100);
+  detail(1,'Insight: still the account&#39;s only session-to-app bridge — worth a re-run. Brief: caption revision only, no new visual. <span class="param-tag">Parameter 5</span>');
+  showMono(1,`task: caption_revision
+asset: reel_2026-03-15.mp4 (existing, reused)
+visual_generation: none`);
+  await wait(1000);
+  setStage(1,'done');
+
+  setStage(2,'active');
+  detail(2,'No generation call — the asset already exists. Same pipeline, stage recorded as not needed. <span class="param-tag">Parameter 1 · one pipeline, any input</span>');
+  await wait(900);
+  setStage(2,'skip');
+
+  setStage(3,'active');
+  detail(3,'No job in flight — nothing to poll.');
+  await wait(600);
+  setStage(3,'skip');
+
+  setStage(4,'active');
+  detail(4,'Existing asset staged with revised-draft caption.');
+  $('outputBody').innerHTML = '<div class="output-phone" style="background:linear-gradient(160deg,#8a9a80,#f0e8de);">March<br>Reel</div><div>existing asset · caption revision<br>reel_2026-03-15.mp4</div>';
+  $('outputCard').style.display='block';
+  await wait(800);
+  setStage(4,'done');
+
+  setStage(5,'active');
+  detail(5,'Checking brand fit, factual accuracy, dated claims…');
+  await wait(1200);
+  setStage(5,'held');
+  detail(5,'<span style="color:#8a6414;font-weight:700;">Hold</span> — caption still reads &quot;Vanaf april kun je…&quot;, a dated claim, stale since April. <span class="param-tag">Parameter 2 · ends pass or hold</span>');
+  await wait(1400);
+  detail(5,'Returned to Claude with the specific fix required — never silence. <span class="param-tag">Parameter 3 · a hold returns with instructions</span>');
+  showMono(5,`before: "Vanaf april kun je via onze app InnerSeed Garden thuis verder oefenen…"
+after:  "Je kunt inmiddels via onze app InnerSeed Garden thuis verder oefenen…"`);
+  await wait(1600);
+  setStage(5,'active');
+  detail(5,'Revised draft re-checked…');
+  await wait(1000);
+  detail(5,'<span class="live-line">Pass</span> on second check — hold resolved, fix on record. <span class="param-tag">Parameter 3 · resolved</span>');
+  setStage(5,'done');
+}
+
+function approve(){
+  $('gateButtons').style.display='none';
+  $('detail6').innerHTML = '<span class="live-line">Approved.</span> Routed to Postiz.';
+  const banner = $('finalBanner');
+  banner.style.display='block';
+  banner.textContent = 'Simulation finished. Same sequence and timing a real run would have — not a run itself.';
+  $('statusPill').textContent = 'Complete';
+}
+function hold(){
+  $('gateButtons').style.display='none';
+  $('detail6').innerHTML = '<span style="color:#8a6414;font-weight:600;">On hold.</span> Returned to Claude with notes — the work queues, nothing publishes.';
+  $('statusPill').textContent = 'Held';
+}
+</script>
+</body>
+</html>

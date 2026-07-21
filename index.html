@@ -326,63 +326,26 @@ footer{
     </div>
   </section>
 
-  <!-- ================= BED TWO — THE TOOLSHED ================= -->
+  <!-- ================= BED TWO — CONTENT INTEGRATION STRATEGY ================= -->
   <section class="bed" aria-labelledby="bed2">
     <p class="bed-label">Bed Two</p>
-    <h2 class="bed-title" id="bed2">The Toolshed — <em>strategy, schematics &amp; groundwork</em></h2>
+    <h2 class="bed-title" id="bed2">Content Integration Strategy — <em>one system, three parts</em></h2>
 
     <div class="row">
-      <!-- Content Integration Strategy — vine on trellis -->
-      <button class="plant" data-key="strategy" style="--sd:0.9s" aria-haspopup="dialog">
-        <svg width="96" height="120" viewBox="0 0 96 120" role="img" aria-label="A vine climbing a trellis">
-          <path class="wood" d="M28,120 L28,20 M68,120 L68,20 M18,44 L78,44 M18,76 L78,76"/>
-          <path class="stem" d="M28,120 C36,100 24,88 34,72 C44,58 28,50 40,34 C46,26 54,24 58,18"/>
-          <path class="leaf" d="M34,74 Q22,70 19,58 Q32,63 35,72 Z"/>
-          <path class="leaf" d="M40,36 Q52,32 56,21 Q43,26 40,34 Z"/>
-          <path class="leaf" d="M58,20 Q68,15 71,5 Q59,10 57,18 Z"/>
+      <!-- Part One — Pipeline Simulation & Activation -->
+      <button class="plant" data-key="cis_one" style="--sd:0.4s" aria-haspopup="dialog">
+        <svg width="88" height="112" viewBox="0 0 88 112" role="img" aria-label="A pipeline flowing upward">
+          <path class="stem" d="M44,112 L44,70"/>
+          <path class="leaf" d="M44,85 Q22,80 16,62 Q36,75 44,83 Z"/>
+          <path class="leaf" d="M44,85 Q66,80 72,62 Q52,75 44,83 Z"/>
+          <path class="stem" d="M44,70 C44,50 43,40 44,28"/>
+          <path class="leaf" d="M44,50 Q26,44 20,28 Q40,42 44,48 Z"/>
+          <path class="leaf" d="M44,50 Q62,44 68,28 Q48,42 44,48 Z"/>
+          <circle class="bloom" cx="44" cy="18" r="8"/>
         </svg>
-        <span class="tag">Strategy<b>Content Integration</b></span>
+        <span class="tag">Part One<b>Pipeline Simulation &amp; Activation</b></span>
       </button>
 
-      <!-- Tool Schematics — spade in the soil -->
-      <button class="plant" data-key="schematics" style="--sd:2.1s" aria-haspopup="dialog">
-        <svg width="70" height="104" viewBox="0 0 70 104" role="img" aria-label="A spade standing in the soil">
-          <path class="wood" d="M35,10 L35,58"/>
-          <path class="wood" d="M26,10 L44,10"/>
-          <path class="tool" d="M24,58 L46,58 L44,86 Q35,98 26,86 Z"/>
-        </svg>
-        <span class="tag">Schematics<b>The Toolset</b></span>
-      </button>
-
-      <!-- Blueprint — seed packet on a marker stake -->
-      <button class="plant" data-key="blueprint" style="--sd:0.3s" aria-haspopup="dialog">
-        <svg width="70" height="110" viewBox="0 0 70 110" role="img" aria-label="A seed packet pinned to a marker stake">
-          <path class="wood" d="M35,110 L35,52"/>
-          <rect class="paper" x="14" y="14" width="42" height="42" rx="3"/>
-          <path class="stem" d="M35,46 C35,40 34,36 35,31" style="stroke:#5a7a4a; stroke-width:1.8"/>
-          <path class="leaf" d="M35,36 Q29,33 27,27 Q34,29 35,34 Z" style="stroke:#5a7a4a"/>
-          <path class="leaf" d="M35,33 Q41,30 43,24 Q36,26 35,31 Z" style="stroke:#5a7a4a"/>
-        </svg>
-        <span class="tag">Blueprint<b>The Garden Plan</b></span>
-      </button>
-
-      <!-- Appendix — the foundation stone -->
-      <button class="plant" data-key="appendix" style="--sd:1.4s" aria-haspopup="dialog">
-        <svg width="88" height="60" viewBox="0 0 88 60" role="img" aria-label="A foundation stone">
-          <path class="stone" d="M12,60 Q6,38 22,26 Q44,12 66,24 Q84,34 78,60 Z"/>
-          <path d="M30,42 Q44,36 58,42" fill="none" stroke="#3a4d3a" stroke-width="1.2"/>
-        </svg>
-        <span class="tag">Appendix<b>Raw &amp; Background</b></span>
-      </button>
-    </div>
-  </section>
-
-  <!-- ================= BED THREE — PHASE 2 ================= -->
-  <section class="bed" aria-labelledby="bed3">
-    <p class="bed-label">Bed Three</p>
-    <h2 class="bed-title" id="bed3">Phase 2 — <em>from root to rise, into the light</em></h2>
-
-    <div class="row">
       <!-- Part Two — Channel & Content Framework -->
       <button class="plant" data-key="cis_two" style="--sd:1.2s" aria-haspopup="dialog">
         <svg width="92" height="116" viewBox="0 0 92 116" role="img" aria-label="Channels branching outward">
@@ -393,7 +356,7 @@ footer{
           <path class="leaf" d="M46,60 Q64,52 70,35 Q52,48 46,58 Z"/>
           <circle class="bloom" cx="46" cy="25" r="10"/>
         </svg>
-        <span class="tag">Part Two<b>Channel & Content Framework</b></span>
+        <span class="tag">Part Two<b>Channel &amp; Content Framework</b></span>
       </button>
 
       <!-- Part Three — Flagship System -->
@@ -495,37 +458,13 @@ const DOCS = {
     toc:["Phase 1 by the numbers","The record, week by week","Headline outcomes","How the work was done","Close-out and what carries forward"],
     href:"docs/InnerSeed_DEVUX_ManifestoWeek5_Reflections_Summary.html", ready:true
   },
-  strategy: {
-    eyebrow:"Enter Great Breath × InnerSeed · Strategy",
-    title:"Content Integration Strategy", em:"The Trellis",
-    date:"2026",
-    summary:"[One-paragraph summary goes here — how the content brand and the app grow along the same frame: what climbs where, and in what season.]",
-    toc:["[Section one]","[Section two]","[Section three]"],
-    href:"docs/content-integration-strategy.html", ready:false
-  },
-  schematics: {
-    eyebrow:"InnerSeed Garden · Technical",
-    title:"Tool Schematics", em:"The Toolset",
-    date:"2026",
-    summary:"[Summary goes here — the working tools of the project: what each one does, how they fit the hand, and where they're kept.]",
-    toc:["[Schematic one]","[Schematic two]"],
-    href:"docs/tool-schematics.html", ready:false
-  },
-  blueprint: {
-    eyebrow:"InnerSeed Garden · Planning",
-    title:"The Blueprint", em:"The Garden Plan",
-    date:"2026",
-    summary:"[Summary goes here — the plan the garden was planted to: what goes in which bed, and why.]",
-    toc:["[Section one]","[Section two]"],
-    href:"docs/blueprint.html", ready:false
-  },
-  appendix: {
-    eyebrow:"SSOT · Raw & Background",
-    title:"The Appendix", em:"Foundation Stone",
-    date:"2026",
-    summary:"[Summary goes here — the raw record everything else rests on: sources, background, the single source of truth.]",
-    toc:["[Raw materials]","[Background]"],
-    href:"docs/appendix.html", ready:false
+  cis_one: {
+    eyebrow:"InnerSeed Garden · Content Integration Strategy · Part One",
+    title:"Pipeline Simulation & Activation", em:"Where content flows",
+    date:"20 July 2026",
+    summary:"The operational backbone: how content moves through the system from ideation to activation. Pipeline stages, simulation frameworks, and the automation that binds the whole strategy together.",
+    toc:["How this connects","The pipeline","Simulation frameworks","Activation channels","Content flows","System requirements"],
+    href:"docs/Bed 2/Content-Simulation-Frameworks/InnerSeed_CIS_PipelineSimulationActivation_PartOne_20Jul2026.html", ready:true
   },
   cis_two: {
     eyebrow:"InnerSeed Garden · Content Integration Strategy · Part Two",
@@ -533,19 +472,19 @@ const DOCS = {
     date:"16 July 2026",
     summary:"Of everywhere content could go, where does it actually go, with what, and to what job — across Instagram, YouTube, X, and paid ads. Channel by channel, the specific destinations, the funnels they serve (Awareness → Consideration → Convert), and how each is measured.",
     toc:["How this connects","The funnel","Instagram","YouTube","X","Paid ads","Email","Website","Instagram in practice"],
-    href:"docs/cis-channel-content-framework.html", ready:true
+    href:"docs/Bed 2/Channel & Content Framework/InnerSeed_CIS_ChannelContentFramework_PartTwo_16Jul2026.html", ready:true
   },
   cis_three: {
     eyebrow:"InnerSeed Garden · Content Integration Strategy · Part Three",
-    title:"The Flagship Content Integration System", em:"The engine, end to end",
+    title:"Flagship Integration System", em:"The engine, end to end",
     date:"16 July 2026",
     summary:"The machine that does the marketing, content, and delivery: what each of the five instruments takes in, what it hands back, how they pass work between each other, and the backbone of the whole system. Claude, Higgsfield, Postiz, MailerLite, Website + Plausible — and the human gate that holds it all.",
     toc:["Starting point","Ideation layer","Claude","Higgsfield","Postiz","MailerLite","Website + Plausible","The backbone","Requirements","Completion parameters","Entry points","Failsafe","Automation depth"],
-    href:"docs/cis-flagship-integration-system.html", ready:true
+    href:"docs/Bed 2/Flagship Content Integration System/InnerSeed_CIS_FlagshipContentIntegrationSystem_v5_16Jul2026.html", ready:true
   }
 };
 
-const ORDER = ["w1","w2","w3","w4","w5","strategy","schematics","blueprint","appendix","cis_two","cis_three"];
+const ORDER = ["w1","w2","w3","w4","w5","cis_one","cis_two","cis_three"];
 
 const veil = document.getElementById('veil');
 const el = id => document.getElementById(id);

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InnerSeed — SSOT — Weeks 5 &amp; 6 Combined — Phase 2</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap');
+
+  :root {
+    --bg: #f0e8de;
+    --card: #faf7f2;
+    --ink: #1c2b1c;
+    --sage: #8a9a80;
+    --olive: #3d5230;
+    --live: #3ea85a;
+    --rule: #ddd4c8;
+  }
+
+  body {
+    font-family: 'DM Sans', -apple-system, sans-serif;
+    font-size: 13px;
+    color: var(--ink);
+    background: var(--bg);
+    max-width: 760px;
+    margin: 40px auto;
+    padding: 0 20px 40px;
+    line-height: 1.7;
+  }
+
+  .sheet {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 36px 40px 28px;
+  }
+
+  .eyebrow {
+    font-size: 10px;
+    color: var(--sage);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin: 0 0 6px;
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 26px;
+    font-weight: 400;
+    margin: 0 0 4px;
+    color: var(--ink);
+  }
+
+  h2 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--olive);
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 4px;
+    margin: 32px 0 12px;
+  }
+
+  p { margin: 0 0 10px; }
+
+  .meta { font-size: 11px; color: var(--sage); margin-bottom: 18px; }
+  .meta span { margin-right: 18px; }
+
+  .note {
+    font-size: 12px;
+    background: var(--bg);
+    border-left: 3px solid var(--olive);
+    padding: 10px 14px;
+    margin: 14px 0;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .doc {
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .doc:last-child { border-bottom: none; }
+  .doc-header { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .doc-id { font-size: 11px; color: var(--sage); margin-right: 8px; }
+  .doc-title { font-weight: 700; font-size: 13px; }
+  .doc-tag { font-size: 10px; color: var(--sage); font-style: italic; white-space: nowrap; }
+  .doc-desc { margin: 5px 0; }
+
+  ul { margin: 6px 0 10px 18px; padding: 0; }
+  li { margin-bottom: 5px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 11.5px; margin: 10px 0 14px; }
+  td, th { border: 1px solid var(--rule); padding: 6px 9px; text-align: left; vertical-align: top; }
+  th { background: var(--bg); font-weight: 700; color: var(--olive); }
+
+  /* Supersession ledger — the record of what changed */
+  .super {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 10px 0 16px;
+    font-size: 12px;
+  }
+  .super .was, .super .now { padding: 10px 14px; }
+  .super .was {
+    background: var(--bg);
+    color: var(--sage);
+    border-right: 1px solid var(--rule);
+  }
+  .super .was .label, .super .now .label {
+    display: block;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 4px;
+  }
+  .super .was .label { color: var(--sage); }
+  .super .was s { text-decoration-color: var(--sage); }
+  .super .now { background: var(--card); }
+  .super .now .label { color: var(--live); font-weight: 700; }
+
+  .log-row {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    font-size: 12px;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--rule);
+    gap: 10px;
+  }
+  .log-date { color: var(--olive); font-weight: 700; }
+
+  .status-open { color: var(--olive); font-weight: 700; }
+  .status-live { color: var(--live); font-weight: 700; }
+
+  footer {
+    margin-top: 26px;
+    font-size: 10px;
+    color: var(--sage);
+    border-top: 1px solid var(--rule);
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @media (max-width: 560px) {
+    .sheet { padding: 24px 18px 20px; }
+    .super { grid-template-columns: 1fr; }
+    .super .was { border-right: none; border-bottom: 1px solid var(--rule); }
+  }
+</style>
+</head>
+<body>
+
+<div class="sheet">
+
+<p class="eyebrow">InnerSeed Garden &middot; SSOT &middot; Weeks 5 &amp; 6 Combined &middot; Phase 2</p>
+<h1>SSOT — Weeks 5 &amp; 6</h1>
+<p class="meta">
+  <span>Reference: Appendix B</span>
+  <span>Weeks: 5–6 (29 Jun – 11 Jul 2026)</span>
+  <span>Author: Ruaraidh</span>
+  <span>Status: Sealed 11 Jul 2026</span>
+</p>
+
+<div class="note"><strong>Scope of this document:</strong> This is the combined Single Source of Truth for Weeks 5 and 6 — the opening fortnight of Phase 2. It records both focus calls, the strategic redirect of 10 July, the Netherlands postponement, and every supersession of earlier plans. Where this document and any earlier document disagree, <strong>this document is authoritative</strong>. For full project context (people, background, Phase 1, university requirements) refer to the master recovery brief (innerseed_recovery_brief.html) and Appendix A (innerseed_appendix.html).</div>
+
+<!-- ============================================================ -->
+<h2>01 — Weeks 5–6 in one paragraph</h2>
+<!-- ============================================================ -->
+
+<p>Phase 2 opened on the 1 July focus call with a plan centred on a backend feedback system build, in-studio content in the Netherlands, and the Presence Process as content formula — and was redirected on the 10 July call, where the <strong>Content Marketing Strategy &amp; Sales Development Process Manual</strong> (working name; also called the Content Integration Strategy, CIS) was confirmed as Phase 2's flagship deliverable and the e-portfolio artefact. Between the two calls, the Netherlands trip was postponed due to travel challenges and rescheduled as a Week 10 post-placement visit with a new agenda: the continuation working relationship, further CIS implementation, and the start of UK marketing. The Garden Lab was parked and inventoried in the Seed Vault. Launch marketing will target a deliberately small local market first — Enschede and Edinburgh.</p>
+
+<!-- ============================================================ -->
+<h2>02 — Timeline of record</h2>
+<!-- ============================================================ -->
+
+<div class="log-row"><span class="log-date">1 Jul 2026</span><span><strong>Week 5 focus call (Ruaraidh &amp; Jeroen).</strong> Phase 2 formally opened; UX Dev Manifesto series closed. Immersion confirmed as the product north star — sessions so good the user is taken out of the app. Othership (othership.us/app) flagged for close competitive attention. The Presence Process confirmed as the content and sales formula, to be simplified into key marketable messages. Plan at this date: Ruaraidh as project lead on a backend feedback system ("UX Feedback Loop" working title, GitHub-based, for trials, split testing and human data beyond Sentry/Plausible), plus in-studio content and founder interviews in the Netherlands during Weeks 5–6.</span></div>
+
+<div class="log-row"><span class="log-date">Early Jul 2026</span><span><strong>Netherlands trip postponed</strong> due to travel challenges. Founder interview and in-studio content did not take place in Weeks 5–6. Rescheduled as a <strong>Week 10, post-placement visit</strong> — see Section 06.</span></div>
+
+<div class="log-row"><span class="log-date">10 Jul 2026</span><span><strong>Week 6 focus call (Ruaraidh &amp; Jeroen) — the redirect.</strong> The Content Marketing Strategy &amp; Sales Development Process Manual confirmed as Phase 2's flagship and the e-portfolio document (name TBC). Built to be switched on: an activatable operating toolset, not a strategy paper — stepwise sales methodology per revenue route, in line with InnerSeed principles, plus the tools and technology for content generation. Garden Lab parked and fully inventoried in the Seed Vault. Continuation call/initiation period agreed for activating the Manual after the placement. Reflective spine for Assignment 2 confirmed: AI collapsing barriers to business entry, the narrowing market, and the rising premium on human connection — with InnerSeed as its own case study.</span></div>
+
+<div class="log-row"><span class="log-date">11 Jul 2026</span><span><strong>Reconciliation session.</strong> Weeks 5–6 record brought fully up to date; supersessions logged (Section 05); this document sealed as the combined Weeks 5–6 SSOT. Local-market launch decision recorded: Enschede and Edinburgh as first target markets (Section 06).</span></div>
+
+<!-- ============================================================ -->
+<h2>03 — The flagship: Content Integration Strategy (the Manual)</h2>
+<!-- ============================================================ -->
+
+<div class="doc">
+  <div class="doc-header">
+    <span><span class="doc-id">P2.01</span><span class="doc-title">What it is</span></span>
+    <span class="doc-tag">Flagship — decided 10 Jul</span>
+  </div>
+  <p class="doc-desc">A combined content marketing strategy and sales development process manual — ISD's proprietary operating asset and the Assignment 1 e-portfolio artefact. Plug-and-play: if followed, the system runs. Stepwise: written per revenue route. Self-improving: evaluation built in as a permanent function. Final name to be confirmed.</p>
+</div>
+
+<div class="doc">
+  <div class="doc-header">
+    <span><span class="doc-id">P2.02</span><span class="doc-title">Audiences &amp; revenue routes</span></span>
+    <span class="doc-tag">Structure</span>
+  </div>
+  <p class="doc-desc">Three audiences: Breathers/subscribers; coaches using the app within their own model; coaches facilitating through the app (the two coach models still to be ironed out — see open items). The sales methodology is written per route:</p>
+  <table>
+    <tr><th>Route</th><th>What it is</th><th>Status</th></tr>
+    <tr><td><strong>B2C</strong></td><td>The app and its sessions sold direct to Breathers</td><td>Confirmed</td></tr>
+    <tr><td><strong>B2B2C</strong></td><td>Facilitators &amp; musicians create sessions in-app for a revenue share (~70% to creator)</td><td>Confirmed</td></tr>
+    <tr><td><strong>B2B — App-Shell</strong></td><td>Codebase copied out to another breathwork business that owns it outright</td><td>Confirmed</td></tr>
+    <tr><td><strong>White label</strong></td><td>Facilitators run the app under their own brand without taking the code</td><td>Proposed by Ruaraidh — Jeroen's verdict pending</td></tr>
+  </table>
+</div>
+
+<div class="doc">
+  <div class="doc-header">
+    <span><span class="doc-id">P2.03</span><span class="doc-title">Strategic principles the Manual answers to</span></span>
+    <span class="doc-tag">Fixed inputs</span>
+  </div>
+  <ul>
+    <li><strong>Immersion is the north star</strong> — every marketing claim answers to the quality of the session experience itself.</li>
+    <li><strong>Competitive framing</strong> — Othership is the primary named competitor within a broad competitive field: Othership is a content platform that <em>gives you</em> a session; InnerSeed Garden is a practice tool that <em>lets you build</em> one. Deliverables acknowledge the wider field; no single rival is declared.</li>
+    <li><strong><em>The Presence Process</em></strong> (Michael Brown) is the content and sales formula — message architecture is distilled from it before any route-level content strategy is built.</li>
+    <li><strong>Spotify playlist import (D-43)</strong> — the standout differentiator; named and marketed, not buried.</li>
+    <li><strong>Brand identity: Root · Rise · Return</strong> — brand identity, voice and visuals are fixed existing inputs the Manual references, not a workstream.</li>
+    <li><strong>Design standard</strong> — the Manual and all Phase 2 assets are built in the app's light-mode design tokens (the palette of this document).</li>
+  </ul>
+</div>
+
+<div class="doc">
+  <div class="doc-header">
+    <span><span class="doc-id">P2.04</span><span class="doc-title">The Stack</span></span>
+    <span class="doc-tag">Production toolset</span>
+  </div>
+  <p class="doc-desc">Confirmed instruments: <strong>Claude</strong> (operating intelligence and agent team) · <strong>Higgsfield AI</strong> (visual/video generation) · <strong>Postiz</strong> (publishing — self-hosted, pending Jeroen's confirmation) · <strong>MailerLite</strong> (email) · <strong>Website + Plausible</strong> (owned channel and measurement; Plausible installed, activation scheduled). Removed from the Stack: Loom, Gemini, ComfyUI — reasoning held internally, not carried into deliverables.</p>
+</div>
+
+<div class="doc">
+  <div class="doc-header">
+    <span><span class="doc-id">P2.05</span><span class="doc-title">Build sequence</span></span>
+    <span class="doc-tag">Agreed order</span>
+  </div>
+  <p class="doc-desc">Stack section → message architecture (Presence Process distillation) → channel diagram → system schematic. Two channel decisions remain open: LinkedIn's role for the coach routes, and a deliberate position on TikTok.</p>
+</div>
+
+<!-- ============================================================ -->
+<h2>04 — Garden Lab — status of record</h2>
+<!-- ============================================================ -->
+
+<p><strong>Parked, not cancelled — and context only.</strong> The Garden Lab exists as a fully summarised concept, inventoried in the Seed Vault, entirely outside the Manual's scope. It is queued for the Week 10 conversation as part of longer-term work together. It may be mentioned as background context where useful, but it is <strong>not</strong> a report component, not a CPD or future-development section item, and not a deliverable in any current workstream. The raw 10 July note suggesting it "can be outlined in the report as part of the future development plan" is recorded faithfully in the raw notes but is superseded by this ruling.</p>
+
+<!-- ============================================================ -->
+<h2>05 — Superseded — do not resume</h2>
+<!-- ============================================================ -->
+
+<p>The following earlier plans and statements no longer hold. Any session resuming from older documents must defer to the right-hand column.</p>
+
+<div class="super">
+  <div class="was"><span class="label">Formerly (Week 4 brief / 27 Jun call)</span><s>"Phase 2 begins Week 5. Brand Book workstream opens." Three workstreams: User Testing System, Brand Book, Digital Marketing Strategy.</s></div>
+  <div class="now"><span class="label">Current truth</span>The Brand Book does not exist in any form — fully replaced by the Content Integration Strategy. Brand identity, voice and visuals are fixed inputs the Manual references. Phase 2 has one flagship: the Manual.</div>
+</div>
+
+<div class="super">
+  <div class="was"><span class="label">Formerly (1 Jul call)</span><s>Four-week backend feedback system build ("UX Feedback Loop") as Phase 2's central document, GitHub-based, Ruaraidh as project lead.</s></div>
+  <div class="now"><span class="label">Current truth</span>Superseded 10 July by the Manual. The feedback-system thinking folds into Garden Lab territory: parked, Seed Vault, Week 10 conversation. Whether it survives independently as a Jeroen development priority is an open confirmation (Section 07).</div>
+</div>
+
+<div class="super">
+  <div class="was"><span class="label">Formerly (27 Jun / 1 Jul)</span><s>Founder interview and in-studio content creation in the Netherlands during Weeks 5–6, footage to serve as cornerstone brand content and launch marketing asset.</s></div>
+  <div class="now"><span class="label">Current truth</span>Postponed due to travel challenges. Rescheduled as a Week 10, post-placement visit. The Manual's input list must not depend on founder-interview footage.</div>
+</div>
+
+<div class="super">
+  <div class="was"><span class="label">Formerly (10 Jul raw note)</span><s>Garden Lab "can be outlined in the report as part of the future development plan of the application."</s></div>
+  <div class="now"><span class="label">Current truth</span>Garden Lab is context only — background mention at most; not a report component or CPD item. See Section 04.</div>
+</div>
+
+<!-- ============================================================ -->
+<h2>06 — Week 10 continuation &amp; local-market launch</h2>
+<!-- ============================================================ -->
+
+<div class="doc">
+  <div class="doc-header">
+    <span><span class="doc-id">C.01</span><span class="doc-title">Week 10 visit — Enschede (post-placement)</span></span>
+    <span class="doc-tag">Agreed</span>
+  </div>
+  <p class="doc-desc">The postponed Netherlands trip is rescheduled to Week 10, after the placement ends. Agenda: the continuation working relationship and next steps; further implementation of the CIS; how to start marketing and selling the app in the UK; the Garden Lab conversation as part of longer-term work together.</p>
+</div>
+
+<div class="doc">
+  <div class="doc-header">
+    <span><span class="doc-id">C.02</span><span class="doc-title">Local-market first — Enschede &amp; Edinburgh</span></span>
+    <span class="doc-tag">Strategic decision — logged 11 Jul</span>
+  </div>
+  <p class="doc-desc">Launch marketing targets a deliberately small local market before scaling: the app packaged and content driven toward people locally in <strong>Enschede</strong> and <strong>Edinburgh</strong>, across the revenue routes (B2B2C and the others). Consequence for the Manual: channel and content decisions per route are made against two named cities, not an abstract market.</p>
+</div>
+
+<!-- ============================================================ -->
+<h2>07 — Open items &amp; confirmations</h2>
+<!-- ============================================================ -->
+
+<table>
+  <tr><th>Item</th><th>Owner</th><th>Status</th></tr>
+  <tr><td>Postiz self-hosting</td><td>Jeroen</td><td><span class="status-open">Open</span> — focus call agenda</td></tr>
+  <tr><td>Coach model definitions (the two coach routes)</td><td>Jeroen &amp; Ruaraidh</td><td><span class="status-open">Open</span> — to be ironed out</td></tr>
+  <tr><td>White-label route verdict</td><td>Jeroen</td><td><span class="status-open">Open</span> — proposed, not yet agreed</td></tr>
+  <tr><td>Backend feedback system — parked with Garden Lab, or live as an independent Jeroen priority?</td><td>Jeroen</td><td><span class="status-open">Open</span> — one-line confirmation needed</td></tr>
+  <tr><td>LinkedIn's role for coach routes</td><td>Ruaraidh</td><td><span class="status-open">Open</span> — channel decision</td></tr>
+  <tr><td>Deliberate position on TikTok</td><td>Ruaraidh</td><td><span class="status-open">Open</span> — channel decision</td></tr>
+  <tr><td>Manual's final name</td><td>Both</td><td><span class="status-open">Open</span></td></tr>
+  <tr><td>Assignment deadlines — logged dates predate the placement</td><td>Ruaraidh → Ann Turner</td><td><span class="status-open">Open</span> — confirm with coordinator</td></tr>
+  <tr><td>Plausible activation</td><td>Jeroen</td><td><span class="status-open">Scheduled</span> — installed, not yet active</td></tr>
+  <tr><td>Meta theme-colour still references retired dark token</td><td>Jeroen</td><td><span class="status-open">Open</span> — minor dev ticket</td></tr>
+  <tr><td>D-03 (Dutch language instability, five surfaces)</td><td>Jeroen</td><td><span class="status-open">Open</span> — one consolidated dev ticket</td></tr>
+  <tr><td>D-21 (threefold consistency)</td><td>Jeroen</td><td><span class="status-open">Open</span> — highest-priority structural recommendation</td></tr>
+  <tr><td>D-49 (Guided Voices — audit cannot close until voices available)</td><td>Jeroen</td><td><span class="status-open">Open</span></td></tr>
+  <tr><td>Human testing — Jade's independent UX review</td><td>—</td><td><span class="status-open">On hold</span> — did not take place; resolved 11 Jul. Back-end support now handled by a separate contact in Enschede (no further details logged by decision)</td></tr>
+  <tr><td>Mobile testing — status after the 10 Jul redirect (absorbed, deferred to continuation period, or parked?)</td><td>Both</td><td><span class="status-open">Open</span> — confirmation needed</td></tr>
+  <tr><td>Friday 13 June focus call notes — flagged unlogged since Week 3</td><td>Ruaraidh</td><td><span class="status-open">Open</span> — still to be formally logged or written off</td></tr>
+  <tr><td>Phase 1 Close-Out (InnerSeed_Phase1_Closeout.html) — referenced as Final in Week 4 appendix</td><td>Ruaraidh</td><td><span class="status-open">Open</span> — confirm physically filed in Drive</td></tr>
+</table>
+<p style="font-size:11px;color:var(--sage);margin-top:6px;"><em>Correction of record, 11 Jul 2026: an earlier working note stated Jade's UX review had been completed. That was incorrect — the review did not happen and is on hold, as logged above.</em></p>
+
+<!-- ============================================================ -->
+<h2>08 — University status at end of Week 6</h2>
+<!-- ============================================================ -->
+
+<div class="doc">
+  <div class="doc-header">
+    <span><span class="doc-id">U.01</span><span class="doc-title">Assignment 1 — E-Portfolio (40%)</span></span>
+    <span class="doc-tag">University</span>
+  </div>
+  <p class="doc-desc">The Manual serves as the e-portfolio artefact. Weeks 1–4 sealed documents plus this SSOT form the supporting record of active project management.</p>
+</div>
+
+<div class="doc">
+  <div class="doc-header">
+    <span><span class="doc-id">U.02</span><span class="doc-title">Assignment 2 — Reflective Report + CPD Plan (60%)</span></span>
+    <span class="doc-tag">University</span>
+  </div>
+  <p class="doc-desc">3,000 words ±10%, Harvard referencing. Framework: Gibbs' Reflective Cycle, applied selectively to major inflection points only (confirmed anchors: D-21, D-43, the settings cog finding; the 10 July redirect and the Netherlands postponement are now logged as candidate Phase 2 anchors). Conceptual spine confirmed: AI collapsing barriers to entry vs the rising premium on human connection, with InnerSeed as its own case study. SOSTAC deployed as a single analytical paragraph. Hard cap: five to six frameworks total. The Presence Process influence on the CIS anchored in Kapferer's brand identity theory. Next build step: the Report Foundation Document, pending direction confirmation and upload of the current assignment brief or marking rubric.</p>
+</div>
+
+<!-- ============================================================ -->
+<h2>09 — Files &amp; filing</h2>
+<!-- ============================================================ -->
+
+<table>
+  <tr><th>Location</th><th>Contents</th></tr>
+  <tr><td>SSOT — Raw &amp; Background</td><td>Appendix A (innerseed_appendix.html), master recovery brief, Week 1–4 subfolders with raw notes and weekly recovery briefs — all sealed</td></tr>
+  <tr><td>SSOT — Weeks 5 &amp; 6</td><td><strong>This file (InnerSeed_SSOT_Weeks5and6.html)</strong> — combined SSOT and appendix for the fortnight — plus the raw call notes (1 Jul, 10 Jul)</td></tr>
+  <tr><td>Phase 2 working documents</td><td>Phase 2 Notes Worth Having, Phase 2 Content Marketing Manual Plan, The Seed Vault (Garden Lab inventory)</td></tr>
+  <tr><td>University</td><td>SSOT weekly markdown summaries (Weeks 1–3), Reflective Captures Weeks 1–2, 3, 4, and <strong>Weeks 5–6 (new, filed alongside this document)</strong></td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>10 — How to resume</h2>
+<!-- ============================================================ -->
+
+<p>At the start of any new session: open this file for the current state of Phase 2, then the Phase 2 Content Marketing Manual Plan for the flagship's full architecture. Weeks 1–4 documents are sealed history — consult them for findings and context, but where they state forward plans, Section 05 of this document overrides. This space is the Manual's home; university report material lives in its own space, seeded by the Report Foundation Document.</p>
+
+<footer>
+  <span>InnerSeed Garden &middot; SSOT &middot; Weeks 5–6 &middot; Phase 2 &middot; Sealed 11 Jul 2026</span>
+  <span>innerseed.garden</span>
+</footer>
+
+</div>
+</body>
+</html>

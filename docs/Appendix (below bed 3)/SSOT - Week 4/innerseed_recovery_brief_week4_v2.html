@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>InnerSeed — Recovery Brief — Week 4</title>
+<style>
+body { font-family: Georgia, serif; font-size: 13px; color: #000; background: #fff; max-width: 720px; margin: 40px auto; padding: 0 20px; line-height: 1.8; }
+h1 { font-size: 22px; font-weight: normal; margin-bottom: 4px; }
+h2 { font-size: 13px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid #000; padding-bottom: 3px; margin: 28px 0 10px; }
+p { margin: 0 0 10px 0; }
+.meta { font-size: 11px; color: #555; margin-bottom: 20px; }
+.meta span { margin-right: 20px; }
+.alert { font-size: 12px; background: #f9f9f9; border-left: 3px solid #000; padding: 10px 14px; margin: 14px 0; }
+ul { margin: 6px 0 10px 16px; }
+li { margin-bottom: 4px; }
+table { width: 100%; border-collapse: collapse; font-size: 11px; margin: 10px 0; }
+td, th { border: 1px solid #ddd; padding: 5px 8px; text-align: left; }
+th { background: #f4f4f4; font-weight: bold; }
+footer { margin-top: 30px; font-size: 10px; color: #888; border-top: 1px solid #ddd; padding-top: 10px; display: flex; justify-content: space-between; }
+</style>
+</head>
+<body>
+
+<p style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:0.1em;">InnerSeed Garden &middot; Recovery Brief &middot; Week 4 Only &middot; Confidential</p>
+<h1>Recovery Brief — Week 4</h1>
+<p class="meta">
+  <span>Week: 4</span>
+  <span>Dates: 22–24 Jun 2026</span>
+  <span>Author: Ruaraidh</span>
+  <span>Scope: Week 4 only</span>
+</p>
+
+<div class="alert"><strong>Scope of this document:</strong> This recovery brief covers Week 4 only (22–24 June 2026). For the full project context — people, background, document structure, university deadlines and all prior weeks — refer to the master recovery brief (innerseed_recovery_brief.html).</div>
+
+<h2>01 — Week 4 in one paragraph</h2>
+<p>Week 4 completed the full desktop audit of Builder mode — the app's most commercially significant feature — using the Builder Mode Evaluation Framework agreed at the start of the week. Eleven findings were logged (D-39 to D-49). The week's standout discovery was a Spotify playlist integration hidden behind an unlabelled icon: a feature that allows users to bring their own Spotify playlists into a breathwork session, with no equivalent in mainstream wellness competitors. The transport bar was fully decoded — its five unlabelled icons were confirmed to perform filter access, mode switching, and Share/Save, all invisible without accidental discovery. A full-width stacked Builder layout and a completed session share card were produced as visual directions for application development. The Week 4 Manifesto contains 16 embedded figures drawn from raw testing screenshots and session concepts. Running findings total: D-01 to D-49.</p>
+
+<h2>02 — What was tested this week</h2>
+<p><strong>Builder mode — Ambient Music pillar:</strong> Track selector, loop control, volume slider, and Spotify integration. Spotify found to be hidden behind an unlabelled playlist icon — a curated "Garden Playlist" plus a field to paste a personal playlist URL. No mainstream competitor currently offers equivalent user playlist import functionality. Proposed fix: surface Spotify as a named, visible feature within the expanded card.</p>
+<p><strong>Builder mode — Guided Breaths pillar:</strong> Dropdown selector ("Diepe Neusademhaling" in Dutch — D-41, fourth confirmed context for language instability), volume slider. "Find your breath" modal confirmed as well-designed — search, filter tabs (Balanced/Stronger), descriptions, preview play — but buried behind an unlabelled icon.</p>
+<p><strong>Builder mode — Guided Voices pillar:</strong> "Select voice…" dropdown produces no options — no voices currently available or displayable (D-49). Volume toggle works correctly. Audit of this pillar cannot be completed until voices are available.</p>
+<p><strong>Transport bar — all five icons decoded:</strong></p>
+<ul>
+  <li>Library icon → opens Filter mode; all six filter labels in Dutch (D-45, D-46)</li>
+  <li>Wind/flow icon → switches to Session/Preset mode, unlabelled (D-47)</li>
+  <li>Mixer/sliders icon → switches back to Builder mode, unlabelled (D-47)</li>
+  <li>Stop icon → stops the session</li>
+  <li>Three-dot menu → Share session and Save Session, both hidden (D-48)</li>
+</ul>
+
+<h2>03 — Findings this week (D-39 to D-49)</h2>
+<table>
+  <tr><th>Ref</th><th>Finding (brief)</th><th>Priority</th></tr>
+  <tr><td>D-39</td><td>No orientation on arrival in Builder mode</td><td>High</td></tr>
+  <tr><td>D-40</td><td>"Select ambient music…" reads as placeholder; controls active with no track selected</td><td>Medium</td></tr>
+  <tr><td>D-41</td><td>Dutch content in Guided Breaths — fourth context for language instability</td><td>Critical</td></tr>
+  <tr><td>D-42</td><td>Transport bar: five unlabelled icons, no visual hierarchy</td><td>Critical</td></tr>
+  <tr><td>D-43</td><td>Spotify integration invisible — hidden behind unlabelled icon</td><td>High</td></tr>
+  <tr><td>D-44</td><td>Four Ambient Music functions compressed into one small card</td><td>High</td></tr>
+  <tr><td>D-45</td><td>Five transport icons performing critical functions with no indication of purpose</td><td>Critical</td></tr>
+  <tr><td>D-46</td><td>Filter mode entirely in Dutch, hidden in transport bar</td><td>Critical</td></tr>
+  <tr><td>D-47</td><td>Mode switching duplicated across two disconnected unlabelled locations</td><td>High</td></tr>
+  <tr><td>D-48</td><td>Share session and Save Session buried in three-dot overflow menu</td><td>High</td></tr>
+  <tr><td>D-49</td><td>Guided Voices: no selectable voices currently available</td><td>Medium</td></tr>
+</table>
+
+<h2>04 — Proposals produced this week</h2>
+<p><strong>Full-width stacked Builder layout (Fig. 14–15 in Manifesto):</strong> Three pillars stacked full width instead of compressed into three columns. Numbered steps (1, 2, 3), each pillar with four clearly labelled function columns. Spotify sits as a named, visible fourth column in Step 1. Session summary with Save and Play at the bottom. Developed as a visual direction for application development purposes.</p>
+<p><strong>Completed session share card (Fig. 16 in Manifesto):</strong> A finished session presented as a shareable product — artwork banner, session title, all three components summarised, Spotify status, favourites status, Share and Save both visible and labelled in the top right. Addresses D-48 and the broader point that a built session should feel like something worth sharing.</p>
+
+<h2>05 — Still open — carried into Phase 2</h2>
+<ul>
+  <li><strong>Mobile testing</strong> — now the first deployment of the User Testing System, not a standalone audit task</li>
+  <li><strong>Analytics</strong> — Jeroen's existing implementation to be reviewed in Phase 2 and mapped against findings</li>
+  <li><strong>Human testing</strong> — Jade Ciao identified as potential first participant; to be confirmed and budgeted</li>
+  <li><strong>Guided Voices (D-49)</strong> — audit cannot close until voices are available for selection</li>
+  <li><strong>D-03</strong> (Dutch language instability, confirmed across five surfaces) — to be raised as one consolidated development ticket</li>
+  <li><strong>D-21</strong> (Threefold consistency) — remains the highest-priority structural recommendation; to be addressed in Phase 2 development</li>
+</ul>
+
+<h2>06 — Phase 1 close-out — 27 June 2026</h2>
+<div class="alert"><strong>Phase 1 is complete.</strong> Four weeks of structured UX audit work sealed as of 27 June 2026. 49 findings logged (D-01 to D-49), plus carry-over W1-01 to W1-05.</div>
+<p><strong>Focus call — 27 June 2026 (Ruaraidh &amp; Jeroen):</strong> Phase 1 reviewed and acknowledged complete. Phase 2 scope agreed — shift from audit to build. Three workstreams confirmed: User Testing System, Brand Book, and Digital Marketing Strategy. Brand expansion discussed (international markets, retreats, phase two concepts). Founder interview agreed — Ruaraidh to travel to Enschede to film Jeroen in his studio; footage to serve as cornerstone brand content and launch marketing asset. Analytics implementation to be reviewed in Phase 2.</p>
+<p><strong>Phase 2 begins Week 5.</strong> Brand Book workstream opens. User Testing System protocol drafted. Mobile testing scheduled as first Testing System deployment. Founder interview brief written and Enschede visit planned.</p>
+
+<h2>07 — How to resume in Phase 2</h2>
+<p>Open the Phase 1 Close-Out document (InnerSeed_Phase1_Closeout.html) for the full transition summary. Open the master recovery brief (innerseed_recovery_brief.html) for full project context. The Brand Book is the primary new workstream — begin with structure, brief, and the founder interview content plan.</p>
+
+<footer>
+  <span>InnerSeed Garden &middot; Recovery Brief &middot; Week 4 &middot; Phase 1 Complete &middot; Sealed 29 Jun 2026</span>
+  <span>innerseed.garden</span>
+</footer>
+
+</body></html>

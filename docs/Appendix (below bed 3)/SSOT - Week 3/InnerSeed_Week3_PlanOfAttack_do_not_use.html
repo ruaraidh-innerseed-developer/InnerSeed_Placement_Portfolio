@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>InnerSeed Garden — UX Development Manifesto — Week 3 — Plan of Attack</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#121712; color:#c8d9be; font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; font-weight:300; font-size:15px; line-height:1.8; }
+.page { max-width:860px; margin:0 auto; padding:3.5rem 2.5rem; }
+.cover { border-bottom:0.5px solid #2e3d2e; padding-bottom:2.5rem; margin-bottom:2.5rem; }
+.eyebrow { font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:#4a6b45; margin-bottom:1rem; }
+h1 { font-family:Georgia,serif; font-size:44px; font-weight:400; line-height:1.15; color:#c8d9be; margin-bottom:0.75rem; }
+h1 em { font-style:italic; color:#8aab7e; }
+.cover-sub { font-size:15px; color:#5a7a55; max-width:560px; line-height:1.8; margin-bottom:1.75rem; }
+.meta-item { display:inline-block; width:170px; vertical-align:top; padding-right:1rem; margin-bottom:0.5rem; }
+.meta-label { font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:#3a4d3a; display:block; margin-bottom:4px; }
+.meta-value { font-size:13px; color:#8aab7e; display:block; }
+.status-banner { background:#1f2b1e; border:0.5px solid #3a5230; border-left:3px solid #8aab7e; border-radius:0 10px 10px 0; padding:1rem 1.4rem; margin-bottom:1.5rem; font-size:14px; color:#5a7a55; line-height:1.8; }
+.status-banner strong { color:#c8d9be; font-weight:500; }
+.intro-note { background:#1a2218; border:0.5px solid #2e3d2e; border-left:3px solid #5a7a4a; border-radius:0 10px 10px 0; padding:1rem 1.4rem; margin-bottom:2.5rem; font-size:14px; color:#5a7a55; line-height:1.8; }
+.intro-note strong { color:#c8d9be; font-weight:500; }
+.section { margin-bottom:3rem; }
+.section-header { display:block; margin-bottom:1.5rem; padding-bottom:0.75rem; border-bottom:0.5px solid #2e3d2e; }
+.section-num { font-size:11px; color:#3a4d3a; letter-spacing:0.12em; display:inline; margin-right:0.75rem; }
+h2 { font-family:Georgia,serif; font-size:24px; font-weight:400; color:#c8d9be; display:inline; }
+.body-text { font-size:15px; color:#c8d9be; line-height:1.85; margin-bottom:1.25rem; }
+.note-block { background:#1a2218; border:0.5px solid #2e3d2e; border-radius:12px; padding:1.3rem 1.5rem; margin-bottom:1rem; page-break-inside:avoid; }
+.note-block p { font-size:15px; color:#c8d9be; line-height:1.85; margin-bottom:0.65rem; }
+.note-block p:last-child { margin-bottom:0; }
+.badge { font-size:10px; letter-spacing:0.09em; text-transform:uppercase; padding:4px 12px; border-radius:20px; font-weight:400; white-space:nowrap; display:inline-block; margin-bottom:0.8rem; }
+.b-note { background:#1a2218; color:#6b9b61; border:0.5px solid #2e3d2e; }
+.b-idea { background:#253422; color:#a8c89e; border:0.5px solid #3a5230; }
+.b-ux { background:#1f2b1e; color:#8aab7e; border:0.5px solid #3a5230; }
+.b-critical { background:#3a1010; color:#e89090; border:0.5px solid #7a2e2e; }
+.b-agenda { background:#1a2230; color:#6b8aab; border:0.5px solid #2e3d5a; }
+.b-flag { background:#2a2418; color:#cbb27e; border:0.5px solid #5a4d2e; }
+.figure-caption { font-size:11px; color:#3a4d3a; text-align:center; margin-top:0.5rem; letter-spacing:0.04em; }
+.figure-caption em { font-style:normal; color:#4a6b45; }
+.log-table { width:100%; border-collapse:collapse; font-size:13px; margin:1rem 0; }
+.log-table th { font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#3a4d3a; text-align:left; padding:0.5rem 0.75rem; border-bottom:0.5px solid #2e3d2e; }
+.log-table td { color:#c8d9be; padding:0.6rem 0.75rem; border-bottom:0.5px solid #1f2b1e; vertical-align:top; line-height:1.6; }
+.log-table tr:last-child td { border-bottom:none; }
+.agenda-list { list-style:none; padding:0; margin:0.75rem 0; }
+.agenda-list li { font-size:14px; color:#8aab7e; padding:0.4rem 0; border-bottom:0.5px solid #1f2b1e; display:flex; align-items:flex-start; gap:0.75rem; }
+.agenda-list li:last-child { border-bottom:none; }
+.agenda-list li::before { content:"—"; color:#3a4d3a; flex-shrink:0; }
+.kiss-banner { background:#253422; border:0.5px solid #3a5230; border-radius:12px; padding:1rem 1.4rem; margin:1.5rem 0; text-align:center; }
+.kiss-banner p { font-size:12px; letter-spacing:0.15em; text-transform:uppercase; color:#8aab7e; }
+.step-num { display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; border:1px solid #3a5230; color:#8aab7e; font-size:13px; font-family:Georgia,serif; margin-right:0.85rem; flex-shrink:0; }
+.step-title-row { display:flex; align-items:center; margin-bottom:0.5rem; }
+.step-title-row h3 { font-family:Georgia,serif; font-size:18px; font-weight:400; color:#c8d9be; }
+.step-meta { font-size:11px; color:#4a6b45; letter-spacing:0.04em; margin-bottom:1rem; padding-left:2.85rem; }
+.ongoing-note { background:#1f2b1e; border:0.5px dashed #3a5230; border-radius:12px; padding:1.3rem 1.5rem; margin-top:2rem; }
+.ongoing-note p { font-size:14px; color:#5a7a55; line-height:1.85; margin-bottom:0.55rem; }
+.ongoing-note p:last-child { margin-bottom:0; }
+.ongoing-title { font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:#3a4d3a; margin-bottom:0.8rem; }
+.footer { border-top:0.5px solid #2e3d2e; padding-top:1.75rem; margin-top:3.5rem; overflow:hidden; }
+.footer-l { font-size:11px; color:#3a4d3a; display:inline; }
+.footer-r { font-size:11px; color:#3a4d3a; letter-spacing:0.08em; float:right; }
+@media print { body { background:#121712 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="cover">
+    <p class="eyebrow">InnerSeed Garden · UX Development Manifesto · Week 3</p>
+    <h1>Plan of Attack —<br><em>Week 3</em></h1>
+    <p class="cover-sub">A proposed running order for Week 3, sequenced so that each step builds the evidence base for the next. Builder mode is the headline focus, mobile testing stress-tests the case made in Week 2, and analytics and human testing groundwork begins ahead of Week 4. All recommendations below remain options for Jeroen to weigh, adapt or set aside — this plan describes how the evidence gets gathered, not what gets built.</p>
+    <div style="margin-top:1.5rem;">
+      <div class="meta-item"><span class="meta-label">Week</span><span class="meta-value">Week 3</span></div><!--
+      --><div class="meta-item"><span class="meta-label">Author</span><span class="meta-value">Ruaraidh</span></div><!--
+      --><div class="meta-item"><span class="meta-label">App</span><span class="meta-value">innerseed.garden</span></div><!--
+      --><div class="meta-item"><span class="meta-label">Headline focus</span><span class="meta-value">Builder mode + mobile</span></div><!--
+      --><div class="meta-item"><span class="meta-label">Carries forward</span><span class="meta-value">D-01 to D-21</span></div><!--
+      --><div class="meta-item"><span class="meta-label">Status</span><span class="meta-value">Proposed</span></div>
+    </div>
+  </div>
+
+  <div class="status-banner">
+    <strong>Why this order.</strong> Week 2 closed with one structural recommendation — "threefold consistency" — that explains five separate findings (D-11, D-17, D-18, D-20, D-21). Week 3 is built around testing that finding from every remaining angle before anything new is proposed: finish Preset mode, audit Builder mode against the same lens, then stress-test both on mobile. Only once that picture is complete does it make sense to plan analytics and human testing — both now have a clear hypothesis to test rather than being open-ended.
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-num">01</span><h2>Step 1 — Close out Preset mode</h2></div>
+    <div class="step-title-row"><span class="step-num">1</span><h3>Carry-over from Week 2 — quick, should be resolved early in the week</h3></div>
+    <div class="step-meta">Two items remain open from the Week 2 Manifesto's running note</div>
+
+    <div class="note-block">
+      <span class="badge b-ux">Confirm the Preset session completion flow</span>
+      <p>What actually happens when a Preset session ends — does it return to the dashboard, the player, or somewhere else? This connects directly to the Week 1 "post-session landing screen" idea (W1-04) and to D-13 (no way back from the player). Confirming this closes the loop on the full Preset journey, start to finish.</p>
+    </div>
+
+    <div class="note-block">
+      <span class="badge b-ux">Filter mode — tested within the Preset browsing flow</span>
+      <p>Rather than a separate pass, Filter mode gets tested as part of browsing for a session in Preset mode — is it discoverable, does it behave as expected, and does it interact cleanly with the Load Session modal flagged in D-19/D-20.</p>
+    </div>
+
+    <div class="note-block">
+      <span class="badge b-idea">Why this comes first</span>
+      <p>This is the last unfinished piece of the Preset-mode picture. Closing it out means Week 3's main event — Builder mode — starts from a complete, comparable baseline.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-num">02</span><h2>Step 2 — Builder mode: full UX audit</h2></div>
+    <div class="step-title-row"><span class="step-num">2</span><h3>Headline focus of Week 3</h3></div>
+    <div class="step-meta">Mirrors the structure used for Preset mode in Week 2</div>
+
+    <div class="note-block">
+      <span class="badge b-agenda">Live build-through</span>
+      <p>Build a session from scratch in Builder mode, exactly as a new user would, narrating the experience as it happens — entry point, options, controls, and the save flow at the end. This is the direct counterpart to the "Ethereal Voyager" Preset walkthrough from Week 2.</p>
+    </div>
+
+    <div class="note-block">
+      <span class="badge b-agenda">Same lens, same questions</span>
+      <p>Apply the same structured approach that produced D-01 to D-21: clarity, orientation, friction, and — critically — does Builder mode show the same "three disconnected navigation systems" pattern (D-21), or does it handle saving, loading and favouriting differently? Each finding gets logged in the same D-xx format, continuing the running log.</p>
+    </div>
+
+    <div class="note-block">
+      <span class="badge b-idea">Use Claude for visuals and suggestions</span>
+      <p>Wherever a friction point is found, Claude produces a quick mockup or annotated wireframe in the same style as the Week 2 "threefold consistency" panels — showing current state alongside a proposed alternative. Where a finding connects back to D-21, the mockup should show how the existing threefold structure would (or wouldn't) extend cleanly into Builder mode.</p>
+    </div>
+
+    <div class="note-block">
+      <span class="badge b-ux">What this tells us</span>
+      <p>By the end of this step, Week 2's headline recommendation gets its first real test: does threefold consistency hold up across <em>two</em> modes, or does Builder mode reveal something the Preset-only view couldn't show?</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-num">03</span><h2>Step 3 — Mobile testing, all fronts</h2></div>
+    <div class="step-title-row"><span class="step-num">3</span><h3>Stress-test, not a parallel audit</h3></div>
+    <div class="step-meta">Runs across both Preset and Builder mode, now both audited on desktop</div>
+
+    <div class="note-block">
+      <span class="badge b-agenda">Re-run the core journeys on mobile</span>
+      <p>Both the Preset journey (Ethereal Voyager) and the new Builder journey from Step 2 get repeated on a phone. The goal isn't to find a fresh set of unrelated mobile bugs — it's to see whether the issues already logged (especially D-04 hover-only nav, D-12 tiny tap targets, and D-21's three disconnected navigation systems) become more or less severe on a small touch screen.</p>
+    </div>
+
+    <div class="note-block">
+      <span class="badge b-critical">Particular attention — D-04 and D-21 on touch</span>
+      <p>D-04 (left-hand nav only appears on hover) is a desktop-specific problem in its current form — hover doesn't really exist on mobile, so this finding needs re-stating for a touch context. Likewise, three separate navigation systems (D-21) that are merely confusing on a large screen may become genuinely unusable on a small one. Both outcomes — "worse on mobile" or "different on mobile" — are useful evidence either way.</p>
+    </div>
+
+    <div class="note-block">
+      <span class="badge b-idea">Output</span>
+      <p>A short mobile findings set (continuing the D-xx log), framed explicitly as evidence for or against the threefold consistency proposal — not as a standalone mobile report.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-num">04</span><h2>Step 4 — Analytics and human testing: groundwork</h2></div>
+    <div class="step-title-row"><span class="step-num">4</span><h3>Delivered in Week 4, planned now</h3></div>
+    <div class="step-meta">Both now have a hypothesis, thanks to Steps 1–3</div>
+
+    <div class="note-block">
+      <span class="badge b-agenda">Human testing brief</span>
+      <p>With both Preset and Builder mode audited on desktop and mobile, the brief for human testing becomes specific: can a first-time user find their favourites, complete a session, build one from scratch, and find their way back — and does the threefold consistency structure (if mocked up by this point) make that noticeably easier? Ruaraidh to arrange participants and logistics; Claude to help draft the testing script and the specific tasks/questions once Steps 1–3 are complete, so the brief reflects the final state of the findings log.</p>
+    </div>
+
+    <div class="note-block">
+      <span class="badge b-agenda">Analytics framework — what to measure, not how to build it</span>
+      <p>A short, evidence-linked list of what would confirm or rule out the Week 2–3 findings if it were tracked: do users reach the favourites they've saved (D-18), do they get stuck or scroll past the Load Session modal (D-19), do they end up in the wrong mode after an action (D-11/D-20). This stays a recommendations list for Jeroen — the technical implementation is his call.</p>
+    </div>
+
+    <div class="note-block">
+      <span class="badge b-note">External UX professional</span>
+      <p>Their informal review is also expected in this window. Cross-referencing their feedback against the D-01 to D-21+ log (and against the human testing results, once available) is a natural fit for Week 4.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><span class="section-num">05</span><h2>Step 5 — Comms &amp; findings integration plan</h2></div>
+    <div class="step-title-row"><span class="step-num">5</span><h3>Proposed plan — scope to confirm</h3></div>
+    <div class="step-meta">Last item in the sequence, written once the picture above is complete</div>
+
+    <div class="note-block">
+      <span class="badge b-flag">Flagged for a short scoping conversation</span>
+      <p>This was listed as "a proposed plan for integrating the comms and findings into the back garden." Before this gets drafted, it would help to confirm exactly what "the back garden" refers to within the app or the wider project — whether that's an existing or planned feature/area, a section of the site, or a broader communications concept — so the plan is grounded in the right thing rather than an assumption. Once that's confirmed, this section sets out how the findings, recommendations and visuals from Steps 1–4 feed into it.</p>
+    </div>
+  </div>
+
+  <div class="ongoing-note">
+    <p class="ongoing-title">Still open from Week 2</p>
+    <p>Friday 13 June focus call — notes, recording link and Jeroen's response to D-03 (Dutch language bug, Critical) and the threefold consistency proposal (D-21) to be logged as soon as available. This is the most valuable single input for prioritising the steps above.</p>
+  </div>
+
+  <div class="footer">
+    <span class="footer-l">InnerSeed Garden · UX Development Manifesto · Week 3 Plan of Attack · Ruaraidh · proposed 15 June 2026</span>
+    <span class="footer-r">innerseed.garden</span>
+  </div>
+
+</div>
+
+</body></html>
