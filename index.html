@@ -383,48 +383,39 @@ footer{
     <h2 class="bed-title" id="bed3">Phase 2 — <em>from root to rise, into the light</em></h2>
 
     <div class="row">
-      <!-- User Testing System — a living root system -->
-      <button class="plant" data-key="testing" style="--sd:1.5s" aria-haspopup="dialog">
-        <svg width="88" height="110" viewBox="0 0 88 110" role="img" aria-label="A root system in the soil">
-          <path class="stem" d="M44,110 C30,95 18,82 16,68 M44,110 C44,95 44,82 44,68 M44,110 C58,95 70,82 72,68"/>
-          <path class="leaf" d="M16,70 Q6,65 4,52 Q16,58 18,68 Z"/>
-          <path class="leaf" d="M44,70 Q32,65 28,52 Q42,58 46,68 Z"/>
-          <path class="leaf" d="M72,70 Q84,65 86,52 Q72,58 70,68 Z"/>
-          <circle class="bud" cx="44" cy="20" r="8"/>
+      <!-- Part Two — Channel & Content Framework -->
+      <button class="plant" data-key="cis_two" style="--sd:1.2s" aria-haspopup="dialog">
+        <svg width="92" height="116" viewBox="0 0 92 116" role="img" aria-label="Channels branching outward">
+          <path class="stem" d="M46,116 L46,70"/>
+          <path class="leaf" d="M46,80 Q20,75 12,55 Q32,65 46,78 Z"/>
+          <path class="leaf" d="M46,80 Q72,75 80,55 Q60,65 46,78 Z"/>
+          <path class="leaf" d="M46,60 Q28,52 22,35 Q40,48 46,58 Z"/>
+          <path class="leaf" d="M46,60 Q64,52 70,35 Q52,48 46,58 Z"/>
+          <circle class="bloom" cx="46" cy="25" r="10"/>
         </svg>
-        <span class="tag">Testing<b>User Testing System</b></span>
+        <span class="tag">Part Two<b>Channel & Content Framework</b></span>
       </button>
 
-      <!-- Brand Book — the growing frame -->
-      <button class="plant" data-key="brand" style="--sd:0.4s" aria-haspopup="dialog">
-        <svg width="76" height="124" viewBox="0 0 76 124" role="img" aria-label="A plant growing within a supporting frame">
-          <rect class="wood" x="8" y="20" width="60" height="90" fill="none"/>
-          <path class="stem" d="M38,124 C38,110 38,95 38,80 C38,65 38,50 38,35"/>
-          <path class="leaf" d="M38,85 Q26,80 22,68 Q35,73 38,83 Z"/>
-          <path class="leaf" d="M38,65 Q50,60 54,48 Q41,53 38,63 Z"/>
-          <path class="leaf" d="M38,45 Q28,40 25,28 Q37,33 38,43 Z"/>
-          <circle class="bloom" cx="38" cy="18" r="7"/>
-        </svg>
-        <span class="tag">Brand<b>Brand Book</b></span>
-      </button>
-
-      <!-- Digital Marketing Strategy — a vine climbing to light -->
-      <button class="plant" data-key="marketing" style="--sd:2.0s" aria-haspopup="dialog">
-        <svg width="100" height="140" viewBox="0 0 100 140" role="img" aria-label="A vine climbing toward light">
-          <path class="stem" d="M50,140 C44,120 42,100 48,80 C52,65 58,50 56,35 C54,20 48,10 50,2"/>
-          <path class="leaf" d="M48,85 Q35,82 31,70 Q46,75 50,83 Z"/>
-          <path class="leaf" d="M56,60 Q68,55 72,43 Q57,48 54,58 Z"/>
-          <path class="leaf" d="M50,40 Q38,35 34,23 Q49,28 52,38 Z"/>
+      <!-- Part Three — Flagship System -->
+      <button class="plant" data-key="cis_three" style="--sd:0.6s" aria-haspopup="dialog">
+        <svg width="88" height="128" viewBox="0 0 88 128" role="img" aria-label="A branching system, root to bloom">
+          <path class="stem" d="M44,128 L44,95"/>
+          <path class="leaf" d="M44,105 Q28,100 20,82 Q38,93 44,103 Z"/>
+          <path class="leaf" d="M44,105 Q60,100 68,82 Q50,93 44,103 Z"/>
+          <path class="leaf" d="M44,85 Q32,78 26,62 Q42,72 44,83 Z"/>
+          <path class="leaf" d="M44,85 Q56,78 62,62 Q46,72 44,83 Z"/>
+          <path class="leaf" d="M44,65 Q34,58 30,43 Q44,54 44,63 Z"/>
+          <path class="leaf" d="M44,65 Q54,58 58,43 Q44,54 44,63 Z"/>
           <g aria-hidden="true">
-            <ellipse class="petal" cx="50" cy="8" rx="5" ry="9"/>
-            <ellipse class="petal" cx="50" cy="8" rx="5" ry="9" transform="rotate(72 50 14)"/>
-            <ellipse class="petal" cx="50" cy="8" rx="5" ry="9" transform="rotate(144 50 14)"/>
-            <ellipse class="petal" cx="50" cy="8" rx="5" ry="9" transform="rotate(216 50 14)"/>
-            <ellipse class="petal" cx="50" cy="8" rx="5" ry="9" transform="rotate(288 50 14)"/>
-            <circle class="bloom" cx="50" cy="14" r="5"/>
+            <circle class="petal" cx="44" cy="20" r="4"/>
+            <circle class="petal" cx="36" cy="22" r="4"/>
+            <circle class="petal" cx="52" cy="22" r="4"/>
+            <circle class="petal" cx="40" cy="10" r="4"/>
+            <circle class="petal" cx="48" cy="10" r="4"/>
+            <circle class="bloom" cx="44" cy="16" r="6"/>
           </g>
         </svg>
-        <span class="tag">Marketing<b>Digital Strategy</b></span>
+        <span class="tag">Part Three<b>Flagship Integration System</b></span>
       </button>
     </div>
   </section>
@@ -536,33 +527,25 @@ const DOCS = {
     toc:["[Raw materials]","[Background]"],
     href:"docs/appendix.html", ready:false
   },
-  testing: {
-    eyebrow:"InnerSeed Garden · Phase 2 · Research & Validation",
-    title:"User Testing System", em:"From Root to Rise",
-    date:"July 2026",
-    summary:"Owned by InnerSeed Design. A structured system for capturing user feedback, testing hypotheses against the audit findings, and validating the Phase 2 design direction. Cornerstone content: founder interview in Enschede.",
-    toc:["Testing framework","Feedback integration","Hypothesis validation","Founder interview — key insights"],
-    href:"docs/user-testing-system.html", ready:false
+  cis_two: {
+    eyebrow:"InnerSeed Garden · Content Integration Strategy · Part Two",
+    title:"Channel & Content Framework", em:"Where content actually goes",
+    date:"16 July 2026",
+    summary:"Of everywhere content could go, where does it actually go, with what, and to what job — across Instagram, YouTube, X, and paid ads. Channel by channel, the specific destinations, the funnels they serve (Awareness → Consideration → Convert), and how each is measured.",
+    toc:["How this connects","The funnel","Instagram","YouTube","X","Paid ads","Email","Website","Instagram in practice"],
+    href:"docs/cis-channel-content-framework.html", ready:true
   },
-  brand: {
-    eyebrow:"Enter Great Breath × InnerSeed · Identity",
-    title:"Brand Book", em:"The Growing Frame",
-    date:"July 2026",
-    summary:"Visual identity, voice, and design language consolidated from Phase 1 audit findings. The fixed inputs that the Content Marketing Strategy and Sales Development Process Manual draw from. Identity, voice, visuals as one coherent system.",
-    toc:["Visual identity system","Voice & tone","Design language","Application guidelines"],
-    href:"docs/brand-book.html", ready:false
-  },
-  marketing: {
-    eyebrow:"InnerSeed Garden · Phase 2 · Growth",
-    title:"Digital Marketing Strategy", em:"Climbing to Light",
-    date:"July 2026",
-    summary:"Content Marketing Strategy & Sales Development Process Manual as flagship Phase 2 deliverable. Spotify discovery feature elevated to commercial differentiator. Grounded in the founder interview as cornerstone content, identity system as creative input.",
-    toc:["Market positioning","Content strategy","Sales process","Launch plan"],
-    href:"docs/digital-marketing-strategy.html", ready:false
+  cis_three: {
+    eyebrow:"InnerSeed Garden · Content Integration Strategy · Part Three",
+    title:"The Flagship Content Integration System", em:"The engine, end to end",
+    date:"16 July 2026",
+    summary:"The machine that does the marketing, content, and delivery: what each of the five instruments takes in, what it hands back, how they pass work between each other, and the backbone of the whole system. Claude, Higgsfield, Postiz, MailerLite, Website + Plausible — and the human gate that holds it all.",
+    toc:["Starting point","Ideation layer","Claude","Higgsfield","Postiz","MailerLite","Website + Plausible","The backbone","Requirements","Completion parameters","Entry points","Failsafe","Automation depth"],
+    href:"docs/cis-flagship-integration-system.html", ready:true
   }
 };
 
-const ORDER = ["w1","w2","w3","w4","w5","strategy","schematics","blueprint","appendix","testing","brand","marketing"];
+const ORDER = ["w1","w2","w3","w4","w5","strategy","schematics","blueprint","appendix","cis_two","cis_three"];
 
 const veil = document.getElementById('veil');
 const el = id => document.getElementById(id);
