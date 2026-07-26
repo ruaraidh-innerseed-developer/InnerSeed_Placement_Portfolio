@@ -1,0 +1,49 @@
+<svg width="640" height="640" viewBox="0 0 640 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder illustration — chilling on the laptop, night garden">
+  <defs>
+    <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0b110c"/>
+      <stop offset="100%" stop-color="#141a13"/>
+    </linearGradient>
+    <radialGradient id="moon2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#e9eddb"/>
+      <stop offset="100%" stop-color="#cfd6bd" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="screen2" cx="50%" cy="30%" r="80%">
+      <stop offset="0%" stop-color="#dfe8d2"/>
+      <stop offset="100%" stop-color="#7a9c6d"/>
+    </radialGradient>
+    <linearGradient id="fig2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1f2b1e"/>
+      <stop offset="100%" stop-color="#0d120d"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="640" height="640" fill="url(#sky2)"/>
+  <circle cx="500" cy="120" r="60" fill="url(#moon2)"/>
+  <circle cx="500" cy="120" r="28" fill="#e9eddb"/>
+
+  <circle cx="120" cy="200" r="2.6" fill="#d7e8a8" opacity="0.8"/>
+  <circle cx="180" cy="300" r="2.2" fill="#d7e8a8" opacity="0.5"/>
+  <circle cx="80" cy="360" r="2.4" fill="#d7e8a8" opacity="0.6"/>
+
+  <path d="M0,470 Q90,430 170,470 Q250,510 340,460 Q430,410 520,470 Q590,510 640,460 L640,640 L0,640 Z" fill="#0d120d"/>
+  <path d="M0,520 Q110,485 230,520 Q350,555 470,510 Q560,480 640,520 L640,640 L0,640 Z" fill="#121712"/>
+
+  <!-- a low garden bench, seated figure, laptop -->
+  <rect x="150" y="560" width="340" height="16" rx="6" fill="#2a3326"/>
+  <rect x="175" y="576" width="18" height="46" fill="#2a3326"/>
+  <rect x="447" y="576" width="18" height="46" fill="#2a3326"/>
+
+  <path d="M230,560 C224,500 236,458 300,444 C364,458 376,500 370,560 Z" fill="url(#fig2)"/>
+  <circle cx="300" cy="420" r="30" fill="url(#fig2)"/>
+
+  <g transform="translate(230,516)">
+    <path d="M0,34 L110,34 L118,50 L-8,50 Z" fill="#1a2218" stroke="#3a4d3a" stroke-width="1"/>
+    <rect x="8" y="-30" width="94" height="64" rx="2" fill="#1a2218" stroke="#3a4d3a" stroke-width="1"/>
+    <rect x="13" y="-25" width="84" height="54" rx="1" fill="url(#screen2)" opacity="0.92"/>
+  </g>
+
+  <!-- a couple of grounded leaves either side -->
+  <path d="M0,640 C50,560 46,500 10,450 C74,480 96,550 70,640 Z" fill="#182015"/>
+  <path d="M640,640 C590,540 604,470 640,410 C580,460 556,550 570,640 Z" fill="#182015"/>
+</svg>
