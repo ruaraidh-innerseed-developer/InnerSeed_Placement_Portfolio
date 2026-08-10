@@ -213,18 +213,18 @@ h1 em{ font-style:italic; color:var(--moss); }
 }
 .plant:focus-visible{ outline:1px solid var(--moss); outline-offset:8px; border-radius:6px; }
 .plant .tag{
-  font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--dim);
+  font-size:11px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--dim);
   white-space:nowrap;
 }
 .plant:hover .tag, .plant:focus-visible .tag{ color:var(--moss); }
 .plant .tag b{ display:block; font-weight:400; color:var(--fern); letter-spacing:.06em; text-transform:none; font-size:11px; }
 .plant .tag i{ display:block; font-style:normal; color:var(--gold-dim); letter-spacing:.1em; font-size:9px; margin-top:2px; }
 
-.stem{ stroke:var(--moss); stroke-width:2.4; fill:none; stroke-linecap:round; }
-.leaf{ fill:url(#leafGrad); stroke:var(--moss); stroke-width:1.4; }
-.bud { fill:url(#budGrad); stroke:var(--sage); stroke-width:1.4; }
-.bloom{ fill:url(#bloomGrad); }
-.petal{ fill:url(#petalGrad); stroke:var(--sage); stroke-width:1.2; }
+.stem{ stroke:var(--moss); stroke-width:3.2; fill:none; stroke-linecap:round; }
+.leaf{ fill:rgba(138,171,126,.45); stroke:var(--moss); stroke-width:1.8; }
+.bud { fill:rgba(200,217,190,.35); stroke:var(--sage); stroke-width:1.8; }
+.bloom{ fill:rgba(233,237,219,.95); }
+.petal{ fill:rgba(200,217,190,.50); stroke:var(--sage); stroke-width:1.6; }
 .wood{ stroke:url(#woodGrad); stroke-width:3; stroke-linecap:round; }
 .tool{ fill:url(#toolGrad); stroke:#8a9b7e; stroke-width:1.6; }
 .paper{ fill:url(#paperGrad); stroke:#b9c4a4; stroke-width:1.2; }
@@ -416,16 +416,18 @@ footer{
   <section id="root">
     <p class="eyebrow">Ruaraidh · ePortfolio · Edinburgh ⇄ Enschede</p>
     <h1>The <em>Night Garden</em></h1>
-    <p class="lede">A working garden of documents, grown over five weeks of UX fieldwork on the InnerSeed
-    Garden app for InnerSeed Developers. Everything below is planted in the order it was written — start
-    with the video, then walk the beds in sequence: Root, Rise, Return.</p>
+    <p class="lede">This portfolio documents two integrated investigations conducted over eight weeks of active placement with InnerSeed Developers.</p>
+
+    <p style="max-width:65ch; color:var(--sage); line-height:1.6; margin-bottom:1.2rem;"><strong>Phase 1</strong> (Weeks 1–5) was a systematic UX audit of the InnerSeed Garden application itself: structured examination of the Session Builder, Preset playback experience, Builder mode workflows, post-session navigation, and the interaction patterns that shape first-time discovery. The audit produced 49 documented findings across five user journeys, identifying friction points, content gaps, and interaction opportunities.</p>
+
+    <p style="max-width:65ch; color:var(--sage); line-height:1.6; margin-bottom:1.2rem;"><strong>Phase 2</strong> (Weeks 6–8) pivoted from product audit to strategy: building an integrated content and marketing system designed to extend an existing breathwork practice to new audiences who'd benefit from it. This work produced the Content Integration System, technical specifications for marketing automation, and the strategic foundations for go-to-market positioning.</p>
+
+    <p style="max-width:65ch; color:var(--sage); line-height:1.6; margin-bottom:2rem;">The two phases are interdependent: the UX findings from Phase 1 directly informed the content architecture of Phase 2, creating a coherent case for how the app serves users, how audiences discover it, and how the practice grows alongside product improvement.</p>
 
     <div class="stats" role="list">
-      <div class="stat" role="listitem"><b>5</b><span>Weekly manifestos</span></div>
-      <div class="stat" role="listitem"><b>49</b><span>Findings logged</span></div>
-      <div class="stat" role="listitem"><b>Phase 1</b><span>Delivered</span></div>
-      <div class="stat" role="listitem"><b>1</b><span>Garden Lab Proposal</span></div>
-      <div class="stat" role="listitem"><b>2 of 5</b><span>Trellis parts built</span></div>
+      <div class="stat" role="listitem"><b>8</b><span>Weeks of placement</span></div>
+      <div class="stat" role="listitem"><b>49</b><span>UX findings (Phase 1)</span></div>
+      <div class="stat" role="listitem"><b>2</b><span>Phases delivered</span></div>
     </div>
 
     <div class="hero-grid reveal">
@@ -573,10 +575,10 @@ footer{
     </div>
   </section>
 
-  <!-- ================= BED TWO — THE TRELLIS: CONTENT INTEGRATION STRATEGY ================= -->
+  <!-- ================= BED TWO — THE ARCHIVE: PHASE 2 STRATEGY & SYSTEMS ================= -->
   <section class="bed reveal" id="strategy" aria-labelledby="bed2">
     <p class="bed-label">Rise · Bed Two</p>
-    <h2 class="bed-title" id="bed2">The Trellis — <em>the Content Integration Strategy</em></h2>
+    <h2 class="bed-title" id="bed2">The Archive — <em>Phase 2 Strategy &amp; Systems</em></h2>
     <p class="bed-lede">Agreed with Jeroen as Phase 2's flagship deliverable, structured here in three parts so
     it reads as one thing from two directions at once: a working document InnerSeed can build from, and a
     piece of applied marketing strategy a university placement assessor can follow start to finish. All three parts
@@ -584,8 +586,8 @@ footer{
     and the full operating system behind the flagship, instrument by instrument, end to end.</p>
 
     <div class="row">
-      <!-- Part 1 — Pipeline Simulation & Activation -->
-      <button class="plant" data-key="cis_one" style="--sd:0.4s" aria-haspopup="dialog">
+      <!-- Week 6 — Pipeline Simulation & Activation -->
+      <button class="plant" data-key="w6" style="--sd:0.4s" aria-haspopup="dialog">
         <svg width="88" height="112" viewBox="0 0 88 112" role="img" aria-label="A pipeline flowing upward">
           <path class="stem" d="M44,112 L44,70"/>
           <path class="leaf" d="M44,85 Q22,80 16,62 Q36,75 44,83 Z"/>
@@ -595,11 +597,11 @@ footer{
           <path class="leaf" d="M44,50 Q62,44 68,28 Q48,42 44,48 Z"/>
           <circle class="bloom" cx="44" cy="18" r="8"/>
         </svg>
-        <span class="tag">Part One<b>Pipeline Simulation &amp; Activation</b></span>
+        <span class="tag">Week 6<b>Pipeline Simulation</b></span>
       </button>
 
-      <!-- Part 2 — Channel & Content Framework -->
-      <button class="plant" data-key="cis_two" style="--sd:1.6s" aria-haspopup="dialog">
+      <!-- Week 7 — Channel & Content Framework -->
+      <button class="plant" data-key="w7" style="--sd:1.6s" aria-haspopup="dialog">
         <svg width="90" height="120" viewBox="0 0 90 120" role="img" aria-label="A branching vine — channel framework">
           <path class="stem" d="M45,120 C45,100 44,84 45,64 C45,50 46,40 45,30"/>
           <path class="stem" d="M45,84 C36,76 30,68 28,58"/>
@@ -608,11 +610,11 @@ footer{
           <path class="leaf" d="M63,46 Q75,41 78,29 Q65,34 62,44 Z"/>
           <path class="leaf" d="M45,46 Q32,42 28,31 Q42,35 45,44 Z"/>
         </svg>
-        <span class="tag">Part Two<b>Channel &amp; Content Framework</b></span>
+        <span class="tag">Week 7<b>Channel &amp; Content</b></span>
       </button>
 
-      <!-- Part 3 — Flagship Content Integration Strategy -->
-      <button class="plant" data-key="cis_three" style="--sd:0.9s" aria-haspopup="dialog">
+      <!-- Week 8 — Flagship Content Integration Strategy -->
+      <button class="plant" data-key="w8" style="--sd:0.9s" aria-haspopup="dialog">
         <svg width="70" height="130" viewBox="0 0 70 130" role="img" aria-label="A trellis ladder — the flagship content integration strategy">
           <path class="wood" d="M25,130 L25,20 M45,130 L45,20"/>
           <path class="wood" d="M25,100 L45,100 M25,76 L45,76 M25,52 L45,52 M25,28 L45,28"/>
@@ -620,7 +622,7 @@ footer{
           <path class="leaf" d="M35,72 Q24,68 21,57 Q32,61 35,70 Z"/>
           <path class="leaf" d="M35,44 Q46,40 49,29 Q38,33 35,42 Z"/>
         </svg>
-        <span class="tag">Part Three<b>Flagship Content Integration Strategy</b></span>
+        <span class="tag">Week 8<b>Flagship Strategy</b></span>
       </button>
     </div>
   </section>
@@ -778,6 +780,30 @@ const DOCS = {
     toc:["Phase 1 by the numbers","The record, week by week","Headline outcomes","How the work was done","Close-out and what carries forward"],
     href:"docs/Bed 1/UX-Manifestos weeks 1 - 5/InnerSeed_DEVUX_ManifestoWeek5_Reflections_Summary.html", ready:true
   },
+  w6: {
+    eyebrow:"InnerSeed Garden · Phase 2 Strategy · Week 6",
+    title:"Content Integration Strategy", em:"Week 6",
+    date:"20 July 2026",
+    summary:["Pipeline Simulation & Activation — the first layer of the Content Integration System. Technical specification for marketing automation, channel architecture, and the systems required to move content to market."],
+    toc:["Pipeline architecture","Activation workflow","System integration"],
+    href:"docs/InnerSeed_CIS_PipelineSimulationActivation_PartOne_20Jul2026.html", ready:true
+  },
+  w7: {
+    eyebrow:"InnerSeed Garden · Phase 2 Strategy · Week 7",
+    title:"Channel & Content Framework", em:"Week 7",
+    date:"16 July 2026",
+    summary:["Channel & Content Framework — the second layer. How content moves across audiences, how the brand speaks in each space, and the integration points between product and marketing."],
+    toc:["Channel mapping","Content architecture","Audience pathways"],
+    href:"docs/InnerSeed_CIS_ChannelContentFramework_PartTwo_16Jul2026.html", ready:true
+  },
+  w8: {
+    eyebrow:"InnerSeed Garden · Phase 2 Strategy · Week 8",
+    title:"Flagship Content Integration Strategy", em:"Week 8",
+    date:"16 July 2026",
+    summary:["Flagship Content Integration Strategy — the complete system. Distribution strategy, the full operating system behind the flagship, instrument by instrument, end to end."],
+    toc:["Distribution strategy","Operating system","Implementation roadmap"],
+    href:"docs/InnerSeed_CIS_FlagshipContentIntegrationSystem_v5_16Jul2026.html", ready:true
+  },
 
   cis_one: {
     eyebrow:"Content Integration Strategy · Part One",
@@ -845,7 +871,7 @@ const DOCS = {
   }
 };
 
-const ORDER = ["w1","w2","w3","w4","w5","cis_one","cis_two","cis_three","vaultdoc","glp","fieldnotes"];
+const ORDER = ["w1","w2","w3","w4","w5","w6","w7","w8","vaultdoc","glp","fieldnotes"];
 
 const veil = document.getElementById('veil');
 const el = id => document.getElementById(id);
