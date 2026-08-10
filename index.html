@@ -213,11 +213,21 @@ h1 em{ font-style:italic; color:var(--moss); }
 }
 .plant:focus-visible{ outline:1px solid var(--moss); outline-offset:8px; border-radius:6px; }
 .plant .tag{
-  font-size:11px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--dim);
-  white-space:nowrap;
+  font-size:13px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--dim);
+  white-space:nowrap; text-shadow: 0 0 8px rgba(138,171,126,0.3);
+  transition: text-shadow .3s, color .3s;
 }
-.plant:hover .tag, .plant:focus-visible .tag{ color:var(--moss); }
-.plant .tag b{ display:block; font-weight:400; color:var(--fern); letter-spacing:.06em; text-transform:none; font-size:11px; }
+.plant:hover .tag, .plant:focus-visible .tag{
+  color:var(--moss);
+  text-shadow: 0 0 12px rgba(138,171,126,0.6);
+}
+.plant .tag b{
+  display:block; font-weight:500; color:var(--fern); letter-spacing:.08em; text-transform:none; font-size:12px;
+  text-shadow: 0 0 6px rgba(138,171,126,0.2);
+}
+.plant:hover .tag b, .plant:focus-visible .tag b{
+  text-shadow: 0 0 10px rgba(138,171,126,0.4);
+}
 .plant .tag i{ display:block; font-style:normal; color:var(--gold-dim); letter-spacing:.1em; font-size:9px; margin-top:2px; }
 
 .stem{ stroke:var(--moss); stroke-width:3.2; fill:none; stroke-linecap:round; }
@@ -586,36 +596,54 @@ footer{
     and the full operating system behind the flagship, instrument by instrument, end to end.</p>
 
     <div class="row">
-      <!-- Week 6: Pipeline Simulation & Activation — vine on trellis -->
+      <!-- Week 6 — Medium plant with 2 leaf pairs + small bud -->
       <button class="plant" data-key="w6" style="--sd:0.9s" aria-haspopup="dialog">
-        <svg width="96" height="120" viewBox="0 0 96 120" role="img" aria-label="A vine climbing a trellis">
-          <path class="wood" d="M28,120 L28,20 M68,120 L68,20 M18,44 L78,44 M18,76 L78,76"/>
-          <path class="stem" d="M28,120 C36,100 24,88 34,72 C44,58 28,50 40,34 C46,26 54,24 58,18"/>
-          <path class="leaf" d="M34,74 Q22,70 19,58 Q32,63 35,72 Z"/>
-          <path class="leaf" d="M40,36 Q52,32 56,21 Q43,26 40,34 Z"/>
-          <path class="leaf" d="M58,20 Q68,15 71,5 Q59,10 57,18 Z"/>
+        <svg width="80" height="140" viewBox="0 0 80 140" role="img" aria-label="A growing seedling with two pairs of leaves">
+          <path class="stem" d="M40,140 L40,30"/>
+          <path class="leaf" d="M40,110 Q25,105 22,95 Q35,100 40,108 Z"/>
+          <path class="leaf" d="M40,105 Q55,100 58,90 Q45,95 40,103 Z"/>
+          <path class="leaf" d="M40,80 Q24,74 20,62 Q34,70 40,78 Z"/>
+          <path class="leaf" d="M40,75 Q56,69 60,57 Q46,65 40,73 Z"/>
+          <circle class="bud" cx="40" cy="20" r="6"/>
         </svg>
         <span class="tag">Week 6<b>Pipeline Simulation</b></span>
       </button>
 
-      <!-- Week 7: Channel & Content Framework — spade in the soil -->
+      <!-- Week 7 — Larger plant with 3 leaf pairs + bud -->
       <button class="plant" data-key="w7" style="--sd:2.1s" aria-haspopup="dialog">
-        <svg width="70" height="104" viewBox="0 0 70 104" role="img" aria-label="A spade standing in the soil">
-          <path class="wood" d="M35,10 L35,58"/>
-          <path class="wood" d="M26,10 L44,10"/>
-          <path class="tool" d="M24,58 L46,58 L44,86 Q35,98 26,86 Z"/>
+        <svg width="90" height="160" viewBox="0 0 90 160" role="img" aria-label="A developing seedling with three pairs of leaves">
+          <path class="stem" d="M45,160 L45,25"/>
+          <path class="leaf" d="M45,135 Q26,128 22,114 Q40,123 45,132 Z"/>
+          <path class="leaf" d="M45,130 Q64,123 68,109 Q50,118 45,128 Z"/>
+          <path class="leaf" d="M45,100 Q25,91 20,75 Q39,87 45,98 Z"/>
+          <path class="leaf" d="M45,95 Q65,86 70,70 Q51,82 45,93 Z"/>
+          <path class="leaf" d="M45,65 Q24,54 19,36 Q38,50 45,63 Z"/>
+          <path class="leaf" d="M45,60 Q66,49 71,31 Q52,45 45,58 Z"/>
+          <circle class="bloom" cx="45" cy="15" r="8"/>
         </svg>
         <span class="tag">Week 7<b>Channel &amp; Content</b></span>
       </button>
 
-      <!-- Week 8: Flagship Content Integration Strategy — seed packet on a marker stake -->
+      <!-- Week 8 — Full mature plant with 4 leaf pairs + flower -->
       <button class="plant" data-key="w8" style="--sd:0.3s" aria-haspopup="dialog">
-        <svg width="70" height="110" viewBox="0 0 70 110" role="img" aria-label="A seed packet pinned to a marker stake">
-          <path class="wood" d="M35,110 L35,52"/>
-          <rect class="paper" x="14" y="14" width="42" height="42" rx="3"/>
-          <path class="stem" d="M35,46 C35,40 34,36 35,31" style="stroke:#5a7a4a; stroke-width:1.8"/>
-          <path class="leaf" d="M35,36 Q29,33 27,27 Q34,29 35,34 Z" style="stroke:#5a7a4a"/>
-          <path class="leaf" d="M35,33 Q41,30 43,24 Q36,26 35,31 Z" style="stroke:#5a7a4a"/>
+        <svg width="100" height="180" viewBox="0 0 100 180" role="img" aria-label="A mature plant with multiple leaves and a flower">
+          <path class="stem" d="M50,180 L50,20"/>
+          <path class="leaf" d="M50,155 Q27,146 22,128 Q43,140 50,153 Z"/>
+          <path class="leaf" d="M50,150 Q73,141 78,123 Q57,135 50,148 Z"/>
+          <path class="leaf" d="M50,118 Q26,107 20,87 Q41,102 50,116 Z"/>
+          <path class="leaf" d="M50,113 Q74,102 80,82 Q59,97 50,111 Z"/>
+          <path class="leaf" d="M50,80 Q25,67 18,44 Q40,62 50,78 Z"/>
+          <path class="leaf" d="M50,75 Q75,62 82,39 Q61,56 50,73 Z"/>
+          <path class="leaf" d="M50,45 Q27,30 20,10 Q42,28 50,43 Z"/>
+          <path class="leaf" d="M50,40 Q73,25 80,5 Q58,23 50,38 Z"/>
+          <g class="flower">
+            <circle class="petal" cx="50" cy="15" r="5" opacity="0.8"/>
+            <circle class="petal" cx="38" cy="22" r="5" opacity="0.7"/>
+            <circle class="petal" cx="42" cy="35" r="5" opacity="0.7"/>
+            <circle class="petal" cx="58" cy="35" r="5" opacity="0.7"/>
+            <circle class="petal" cx="62" cy="22" r="5" opacity="0.8"/>
+            <circle class="bloom" cx="50" cy="24" r="4"/>
+          </g>
         </svg>
         <span class="tag">Week 8<b>Flagship Strategy</b></span>
       </button>
