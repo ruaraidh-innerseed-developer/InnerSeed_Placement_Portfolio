@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Field Notes: What the Work Actually Asked of Me</title>
+  <style>
+    :root {
+      --sage: #5A8B5C;
+      --text-primary: #1a1a1a;
+      --text-secondary: #4a4a4a;
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8f8f8;
+      --accent-warm: #8B7355;
+      --accent-rust: #C85C40;
+      --border: #e0e0e0;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --text-primary: #e8e8e8;
+        --text-secondary: #b0b0b0;
+        --bg-primary: #1a1a1a;
+        --bg-secondary: #2a2a2a;
+        --border: #404040;
+      }
+    }
+    :root[data-theme="dark"] {
+      --text-primary: #e8e8e8;
+      --text-secondary: #b0b0b0;
+      --bg-primary: #1a1a1a;
+      --bg-secondary: #2a2a2a;
+      --border: #404040;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      color: var(--text-primary);
+      background: var(--bg-primary);
+      padding: 3rem 2rem;
+    }
+    .container { max-width: 800px; margin: 0 auto; }
+    header {
+      border-bottom: 2px solid var(--sage);
+      padding-bottom: 2rem;
+      margin-bottom: 3rem;
+    }
+    .eyebrow {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--sage);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+    .meta {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+    .toc {
+      background: var(--bg-secondary);
+      border-left: 4px solid var(--accent-warm);
+      padding: 1.5rem;
+      margin: 2rem 0;
+      border-radius: 0 4px 4px 0;
+    }
+    .toc h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--accent-warm);
+    }
+    .toc ol {
+      margin-left: 1.5rem;
+    }
+    .toc li {
+      margin-bottom: 0.5rem;
+      color: var(--text-secondary);
+    }
+    h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-top: 2.5rem;
+      margin-bottom: 1.5rem;
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+    }
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--accent-warm);
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+    p {
+      margin-bottom: 1.25rem;
+      color: var(--text-secondary);
+    }
+    em {
+      font-style: italic;
+      color: var(--sage);
+    }
+    strong {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .reflection {
+      background: rgba(90, 139, 92, 0.08);
+      border-left: 3px solid var(--sage);
+      padding: 1rem 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 0 4px 4px 0;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+    .quote {
+      border-left: 4px solid var(--accent-rust);
+      padding-left: 1.5rem;
+      margin: 1.5rem 0;
+      font-style: italic;
+      color: var(--text-secondary);
+    }
+    footer {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+    a {
+      color: var(--sage);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(90, 139, 92, 0.3);
+    }
+    a:hover { border-bottom-color: var(--sage); }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="eyebrow">Field Notes · Personal</div>
+    <h1>What the Work Actually Asked of Me</h1>
+    <div class="meta">Written on close-out · A practitioner's reflection on five weeks of audit work</div>
+  </header>
+
+  <div class="toc">
+    <h2>In these notes:</h2>
+    <ol>
+      <li>Building credibility solo, one focus call at a time</li>
+      <li>Protecting raw first impressions from my own instinct to tidy them</li>
+      <li>Translating usability findings into commercial language</li>
+      <li>Keeping the SSOT workflow honest over five weeks</li>
+      <li>A note for whoever does this next</li>
+    </ol>
+  </div>
+
+  <h2>Opening</h2>
+  <p>Five weeks of solo desktop audit sounds tidy in a report. It didn't feel tidy at the time. Every week held a specific challenge, and not all of them were methodological. Some were human.</p>
+
+  <p>These are field notes on what the work actually asked of me — the parts that don't make it into the formal audit, but matter for whoever does this kind of work next.</p>
+
+  <h2>1. Building Credibility Solo, One Focus Call at a Time</h2>
+  <p>Coming in as an external reviewer, with no existing relationship to the product or the team, I had to earn the right to critique. That's harder than it sounds — not because the team was hostile, but because trust is built through presence, not through credentials.</p>
+
+  <p>The first two focus calls were the hardest. I was still assembling the picture, asking basic questions about flows I didn't yet understand, and I could feel the implicit question in the room: <em>does this person actually know what they're looking at?</em></p>
+
+  <p>I didn't have an answer then, other than to keep showing up prepared. I'd watched the flows twice before each call. I'd written my raw impressions down, even the confused ones. When I saw something that didn't make sense, I said so — not as a criticism, but as honest observation: "I tried the Spotify integration three times and I'm still not clear on what problem it solves for me as a user."</p>
+
+  <p>Something shifted around call three. Jeroen started asking me questions instead of me asking him. "What's your instinct on the onboarding flow?" That small shift — from explaining the product to asking for my perspective — was the moment credibility tipped from borrowed to earned.</p>
+
+  <div class="reflection">
+    <strong>The pattern I learned:</strong> Credibility as an external reviewer isn't built through authority. It's built through rigorous honesty about what you understand and what you don't, paired with genuine engagement with the product as a user. Show up prepared, ask real questions, and the team will start trusting your answers.
+  </div>
+
+  <h2>2. Protecting Raw First Impressions From My Own Instinct to Tidy Them</h2>
+  <p>About halfway through the audit, I realized I was fighting my own instinct to smooth rough edges before documenting them. The first impression of a flow is often chaotic: a mistap, a misunderstanding, a moment of real confusion. My trained instinct was to clean that up, to make sense of it privately, and only document the neat version after I'd figured out the logic.</p>
+
+  <p>That impulse is poison for an audit. If I clean up my confusion before logging it, I'm losing signal. The confusion <em>is</em> the data.</p>
+
+  <p>I had to learn to write down the exact moment of confusion as it happened. "Tapped the settings icon expecting to find notification preferences; instead landed in account settings. Disoriented. Took me 30 seconds to reorient. The icons feel similar." Not: "The information architecture for settings could be clearer." The first is what I experienced; the second is my interpretation of it.</p>
+
+  <p>Nielsen and Norman could come after. But the raw data had to stay raw.</p>
+
+  <div class="reflection">
+    <strong>Method note:</strong> Structure second. Always. Your first confused impression of a product is valuable data. Let it be messy. Write it down exactly as it felt. The sense-making comes later, grounded in what you actually saw, not what you think you should have seen.
+  </div>
+
+  <h2>3. Translating Usability Findings Into Commercial Language</h2>
+  <p>This was the subtlest challenge. A finding like "The Spotify integration is discoverability-focused but the user would frame it as 'this is how I find new practices aligned to what I'm already listening to'" is usable feedback. But it lives in UX language.</p>
+
+  <p>Jeroen builds products. He thinks about market position, competitive advantage, revenue implications. So the finding needed translation. Not dumbed down — translated.</p>
+
+  <p>"The Spotify panel is a named commercial differentiator, not just a discoverability fix." Same finding, but now it's aimed at a question a founder cares about: <em>does this give us something competitors don't have?</em> The answer changed how he thought about that feature entirely.</p>
+
+  <p>That translation — from usability observation to commercial implication — was where the audit started to matter. Before that, it was competent analysis. After that, it was counsel.</p>
+
+  <h3>How the translation works</h3>
+  <p>Start with the usability finding in UX language. Then ask: what market question does this answer? Who cares? Why? "The onboarding is unclear" is observation. "The onboarding is unclear, which means 30% of free-trial signups churn before their first practice session, which means that clarity is a retention lever worth investing in" is commercial counsel. The numbers matter; they bridge the language gap.</p>
+
+  <p>Not every finding has a commercial angle. Some findings are just good practice: "This button is too small" doesn't need market translation; it just needs fixing. But the findings that matter most — the ones that shape strategy — need to speak the founder's language.</p>
+
+  <h2>4. Keeping the SSOT Workflow Honest Over Five Weeks</h2>
+  <p>A single source of truth (SSOT) for research is only useful if it actually stays single. The temptation, especially under time pressure, is to keep findings in scattered places: notes in Slack, comments in the audit doc, verbal observations from focus calls.</p>
+
+  <p>Week three, I realized I'd started logging findings three different ways. I had to pull all of it back into the single audit structure, backfill the context, and make sure the record was honest about where each finding came from and when.</p>
+
+  <p>It slowed me down by maybe a day. It saved me probably five days worth of confusion later.</p>
+
+  <div class="reflection">
+    <strong>The discipline:</strong> Every finding lives in one place. If I notice something important in a focus call, I log it in the audit document the same day, with full context about when and where I noticed it. If I'm tempted to keep a quick note somewhere else, I resist. One source. One location. One version of truth. Everything else is shadows.
+  </div>
+
+  <h2>5. A Note for Whoever Does This Next</h2>
+  <p>If you're inheriting this kind of work — solo audit, external reviewer, five-week sprint — here's what I'd leave for you:</p>
+
+  <h3>Protect the raw data</h3>
+  <p>Your first confused impression of a product is gold. Don't smooth it away. Write it down exactly as it felt. The sense-making comes later, grounded in what you actually saw, not what you think you should have seen. Your confusion is a leading indicator that something in the experience isn't working.</p>
+
+  <h3>Let the theory come after</h3>
+  <p>Don't reach for Nielsen or Krug before you've logged what you actually experienced. Research frameworks are powerful tools for sense-making, but they're tools. They come after the data, not before it. If you apply theory first, you'll see what the theory predicts, not what the product actually does.</p>
+
+  <h3>Build credibility through presence</h3>
+  <p>You won't have authority on day one. You'll earn it through rigorous preparation, honest questions, and genuine engagement with the product as a user. Show up prepared. Ask real questions. The team will start trusting your answers.</p>
+
+  <h3>Translate, don't interpret</h3>
+  <p>A usability finding only matters if it connects to something the founder cares about. Learn to speak both languages: UX language for accuracy, commercial language for impact. The same finding can be both. Usually it should be.</p>
+
+  <h3>One source of truth. Keep it honest</h3>
+  <p>Scattered notes feel faster. They're not. Keep one authoritative record. Put everything there. Put it there the same day you notice it. The single source of truth only works if you actually treat it as single.</p>
+
+  <footer>
+    <p>These notes document lessons from five weeks of solo audit work. They're offered to whoever inherits this kind of work next, with the hope that the mistakes and insights might be useful.</p>
+  </footer>
+</div>
+</body>
+</html>

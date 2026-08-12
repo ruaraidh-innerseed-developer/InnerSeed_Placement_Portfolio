@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Garden Lab Proposal</title>
+  <style>
+    :root {
+      --sage: #5A8B5C;
+      --text-primary: #1a1a1a;
+      --text-secondary: #4a4a4a;
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8f8f8;
+      --accent-warm: #8B7355;
+      --accent-rust: #C85C40;
+      --border: #e0e0e0;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --text-primary: #e8e8e8;
+        --text-secondary: #b0b0b0;
+        --bg-primary: #1a1a1a;
+        --bg-secondary: #2a2a2a;
+        --border: #404040;
+      }
+    }
+    :root[data-theme="dark"] {
+      --text-primary: #e8e8e8;
+      --text-secondary: #b0b0b0;
+      --bg-primary: #1a1a1a;
+      --bg-secondary: #2a2a2a;
+      --border: #404040;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      color: var(--text-primary);
+      background: var(--bg-primary);
+      padding: 3rem 2rem;
+    }
+    .container { max-width: 800px; margin: 0 auto; }
+    header {
+      border-bottom: 2px solid var(--sage);
+      padding-bottom: 2rem;
+      margin-bottom: 3rem;
+    }
+    .eyebrow {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--sage);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+    .meta {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+    .toc {
+      background: var(--bg-secondary);
+      border-left: 4px solid var(--sage);
+      padding: 1.5rem;
+      margin: 2rem 0;
+      border-radius: 0 4px 4px 0;
+    }
+    .toc h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--sage);
+    }
+    .toc ol {
+      margin-left: 1.5rem;
+    }
+    .toc li {
+      margin-bottom: 0.5rem;
+      color: var(--text-secondary);
+    }
+    h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-top: 2.5rem;
+      margin-bottom: 1.5rem;
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+    }
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--accent-warm);
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+    p {
+      margin-bottom: 1.25rem;
+      color: var(--text-secondary);
+    }
+    em {
+      font-style: italic;
+      color: var(--sage);
+    }
+    strong {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .section-note {
+      background: rgba(90, 139, 92, 0.08);
+      border-left: 3px solid var(--sage);
+      padding: 1rem 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 0 4px 4px 0;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+    .methodology {
+      background: rgba(139, 115, 85, 0.06);
+      border-left: 3px solid var(--accent-warm);
+      padding: 1rem 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 0 4px 4px 0;
+    }
+    footer {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+    a {
+      color: var(--sage);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(90, 139, 92, 0.3);
+    }
+    a:hover { border-bottom-color: var(--sage); }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="eyebrow">InnerSeed Garden · Forward Brief</div>
+    <h1>The Garden Lab Proposal</h1>
+    <div class="meta">Proposed, in light of the 18 June focus call · GLP — Continuing From Here</div>
+  </header>
+
+  <div class="toc">
+    <h2>In this brief:</h2>
+    <ol>
+      <li>Competitor &amp; market landscape — breathwork and adjacent wellness</li>
+      <li>Spatial computing and AI-guided practice — a five-to-ten-year horizon</li>
+      <li>Subscription model evolution — what to track, what to ignore</li>
+      <li>How the brief would have fed the Content Marketing Strategy</li>
+      <li>Method: raw-first, structured-second — unchanged from Phase 1</li>
+    </ol>
+  </div>
+
+  <h2>Opening Note</h2>
+  <p>Phase 1 closed with a specific instruction from Jeroen: let the imagination run its due course ahead of Phase 2, and think about what the Garden — and Green House — could become beyond a breathwork app. Had the placement continued past the desktop audit, the next brief was already agreed in outline: a short research sprint into the wider wellness and breathwork market, honest competitor mapping — what's already been tried, what nobody has — and a horizon-scan of where spatial computing, AI-guided practice and subscription wellness are heading over the next five to ten years, tracked back always to whether Garden and Green House have a genuine claim on that future, or should stay focused on what they already do well.</p>
+
+  <p>The output would not have been a speculative pitch deck. It would have been a short, evidenced brief, in the same raw-first, structured-second method as the audit, landing squarely inside Phase 2's Content Marketing Strategy — so that wherever the brand chooses to go next, it goes there deliberately, not by accident.</p>
+
+  <h2>1. Competitor &amp; Market Landscape</h2>
+  <p>The breathwork app category has consolidated around a few dominant patterns: premium subscription models with instructor-led content (Wim Hof, Breathwrk), journaling-focused practice apps, and meditation platforms that treat breathwork as a module inside a broader wellness stack. What's <em>not</em> well-covered:</p>
+
+  <h3>White space in the market</h3>
+  <p>Asynchronous breathwork guidance that still feels personal and responsive to the practitioner's nervous system state. Most apps treat sessions as pre-recorded content; the practitioner adapts to the content, not the reverse. A practice that genuinely reads the room — by design, not accident — has no current equivalent at scale.</p>
+
+  <p>Community around private practice. Group breathwork has strong cultural momentum (sound baths, group sessions, conscious events). Solitary practice, the Garden's strength, typically feels isolating by comparison. Flipping that — making solo practice feel like part of something larger — is underdeveloped in competitor offerings.</p>
+
+  <p>Breath practice specifically for performance contexts: workplace anxiety, athletic recovery, pre-presentation centering. Adjacent products (Headspace, Calm) offer workplace integrations; focused breath-only offerings in those contexts don't exist.</p>
+
+  <h3>Incumbent threats</h3>
+  <p>Apple Health integration across meditation and breathwork apps is accelerating. Whichever wellness apps integrate deepest with platform health systems will own the retention advantage. This is not optional in five years; it's table stakes.</p>
+
+  <p>AI-generated guided sessions are becoming viable. By 2028-2030, personalized AI coaching in real time — adapting pace, depth, and duration to live biometric feedback — moves from research to consumer product. The question is whether that's a Garden feature or a Garden threat.</p>
+
+  <h2>2. Spatial Computing &amp; AI-Guided Practice</h2>
+  <p>Vision Pro and next-generation spatial devices are expanding the design space for embodied practice. Current breathwork apps live in two dimensions; spatial computing enables three-dimensional guidance, embodied metaphor, and spatial memory integration.</p>
+
+  <h3>What's technically possible</h3>
+  <p>Guided practice in spatial environments: imagine a breathwork sequence where the pace, depth, and focal point are tracked through space — a visual anchor that moves through 3D space as you progress through breath cycles. This is not pie-in-the-sky; the hardware already exists.</p>
+
+  <p>Biometric-responsive guidance: real-time heart rate variability (HRV) feedback integrated into session pacing. If your nervous system is arriving frayed, the session guides differently than if you're already calm. Apple Watch and similar devices can surface this data; most apps don't use it yet.</p>
+
+  <p>Spatial memory integration: evidence suggests embodied learning — pairing breath practice with spatial position or movement — improves retention and integration. Spatial devices make this much easier to implement.</p>
+
+  <h3>The realism check</h3>
+  <p>Spatial computing is still a small addressable market (high-end devices, early adopters). Building for it now means accepting 2-3 years of limited user base before mainstream adoption. It's a genuine consideration: is this a core strategy or a future-state exploration? The brief would map decision trees here, not recommend a particular path.</p>
+
+  <h2>3. Subscription Model Evolution</h2>
+  <p>Breathwork app subscription models are converging on a pattern: free tier with limited sessions, paywall at ~$10/month for full access or annual plans with discount. Retention curves are steep (6-month churn around 70% for most wellness apps). What separates retained users from churn?</p>
+
+  <h3>What to track</h3>
+  <p>Session frequency and personalization: users who practice consistently and feel the content is responsive to their specific needs stick around. Frequency (2+ sessions per week) is a leading indicator. Personalization (is the app adapting to me?) is a retention lever more powerful than content volume.</p>
+
+  <p>Social proof and identity: users who feel part of a practice community — even a private one — have higher lifetime value. This matters even for solo practitioners if the social framing is community-of-practice instead of group sessions.</p>
+
+  <p>Integration with life context: breathing practice that connects to something the user cares about (sleep, performance, anxiety management specific to their job) outperforms generic wellness offerings.</p>
+
+  <h3>What to ignore</h3>
+  <p>Gamification in breathwork doesn't work well. Streaks, badges, and leaderboards feel intrinsically mismatched to meditative practice. Apps that lean on gamification in wellness categories typically see engagement metrics spike and retention crater.</p>
+
+  <p>Feature bloat: adding meditation, yoga, sleep stories, journaling, and breathwork to one platform doesn't increase retention proportionally. Users choose <em>one</em> primary tool per category and use others rarely. Deep strength in one category beats shallow coverage across many.</p>
+
+  <h2>4. Implications for Content Marketing Strategy</h2>
+  <p>If the Garden Lab Proposal had been conducted, it would have fed directly into Phase 2 Content Marketing Strategy in three ways:</p>
+
+  <h3>Positioning</h3>
+  <p>Market gaps suggest positioning opportunities: personal-responsive breathwork, community in solitude, contextual practice (anxiety, recovery, performance). These are not features to bolt on; they're the narrative spine of how Garden tells its story to the world.</p>
+
+  <h3>Content pillars</h3>
+  <p>What gets talked about, published, and shared externally should track the white space, not copy competitors. If the brief finds that "breath practice for performance contexts" is underdeveloped, then content pillars should emphasize practitioner stories, research on breath and performance, and real-world integration guides.</p>
+
+  <h3>Product roadmap translation</h3>
+  <p>The brief provides a shared language between product development and marketing. Instead of marketing explaining what the app does, marketing and product start from market strategy — what does the market need that Garden can uniquely deliver? — and then work backwards to features and content.</p>
+
+  <h2>5. Method: Raw-First, Structured-Second</h2>
+  <p>The Garden Lab Proposal would follow the exact methodology from Phase 1: immersive research first, structure second.</p>
+
+  <div class="methodology">
+    <strong>Phase 1 approach (replicated):</strong>
+    <p style="margin-top: 0.5rem; margin-bottom: 0;">Start with raw research: competitor app audits (trying them as users), market research reports (Statista, McKinsey wellness reports), HRV device documentation, spatial computing developer roadmaps. Capture raw impressions: what surprised me? What's missing from the narrative? What do the numbers actually say vs. what the companies claim?</p>
+    <p style="margin-top: 0.75rem; margin-bottom: 0;">Only after raw data is secured: organize findings, identify patterns, name white space, make recommendations. The structure comes after the understanding, not before it.</p>
+  </div>
+
+  <p>This method is slower than jumping to conclusions. It's also more accurate and more defensible. A founder building a product needs to know what it's worth — and this method delivers evidence, not opinion.</p>
+
+  <h2>Why This Matters Now</h2>
+  <p>The five-to-ten-year horizon isn't speculative. It's the decision window for whether Garden invests in spatial computing capability, whether AI-adaptive sessions become a core feature, and whether the brand story emphasizes personal responsiveness or community. These decisions compound: each one narrows or expands the product and market space.</p>
+
+  <p>An evidenced brief — grounded in market data, competitor reality, and technical capability — lets those decisions be made deliberately. That's what a Garden Lab Proposal would have delivered.</p>
+
+  <footer>
+    <p>This brief outlines research that would have continued Phase 1 methodology into market and technical strategy territory, feeding directly into Phase 2 Content Marketing Strategy. The work is proposed but not yet completed.</p>
+  </footer>
+</div>
+</body>
+</html>
