@@ -1,0 +1,18 @@
+[Unit]
+Description=Agent One - Autonomous Video Processing Agent
+After=network.target
+
+[Service]
+Type=simple
+User=agent-one
+WorkingDirectory=/home/agent-one/app
+Environment="PATH=/home/agent-one/venv/bin"
+EnvironmentFile=/home/agent-one/.env
+ExecStart=/home/agent-one/venv/bin/python -m src.claude_agent --mode scheduled --interval 30
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
