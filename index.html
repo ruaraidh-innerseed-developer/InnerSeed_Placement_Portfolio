@@ -106,16 +106,18 @@ h1{
   margin-bottom:.6rem;
 }
 h1 em{ font-style:italic; color:var(--moss); }
-.lede{ max-width:56ch; color:var(--fern); margin-bottom:1.6rem; }
+.lede{ max-width:56ch; color:var(--fern); margin-bottom:1.6rem; margin-left:auto; margin-right:auto; }
 
-.stats{ display:flex; gap:2.4rem; flex-wrap:wrap; margin-bottom:1rem; }
+.stats{ display:flex; gap:2.4rem; flex-wrap:wrap; margin-bottom:1rem; justify-content:center; }
 .stat b{ display:block; font-family:Georgia,serif; font-weight:400; font-size:1.7rem; color:var(--sage); line-height:1.2; }
 .stat span{ font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--faint); }
 
+#root > p:not(.eyebrow):not(.lede){ margin-left:auto; margin-right:auto; max-width:65ch; }
+
 /* ---------- ROOT — hero: video + 500-word field note ---------- */
 .hero-grid{
-  display:grid; grid-template-columns:minmax(220px,320px) 1fr; gap:clamp(1.6rem,4vw,3.4rem);
-  align-items:start; margin-top:3.2rem;
+  display:grid; grid-template-columns:1fr; gap:clamp(1.6rem,4vw,3.4rem);
+  align-items:start; margin-top:3.2rem; max-width:66ch; margin-left:auto; margin-right:auto;
 }
 @media (max-width:820px){ .hero-grid{ grid-template-columns:1fr; } }
 
@@ -148,7 +150,7 @@ h1 em{ font-style:italic; color:var(--moss); }
 .vine-corner.tl{ top:-14px; left:-18px; width:70px; transform:rotate(-8deg); }
 .vine-corner.br{ bottom:-18px; right:-16px; width:78px; transform:rotate(174deg); }
 
-.prose{ max-width:66ch; }
+.prose{ max-width:66ch; margin:0 auto; }
 .prose p{ margin-bottom:1.15rem; color:var(--sage); }
 .prose p:first-of-type::first-letter{
   font-family:Georgia,serif; font-size:3.4em; float:left; line-height:.82; padding:.05em .09em 0 0;
@@ -166,7 +168,7 @@ h1 em{ font-style:italic; color:var(--moss); }
 }
 .bed-title{ font-family:Georgia,serif; font-weight:400; font-size:1.35rem; color:var(--sage); margin-bottom:.7rem; }
 .bed-title em{ font-style:italic; color:var(--moss); }
-.bed-lede{ max-width:64ch; color:var(--fern); font-size:14px; margin-bottom:2rem; }
+.bed-lede{ max-width:64ch; color:var(--fern); font-size:14px; margin-bottom:2rem; margin-left:auto; margin-right:auto; }
 
 .row{
   width:100%; display:flex; align-items:flex-end; gap:clamp(14px, 4vw, 44px);
