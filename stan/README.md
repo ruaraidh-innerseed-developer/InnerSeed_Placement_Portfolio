@@ -43,8 +43,15 @@ stan/
 ├── governance/
 │   ├── SCOPE.md              What STAN does and — more importantly — does not do
 │   ├── EVIDENCE-POLICY.md    How sources are graded, reviewed and approved
-│   └── SUPPORT-MODEL.md      How human support is governed: tiers, boundaries,
-│                             crisis protocol, groups, supervision
+│   ├── SUPPORT-MODEL.md      How human support is governed: tiers, boundaries,
+│   │                         groups, supervision, the founder's role
+│   └── CRISIS-PROTOCOL.md    What to do when someone discloses suicidal intent,
+│                             per channel — including the email safeguards
+├── services/
+│   ├── schema/
+│   │   └── service.schema.yaml
+│   └── crisis-services.yaml  Crisis signposting, Scotland and England.
+│                             Reviewed every 6 months, enforced.
 ├── evidence/
 │   ├── schema/
 │   │   └── source.schema.yaml   The record schema. Editing it is a governance act.
@@ -119,39 +126,43 @@ can represent its own uncertainty is worth more than one that cannot.
 6. Draft the safeguarding policy. Required before any public launch and before
    any support channel opens.
 
-**Support** — governed by `SUPPORT-MODEL.md`
-7. Collect evidence under the `peer-support` and `mental-health` topics. The
-   crisis protocol depends on knowing the actual risk profile of AAS cessation,
-   and the tier model should be built on established peer support practice
-   rather than invented here.
-8. Write the crisis protocol. It is the first thing needed and the thing most
-   likely to be deferred.
-9. Complete the jurisdiction-dependent crisis signposting list once STAN's base
-   and coverage are settled.
-10. Start with recorded seminars. Lowest risk, reviewable in advance, and the
+**Support** — governed by `SUPPORT-MODEL.md` and `CRISIS-PROTOCOL.md`
+7. **Verify all nine crisis service entries** against each provider's own
+   website and promote them to `verified`. Eight are currently unconfirmed.
+   This is roughly ten minutes of work and it blocks every support channel.
+8. Close the gaps listed at the foot of `crisis-services.yaml`: a Scottish
+   drugs information route, needle and syringe programme access, and a decision
+   on whether STAN's signposting covers Wales and Northern Ireland.
+9. Set up the STAN email address and implement the auto-reply in
+   `CRISIS-PROTOCOL.md` §4. Never use a personal address for a public contact
+   route — it cannot carry an auto-response and cannot be covered.
+10. Collect evidence under `peer-support` and `mental-health`. Two specific
+    needs: the risk profile of AAS cessation, which the crisis protocol assumes,
+    and the "asking directly does not increase risk" claim the protocol makes.
+11. Start with recorded seminars. Lowest risk, reviewable in advance, and the
     best demonstration of quality to a prospective clinical partner.
 
 **People** — the binding constraint, not the code
-11. Recruit a clinical lead. The author group on
+12. Recruit a clinical lead. The author group on
     `grant-2023-endocrinologist-survey` (Grant, Pradeep, Minhas, Dhillo, Quinton,
     Jayasena) is effectively a shortlist of UK academics and clinicians working in
     exactly this area. Approach academics before clinics.
-12. Reproductive urology, andrology and male fertility services see
+13. Reproductive urology, andrology and male fertility services see
     AAS-related presentations far more often than general endocrinology. Target
     accordingly.
-13. Define the founder's role per `SUPPORT-MODEL.md` §7 — designing and holding
+14. Define the founder's role per `SUPPORT-MODEL.md` §7 — designing and holding
     the standard, not being the always-on contact. Includes arranging supervision
     for the founder, which is the step most likely to be skipped.
 
 **Product**
-14. Build one content page to full publishable standard, using the index case
+15. Build one content page to full publishable standard, using the index case
     (high SHBG, low calculated free testosterone, symptomatic on transdermal
     replacement after prolonged supraphysiological exposure). That page, plus its
     consultation brief, is the specimen to put in front of a prospective clinical
     lead. Not a deck — a specimen.
 
 **Deferred on purpose**
-15. Platform. Current lean is Next.js + Postgres + Payload CMS, with
+16. Platform. Current lean is Next.js + Postgres + Payload CMS, with
     Django + Wagtail the serious alternative if Python is the more comfortable
     language. Nothing above depends on that choice. Make it when there is content
     to render and a second person to hand it to.

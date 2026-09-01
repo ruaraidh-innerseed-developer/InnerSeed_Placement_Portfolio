@@ -84,19 +84,25 @@ Depression and suicidality are documented features of anabolic steroid cessation
 intent.** This is not a possibility to plan for eventually; it is a certainty to
 plan for first.
 
-Requirements before any live channel opens:
+This is now covered in full by [`CRISIS-PROTOCOL.md`](CRISIS-PROTOCOL.md), with
+the verified service list in
+[`../services/crisis-services.yaml`](../services/crisis-services.yaml) covering
+both Scotland and England.
+
+In summary, requirements before any channel opens:
 
 1. A written crisis protocol every supporter has been trained on and can execute
    without improvising.
-2. A single, unambiguous escalation route, and a named person on call.
-3. Standing signposts that every supporter knows verbatim: 999 and A&E for
-   immediate danger; NHS 111 option 2 for urgent mental health; Samaritans 116 123
-   free at any hour; and the relevant local crisis service for the person's
-   nation. *(Jurisdiction-dependent — Scotland also has Breathing Space; this
-   list must be completed once STAN's base and coverage are settled.)*
-4. A rule that **no supporter holds a crisis alone.** Every crisis contact is
-   reported the same day and debriefed.
-5. Recognition that STAN operates no crisis service, cannot offer out-of-hours
+2. A single, unambiguous escalation route, and a named person on call, plus a
+   named deputy.
+3. Every crisis service entry confirmed against the provider's own website.
+   `validate.py` reports how many remain unverified.
+4. The email safeguards in `CRISIS-PROTOCOL.md` §4 implemented and tested.
+   Asynchronous channels are the most dangerous ones here, because a message can
+   sit unread for hours — that gap is engineered against, not trained against.
+5. A rule that **no supporter holds a crisis alone**, the founder included. Every
+   crisis contact is reported the same day and debriefed.
+6. Recognition that STAN operates no crisis service, cannot offer out-of-hours
    cover, and must state this plainly wherever a channel is advertised.
 
 ## 6. Groups and moderation

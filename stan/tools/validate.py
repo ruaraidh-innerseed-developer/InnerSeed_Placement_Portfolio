@@ -21,8 +21,20 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 SCHEMA_PATH = ROOT / "evidence" / "schema" / "source.schema.yaml"
 SOURCES_DIR = ROOT / "evidence" / "sources"
+SERVICE_SCHEMA_PATH = ROOT / "services" / "schema" / "service.schema.yaml"
+SERVICES_PATH = ROOT / "services" / "crisis-services.yaml"
 
-TYPE_MAP = {"str": str, "int": int, "list": list, "bool": bool, "map": dict}
+TYPE_MAP = {
+    "str": str,
+    "int": int,
+    "float": float,
+    "list": list,
+    "bool": bool,
+    "map": dict,
+}
+
+# Crisis information goes stale faster than anything else STAN holds.
+MAX_SERVICE_REVIEW_DAYS = 183
 
 REVIEW_INTERVAL_DAYS = {
     "guideline": 365,
@@ -159,6 +171,77 @@ def check_rules(report, rec_id, record, today):
                 )
 
 
+def validate_services(report) -> dict:
+    """Validate the crisis services register. Returns counts for the summary."""
+    counts = {"total": 0, "verified": 0}
+    if not SERVICES_PATH.exists():
+        report.warn("services", f"no services register at {SERVICES_PATH}")
+        return counts
+
+    schema = yaml.safe_load(SERVICE_SCHEMA_PATH.read_text())
+    enums = schema["enums"]
+    fields = schema["fields"]
+
+    try:
+        doc = yaml.safe_load(SERVICES_PATH.read_text())
+    except yaml.YAMLError as exc:
+        report.error("services", f"YAML parse error: {exc}")
+        return counts
+
+    for name, spec in schema["top_level"].items():
+        if name not in doc or doc[name] in (None, ""):
+            if spec.get("required"):
+                report.error("services", f"{name}: missing required field")
+            continue
+        check_value(report, "services", name, doc[name], spec, enums)
+
+    last = parse_date(doc.get("last_full_review"))
+    nxt = parse_date(doc.get("next_full_review"))
+    if last and nxt:
+        interval = (nxt - last).days
+        if interval > MAX_SERVICE_REVIEW_DAYS:
+            report.error(
+                "services",
+                f"review-interval: {interval}d between reviews exceeds the "
+                f"{MAX_SERVICE_REVIEW_DAYS}d maximum for crisis information",
+            )
+    if nxt and nxt < dt.date.today():
+        report.error(
+            "services",
+            f"review-interval: crisis register review was due {nxt.isoformat()} "
+            "and is overdue — treat every entry as unverified until rechecked",
+        )
+
+    seen: set[str] = set()
+    for entry in doc.get("services") or []:
+        if not isinstance(entry, dict):
+            report.error("services", "a service entry is not a mapping")
+            continue
+        sid = entry.get("id", "<no id>")
+        label = f"services/{sid}"
+
+        if sid in seen:
+            report.error(label, "unique-ids: duplicate service id")
+        seen.add(sid)
+
+        for name, spec in fields.items():
+            if name not in entry or entry[name] in (None, ""):
+                if spec.get("required"):
+                    report.error(label, f"{name}: missing required field")
+                continue
+            check_value(report, label, name, entry[name], spec, enums)
+
+        contact = entry.get("contact") or {}
+        if not any(contact.get(k) for k in ("phone", "text", "email", "web")):
+            report.error(label, "contact-present: need one of phone, text, email, web")
+
+        counts["total"] += 1
+        if (entry.get("verification") or {}).get("status") == "verified":
+            counts["verified"] += 1
+
+    return counts
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--quiet", action="store_true", help="print errors only")
@@ -208,6 +291,8 @@ def main() -> int:
 
         check_rules(report, rec_id, record, today)
 
+    service_counts = validate_services(report)
+
     # A record that failed validation is never citable, whatever its status says.
     citable = [
         rec_id
@@ -230,6 +315,15 @@ def main() -> int:
             print(
                 "  None yet. No record may be cited until it has been read in full\n"
                 "  and approved by a named clinical reviewer (EVIDENCE-POLICY.md §4, §8)."
+            )
+
+        total, verified = service_counts["total"], service_counts["verified"]
+        print(f"\nCrisis services: {total} listed, {verified} verified")
+        if total and verified < total:
+            print(
+                f"  {total - verified} entr(y/ies) NOT confirmed against the provider's\n"
+                "  own website. No support channel may open until all are verified\n"
+                "  (SUPPORT-MODEL.md §10, CRISIS-PROTOCOL.md §1)."
             )
 
     if report.warnings and not args.quiet:
