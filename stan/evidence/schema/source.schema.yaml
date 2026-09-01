@@ -1,0 +1,203 @@
+# STAN evidence register — source record schema
+# Version: 1.0
+#
+# This file is loaded by stan/tools/validate.py. Editing it changes what the
+# validator enforces, so treat changes as governance changes, not code changes.
+#
+# Field spec format:
+#   required: must be present and non-empty
+#   type:     str | int | list | bool | map
+#   enum:     permitted values
+#   pattern:  regex the value must match
+
+version: 1.0
+
+enums:
+  type:
+    - primary-research
+    - systematic-review
+    - scoping-review
+    - narrative-review
+    - guideline
+    - position-statement
+    - textbook
+    - grey-literature
+    - regulatory
+    - service-record
+    - lived-experience
+
+  grade:
+    - A
+    - B
+    - C
+    - D
+
+  population_relevance:
+    - direct
+    - partial
+    - indirect
+    - unclear
+
+  bibliographic_verification:
+    - verified
+    - partial
+    - unverified
+
+  status:
+    - added
+    - in-review
+    - approved
+    - retired
+
+  topics:
+    - asih
+    - hpg-axis-recovery
+    - trt-initiation
+    - trt-monitoring
+    - shbg-free-testosterone
+    - oestradiol-management
+    - fertility-spermatogenesis
+    - cardiovascular
+    - mental-health
+    - pct-restart
+    - delivery-routes
+    - harm-reduction
+    - women-and-peds
+    - adolescents
+    - service-access-uk
+    - epidemiology
+
+fields:
+  id:
+    required: true
+    type: str
+    pattern: '^[a-z0-9]+(-[a-z0-9]+)*$'
+    note: Stable slug. Never change it once content cites this record.
+
+  type:
+    required: true
+    type: str
+    enum: type
+
+  title:
+    required: true
+    type: str
+
+  authors:
+    required: true
+    type: list
+    note: Surname + initials. Use ["(corporate author)"] for body-authored works.
+
+  year:
+    required: true
+    type: int
+
+  venue:
+    required: true
+    type: str
+    note: Journal, publisher, or issuing body.
+
+  identifiers:
+    required: true
+    type: map
+    note: Any of doi, pmid, pmcid, isbn, url. At least one must be present.
+
+  open_access:
+    required: false
+    type: bool
+
+  evidence_level:
+    required: true
+    type: map
+    subfields:
+      scheme: {required: true, type: str}
+      grade: {required: true, type: str, enum: grade}
+      rationale: {required: true, type: str}
+
+  population_relevance:
+    required: true
+    type: map
+    subfields:
+      rating: {required: true, type: str, enum: population_relevance}
+      notes: {required: true, type: str}
+
+  topics:
+    required: true
+    type: list
+    enum: topics
+
+  claims_supported:
+    required: true
+    type: list
+    note: What this source may be cited for. Required non-empty at status approved.
+
+  claims_not_supported:
+    required: true
+    type: list
+    note: What it must never be cited for. Foreseeable misuse goes here.
+
+  limitations:
+    required: true
+    type: str
+
+  conflicts_of_interest:
+    required: true
+    type: str
+    note: Use "not stated in source" where none is declared. Never "none".
+
+  verification:
+    required: true
+    type: map
+    subfields:
+      bibliographic: {required: true, type: str, enum: bibliographic_verification}
+      full_text_read: {required: true, type: bool}
+      verified_by: {required: true, type: str}
+      verified_on: {required: true, type: str, pattern: '^\d{4}-\d{2}-\d{2}$'}
+
+  review:
+    required: true
+    type: map
+    subfields:
+      status: {required: true, type: str, enum: status}
+      clinical_reviewer: {required: false, type: str}
+      reviewed_on: {required: false, type: str, pattern: '^\d{4}-\d{2}-\d{2}$'}
+      next_review_due: {required: false, type: str, pattern: '^\d{4}-\d{2}-\d{2}$'}
+
+  provenance:
+    required: true
+    type: map
+    subfields:
+      added_by: {required: true, type: str}
+      added_on: {required: true, type: str, pattern: '^\d{4}-\d{2}-\d{2}$'}
+      discovered_via: {required: false, type: str}
+
+  notes:
+    required: false
+    type: str
+
+# Cross-field rules enforced by the validator beyond simple field checks.
+rules:
+  - id: approved-requires-reviewer
+    description: >
+      A record at review.status "approved" must name a clinical reviewer and
+      carry both reviewed_on and next_review_due dates.
+
+  - id: approved-requires-verified-bibliography
+    description: >
+      A record at review.status "approved" must have
+      verification.bibliographic == "verified" and full_text_read == true.
+
+  - id: approved-requires-claims
+    description: >
+      A record at review.status "approved" must have a non-empty
+      claims_supported list.
+
+  - id: retired-requires-reason
+    description: >
+      A record at review.status "retired" must explain why in notes.
+
+  - id: identifier-present
+    description: At least one of doi, pmid, pmcid, isbn, url must be present.
+
+  - id: id-matches-filename
+    description: The record id must equal the filename without its .yaml suffix.

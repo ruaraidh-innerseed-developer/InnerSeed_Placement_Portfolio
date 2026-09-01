@@ -1,0 +1,99 @@
+id: grant-2023-endocrinologist-survey
+type: primary-research
+title: >-
+  Survey of endocrinologists managing recovery from anabolic androgenic steroid
+  induced hypogonadism
+authors:
+  - Grant B
+  - Pradeep A
+  - Minhas S
+  - Dhillo WS
+  - Quinton R
+  - Jayasena CN
+year: 2023
+venue: Reproduction & Fertility
+identifiers:
+  doi: 10.1530/RAF-22-0097
+  pmid: '36757334'
+  pmcid: PMC9986377
+  url: https://pubmed.ncbi.nlm.nih.gov/36757334/
+open_access: true
+
+evidence_level:
+  scheme: STAN-EL-1
+  grade: C
+  rationale: >-
+    Peer-reviewed primary research, but a cross-sectional survey of clinician
+    self-reported practice with no patient outcome data. Strong for
+    characterising the state of practice; carries no weight on what works.
+
+population_relevance:
+  rating: direct
+  notes: >-
+    Surveys clinicians specifically about managing ASIH recovery. The subject
+    matter is exactly STAN's core population, though the respondents are
+    clinicians rather than patients.
+
+topics:
+  - asih
+  - hpg-axis-recovery
+  - service-access-uk
+  - pct-restart
+
+claims_supported:
+  - >-
+    That endocrinologists report no consistent or agreed approach to managing
+    recovery from anabolic-androgenic steroid induced hypogonadism.
+  - >-
+    That the absence of an established clinical pathway for ASIH is a documented
+    finding in the peer-reviewed literature, not merely an anecdotal complaint.
+  - >-
+    As the primary citation for STAN's own statement of the gap it exists to
+    address.
+
+claims_not_supported:
+  - >-
+    Any claim that a particular management approach for ASIH is effective,
+    safe, or preferable. The study measures what clinicians say they do, not
+    what works.
+  - Any claim about patient outcomes following any approach.
+  - Any claim about the prevalence of ASIH in the general population.
+  - >-
+    Any suggestion that because clinicians disagree, non-clinical advice is
+    therefore equivalent or preferable. The study shows uncertainty among
+    experts, which is an argument for better evidence, not for bypassing them.
+
+limitations: >-
+  Cross-sectional clinician survey. Self-reported practice may diverge from
+  actual practice. Respondent sample may not represent all endocrinologists
+  managing these patients. No patient-level or outcome data. Full text not yet
+  read by STAN.
+
+conflicts_of_interest: >-
+  Not yet assessed — full text not read. Author group is UK academic
+  (Imperial College London and Newcastle); note that several authors also
+  practise privately in this clinical area, which should be recorded once the
+  declaration is read.
+
+verification:
+  bibliographic: partial
+  full_text_read: false
+  verified_by: R. (founder) via Claude-assisted search
+  verified_on: '2026-09-01'
+
+review:
+  status: added
+
+provenance:
+  added_by: R. (founder)
+  added_on: '2026-09-01'
+  discovered_via: >-
+    Literature search on ASIH management, 2026-09-01. Surfaced as the key
+    citation evidencing absence of an agreed clinical pathway.
+
+notes: >-
+  HIGH PRIORITY for full-text read and promotion to approved. This is the single
+  most strategically important record in the register: it is the peer-reviewed
+  evidence for STAN's reason to exist, and the author list (Grant, Pradeep,
+  Minhas, Dhillo, Quinton, Jayasena) is effectively a shortlist of UK clinicians
+  and academics working in this exact area.

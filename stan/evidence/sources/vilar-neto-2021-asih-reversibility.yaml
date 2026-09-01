@@ -1,0 +1,81 @@
+id: vilar-neto-2021-asih-reversibility
+type: systematic-review
+title: >-
+  Anabolic androgenic steroid-induced hypogonadism, a reversible condition in
+  male individuals? A systematic review
+authors:
+  - Vilar Neto JO
+  - da Silva CA
+  - Bruno da Silva CA
+  - Pinto DV
+  - Caminha JSR
+  - de Matos RS
+  - Nunes Filho JCC
+  - Alves FR
+  - Magalhães SC
+  - Daher EF
+year: 2021
+venue: Andrologia
+identifiers:
+  doi: 10.1111/and.14062
+  pmid: '33887077'
+  url: https://pubmed.ncbi.nlm.nih.gov/33887077/
+open_access: false
+
+evidence_level:
+  scheme: STAN-EL-1
+  grade: C
+  rationale: >-
+    Systematic review on a directly relevant question, but provisionally graded
+    C pending full-text assessment of the quality and heterogeneity of included
+    studies. Upgrade to B or A only after reading — the grade of a review is
+    determined by what it reviewed, not by its label.
+
+population_relevance:
+  rating: direct
+  notes: >-
+    Directly addresses reversibility of ASIH in male individuals. Included study
+    populations not yet assessed.
+
+topics:
+  - asih
+  - hpg-axis-recovery
+  - fertility-spermatogenesis
+
+claims_supported:
+  - >-
+    That the reversibility of ASIH has been the subject of formal systematic
+    review, and remains posed as an open question in that literature.
+
+claims_not_supported:
+  - >-
+    Any conclusion about whether ASIH is or is not reversible. STAN has not read
+    the full text and must not represent this review's findings until it has.
+  - Any timeline, prognosis, or treatment approach.
+
+limitations: >-
+  Full text not read. Findings, included-study quality, heterogeneity and
+  conclusions are all currently unassessed by STAN. Everything in this record
+  beyond the bibliographic data is provisional.
+
+conflicts_of_interest: not yet assessed — full text not read
+
+verification:
+  bibliographic: partial
+  full_text_read: false
+  verified_by: R. (founder) via Claude-assisted search
+  verified_on: '2026-09-01'
+
+review:
+  status: added
+
+provenance:
+  added_by: R. (founder)
+  added_on: '2026-09-01'
+  discovered_via: Literature search on ASIH reversibility, 2026-09-01.
+
+notes: >-
+  Deliberately included at minimal claims to demonstrate the register's
+  discipline: a source whose title suggests it answers our central question, but
+  which we have not read, contributes almost nothing until we do. The title is
+  not the finding.

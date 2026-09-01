@@ -1,0 +1,252 @@
+#!/usr/bin/env python3
+"""Validate the STAN evidence register against source.schema.yaml.
+
+Usage:
+    python3 stan/tools/validate.py            # validate and summarise
+    python3 stan/tools/validate.py --quiet    # errors only
+
+Exit status is 1 if any record fails validation, 0 otherwise.
+"""
+
+from __future__ import annotations
+
+import argparse
+import datetime as dt
+import re
+import sys
+from pathlib import Path
+
+import yaml
+
+ROOT = Path(__file__).resolve().parent.parent
+SCHEMA_PATH = ROOT / "evidence" / "schema" / "source.schema.yaml"
+SOURCES_DIR = ROOT / "evidence" / "sources"
+
+TYPE_MAP = {"str": str, "int": int, "list": list, "bool": bool, "map": dict}
+
+REVIEW_INTERVAL_DAYS = {
+    "guideline": 365,
+    "position-statement": 365,
+    "regulatory": 365,
+    "service-record": 183,
+}
+DEFAULT_REVIEW_INTERVAL_DAYS = 730
+
+
+class Report:
+    def __init__(self) -> None:
+        self.errors: list[str] = []
+        self.warnings: list[str] = []
+        self.failed: set[str] = set()
+
+    def error(self, record: str, message: str) -> None:
+        self.errors.append(f"{record}: {message}")
+        self.failed.add(record)
+
+    def warn(self, record: str, message: str) -> None:
+        self.warnings.append(f"{record}: {message}")
+
+
+def check_value(report, rec_id, path, value, spec, enums):
+    """Check one field value against its spec fragment."""
+    expected = TYPE_MAP.get(spec.get("type", "str"), str)
+
+    # bool is a subclass of int in Python, so guard the int case explicitly.
+    if expected is int and isinstance(value, bool):
+        report.error(rec_id, f"{path}: expected int, got bool")
+        return
+    if not isinstance(value, expected):
+        report.error(
+            rec_id, f"{path}: expected {spec.get('type')}, got {type(value).__name__}"
+        )
+        return
+
+    if spec.get("required") and isinstance(value, (str, list, dict)) and not value:
+        report.error(rec_id, f"{path}: required field is empty")
+        return
+
+    enum_name = spec.get("enum")
+    if enum_name:
+        permitted = enums.get(enum_name, [])
+        values = value if isinstance(value, list) else [value]
+        for item in values:
+            if item not in permitted:
+                report.error(
+                    rec_id,
+                    f"{path}: '{item}' is not a permitted {enum_name} "
+                    f"(allowed: {', '.join(map(str, permitted))})",
+                )
+
+    pattern = spec.get("pattern")
+    if pattern and isinstance(value, str) and not re.match(pattern, value):
+        report.error(rec_id, f"{path}: '{value}' does not match required pattern {pattern}")
+
+    for sub_name, sub_spec in spec.get("subfields", {}).items():
+        sub_path = f"{path}.{sub_name}"
+        if sub_name not in value or value[sub_name] in (None, ""):
+            if sub_spec.get("required"):
+                report.error(rec_id, f"{sub_path}: missing required subfield")
+            continue
+        check_value(report, rec_id, sub_path, value[sub_name], sub_spec, enums)
+
+
+def parse_date(value):
+    try:
+        return dt.date.fromisoformat(str(value))
+    except (ValueError, TypeError):
+        return None
+
+
+def check_rules(report, rec_id, record, today):
+    """Cross-field rules from the 'rules' section of the schema."""
+    review = record.get("review") or {}
+    status = review.get("status")
+    verification = record.get("verification") or {}
+
+    if not (record.get("identifiers") or {}):
+        report.error(rec_id, "identifier-present: no identifiers given")
+    elif not any(
+        (record["identifiers"] or {}).get(k)
+        for k in ("doi", "pmid", "pmcid", "isbn", "url")
+    ):
+        report.error(
+            rec_id, "identifier-present: need at least one of doi, pmid, pmcid, isbn, url"
+        )
+
+    if status == "approved":
+        if not review.get("clinical_reviewer"):
+            report.error(rec_id, "approved-requires-reviewer: no clinical_reviewer named")
+        for field in ("reviewed_on", "next_review_due"):
+            if not review.get(field):
+                report.error(rec_id, f"approved-requires-reviewer: review.{field} missing")
+
+        if verification.get("bibliographic") != "verified":
+            report.error(
+                rec_id,
+                "approved-requires-verified-bibliography: bibliographic verification is "
+                f"'{verification.get('bibliographic')}', must be 'verified'",
+            )
+        if not verification.get("full_text_read"):
+            report.error(
+                rec_id,
+                "approved-requires-verified-bibliography: full_text_read is false",
+            )
+        if not record.get("claims_supported"):
+            report.error(rec_id, "approved-requires-claims: claims_supported is empty")
+
+        due = parse_date(review.get("next_review_due"))
+        if due and due < today:
+            report.warn(
+                rec_id, f"review overdue: next_review_due was {due.isoformat()}"
+            )
+
+    if status == "retired" and not (record.get("notes") or "").strip():
+        report.error(rec_id, "retired-requires-reason: notes must explain the retirement")
+
+    # An approved record whose interval exceeds policy is a governance drift signal.
+    if status == "approved":
+        reviewed = parse_date(review.get("reviewed_on"))
+        due = parse_date(review.get("next_review_due"))
+        if reviewed and due:
+            allowed = REVIEW_INTERVAL_DAYS.get(
+                record.get("type"), DEFAULT_REVIEW_INTERVAL_DAYS
+            )
+            if (due - reviewed).days > allowed:
+                report.warn(
+                    rec_id,
+                    f"review interval {(due - reviewed).days}d exceeds the "
+                    f"{allowed}d policy for type '{record.get('type')}'",
+                )
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--quiet", action="store_true", help="print errors only")
+    args = parser.parse_args()
+
+    schema = yaml.safe_load(SCHEMA_PATH.read_text())
+    enums = schema["enums"]
+    fields = schema["fields"]
+    today = dt.date.today()
+
+    report = Report()
+    records: dict[str, dict] = {}
+
+    paths = sorted(SOURCES_DIR.glob("*.yaml"))
+    if not paths:
+        print(f"No source records found in {SOURCES_DIR}", file=sys.stderr)
+        return 1
+
+    for path in paths:
+        stem = path.stem
+        try:
+            record = yaml.safe_load(path.read_text())
+        except yaml.YAMLError as exc:
+            report.error(stem, f"YAML parse error: {exc}")
+            continue
+        if not isinstance(record, dict):
+            report.error(stem, "record is not a mapping")
+            continue
+
+        rec_id = record.get("id", stem)
+        if rec_id != stem:
+            report.error(stem, f"id-matches-filename: id is '{rec_id}'")
+        if rec_id in records:
+            report.error(stem, f"duplicate id '{rec_id}'")
+        records[rec_id] = record
+
+        for name, spec in fields.items():
+            if name not in record or record[name] in (None, ""):
+                if spec.get("required"):
+                    report.error(rec_id, f"{name}: missing required field")
+                continue
+            check_value(report, rec_id, name, record[name], spec, enums)
+
+        unknown = set(record) - set(fields)
+        for name in sorted(unknown):
+            report.warn(rec_id, f"{name}: field not in schema, will be ignored downstream")
+
+        check_rules(report, rec_id, record, today)
+
+    # A record that failed validation is never citable, whatever its status says.
+    citable = [
+        rec_id
+        for rec_id, record in records.items()
+        if (record.get("review") or {}).get("status") == "approved"
+        and rec_id not in report.failed
+    ]
+
+    if not args.quiet:
+        counts: dict[str, int] = {}
+        for record in records.values():
+            status = (record.get("review") or {}).get("status", "unknown")
+            counts[status] = counts.get(status, 0) + 1
+
+        print(f"STAN evidence register — {len(records)} record(s) in {SOURCES_DIR}")
+        for status in sorted(counts):
+            print(f"  {status:<12} {counts[status]}")
+        print(f"\nCitable in published content (approved): {len(citable)}")
+        if not citable:
+            print(
+                "  None yet. No record may be cited until it has been read in full\n"
+                "  and approved by a named clinical reviewer (EVIDENCE-POLICY.md §4, §8)."
+            )
+
+    if report.warnings and not args.quiet:
+        print(f"\n{len(report.warnings)} warning(s):")
+        for line in report.warnings:
+            print(f"  ! {line}")
+
+    if report.errors:
+        print(f"\n{len(report.errors)} error(s):", file=sys.stderr)
+        for line in report.errors:
+            print(f"  x {line}", file=sys.stderr)
+        return 1
+
+    if not args.quiet:
+        print("\nAll records valid.")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
