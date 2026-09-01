@@ -59,8 +59,12 @@ stan/
 ├── tools/
 │   ├── validate.py           Enforces the policy. Exits non-zero on breach.
 │   └── query.py              Search and filter the register.
+├── content/
+│   └── drafts/
+│       └── how-the-system-works.md   The HPG axis explained. Flagship draft.
 └── templates/
     ├── content-page.md       The governed content unit
+    ├── hormone-explainer.md  Fixed skeleton for every marker explainer
     └── consultation-brief.md The document a reader takes to their GP
 ```
 
@@ -154,15 +158,42 @@ can represent its own uncertainty is worth more than one that cannot.
     the standard, not being the always-on contact. Includes arranging supervision
     for the founder, which is the step most likely to be skipped.
 
+**Content — the foundational explainers**
+
+The reader has to understand the system before a sixteen-marker panel means
+anything. These are the interpretation layer without which a bloodwork tool is
+just a wall of numbers, and they are the part of STAN that has no good equivalent
+anywhere: mainstream explainers cover *deficiency* but not *suppression*, and
+they explain the parts without ever explaining the machine.
+
+Every one uses `templates/hormone-explainer.md`, including the two sections that
+make them worth reading — **"When it's suppressed"** and **"What this number does
+not tell you"**.
+
+Build order:
+
+*Tier 1 — the core loop. These six tell the whole central story.*
+15. Testosterone (total and free) · SHBG · LH · FSH · oestradiol · albumin
+
+*Tier 2 — the rest of a typical panel*
+16. Prolactin · haematocrit · DHT · inhibin B and AMH · thyroid (it moves SHBG)
+
+*Tier 3 — general health markers that appear on the same report*
+17. Lipids · liver markers · kidney function · HbA1c · PSA · IGF-1
+
+A drafted page is a far smaller ask of a volunteer clinician than a blank one.
+Draft first, recruit second — reviewing thirty minutes of someone else's writing
+is a yes; writing from scratch is a no.
+
 **Product**
-15. Build one content page to full publishable standard, using the index case
+18. Build one content page to full publishable standard, using the index case
     (high SHBG, low calculated free testosterone, symptomatic on transdermal
     replacement after prolonged supraphysiological exposure). That page, plus its
     consultation brief, is the specimen to put in front of a prospective clinical
     lead. Not a deck — a specimen.
 
 **Deferred on purpose**
-16. Platform. Current lean is Next.js + Postgres + Payload CMS, with
+19. Platform. Current lean is Next.js + Postgres + Payload CMS, with
     Django + Wagtail the serious alternative if Python is the more comfortable
     language. Nothing above depends on that choice. Make it when there is content
     to render and a second person to hand it to.
