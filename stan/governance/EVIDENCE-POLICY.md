@@ -139,6 +139,7 @@ mental-health             mood, dependence, suicidality, psychiatric effects
 pct-restart               post-cycle therapy and restart approaches
 delivery-routes           esters, gels, pellets, pharmacokinetics
 harm-reduction            harm-reduction practice and services
+peer-support              peer support models, effectiveness, and governance
 women-and-peds            PED use in women
 adolescents               use in under-18s
 service-access-uk         UK service provision, pathways, and gaps

@@ -49,8 +49,17 @@ afterthought.
    know" into "my GP has something to work with."
 4. **Publishes lived-experience accounts**, clearly labelled as such and
    governed separately from information content.
-5. **Convenes** — seminars, recorded talks, and moderated connection between
-   people going through the same thing.
+5. **Provides human support.** STAN is a support *network*, not a library. The
+   gap is filled by people as well as pages: navigation help, trained peer
+   support, facilitated groups, live and recorded seminars, and — through vetted
+   partners — clinical consultation.
+
+   Support is governed separately and more strictly than published content,
+   because a conversation cannot be reviewed before it happens. The tier model,
+   the boundary between sharing experience and giving advice, crisis protocol,
+   group moderation and supporter supervision are all set out in
+   [`SUPPORT-MODEL.md`](SUPPORT-MODEL.md). **No support channel opens until the
+   prerequisites in that document are met.**
 
 ## 4. What STAN does NOT do
 
@@ -70,6 +79,11 @@ signal that STAN is different from the rest of this information ecosystem.
   contested, STAN says so plainly rather than filling the gap with confidence.
 - **No content that assumes the reader will stop.** Harm reduction means meeting
   people where they are. It does not mean supplying a how-to.
+- **No clinical advice from non-clinicians, in any channel.** The prohibitions
+  above apply identically in a chat, a group, a seminar Q&A and a one-to-one
+  conversation. A peer supporter who knows the answer still does not give it.
+- **No crisis service.** STAN offers no out-of-hours cover and no emergency
+  response, and says so wherever a support channel is advertised.
 
 ## 5. The boundary rule
 
