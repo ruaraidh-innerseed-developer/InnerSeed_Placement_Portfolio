@@ -1,0 +1,87 @@
+# Group sessions shown on the hub.
+#
+# STATUS: every entry below is `illustrative: true`. None of these sessions
+# exists. They are here so the filtering works and the shape can be judged.
+# Nothing may lose its illustrative flag until SUPPORT-MODEL.md §10 prerequisites
+# are met — trained facilitators, crisis protocol, insurance, clinical escalation.
+#
+# coverage values must match the country selector:
+#   scotland | england | wales | ni | ireland | other
+# kind values must match the type selector:
+#   open | cohort | family | talk
+
+countries:
+  - {id: all,      label: "Anywhere — show me everything"}
+  - {id: scotland, label: Scotland}
+  - {id: england,  label: England}
+  - {id: wales,    label: Wales}
+  - {id: ni,       label: Northern Ireland}
+  - {id: ireland,  label: Republic of Ireland}
+  - {id: other,    label: Outside UK & Ireland}
+
+kinds:
+  - {id: all,    label: Any kind}
+  - {id: open,   label: Open group}
+  - {id: cohort, label: Fixed-length cohort}
+  - {id: family, label: Partners & family}
+  - {id: talk,   label: Talk or seminar}
+
+sessions:
+
+  - id: open-scotland
+    when: Tue · 19:30
+    tz: UK time
+    title: Open group — Scotland
+    who: Anyone, any stage. Turn up, say nothing if you'd rather. Facilitated.
+    coverage: [scotland]
+    kind: open
+    illustrative: true
+
+  - id: open-englandwales
+    when: Wed · 20:00
+    tz: UK time
+    title: Open group — England & Wales
+    who: Anyone, any stage. Same format, different room.
+    coverage: [england, wales]
+    kind: open
+    illustrative: true
+
+  - id: cohort-comingoff
+    when: Mon · 20:00
+    tz: UK time
+    title: Coming off — six week cohort
+    who: >-
+      Same eight people for six weeks. Starts together, finishes together.
+      Waiting list.
+    coverage: [scotland, england, wales, ni, ireland, other]
+    kind: cohort
+    illustrative: true
+
+  - id: family-monthly
+    when: 1st Thu · 19:00
+    tz: UK time
+    title: Partners & family
+    who: For people supporting someone who uses. He does not need to know you're here.
+    coverage: [scotland, england, wales, ni, ireland, other]
+    kind: family
+    illustrative: true
+
+  - id: seminar-monthly
+    when: Last Sun · 18:00
+    tz: UK time
+    title: Seminar — recorded
+    who: >-
+      A clinician or researcher, forty minutes, then questions. Recording goes in
+      the library.
+    coverage: [scotland, england, wales, ni, ireland, other]
+    kind: talk
+    illustrative: true
+
+  - id: open-weekend
+    when: Sat · 10:00
+    tz: UK time
+    title: Open group — Ireland & further out
+    who: Timed for people who can't make weekday evenings, wherever you are.
+    coverage: [ni, ireland, other]
+    kind: open
+    illustrative: true

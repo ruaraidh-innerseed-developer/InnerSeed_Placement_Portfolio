@@ -7,6 +7,15 @@ title: <plain-English title, written as the question a reader would ask>
 content_class: information        # information | signposting | lived-experience
 status: draft                     # draft | in-review | approved | retired
 
+# Which standard this page publishes under. See governance/INTERIM-STANDARD.md.
+#   A — signpost, attributed report, settled definition, question set, or lived
+#       experience. No clinician required, but needs a second reader and the
+#       visible notice. Nothing that says "should".
+#   B — synthesis, interpretation, prognosis, or anything advising. Locked until
+#       a clinical lead is appointed.
+publishing_tier: B
+second_reader:                    # required for Tier A, must not be the author
+
 author: <name>
 clinical_reviewer:                # must be filled and registered before approval
 reviewed_on:

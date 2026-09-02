@@ -1,9 +1,22 @@
 ---
 id: how-the-system-works
 title: How the system works — the loop that controls your testosterone
+short_title: How the system works
 content_class: information
 status: draft
+publishing_tier: B
+second_reader:
 marker_type: overview
+
+blurb: >-
+  Your testosterone is controlled by a loop between your brain and your
+  testicles. Explains why low testosterone with low LH means something
+  completely different from low testosterone with high LH.
+units: "Covers LH · FSH · testosterone · SHBG · oestradiol"
+keywords: axis hpg loop lh fsh testosterone shbg oestradiol estradiol suppressed
+  suppression secondary primary feedback brain testicle basics start understand
+topics: [asih, hpg-axis-recovery, shbg-free-testosterone]
+routes: [stopped, bloods, considering, worried]
 
 author: R. (founder), drafted with AI assistance
 clinical_reviewer:

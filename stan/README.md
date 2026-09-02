@@ -71,14 +71,45 @@ stan/
 ## Using it
 
 ```bash
-python3 stan/tools/validate.py                  # check the register
-python3 stan/tools/query.py                     # list everything
-python3 stan/tools/query.py --unread            # the reading list
+python3 stan/tools/validate.py         # check both registers against policy
+python3 stan/tools/build.py            # compile the repository into the hub page
+python3 stan/tools/new.py page shbg    # scaffold a new content page
+python3 stan/tools/new.py source x-2024-y
+python3 stan/tools/query.py --unread   # the reading list
 python3 stan/tools/query.py --topic asih --format full
-python3 stan/tools/query.py --citable           # what may be cited today
 ```
 
 Requires Python 3.11+ and PyYAML.
+
+## How the hub is built
+
+**The repository is the source of truth. The site is a generated artefact.**
+
+`prototype/index.html` is compiled and must never be hand-edited — your changes
+would be overwritten on the next build. To change what the site says, change the
+data:
+
+| To change | Edit |
+|---|---|
+| What search finds, and its status badge | `content/pages/*.md` frontmatter |
+| The "Why are you here?" routes and their cards | `data/routes.yaml` |
+| Group sessions, countries, session types | `data/sessions.yaml` |
+| The crisis numbers in the footer | `services/crisis-services.yaml` |
+| Layout, styling, copy | `prototype/template.html` |
+
+Then `python3 stan/tools/build.py` and republish. `build.py --check` fails if the
+generated page has drifted from the data, which is what a CI step would run.
+
+The build enforces a few things quietly. A route card pointing at a page pulls
+that page's real status, so badges cannot go stale. A route pointing at a page
+that does not exist fails the build. A session naming an unknown country or type
+fails the build. And a crisis service whose hours do not say "24 hours" is
+automatically flagged amber on the page — so a new part-hours service is caught
+without anyone remembering to mark it.
+
+The counters in the site footer are read from the repository too: pages reviewed
+and drafted, sources approved, crisis services verified. The site reports its own
+real state rather than a claim about it.
 
 ## The two fields that matter
 
