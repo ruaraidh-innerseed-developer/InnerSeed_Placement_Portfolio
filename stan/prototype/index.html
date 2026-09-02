@@ -1,0 +1,1002 @@
+<title>Steroid Awareness Network</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Bitter:wght@600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+  :root {
+    --ground:      #eaece9;
+    --surface:     #f7f8f6;
+    --surface-2:   #ffffff;
+    --ink:         #17242a;
+    --ink-2:       #4a5a60;
+    --ink-3:       #74868c;
+    --line:        #d3d9d4;
+    --line-strong: #b9c2bc;
+    --accent:      #a85f1a;
+    --accent-ink:  #ffffff;
+    --accent-soft: #f2e4d2;
+    --verified:    #1a6355;
+    --verified-bg: #dfeae6;
+    --draft:       #8a5a00;
+    --draft-bg:    #f4e8d2;
+    --absent:      #6b767b;
+    --absent-bg:   #e2e6e3;
+    --alarm:       #9c2f22;
+
+    --display: "Bitter", Georgia, "Times New Roman", serif;
+    --body:    "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --mono:    "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+
+    --measure: 63ch;
+    --radius:  3px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #121c21;
+      --surface:     #17242a;
+      --surface-2:   #1d2d34;
+      --ink:         #e8ecea;
+      --ink-2:       #a5b4b9;
+      --ink-3:       #7d8e94;
+      --line:        #2a3d45;
+      --line-strong: #3b525b;
+      --accent:      #e0a054;
+      --accent-ink:  #121c21;
+      --accent-soft: #2e2317;
+      --verified:    #56bda6;
+      --verified-bg: #16302c;
+      --draft:       #d9a441;
+      --draft-bg:    #2e2617;
+      --absent:      #8b9a9f;
+      --absent-bg:   #202f36;
+      --alarm:       #e8705f;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:      #121c21;
+    --surface:     #17242a;
+    --surface-2:   #1d2d34;
+    --ink:         #e8ecea;
+    --ink-2:       #a5b4b9;
+    --ink-3:       #7d8e94;
+    --line:        #2a3d45;
+    --line-strong: #3b525b;
+    --accent:      #e0a054;
+    --accent-ink:  #121c21;
+    --accent-soft: #2e2317;
+    --verified:    #56bda6;
+    --verified-bg: #16302c;
+    --draft:       #d9a441;
+    --draft-bg:    #2e2617;
+    --absent:      #8b9a9f;
+    --absent-bg:   #202f36;
+    --alarm:       #e8705f;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 16.5px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--display);
+    font-weight: 700;
+    line-height: 1.14;
+    text-wrap: balance;
+    margin: 0;
+    letter-spacing: -0.012em;
+  }
+
+  p { margin: 0; }
+  a { color: inherit; }
+
+  .wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin: 0;
+  }
+
+  /* ---------------------------------------------------------- prototype bar */
+
+  .protobar {
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    padding: 9px 0;
+  }
+  .protobar .wrap {
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+    flex-wrap: wrap;
+  }
+  .protobar strong { font-weight: 500; }
+  .protobar span { opacity: 0.82; }
+
+  /* ----------------------------------------------------------------- header */
+
+  header.site {
+    border-bottom: 1px solid var(--line);
+    background: var(--surface);
+  }
+  header.site .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 11px;
+  }
+  .brand b {
+    font-family: var(--display);
+    font-size: 22px;
+    letter-spacing: 0.02em;
+  }
+  .brand em {
+    font-style: normal;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  nav.top {
+    display: flex;
+    gap: 24px;
+    font-size: 14.5px;
+  }
+  nav.top a {
+    text-decoration: none;
+    color: var(--ink-2);
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+  }
+  nav.top a:hover { color: var(--ink); border-bottom-color: var(--accent); }
+
+  /* ------------------------------------------------------------------- hero */
+
+  .hero {
+    padding: 68px 0 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .stance {
+    max-width: var(--measure);
+    display: grid;
+    gap: 20px;
+  }
+  .stance h1 {
+    font-size: clamp(32px, 5vw, 50px);
+  }
+  .stance .lede {
+    font-size: 18.5px;
+    color: var(--ink-2);
+    max-width: 58ch;
+  }
+  .stance .lede b {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .rule-quote {
+    margin-top: 34px;
+    padding: 18px 0 18px 22px;
+    border-left: 3px solid var(--accent);
+    max-width: 60ch;
+    font-size: 17px;
+    color: var(--ink-2);
+  }
+  .rule-quote b { color: var(--ink); font-weight: 600; }
+
+  /* ----------------------------------------------------------------- search */
+
+  .searchblock { margin-top: 46px; }
+  .searchrow {
+    display: flex;
+    border: 1.5px solid var(--line-strong);
+    border-radius: var(--radius);
+    background: var(--surface-2);
+    overflow: hidden;
+  }
+  .searchrow:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+  .searchrow input {
+    flex: 1;
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    padding: 17px 18px;
+    outline: none;
+    min-width: 0;
+  }
+  .searchrow input::placeholder { color: var(--ink-3); }
+  .searchrow button {
+    border: 0;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-family: var(--body);
+    font-weight: 600;
+    font-size: 15px;
+    padding: 0 26px;
+    cursor: pointer;
+  }
+  .searchhint {
+    margin-top: 10px;
+    font-size: 13.5px;
+    color: var(--ink-3);
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: baseline;
+  }
+  .searchhint button {
+    background: none;
+    border: 0;
+    border-bottom: 1px dashed var(--line-strong);
+    color: var(--ink-2);
+    font-family: var(--mono);
+    font-size: 12.5px;
+    padding: 0 0 1px;
+    cursor: pointer;
+  }
+  .searchhint button:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+  #results { margin-top: 26px; display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  #results:empty { display: none; }
+
+  .result {
+    background: var(--surface-2);
+    padding: 16px 18px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 6px 18px;
+    align-items: start;
+  }
+  .result h4 {
+    margin: 0;
+    font-family: var(--body);
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .result p {
+    grid-column: 1 / -1;
+    font-size: 14.5px;
+    color: var(--ink-2);
+    max-width: 70ch;
+  }
+  .result .unitline {
+    grid-column: 1 / -1;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+
+  .badge {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .badge.approved { background: var(--verified-bg); color: var(--verified); }
+  .badge.draft    { background: var(--draft-bg);    color: var(--draft); }
+  .badge.absent   { background: var(--absent-bg);   color: var(--absent); }
+
+  .noresult {
+    background: var(--surface-2);
+    padding: 22px 18px;
+    display: grid;
+    gap: 10px;
+  }
+  .noresult strong { font-family: var(--display); font-size: 18px; }
+  .noresult p { font-size: 15px; color: var(--ink-2); max-width: 66ch; }
+
+  /* ----------------------------------------------------------------- routes */
+
+  section { padding: 62px 0; border-bottom: 1px solid var(--line); }
+  .sechead { display: grid; gap: 12px; margin-bottom: 34px; max-width: var(--measure); }
+  .sechead h2 { font-size: clamp(24px, 3.2vw, 33px); }
+  .sechead p { color: var(--ink-2); font-size: 16.5px; }
+
+  .routes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(288px, 1fr));
+    gap: 14px;
+  }
+  .route {
+    text-align: left;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--line-strong);
+    border-radius: var(--radius);
+    padding: 20px 20px 18px;
+    cursor: pointer;
+    font-family: var(--body);
+    color: var(--ink);
+    display: grid;
+    gap: 7px;
+    transition: border-left-color .14s, background .14s;
+  }
+  .route:hover { border-left-color: var(--accent); background: var(--surface-2); }
+  .route[aria-pressed="true"] {
+    border-left-color: var(--accent);
+    background: var(--surface-2);
+    box-shadow: inset 0 0 0 1px var(--accent-soft);
+  }
+  .route b { font-size: 17px; font-weight: 600; line-height: 1.3; }
+  .route span { font-size: 14px; color: var(--ink-2); }
+  .route:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  #routepanel {
+    margin-top: 22px;
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--accent);
+    border-radius: var(--radius);
+    background: var(--surface-2);
+    padding: 26px 24px;
+    display: grid;
+    gap: 18px;
+  }
+  #routepanel[hidden] { display: none !important; }
+  #routepanel h3 { font-size: 21px; }
+  #routepanel .said { color: var(--ink-2); font-size: 16px; max-width: 64ch; }
+  .panelgrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+  }
+  .panelitem {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px 15px;
+    display: grid;
+    gap: 7px;
+    align-content: start;
+    background: var(--surface);
+  }
+  .panelitem b { font-size: 15px; font-weight: 600; }
+  .panelitem span { font-size: 13.5px; color: var(--ink-2); }
+
+  /* --------------------------------------------------------------- sessions */
+
+  .sessioncontrols {
+    display: flex;
+    gap: 14px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    margin-bottom: 26px;
+  }
+  .field { display: grid; gap: 6px; }
+  .field label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .field select {
+    font-family: var(--body);
+    font-size: 15.5px;
+    padding: 11px 13px;
+    background: var(--surface-2);
+    color: var(--ink);
+    border: 1.5px solid var(--line-strong);
+    border-radius: var(--radius);
+    min-width: 230px;
+  }
+  .field select:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  .sessions { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .session {
+    background: var(--surface-2);
+    padding: 17px 18px;
+    display: grid;
+    grid-template-columns: 150px 1fr auto;
+    gap: 6px 20px;
+    align-items: baseline;
+  }
+  .session .when {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .session b { font-size: 16px; font-weight: 600; }
+  .session .who { grid-column: 2 / -1; font-size: 14px; color: var(--ink-2); max-width: 62ch; }
+  .session .place {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--ink-3);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .sessions .empty { background: var(--surface-2); padding: 24px 18px; color: var(--ink-2); font-size: 15px; }
+
+  @media (max-width: 620px) {
+    .session { grid-template-columns: 1fr; }
+    .session .who, .session .place { grid-column: 1; }
+  }
+
+  /* ---------------------------------------------------------------- connect */
+
+  .twocol {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 18px;
+  }
+  .panel {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    padding: 24px 22px;
+    display: grid;
+    gap: 12px;
+    align-content: start;
+  }
+  .panel h3 { font-size: 19px; }
+  .panel p { font-size: 15px; color: var(--ink-2); }
+  .panel ul { margin: 0; padding-left: 18px; display: grid; gap: 7px; font-size: 15px; color: var(--ink-2); }
+  .panel .tag {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  /* ----------------------------------------------------------------- crisis */
+
+  .crisis {
+    background: var(--surface-2);
+    border-top: 3px solid var(--alarm);
+    padding: 34px 0;
+  }
+  .crisis h2 { font-size: 20px; margin-bottom: 6px; }
+  .crisis .note { font-size: 14.5px; color: var(--ink-2); margin-bottom: 20px; max-width: 68ch; }
+  .lines {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(216px, 1fr));
+    gap: 14px;
+  }
+  .line {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 13px 15px;
+    display: grid;
+    gap: 3px;
+    background: var(--surface);
+  }
+  .line b { font-size: 15px; font-weight: 600; }
+  .line .num { font-family: var(--mono); font-size: 15.5px; color: var(--accent); font-weight: 500; }
+  .line .hrs { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); }
+  .line .hrs.warn { color: var(--draft); }
+
+  /* ----------------------------------------------------------------- footer */
+
+  footer.site {
+    padding: 30px 0 46px;
+    font-size: 13.5px;
+    color: var(--ink-3);
+    display: grid;
+    gap: 8px;
+  }
+  footer.site p { max-width: 76ch; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+
+<div class="protobar">
+  <div class="wrap">
+    <strong>PROTOTYPE</strong>
+    <span>Not a live service. No content here has been clinically reviewed. Example sessions are illustrative.</span>
+  </div>
+</div>
+
+<header class="site">
+  <div class="wrap">
+    <div class="brand">
+      <b>STAN</b>
+      <em>Steroid Awareness Network</em>
+    </div>
+    <nav class="top">
+      <a href="#routes">Start here</a>
+      <a href="#sessions">Sessions</a>
+      <a href="#connect">Connect</a>
+      <a href="#crisis">Urgent help</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="stance">
+      <p class="eyebrow">Free · Independent · No affiliate money, ever</p>
+      <h1>Straight answers about steroids, from people who have been there and people who are qualified.</h1>
+      <p class="lede">Whether you are on, coming off, or thinking about starting — you can find out
+        what is actually happening in your body, and talk to someone who understands it.
+        <b>Nobody here will lecture you.</b></p>
+    </div>
+
+    <div class="rule-quote">
+      We won't tell you what you can and can't do. We will tell you the truth:
+      <b>there is nothing natural about staying unnatural for long</b>, and everything
+      comes with a side effect. What you do with that is yours.
+    </div>
+
+    <div class="searchblock">
+      <div class="searchrow">
+        <input id="q" type="search" autocomplete="off" aria-label="Search the resource hub"
+               placeholder="Search — try &ldquo;SHBG&rdquo;, &ldquo;coming off&rdquo;, &ldquo;low LH&rdquo;, &ldquo;fertility&rdquo;">
+        <button type="button" id="go">Search</button>
+      </div>
+      <div class="searchhint">
+        <span>Only shows what we have checked.</span>
+        <button type="button" data-eg="SHBG">SHBG</button>
+        <button type="button" data-eg="coming off">coming off</button>
+        <button type="button" data-eg="LH">LH</button>
+        <button type="button" data-eg="fertility">fertility</button>
+        <button type="button" data-eg="hair loss">hair loss</button>
+      </div>
+      <div id="results" role="region" aria-live="polite" aria-label="Search results"></div>
+    </div>
+  </div>
+</div>
+
+<section id="routes">
+  <div class="wrap">
+    <div class="sechead">
+      <p class="eyebrow">No account needed</p>
+      <h2>Why are you here?</h2>
+      <p>Pick whichever is closest. You can change it, and nothing is recorded.</p>
+    </div>
+
+    <div class="routes" id="routelist"></div>
+    <div id="routepanel" hidden></div>
+  </div>
+</section>
+
+<section id="sessions">
+  <div class="wrap">
+    <div class="sechead">
+      <p class="eyebrow">Online · Free · Cameras optional</p>
+      <h2>Group sessions</h2>
+      <p>Small facilitated groups, run to a start and finish time. Not a forum, not a chat
+        room — a room with someone holding it.</p>
+    </div>
+
+    <div class="sessioncontrols">
+      <div class="field">
+        <label for="country">Where are you</label>
+        <select id="country">
+          <option value="all">Anywhere — show me everything</option>
+          <option value="scotland">Scotland</option>
+          <option value="england">England</option>
+          <option value="wales">Wales</option>
+          <option value="ni">Northern Ireland</option>
+          <option value="ireland">Republic of Ireland</option>
+          <option value="other">Outside UK &amp; Ireland</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="kind">What kind</label>
+        <select id="kind">
+          <option value="all">Any kind</option>
+          <option value="open">Open group</option>
+          <option value="cohort">Fixed-length cohort</option>
+          <option value="family">Partners &amp; family</option>
+          <option value="talk">Talk or seminar</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="sessions" id="sessionlist"></div>
+  </div>
+</section>
+
+<section id="connect">
+  <div class="wrap">
+    <div class="sechead">
+      <p class="eyebrow">The part that actually helps</p>
+      <h2>Connecting people who have no clue with people who do</h2>
+      <p>Two different kinds of knowing, and you need both. Neither one substitutes for
+        the other, and we keep the line between them clear on purpose.</p>
+    </div>
+
+    <div class="twocol">
+      <div class="panel">
+        <p class="tag">Peer — lived experience</p>
+        <h3>Someone who has been where you are</h3>
+        <p>Trained volunteers who have used, come off, and come out the other side. They will
+          tell you what it was like and sit with you while it's hard.</p>
+        <ul>
+          <li>Will share their own experience, openly</li>
+          <li>Will help you work out what to ask</li>
+          <li><b>Will not</b> tell you what to take, or read your bloods</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <p class="tag">Clinical — registered professionals</p>
+        <h3>Someone qualified to answer</h3>
+        <p>Endocrinology, andrology and male fertility clinicians who understand
+          supraphysiological exposure — not just age-related low testosterone.</p>
+        <ul>
+          <li>Can interpret results and advise on treatment</li>
+          <li>Reviews everything published here before it goes live</li>
+          <li>Any fee STAN receives for a referral is shown on the page</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="crisis" id="crisis">
+  <div class="wrap">
+    <h2>If tonight is bad</h2>
+    <p class="note">STAN is not a crisis service and nobody here is on call. These people are,
+      and they are better at it than we are. Check the hours — two of these are not open
+      around the clock.</p>
+    <div class="lines">
+      <div class="line">
+        <b>Immediate danger</b>
+        <span class="num">999</span>
+        <span class="hrs">Always</span>
+      </div>
+      <div class="line">
+        <b>Samaritans</b>
+        <span class="num">116 123</span>
+        <span class="hrs">24 hours, every day</span>
+      </div>
+      <div class="line">
+        <b>Shout — text</b>
+        <span class="num">SHOUT to 85258</span>
+        <span class="hrs">24 hours, every day</span>
+      </div>
+      <div class="line">
+        <b>CALM</b>
+        <span class="num">0800 58 58 58</span>
+        <span class="hrs warn">5pm – midnight only</span>
+      </div>
+      <div class="line">
+        <b>Breathing Space — Scotland</b>
+        <span class="num">0800 83 85 87</span>
+        <span class="hrs warn">Mon–Thu 6pm–2am · Fri 6pm–Mon 6am</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="site">
+  <div class="wrap">
+    <p><b>Prototype.</b> Nothing on this page has been clinically reviewed and the group
+      sessions shown are examples, not real bookings. Crisis numbers are drawn from STAN's
+      services register and are pending confirmation against each provider's own website.</p>
+    <p>STAN publishes general information. It does not assess, diagnose or prescribe, and it
+      does not publish dosing protocols or tell anyone where to obtain anything.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  /* Content index mirrors the real state of stan/evidence and stan/content.
+     "absent" entries are deliberate: the hub says what it hasn't got. */
+  var INDEX = [
+    { t: "How the system works — the loop that controls your testosterone",
+      s: "draft",
+      u: "Covers LH · FSH · testosterone · SHBG · oestradiol",
+      d: "Your testosterone is controlled by a loop between your brain and your testicles. Explains why low testosterone with low LH means something completely different from low testosterone with high LH.",
+      k: "axis hpg loop lh fsh testosterone shbg oestradiol estradiol suppressed suppression secondary primary feedback brain testicle basics start" },
+
+    { t: "SHBG — the reason your testosterone can read normal and still be too low",
+      s: "absent",
+      u: "Typical UK units: nmol/L",
+      d: "Planned. Sex hormone binding globulin holds testosterone so your body cannot use it. High SHBG means a normal total can hide a low free level.",
+      k: "shbg sex hormone binding globulin free testosterone bound albumin normal range vermeulen calculated" },
+
+    { t: "LH — the signal that tells your testicles to work",
+      s: "absent",
+      u: "Typical UK units: IU/L",
+      d: "Planned. Luteinising hormone is the brain's instruction to make testosterone. Whether it is high or undetectable tells you where the problem actually sits.",
+      k: "lh luteinising luteinizing hormone signal pituitary undetectable suppressed secondary primary" },
+
+    { t: "FSH and fertility — why sperm production stops even on high doses",
+      s: "absent",
+      u: "Typical UK units: IU/L",
+      d: "Planned. Sperm production needs a testosterone concentration inside the testicle far higher than anything in your bloodstream. Injecting does not replicate it.",
+      k: "fsh fertility sperm spermatogenesis sertoli inhibin amh intratesticular children conceive trying baby azoospermia" },
+
+    { t: "Oestradiol — not the enemy, and what happens when you crush it",
+      s: "absent",
+      u: "Typical UK units: pmol/L",
+      d: "Planned. Men need oestradiol for bone, brain, mood and libido. Low-oestrogen symptoms are commonly mistaken for something else.",
+      k: "oestradiol estradiol e2 oestrogen estrogen aromatase ai aromatase inhibitor joints libido mood low" },
+
+    { t: "Coming off — what the evidence actually supports, and what it doesn't",
+      s: "absent",
+      u: "",
+      d: "Planned, and it will be honest about the gap. There is no agreed clinical pathway for recovery from steroid-induced hypogonadism, and post-cycle protocols are not supported by good evidence.",
+      k: "coming off stop stopping quit cessation pct post cycle therapy restart recovery hcg clomid tamoxifen taper crash" },
+
+    { t: "Staying on — reducing harm if you are not stopping",
+      s: "absent",
+      u: "",
+      d: "Planned. Monitoring that matters, the markers worth watching, and the risks that build quietly over years. No judgement and no dosing advice.",
+      k: "staying on cruise blast harm reduction monitoring bloods haematocrit blood pressure cholesterol lipids liver kidney risk" },
+
+    { t: "Consultation brief — the sheet you hand your GP",
+      s: "draft",
+      u: "Print · 2 pages",
+      d: "Your history, your symptoms, your results with their reference ranges, and the specific questions to ask. Turns “my GP doesn't know” into “my GP has something to work with”.",
+      k: "gp doctor appointment consultation brief questions results referral nhs prepare print sheet" },
+
+    { t: "Recovery after stopping: what one study found years later",
+      s: "draft",
+      u: "Rasmussen et al. 2016 · PLoS ONE",
+      d: "Men who had stopped still showed lower testosterone and more symptoms than comparable men years afterwards. Record is in the evidence register, awaiting full-text read and clinical review.",
+      k: "recovery rasmussen study evidence research years later testosterone lower symptoms asih hypogonadism" }
+  ];
+
+  var ROUTES = [
+    { id: "considering",
+      b: "I'm thinking about starting",
+      s: "You want a straight account before you decide",
+      said: "Good. This is the cheapest moment there will ever be to get the full picture — before anything is suppressed and before anything needs undoing.",
+      items: [
+        ["Read how the system works first", "Understand the loop you would be switching off. Ten minutes.", "draft"],
+        ["What everything costs", "Every compound has effects you want and effects you don't. Both get named.", "absent"],
+        ["Get baseline bloods now", "If you go ahead, a before picture is the single most useful thing you will ever have.", "absent"]
+      ]},
+    { id: "using",
+      b: "I'm using and staying on for now",
+      s: "You are not looking to stop, you want to do less damage",
+      said: "That is a legitimate place to be and you will not be lectured here. What we can do is tell you what to watch, and what tends to go wrong quietly over years.",
+      items: [
+        ["Markers worth monitoring", "Which bloods, how often, and what a drifting number actually means.", "absent"],
+        ["The risks that build slowly", "Haematocrit, blood pressure, lipids, the heart. Nothing dramatic on day one.", "absent"],
+        ["Talk to a peer, not a lecture", "Someone who has been on for years and is not going to tell you to stop.", "absent"]
+      ]},
+    { id: "comingoff",
+      b: "I want to come off",
+      s: "You have decided, or you are close to deciding",
+      said: "This is where the honest answer is uncomfortable: there is no agreed clinical pathway, and the popular protocols are not backed by good evidence. What we can do is get you to someone who actually works in this, and make you ready for that conversation.",
+      items: [
+        ["Find a clinician who understands this", "Andrology and male fertility services see this far more often than general endocrinology.", "absent"],
+        ["Consultation brief", "Fill it in, take it with you. Makes a GP who doesn't know this area far more useful.", "draft"],
+        ["The coming-off cohort", "Six weeks, same small group, someone facilitating. See sessions below.", "absent"]
+      ]},
+    { id: "stopped",
+      b: "I've stopped and I feel wrong",
+      s: "Tired, flat, no libido, and told your bloods are fine",
+      said: "You are describing something with a name and a research literature, even though your GP may not have used it: steroid-induced hypogonadism. Being told you are normal when you feel like this usually means the wrong thing was measured.",
+      items: [
+        ["Why “normal” testosterone can still be too low", "SHBG, and the difference between total and free.", "absent"],
+        ["How the system works", "Low testosterone with low LH points somewhere quite specific.", "draft"],
+        ["What the evidence says about recovery", "Honestly, including how much is still unknown.", "draft"]
+      ]},
+    { id: "bloods",
+      b: "I've got bloods I can't read",
+      s: "Sixteen lines, no explanation, and an appointment in a fortnight",
+      said: "Start with the loop rather than the list. A panel is not sixteen separate facts — the markers move together, and once you know how, most of it reads itself.",
+      items: [
+        ["Read the system before the numbers", "The one page that makes the rest legible.", "draft"],
+        ["Marker by marker", "What each one is, what it does, and what it does not tell you.", "absent"],
+        ["Track them over time", "Recovery is invisible week to week and obvious over a year.", "absent"]
+      ]},
+    { id: "worried",
+      b: "I'm worried about someone else",
+      s: "Partner, son, brother, mate",
+      said: "You are probably getting very little from him and quite a lot of defensiveness. Understanding what is physically happening tends to help more than confronting it does.",
+      items: [
+        ["What is actually going on in his body", "Including the mood and irritability, which are not just personality.", "draft"],
+        ["Partners and family group", "A room of people in the same position. Monthly.", "absent"],
+        ["How to raise it without a row", "Approaches that tend not to end the conversation.", "absent"]
+      ]}
+  ];
+
+  var SESSIONS = [
+    { when: "Tue · 19:30",  tz: "UK time", b: "Open group — Scotland",
+      who: "Anyone, any stage. Turn up, say nothing if you'd rather. Facilitated.",
+      c: ["scotland"], k: "open" },
+    { when: "Wed · 20:00",  tz: "UK time", b: "Open group — England &amp; Wales",
+      who: "Anyone, any stage. Same format, different room.",
+      c: ["england", "wales"], k: "open" },
+    { when: "Mon · 20:00",  tz: "UK time", b: "Coming off — six week cohort",
+      who: "Same eight people for six weeks. Starts together, finishes together. Waiting list.",
+      c: ["scotland", "england", "wales", "ni", "ireland", "other"], k: "cohort" },
+    { when: "1st Thu · 19:00", tz: "UK time", b: "Partners &amp; family",
+      who: "For people supporting someone who uses. He does not need to know you're here.",
+      c: ["scotland", "england", "wales", "ni", "ireland", "other"], k: "family" },
+    { when: "Last Sun · 18:00", tz: "UK time", b: "Seminar — recorded",
+      who: "A clinician or researcher, forty minutes, then questions. Recording goes in the library.",
+      c: ["scotland", "england", "wales", "ni", "ireland", "other"], k: "talk" },
+    { when: "Sat · 10:00",  tz: "UK time", b: "Open group — Ireland &amp; further out",
+      who: "Timed for people who can't make weekday evenings, wherever you are.",
+      c: ["ni", "ireland", "other"], k: "open" }
+  ];
+
+  function el(tag, cls, html) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (html !== undefined) n.innerHTML = html;
+    return n;
+  }
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  }
+
+  var BADGE = {
+    approved: ["approved", "Reviewed"],
+    draft:    ["draft",    "Draft · unreviewed"],
+    absent:   ["absent",   "Not written yet"]
+  };
+
+  /* ------------------------------------------------------------- search */
+
+  var qEl = document.getElementById("q");
+  var resEl = document.getElementById("results");
+
+  function search(term) {
+    resEl.textContent = "";
+    term = term.trim().toLowerCase();
+    if (!term) return;
+
+    var hits = INDEX.filter(function (it) {
+      return (it.t + " " + it.k + " " + it.d).toLowerCase().indexOf(term) !== -1;
+    });
+
+    // Written content first, gaps after — but always show the gaps.
+    var order = { draft: 0, approved: 0, absent: 1 };
+    hits.sort(function (a, b) { return order[a.s] - order[b.s]; });
+
+    if (!hits.length) {
+      var n = el("div", "noresult");
+      n.appendChild(el("strong", null, "We haven't covered that yet."));
+      n.appendChild(el("p", null,
+        "Rather than guess, we'd sooner say so. If it's urgent and clinical, an andrology " +
+        "or male fertility service will know far more than a website. If it's about how you're " +
+        "feeling tonight, the numbers at the bottom of this page are open now."));
+      n.appendChild(el("p", null,
+        "Tell us what you searched for and it goes on the list — that's genuinely how the " +
+        "content plan gets written."));
+      resEl.appendChild(n);
+      return;
+    }
+
+    hits.forEach(function (it) {
+      var r = el("div", "result");
+      r.appendChild(el("h4", null, esc(it.t)));
+      var badge = BADGE[it.s];
+      r.appendChild(el("span", "badge " + badge[0], badge[1]));
+      r.appendChild(el("p", null, esc(it.d)));
+      if (it.u) r.appendChild(el("div", "unitline", esc(it.u)));
+      resEl.appendChild(r);
+    });
+  }
+
+  qEl.addEventListener("input", function () { search(qEl.value); });
+  document.getElementById("go").addEventListener("click", function () { search(qEl.value); });
+  qEl.addEventListener("keydown", function (e) { if (e.key === "Enter") search(qEl.value); });
+
+  Array.prototype.forEach.call(document.querySelectorAll("[data-eg]"), function (b) {
+    b.addEventListener("click", function () {
+      qEl.value = b.getAttribute("data-eg");
+      search(qEl.value);
+      qEl.focus();
+    });
+  });
+
+  /* ------------------------------------------------------------- routes */
+
+  var listEl = document.getElementById("routelist");
+  var panelEl = document.getElementById("routepanel");
+
+  ROUTES.forEach(function (r) {
+    var btn = el("button", "route");
+    btn.type = "button";
+    btn.setAttribute("aria-pressed", "false");
+    btn.appendChild(el("b", null, esc(r.b)));
+    btn.appendChild(el("span", null, esc(r.s)));
+    btn.addEventListener("click", function () { pick(r, btn); });
+    listEl.appendChild(btn);
+  });
+
+  function pick(r, btn) {
+    var open = btn.getAttribute("aria-pressed") === "true";
+    Array.prototype.forEach.call(listEl.children, function (b) {
+      b.setAttribute("aria-pressed", "false");
+    });
+    if (open) { panelEl.hidden = true; return; }
+
+    btn.setAttribute("aria-pressed", "true");
+    panelEl.textContent = "";
+    panelEl.appendChild(el("h3", null, esc(r.b)));
+    panelEl.appendChild(el("p", "said", r.said));
+
+    var grid = el("div", "panelgrid");
+    r.items.forEach(function (it) {
+      var card = el("div", "panelitem");
+      card.appendChild(el("b", null, esc(it[0])));
+      card.appendChild(el("span", null, esc(it[1])));
+      var badge = BADGE[it[2]];
+      card.appendChild(el("span", "badge " + badge[0], badge[1]));
+      grid.appendChild(card);
+    });
+    panelEl.appendChild(grid);
+    panelEl.hidden = false;
+  }
+
+  /* ----------------------------------------------------------- sessions */
+
+  var sessEl = document.getElementById("sessionlist");
+  var countryEl = document.getElementById("country");
+  var kindEl = document.getElementById("kind");
+
+  function renderSessions() {
+    var c = countryEl.value, k = kindEl.value;
+    sessEl.textContent = "";
+
+    var rows = SESSIONS.filter(function (s) {
+      return (c === "all" || s.c.indexOf(c) !== -1) && (k === "all" || s.k === k);
+    });
+
+    if (!rows.length) {
+      sessEl.appendChild(el("div", "empty",
+        "Nothing matching that yet. The cohort and the seminar run wherever you are — " +
+        "try clearing the filter."));
+      return;
+    }
+
+    rows.forEach(function (s) {
+      var row = el("div", "session");
+      row.appendChild(el("span", "when", s.when));
+      row.appendChild(el("b", null, s.b));
+      row.appendChild(el("span", "place", s.tz));
+      row.appendChild(el("span", "who", s.who));
+      sessEl.appendChild(row);
+    });
+  }
+
+  countryEl.addEventListener("change", renderSessions);
+  kindEl.addEventListener("change", renderSessions);
+  renderSessions();
+
+  /* Open the page in a working state rather than an empty shell. */
+  pick(ROUTES[3], listEl.children[3]);
+})();
+</script>
