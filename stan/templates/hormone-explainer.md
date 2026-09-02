@@ -34,6 +34,43 @@ accessibility_checked: false
 
 <!-- Two or three sentences. Someone who reads only this must not be misled. -->
 
+<!--
+  ============================================================================
+  QUESTIONS FIRST. This is the part that makes STAN worth reading.
+
+  Nobody arrives wanting "an article about SHBG". They arrive with a question,
+  usually holding a result they don't understand:
+
+      "My SHBG is high. What does that mean?"
+      "My testosterone is normal but I feel terrible. Is this why?"
+      "What number should mine be?"
+
+  So lead with three to five of those, as headings, in the reader's own words.
+  Answer each one directly and immediately — no throat-clearing, no working up
+  to it. The systematic reference sections below then serve the reader who
+  wants to go deeper, rather than standing between them and their answer.
+
+  Write the questions from what people actually search for. Once the hub is
+  live, the unmet-search log (INTERIM-STANDARD.md §7) supplies them directly.
+  Until then, take them from what you were asking at the time.
+  ============================================================================
+-->
+
+## "<Question, in the reader's words>"
+
+<!-- Answer in the first sentence. Then explain. -->
+
+## "<Second question>"
+
+## "<Third question>"
+
+---
+
+<!--
+  Reference sections below. Keep them — a reader who wants the whole picture
+  should find it — but they come after the answers, not before.
+-->
+
 ## What it is
 
 <!-- One plain sentence first, then detail. No abbreviation used before it is spelled out. -->
