@@ -1,0 +1,203 @@
+# STAN knowledge base — marker record schema
+# Version: 1.0
+#
+# THE ARCHITECTURAL RULE
+#
+#   One marker  = a record here.   Structured, fillable, queryable.
+#   A concept or a journey = a page in content/pages/.  Prose.
+#
+# "What is LH" is a record. "How the system works" and "Coming off" are pages.
+# Anything that is one substance or one line on a blood panel belongs here.
+#
+# WHY RECORDS RATHER THAN ESSAYS
+#
+# An essay has to be written whole, by one person, in one go. A record can be
+# filled in a field at a time, by different people, over months — and coverage
+# can be measured (tools/coverage.py). More importantly, the reader-facing Q&A
+# generates from the fields: "my SHBG is low" is answered from states.low, not
+# from a sentence somebody remembered to write. Twenty markers filled in
+# produce roughly eighty answers nobody authored individually.
+#
+# MALE AND FEMALE
+#
+# applies_to is required. Women using PEDs are the most under-served group in
+# this field and the model treats them as first-class, not as a footnote.
+# Where the picture genuinely differs by sex, use the female_note fields rather
+# than writing a male record and apologising for it.
+
+version: 1.0
+
+enums:
+  category:
+    - hormone
+    - binding-protein
+    - metabolite
+    - gonadotrophin
+    - blood-count
+    - organ-marker
+    - metabolic
+    - fertility-marker
+
+  applies_to:
+    - male
+    - female
+
+  evidence_state:
+    - good           # well established, multiple good sources agree
+    - moderate       # reasonable evidence, some open questions
+    - thin           # little direct evidence in this population
+    - unknown        # not studied, or STAN has not looked yet
+
+  expected_direction:
+    - up
+    - down
+    - unchanged
+    - variable
+    - unknown
+
+  fill_status:
+    - stub           # identity fields only
+    - partial        # some states filled
+    - complete       # every required field filled, ready for review
+    - reviewed       # a clinician has signed it off
+
+# Fields marked coverage: true count towards the completeness report.
+fields:
+
+  # ---------------------------------------------------------------- identity
+
+  id:        {required: true, type: str, pattern: '^[a-z0-9]+(-[a-z0-9]+)*$'}
+  name:      {required: true, type: str, note: "Short name as a reader would say it: SHBG, LH"}
+  full_name: {required: true, type: str, note: "Spelled out: sex hormone binding globulin"}
+  aka:       {required: false, type: list, note: Other names and spellings, for search.
+              }
+  category:  {required: true, type: str, enum: category}
+  applies_to: {required: true, type: list, enum: applies_to}
+  units:     {required: true, type: str, note: "UK units. Empty string if not measured."}
+
+  # ------------------------------------------------------------- the basics
+  # These four answer "what is it and what does it do" — the encyclopedia core.
+
+  what_it_is:    {required: true, type: str, coverage: true}
+  made_where:    {required: true, type: str, coverage: true}
+  controlled_by: {required: true, type: str, coverage: true,
+                  note: What makes it rise and fall.}
+  functions:     {required: true, type: list, coverage: true,
+                  note: What it actually does. Lead with what a reader will care
+                        about — energy, mood, libido, fertility — over what is
+                        physiologically interesting but invisible.}
+  female_note:   {required: false, type: str,
+                  note: Where the picture differs materially for women.}
+
+  # ------------------------------------------------------------ on a panel
+
+  on_a_panel:
+    required: true
+    type: map
+    subfields:
+      commonly_measured: {required: true, type: bool}
+      measured_with: {required: false, type: list,
+                      note: Marker ids usually needed to interpret this one.}
+      timing_matters: {required: false, type: str,
+                       note: Time of day, cycle phase, trough vs peak.}
+      range_note: {required: false, type: str,
+                   note: Never quote a reference range as authoritative. Say that
+                         ranges differ between laboratories and the reader's own
+                         report is what counts.}
+
+  # ---------------------------------------------------------------- states
+  # The engine room. Each state generates a reader-facing Q&A entry.
+
+  states:
+    required: true
+    type: map
+    subfields:
+
+      low:
+        required: false
+        type: map
+        coverage: true
+        subfields:
+          meaning:            {required: true, type: str}
+          common_causes:      {required: false, type: list}
+          symptoms_reported:  {required: false, type: list}
+          what_else_to_check: {required: false, type: list}
+          questions_to_ask:   {required: false, type: list}
+          female_note:        {required: false, type: str}
+
+      high:
+        required: false
+        type: map
+        coverage: true
+        subfields:
+          meaning:            {required: true, type: str}
+          common_causes:      {required: false, type: list}
+          symptoms_reported:  {required: false, type: list}
+          what_else_to_check: {required: false, type: list}
+          questions_to_ask:   {required: false, type: list}
+          female_note:        {required: false, type: str}
+
+      # The section that makes STAN worth reading. Suppression is not
+      # deficiency: deficiency is the body failing, suppression is the body
+      # correctly stopping because something is arriving from outside.
+      suppressed:
+        required: false
+        type: map
+        coverage: true
+        subfields:
+          expected_direction: {required: true, type: str, enum: expected_direction}
+          what_happens:       {required: true, type: str}
+          why:                {required: false, type: str}
+          unexpected_finding: {required: false, type: str,
+                               note: What it suggests when this marker moves the
+                                     OTHER way. Often the most useful line on the
+                                     whole record.}
+          female_note:        {required: false, type: str}
+
+      recovery:
+        required: false
+        type: map
+        coverage: true
+        subfields:
+          what_is_known:  {required: true, type: str}
+          evidence_state: {required: true, type: str, enum: evidence_state}
+          do_not_claim:   {required: false, type: list,
+                           note: Figures and timelines circulating that STAN will
+                                 not repeat, and why.}
+
+  # ------------------------------------------------------------- guardrails
+
+  does_not_tell_you:
+    required: true
+    type: list
+    coverage: true
+    note: The reader-facing equivalent of claims_not_supported. How this number
+          gets over-read, stated plainly.
+
+  related:
+    required: true
+    type: list
+    note: Other marker ids. This is what turns a pile of records into a map —
+          "what else should I be looking at" answers itself from these edges.
+
+  sources:
+    required: false
+    type: list
+    note: Register ids in evidence/sources/. Need not be approved to be listed;
+          Tier A reporting cites them by attribution.
+
+  # ----------------------------------------------------------------- status
+
+  fill_status:       {required: true, type: str, enum: fill_status}
+  clinical_reviewer: {required: false, type: str}
+  reviewed_on:       {required: false, type: str, pattern: '^\d{4}-\d{2}-\d{2}$'}
+  notes:             {required: false, type: str}
+
+rules:
+  - id: id-matches-filename
+  - id: related-must-exist
+    description: Every id in `related` must be a marker in this directory.
+  - id: reviewed-requires-reviewer
+    description: fill_status "reviewed" requires clinical_reviewer and reviewed_on.
+  - id: complete-requires-coverage
+    description: fill_status "complete" requires every coverage field filled.

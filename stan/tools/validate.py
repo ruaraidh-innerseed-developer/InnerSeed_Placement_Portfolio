@@ -242,6 +242,111 @@ def validate_services(report) -> dict:
     return counts
 
 
+MARKERS_DIR = ROOT / "knowledge" / "markers"
+
+# Fields that must be filled before a record may claim fill_status "complete".
+MARKER_COVERAGE = [
+    "what_it_is", "made_where", "controlled_by", "functions",
+    "on_a_panel.range_note", "states.high.meaning", "states.low.meaning",
+    "states.suppressed.what_happens", "states.recovery.what_is_known",
+    "does_not_tell_you",
+]
+
+
+def dig(obj, path):
+    for part in path.split("."):
+        if not isinstance(obj, dict):
+            return None
+        obj = obj.get(part)
+    return obj
+
+
+def is_filled(value) -> bool:
+    if isinstance(value, str):
+        return bool(value.strip())
+    return bool(value) if value is not None else False
+
+
+def validate_markers(report) -> dict:
+    """Validate the marker encyclopedia."""
+    counts = {"total": 0, "written": 0, "reviewed": 0}
+    if not MARKERS_DIR.exists():
+        return counts
+
+    records = {}
+    for path in sorted(MARKERS_DIR.glob("*.yaml")):
+        label = f"markers/{path.stem}"
+        try:
+            rec = yaml.safe_load(path.read_text())
+        except yaml.YAMLError as exc:
+            report.error(label, f"YAML parse error: {exc}")
+            continue
+        if not isinstance(rec, dict):
+            report.error(label, "record is not a mapping")
+            continue
+
+        mid = rec.get("id")
+        if mid != path.stem:
+            report.error(label, f"id-matches-filename: id is '{mid}'")
+        records[path.stem] = rec
+
+        for field in ("id", "name", "full_name", "category", "applies_to",
+                      "units", "related", "fill_status"):
+            if field not in rec or (rec[field] is None and field != "units"):
+                report.error(label, f"{field}: missing required field")
+
+        applies = rec.get("applies_to") or []
+        if not applies:
+            report.error(label, "applies_to: must name at least one of male, female")
+        for who in applies:
+            if who not in ("male", "female"):
+                report.error(label, f"applies_to: '{who}' is not male or female")
+
+        fill = rec.get("fill_status")
+        if fill not in ("stub", "partial", "complete", "reviewed"):
+            report.error(label, f"fill_status: '{fill}' is not a permitted value")
+
+        if fill == "reviewed":
+            if not rec.get("clinical_reviewer"):
+                report.error(label, "reviewed-requires-reviewer: no clinical_reviewer")
+            if not rec.get("reviewed_on"):
+                report.error(label, "reviewed-requires-reviewer: no reviewed_on")
+
+        if fill in ("complete", "reviewed"):
+            missing = [f for f in MARKER_COVERAGE if not is_filled(dig(rec, f))]
+            if missing:
+                report.error(
+                    label,
+                    "complete-requires-coverage: unfilled — " + ", ".join(missing),
+                )
+
+        # A stub claiming filled content is a bookkeeping slip worth catching.
+        if fill == "stub":
+            filled = [f for f in MARKER_COVERAGE if is_filled(dig(rec, f))]
+            if filled:
+                report.warn(
+                    label,
+                    "fill_status is 'stub' but content exists — promote to "
+                    "'partial' so coverage reports it: " + ", ".join(filled),
+                )
+
+        counts["total"] += 1
+        if fill in ("partial", "complete", "reviewed"):
+            counts["written"] += 1
+        if fill == "reviewed":
+            counts["reviewed"] += 1
+
+    # related-must-exist: the edges are what turn records into a map.
+    for mid, rec in records.items():
+        for other in rec.get("related") or []:
+            if other not in records:
+                report.error(
+                    f"markers/{mid}", f"related-must-exist: no marker '{other}'"
+                )
+
+    return counts
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--quiet", action="store_true", help="print errors only")
@@ -292,6 +397,7 @@ def main() -> int:
         check_rules(report, rec_id, record, today)
 
     service_counts = validate_services(report)
+    marker_counts = validate_markers(report)
 
     # A record that failed validation is never citable, whatever its status says.
     citable = [
@@ -316,6 +422,11 @@ def main() -> int:
                 "  None yet. No record may be cited until it has been read in full\n"
                 "  and approved by a named clinical reviewer (EVIDENCE-POLICY.md §4, §8)."
             )
+
+        mt, mw, mr = (marker_counts["total"], marker_counts["written"],
+                      marker_counts["reviewed"])
+        if mt:
+            print(f"\nMarker encyclopedia: {mw} written of {mt}, {mr} clinically reviewed")
 
         total, verified = service_counts["total"], service_counts["verified"]
         print(f"\nCrisis services: {total} listed, {verified} verified")

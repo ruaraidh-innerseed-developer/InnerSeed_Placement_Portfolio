@@ -24,6 +24,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 PAGES_DIR = ROOT / "content" / "pages"
+MARKERS_DIR = ROOT / "knowledge" / "markers"
 ROUTES_PATH = ROOT / "data" / "routes.yaml"
 SESSIONS_PATH = ROOT / "data" / "sessions.yaml"
 SERVICES_PATH = ROOT / "services" / "crisis-services.yaml"
@@ -67,8 +68,12 @@ def load_pages() -> dict:
     return pages
 
 
-def build_index(pages: dict) -> list:
-    """The searchable index. Ordered so written content sorts above gaps."""
+def build_index(pages: dict, markers: dict) -> list:
+    """The searchable index: prose pages plus Q&A generated from the markers.
+
+    Ordered so written content sorts above gaps, and the gaps still appear —
+    the hub tells you what it hasn't got rather than returning nothing.
+    """
     rank = {"live": 0, "draft": 1, "planned": 2, "retired": 9}
     rows = []
     for pid, fm in pages.items():
@@ -83,23 +88,119 @@ def build_index(pages: dict) -> list:
             "d": " ".join(str(fm.get("blurb", "")).split()),
             "k": " ".join(str(fm.get("keywords", "")).split()).lower(),
         })
+    rows.extend(marker_qa(markers))
     rows.sort(key=lambda r: (rank.get(r["s"], 5), r["t"]))
     return rows
 
 
-def build_routes(pages: dict) -> dict:
+def load_markers() -> dict:
+    markers = {}
+    for path in sorted(MARKERS_DIR.glob("*.yaml")):
+        rec = yaml.safe_load(path.read_text())
+        if not isinstance(rec, dict):
+            continue
+        mid = rec.get("id") or path.stem
+        if mid != path.stem:
+            raise ValueError(f"{path.name}: id '{mid}' does not match filename")
+        markers[mid] = rec
+    return markers
+
+
+def dig(obj, path):
+    for part in path.split("."):
+        if not isinstance(obj, dict):
+            return None
+        obj = obj.get(part)
+    return obj
+
+
+def marker_qa(markers: dict) -> list:
+    """Generate reader-facing Q&A entries from the marker records.
+
+    This is the point of the knowledge base: filling in a field produces an
+    answer, rather than someone remembering to write that particular sentence.
+    A record with all four states filled yields four searchable answers, and
+    they read consistently because they came from the same shape.
+    """
+    # (question template, field path, extra keywords)
+    SHAPES = [
+        ("What is {name}?",              "what_it_is",                      "what is explain define"),
+        ("My {name} is high — what does that mean?",
+                                          "states.high.meaning",             "high raised elevated too much over"),
+        ("My {name} is low — what does that mean?",
+                                          "states.low.meaning",              "low under below deficient too little"),
+        ("What happens to {name} on steroids?",
+                                          "states.suppressed.what_happens",  "suppressed suppression steroids aas cycle on"),
+        ("Does {name} recover after stopping?",
+                                          "states.recovery.what_is_known",   "recover recovery after stopping off pct"),
+    ]
+    status_of = {"reviewed": "live", "complete": "draft", "partial": "draft"}
+
+    rows = []
+    for mid, rec in markers.items():
+        name = rec.get("name", mid)
+        fill = rec.get("fill_status", "stub")
+        base_kw = " ".join([
+            mid.replace("-", " "), name,
+            str(rec.get("full_name", "")),
+            " ".join(rec.get("aka") or []),
+        ]).lower()
+        units = f"Typical UK units: {rec['units']}" if rec.get("units") else ""
+
+        if fill == "stub":
+            rows.append({
+                "id": f"marker:{mid}",
+                "t": f"{name} — {rec.get('full_name', '')}",
+                "s": "planned",
+                "u": units,
+                "d": ("Planned. This marker is in the encyclopedia but nobody has "
+                      "written it up yet."),
+                "k": base_kw,
+            })
+            continue
+
+        for template, path, kw in SHAPES:
+            text = dig(rec, path)
+            if not (isinstance(text, str) and text.strip()):
+                continue
+            rows.append({
+                "id": f"marker:{mid}:{path}",
+                "t": template.format(name=name),
+                "s": status_of.get(fill, "draft"),
+                "u": units,
+                "d": " ".join(text.split()),
+                "k": f"{base_kw} {kw}",
+            })
+    return rows
+
+
+def build_routes(pages: dict, markers: dict) -> dict:
     doc = yaml.safe_load(ROUTES_PATH.read_text())
+    marker_status = {"reviewed": "live", "complete": "draft",
+                     "partial": "draft", "stub": "planned"}
     out = []
     for r in doc.get("routes", []):
         items = []
         for it in r.get("items", []):
-            page_id = it.get("page")
+            page_id, marker_id = it.get("page"), it.get("marker")
+            if page_id and marker_id:
+                raise ValueError(
+                    f"route '{r['id']}' item '{it['title']}' sets both page and marker"
+                )
             if page_id:
                 if page_id not in pages:
                     raise ValueError(
                         f"route '{r['id']}' links to unknown page '{page_id}'"
                     )
                 status = pages[page_id].get("status", "planned")
+            elif marker_id:
+                if marker_id not in markers:
+                    raise ValueError(
+                        f"route '{r['id']}' links to unknown marker '{marker_id}'"
+                    )
+                status = marker_status.get(
+                    markers[marker_id].get("fill_status", "stub"), "planned"
+                )
             else:
                 status = it.get("status", "planned")
             items.append({
@@ -162,7 +263,7 @@ def build_crisis() -> list:
     return lines
 
 
-def build_state(pages: dict) -> dict:
+def build_state(pages: dict, markers: dict) -> dict:
     """The honest counters shown in the footer."""
     src_total = src_approved = 0
     for path in SOURCES_DIR.glob("*.yaml"):
@@ -185,7 +286,16 @@ def build_state(pages: dict) -> dict:
         if st in counts:
             counts[st] += 1
 
+    mcounts = {"stub": 0, "partial": 0, "complete": 0, "reviewed": 0}
+    for rec in markers.values():
+        st = rec.get("fill_status", "stub")
+        if st in mcounts:
+            mcounts[st] += 1
+
     return {
+        "markers_total": len(markers),
+        "markers_written": mcounts["partial"] + mcounts["complete"] + mcounts["reviewed"],
+        "markers_reviewed": mcounts["reviewed"],
         "pages_live": counts["live"],
         "pages_draft": counts["draft"],
         "pages_planned": counts["planned"],
@@ -206,12 +316,13 @@ def main() -> int:
 
     try:
         pages = load_pages()
+        markers = load_markers()
         data = {
-            "index": build_index(pages),
-            "routes": build_routes(pages),
+            "index": build_index(pages, markers),
+            "routes": build_routes(pages, markers),
             "sessions": build_sessions(),
             "crisis": build_crisis(),
-            "state": build_state(pages),
+            "state": build_state(pages, markers),
         }
     except (ValueError, KeyError, yaml.YAMLError) as exc:
         print(f"build failed: {exc}", file=sys.stderr)
@@ -245,6 +356,10 @@ def main() -> int:
           f"{st['pages_planned']} planned")
     print(f"  sources   {st['sources_approved']} approved of {st['sources_total']}")
     print(f"  services  {st['services_verified']} verified of {st['services_total']}")
+    print(f"  markers   {st['markers_written']} written of {st['markers_total']}"
+          f" ({st['markers_reviewed']} reviewed)")
+    print(f"  qa        {sum(1 for r in data['index'] if r['id'].startswith('marker:'))}"
+          f" generated entries")
     print(f"  routes    {len(data['routes']['routes'])}")
     print(f"  sessions  {len(data['sessions']['sessions'])}")
     return 0

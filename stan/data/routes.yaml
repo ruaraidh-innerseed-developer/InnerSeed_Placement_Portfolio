@@ -41,7 +41,7 @@ routes:
         page: staying-on
       - title: Oestradiol, and what happens when you crush it
         note: One of the most commonly mismanaged parts of a cycle.
-        page: oestradiol
+        marker: oestradiol
       - title: Talk to a peer, not a lecture
         note: Someone who has been on for years and is not going to tell you to stop.
         status: planned
@@ -78,13 +78,13 @@ routes:
     items:
       - title: Why "normal" testosterone can still be too low
         note: SHBG, and the difference between total and free.
-        page: shbg
+        marker: shbg
       - title: How the system works
         note: Low testosterone with low LH points somewhere quite specific.
         page: how-the-system-works
       - title: LH — where the problem actually sits
         note: The second number that makes the first one readable.
-        page: lh
+        marker: lh
 
   - id: bloods
     label: I've got bloods I can't read
@@ -99,7 +99,7 @@ routes:
         page: how-the-system-works
       - title: Testosterone — total and free
         note: The number everyone looks at, and the one most often misread.
-        page: testosterone-total-and-free
+        marker: total-testosterone
       - title: Track them over time
         note: Recovery is invisible week to week and obvious over a year.
         status: planned

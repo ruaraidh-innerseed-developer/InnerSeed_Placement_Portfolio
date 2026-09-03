@@ -1,0 +1,185 @@
+id: shbg
+name: SHBG
+full_name: Sex hormone binding globulin
+aka:
+  - sex hormone-binding globulin
+  - sex hormone binding globulin
+  - testosterone binding protein
+category: binding-protein
+applies_to: [male, female]
+units: nmol/L
+
+what_it_is: >-
+  A protein that circulates in your blood and holds on to sex hormones. While a
+  hormone is stuck to SHBG, your body cannot use it. It is not a hormone itself —
+  it is the thing that decides how much of your hormones are actually available.
+
+made_where: >-
+  Mostly the liver.
+
+controlled_by: >-
+  Several things at once, which is why it drifts. Thyroid hormone, oestrogen and
+  ageing push it up. Insulin, androgens and body fat push it down. Liver health
+  affects it in both directions. It is not directly controlled by the brain the
+  way LH and FSH are.
+
+functions:
+  - >-
+    Sets how much of your testosterone is free and usable rather than locked away.
+  - >-
+    Buffers the swings — it holds a reserve so hormone levels in tissue stay
+    steadier than the raw production would suggest.
+  - >-
+    Carries oestradiol as well as testosterone, though it binds testosterone more
+    tightly.
+
+female_note: >-
+  SHBG matters at least as much in women, where it is a central part of how much
+  free androgen is circulating. Low SHBG is a common finding in polycystic ovary
+  syndrome and in insulin resistance, and it is often what turns a modest total
+  testosterone into meaningful androgen excess. Women using PEDs face the same
+  arithmetic as men, from a much lower starting point.
+
+on_a_panel:
+  commonly_measured: true
+  measured_with: [total-testosterone, albumin]
+  timing_matters: >-
+    Less time-sensitive than testosterone itself, but it should be interpreted
+    against a testosterone sample taken at a sensible time, since the point of
+    measuring it is to work out the free fraction.
+  range_note: >-
+    Reference ranges differ between laboratories — different equipment, different
+    populations, different cut-offs. A result that reads high at one lab can read
+    as within range at another. The range printed on your own report is more
+    reliable than any figure quoted on a website. What travels between labs is the
+    relationship, not the number: higher SHBG means less free testosterone for the
+    same total.
+
+states:
+
+  high:
+    meaning: >-
+      More of your testosterone is bound up and less of it is free. Think of total
+      testosterone as money in an account and SHBG as the portion locked in a
+      fixed-term deposit — the balance looks healthy, but what you can actually
+      spend this week might not be. High SHBG does not itself make you unwell. What
+      matters is the knock-on effect: for any given total testosterone, a higher
+      SHBG leaves a smaller free portion.
+    common_causes:
+      - An overactive thyroid
+      - Liver disease
+      - Oestrogens
+      - Some anticonvulsant medicines
+      - Ageing
+      - Sustained caloric restriction and very low body fat
+    symptoms_reported:
+      - >-
+        None directly. Where people feel unwell it is generally attributed to the
+        low free testosterone that a high SHBG can leave behind, not to the SHBG.
+    what_else_to_check:
+      - total-testosterone
+      - albumin
+      - tsh
+    questions_to_ask:
+      - What is my SHBG, and what is the reference range at the lab that ran it?
+      - >-
+        Do we have total testosterone and albumin too, so a calculated free
+        testosterone can be worked out?
+      - Given my SHBG, does my total testosterone reflect what is actually available?
+      - Should my thyroid be checked alongside this?
+    female_note: >-
+      In women high SHBG lowers free androgen, and is seen with oral oestrogen
+      including the combined pill, and with thyroid overactivity.
+
+  low:
+    meaning: >-
+      Less is bound, so more of your total testosterone is free. Your free
+      testosterone may be higher than the total alone suggests. Low SHBG is also a
+      signal in its own right — it is often the line on a panel that says something
+      about the rest of your metabolic picture rather than about your hormones.
+    common_causes:
+      - Obesity and insulin resistance
+      - Type 2 diabetes
+      - An underactive thyroid
+      - Androgens, especially oral 17-alpha-alkylated compounds
+      - Glucocorticoids
+      - Growth hormone
+    symptoms_reported:
+      - >-
+        Not symptomatic in itself. Its significance is what it points at — commonly
+        metabolic — and what it does to the free fraction.
+    what_else_to_check:
+      - total-testosterone
+      - hba1c
+      - tsh
+    questions_to_ask:
+      - Is my low SHBG pointing at something metabolic worth investigating?
+      - Does it change how my testosterone result should be read?
+    female_note: >-
+      Low SHBG in women is a common and clinically meaningful finding, frequently
+      associated with polycystic ovary syndrome and insulin resistance, and it can
+      raise free androgen substantially without a dramatic total testosterone.
+
+  suppressed:
+    expected_direction: down
+    what_happens: >-
+      Exogenous androgens usually push SHBG down. Oral 17-alpha-alkylated compounds
+      push it down hard, sometimes to the floor.
+    why: >-
+      Androgens reduce SHBG production by the liver. Orals reach the liver in
+      concentration on first pass, which is why their effect is disproportionate.
+    unexpected_finding: >-
+      A HIGH SHBG in someone with a history of heavy use is unexpected, and
+      unexpected findings are worth asking about rather than ignoring. It may point
+      somewhere other than the steroids — thyroid, liver, or something else — and
+      it changes how the rest of the panel reads. STAN does not interpret that
+      finding. It says it is a legitimate thing to ask about, and that "your
+      testosterone is normal" does not answer it.
+    female_note: >-
+      The same direction, and the consequences are larger. Women start with higher
+      SHBG and far lower testosterone, so androgen-driven suppression of SHBG can
+      raise free androgen sharply from a total that still looks unremarkable.
+
+  recovery:
+    what_is_known: >-
+      SHBG generally moves back toward baseline once exogenous androgen stops, and
+      it tends to be a faster-moving marker than the gonadotrophins. How far and how
+      fast in people with prolonged high-dose exposure has not been well
+      characterised.
+    evidence_state: thin
+    do_not_claim:
+      - >-
+        Any specific timeline for SHBG normalisation. STAN has not found evidence
+        that supports one in this population.
+
+does_not_tell_you:
+  - Whether you feel bad because of it. It is one number among several.
+  - >-
+    What your free testosterone is, on its own — the calculation needs total
+    testosterone and albumin as well.
+  - >-
+    Why it is what it is. The cause lists are associations, not a diagnosis, and
+    working out which applies to you is a clinical job.
+  - Whether anything needs doing. That is not a question a website can answer.
+
+related:
+  - total-testosterone
+  - albumin
+  - free-testosterone
+  - tsh
+  - lh
+
+sources:
+  - jayasena-2022-sfe-trt-guidelines
+
+fill_status: complete
+clinical_reviewer:
+reviewed_on:
+
+notes: >-
+  Converted from the prose draft at content/pages/shbg.md, which was written first
+  and proved the voice. This record is now the source of truth for SHBG; the prose
+  page is kept as the specimen for clinician outreach. The Society for Endocrinology
+  guideline is cited under Tier A for the statement that where SHBG is abnormal,
+  total testosterone may not reflect biological androgen effect and a calculated
+  free testosterone is indicated.

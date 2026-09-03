@@ -43,29 +43,41 @@ stan/
 ├── governance/
 │   ├── SCOPE.md              What STAN does and — more importantly — does not do
 │   ├── EVIDENCE-POLICY.md    How sources are graded, reviewed and approved
-│   ├── SUPPORT-MODEL.md      How human support is governed: tiers, boundaries,
-│   │                         groups, supervision, the founder's role
-│   └── CRISIS-PROTOCOL.md    What to do when someone discloses suicidal intent,
-│                             per channel — including the email safeguards
-├── services/
+│   ├── INTERIM-STANDARD.md   What may publish before a clinical lead exists
+│   ├── SUPPORT-MODEL.md      Tiers, boundaries, groups, the founder's role
+│   └── CRISIS-PROTOCOL.md    Suicidal disclosure, per channel, incl. email
+├── knowledge/                THE ENCYCLOPEDIA
 │   ├── schema/
-│   │   └── service.schema.yaml
-│   └── crisis-services.yaml  Crisis signposting, Scotland and England.
-│                             Reviewed every 6 months, enforced.
-├── evidence/
-│   ├── schema/
-│   │   └── source.schema.yaml   The record schema. Editing it is a governance act.
-│   └── sources/                 One YAML file per source. 5 seeded.
-├── tools/
-│   ├── validate.py           Enforces the policy. Exits non-zero on breach.
-│   └── query.py              Search and filter the register.
+│   │   └── marker.schema.yaml
+│   └── markers/              One YAML record per marker. 16 seeded, 1 filled.
 ├── content/
-│   └── drafts/
-│       └── how-the-system-works.md   The HPG axis explained. Flagship draft.
+│   └── pages/                Prose: concepts and journeys, not markers
+├── evidence/
+│   ├── schema/source.schema.yaml
+│   └── sources/              One record per source. 5 seeded, 0 approved.
+├── services/
+│   ├── schema/service.schema.yaml
+│   └── crisis-services.yaml  Scotland and England. 6-month review, enforced.
+├── data/
+│   ├── routes.yaml           The "Why are you here?" routes
+│   └── sessions.yaml         Group sessions, countries, types
+├── outreach/
+│   ├── clinical-lead-approach.md   Ready-to-send email and the target order
+│   └── specimen-shbg.md            The prose page to show a clinician
+├── prototype/
+│   ├── template.html         The shell. Edit this for layout and styling.
+│   └── index.html            GENERATED — never hand-edit
+├── tools/
+│   ├── validate.py           Enforces policy across all three registers
+│   ├── build.py              Compiles the repository into the hub page
+│   ├── coverage.py           How complete the encyclopedia is
+│   ├── query.py              Search and filter the evidence register
+│   └── new.py                Scaffold a page or a source
 └── templates/
-    ├── content-page.md       The governed content unit
-    ├── hormone-explainer.md  Fixed skeleton for every marker explainer
-    └── consultation-brief.md The document a reader takes to their GP
+    ├── content-page.md       The governed prose unit
+    ├── hormone-explainer.md  Superseded by knowledge/ for markers; kept for
+    │                         reference on voice and section order
+    └── consultation-brief.md The sheet a reader takes to their GP
 ```
 
 ## Using it
@@ -80,6 +92,56 @@ python3 stan/tools/query.py --topic asih --format full
 ```
 
 Requires Python 3.11+ and PyYAML.
+
+## The knowledge base — records, not essays
+
+**One marker is a record. A concept or a journey is a page.**
+
+"What is LH" is a record in `knowledge/markers/`. "How the system works" and
+"Coming off" are prose pages in `content/pages/`. Anything that is one substance,
+or one line on a blood panel, belongs in the encyclopedia.
+
+This distinction is the difference between a project that scales and one that
+doesn't. An essay has to be written whole, by one person, in one sitting. A record
+is filled a field at a time, by different people, over months — and progress can
+be measured.
+
+More importantly, **the reader-facing Q&A generates from the fields.** Fill in
+`states.low.meaning` for a marker and "my LH is low — what does that mean?"
+becomes a searchable answer, without anyone writing that sentence as prose. Each
+record yields up to five answers, and they read consistently because they came out
+of the same shape:
+
+| Filled field | Question it answers |
+|---|---|
+| `what_it_is` | What is LH? |
+| `states.high.meaning` | My LH is high — what does that mean? |
+| `states.low.meaning` | My LH is low — what does that mean? |
+| `states.suppressed.what_happens` | What happens to LH on steroids? |
+| `states.recovery.what_is_known` | Does LH recover after stopping? |
+
+Sixteen markers fully filled is around eighty answers nobody authored one by one.
+
+Two fields carry the differentiation and neither exists in mainstream health
+content: **`states.suppressed`**, because suppression is not deficiency, and
+**`does_not_tell_you`**, the reader-facing form of "what this must not be used to
+claim". `states.suppressed.unexpected_finding` — what it means when a marker moves
+the *opposite* way to expected — is frequently the most useful line on a record.
+
+Every record declares `applies_to: [male, female]`. Women using PEDs are the most
+under-served group in this field, and the model treats them as first-class rather
+than a footnote: `female_note` exists on the record and inside each state.
+
+```bash
+python3 stan/tools/coverage.py              # how complete is the encyclopedia
+python3 stan/tools/coverage.py --by field   # which section to sweep next
+python3 stan/tools/coverage.py --next       # highest-leverage thing to write
+python3 stan/tools/coverage.py --marker lh  # what's missing from one record
+```
+
+**Work by field, not by marker.** Writing `what_it_is` across all sixteen records
+in one sitting is faster than finishing one record, and the voice stays
+consistent. `--next` picks the sweep for you.
 
 ## How the hub is built
 
@@ -189,42 +251,33 @@ can represent its own uncertainty is worth more than one that cannot.
     the standard, not being the always-on contact. Includes arranging supervision
     for the founder, which is the step most likely to be skipped.
 
-**Content — the foundational explainers**
+**Content — the encyclopedia**
 
-The reader has to understand the system before a sixteen-marker panel means
-anything. These are the interpretation layer without which a bloodwork tool is
-just a wall of numbers, and they are the part of STAN that has no good equivalent
-anywhere: mainstream explainers cover *deficiency* but not *suppression*, and
-they explain the parts without ever explaining the machine.
+Fill the marker records. Do it by field across the whole set, not record by
+record — `coverage.py --next` names the sweep. Every field filled becomes a
+searchable answer without anyone writing it as prose.
 
-Every one uses `templates/hormone-explainer.md`, including the two sections that
-make them worth reading — **"When it's suppressed"** and **"What this number does
-not tell you"**.
+15. Sweep `what_it_is`, `made_where`, `controlled_by`, `functions` across all 16
+    markers. That alone gives the hub sixteen real answers to "what is X".
+16. Then sweep the states: `low`, `high`, `suppressed`, `recovery`. These are the
+    ones people actually search for, and `suppressed` is the one nobody else has.
+17. Then `does_not_tell_you` and the `female_note` fields.
+18. Add markers as gaps appear. `new.py` does not scaffold markers yet — copy an
+    existing stub, or ask for that to be added.
 
-Build order:
-
-*Tier 1 — the core loop. These six tell the whole central story.*
-15. Testosterone (total and free) · SHBG · LH · FSH · oestradiol · albumin
-
-*Tier 2 — the rest of a typical panel*
-16. Prolactin · haematocrit · DHT · inhibin B and AMH · thyroid (it moves SHBG)
-
-*Tier 3 — general health markers that appear on the same report*
-17. Lipids · liver markers · kidney function · HbA1c · PSA · IGF-1
-
-A drafted page is a far smaller ask of a volunteer clinician than a blank one.
-Draft first, recruit second — reviewing thirty minutes of someone else's writing
-is a yes; writing from scratch is a no.
+Discipline throughout (`INTERIM-STANDARD.md`): report and attribute, never
+advise. No reference range quoted as authoritative. No recovery timeline the
+evidence does not support. Nothing containing the word "should".
 
 **Product**
-18. Build one content page to full publishable standard, using the index case
+19. Build one content page to full publishable standard, using the index case
     (high SHBG, low calculated free testosterone, symptomatic on transdermal
     replacement after prolonged supraphysiological exposure). That page, plus its
     consultation brief, is the specimen to put in front of a prospective clinical
     lead. Not a deck — a specimen.
 
 **Deferred on purpose**
-19. Platform. Current lean is Next.js + Postgres + Payload CMS, with
+20. Platform. Current lean is Next.js + Postgres + Payload CMS, with
     Django + Wagtail the serious alternative if Python is the more comfortable
     language. Nothing above depends on that choice. Make it when there is content
     to render and a second person to hand it to.
