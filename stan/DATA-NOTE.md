@@ -68,22 +68,51 @@ supports this: fill a field once, and it can render as any of these.
 Point 4 is worth remembering. The people at highest risk are often not the ones
 Googling at 2am; they are the ones already walking into a service.
 
-### Licensing our own content ⟨OPEN⟩
+### Licensing our own content — DECIDED: all rights reserved, for now
 
-Should STAN's explainers be published under CC-BY, so other services can reuse
-them with attribution?
+**Decision (founder, this session): STAN's content is not openly licensed.
+No CC licence until provenance is established and content is clinically
+reviewed.** Revisit once the register carries approved sources and a clinical
+lead is in place.
 
-**For:** the mission is that good information spreads. A needle exchange in
-Dundee reusing our SHBG explainer is a win, not a loss. It is what a non-profit
-does, and it is a credibility signal to academics and funders.
+The reasoning, worst risk first:
 
-**Against:** someone can lift the useful half and drop the caveats, and the
-caveats are the part that makes it safe. Our name may end up on a stripped
-version.
+1. **A CC licence is irrevocable.** Perpetual for every version released under
+   it. Future versions can be relicensed; copies already out cannot be recalled.
+   If a page later proves wrong we can correct ours and not theirs — and theirs
+   still carries our name.
+2. **Attribution runs backwards.** CC-BY obliges downstream users to credit us,
+   which guarantees our name travels with modified content we no longer control.
+3. **Modification is the point of CC-BY.** Someone may lawfully strip
+   `does_not_tell_you`, add a dosing section, and republish attributed to STAN.
+   NoDerivatives blocks that and also blocks the legitimate reuse — a service
+   reformatting a page as a leaflet — that was the reason to license at all.
+4. **We would be licensing unverified content.** Every source record still says
+   `full_text_read: false` and nothing is clinically reviewed. Granting
+   perpetual redistribution over material whose provenance we cannot yet prove
+   is backwards, and settles it on its own.
+5. **It makes the clinical lead harder to recruit.** Asking someone to stake
+   their registration on content that is also freely modifiable by anyone is a
+   worse offer.
 
-My lean is **CC-BY with a clause requiring the status label and the "what this
-does not tell you" section to travel with the text** — but this is a decision
-for you, and it is easier to open a licence later than to close one.
+**A superseded suggestion, recorded so it is not repeated:** "CC-BY plus a
+clause requiring the status label and caveats to travel with the text" does not
+work. Adding restrictions to a CC licence stops it being one — losing the single
+real benefit, that another organisation's legal team recognises it instantly —
+and leaves a bespoke licence enforceable only by litigation a small non-profit
+will never bring.
+
+**What a restrictive licence does not do:** protect against AI scraping or
+regurgitation. A publicly readable page gets crawled whatever its licence.
+Closed licensing guards against irrevocability and modification; it does nothing
+for misinformation. The defences against *that* are the provenance chain, the
+status labels, `claims_not_supported`, and refusing to publish figures we cannot
+stand behind — all of which work regardless of who copies us.
+
+⟨CHECK⟩ The GitHub repository holding all of this — is it public? If so the
+content is already readable and crawlable. That does not change the licence
+position (no licence stated means all rights reserved) but "private first" and
+"public repo" are in tension and the actual setting should be known.
 
 ### Sharing with researchers — the asset nobody else has
 
@@ -110,12 +139,33 @@ as confidence, but that is a judgement call.
 
 ---
 
+### The corrections log ⟨PROPOSED⟩
+
+If STAN is to be the thing people check *against*, it needs something it does not
+yet have: **a public, dated record of what we published, what turned out to be
+wrong, when we found out, and what changed.**
+
+Nobody in this field does this. It costs almost nothing. And it answers the
+misinformation worry in the only way that is actually available — not by
+preventing errors, which is impossible, but by proving they get caught and named.
+
+It also converts the project's biggest vulnerability into its strongest signal.
+"We got this wrong in March and here is the correction" is a demonstration of the
+system working. Silence, when someone eventually finds an error, is not.
+
+Suggested shape: one entry per correction — date found, what was wrong, how it
+was found, what changed, who checked it. Committed to the repository like
+everything else, so the history is not editable after the fact.
+
 ## Next actions from this note
 
 1. Get **Grant 2023** and **Solanki 2023** into `sources-inbox/`. Free, five
    minutes each, and they unblock the most.
-2. Decide the licence ⟨OPEN⟩ — not urgent, but before anything publishes.
-3. Keep reader data collection at "almost nothing" until the tracker forces the
+2. ~~Decide the licence~~ — decided: all rights reserved for now. Revisit when
+   sources are verified and a clinical lead is appointed.
+3. Check whether the GitHub repository is public ⟨CHECK⟩.
+4. Keep reader data collection at "almost nothing" until the tracker forces the
    question, then answer it properly.
-4. Put the search-log offer in the clinician approach as a second-email card, not
+5. Put the search-log offer in the clinician approach as a second-email card, not
    the first — the first email should stay a small ask.
+6. Decide on the corrections log ⟨PROPOSED⟩.
