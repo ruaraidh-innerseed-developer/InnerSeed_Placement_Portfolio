@@ -3,7 +3,11 @@
 # Order here is the order on the page. Each route's `items` are the cards shown
 # when it is selected; a card's `page` id links it to stan/content/pages/, and
 # the build script pulls that page's live status so badges never go stale.
-# A card with no `page` is a service or feature rather than a document.
+# A card with no `page` or `marker` is planned but unwritten.
+#
+# Cards currently reading `status: planned` were pages that got scrapped for
+# being unbacked. They come back when they are written FROM a source that has
+# been read, not before.
 
 default_open: stopped
 
@@ -18,10 +22,10 @@ routes:
     items:
       - title: Read how the system works first
         note: Understand the loop you would be switching off. Ten minutes.
-        page: how-the-system-works
+        status: planned
       - title: What everything costs
         note: Every compound has effects you want and effects you don't. Both get named.
-        page: staying-on
+        status: planned
       - title: Get baseline bloods now
         note: >-
           If you go ahead, a before picture is the single most useful thing you
@@ -38,7 +42,7 @@ routes:
     items:
       - title: Markers worth monitoring
         note: Which bloods, how often, and what a drifting number actually means.
-        page: staying-on
+        status: planned
       - title: Oestradiol, and what happens when you crush it
         note: One of the most commonly mismanaged parts of a cycle.
         marker: oestradiol
@@ -57,7 +61,7 @@ routes:
     items:
       - title: What the evidence supports, and what it doesn't
         note: Including how much is genuinely unknown.
-        page: coming-off
+        status: planned
       - title: Consultation brief
         note: >-
           Fill it in, take it with you. Makes a GP who doesn't know this area far
@@ -81,7 +85,7 @@ routes:
         marker: shbg
       - title: How the system works
         note: Low testosterone with low LH points somewhere quite specific.
-        page: how-the-system-works
+        status: planned
       - title: LH — where the problem actually sits
         note: The second number that makes the first one readable.
         marker: lh
@@ -96,7 +100,7 @@ routes:
     items:
       - title: Read the system before the numbers
         note: The one page that makes the rest legible.
-        page: how-the-system-works
+        status: planned
       - title: Testosterone — total and free
         note: The number everyone looks at, and the one most often misread.
         marker: total-testosterone
@@ -114,7 +118,7 @@ routes:
     items:
       - title: What is actually going on in his body
         note: Including the mood and irritability, which are not just personality.
-        page: how-the-system-works
+        status: planned
       - title: Partners and family group
         note: A room of people in the same position. Monthly.
         status: planned

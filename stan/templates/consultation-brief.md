@@ -95,10 +95,10 @@ when the sample was taken relative to your last dose.*
 Delete what does not apply. Add your own.
 
 1. My total testosterone is reported as within range. Given my SHBG result, would
-   a **calculated free testosterone** be informative here? UK Society for
-   Endocrinology guidance notes that where SHBG is abnormal, total testosterone
-   may not reflect biological androgen effect. *(cite:
-   jayasena-2022-sfe-trt-guidelines — pending approval)*
+   a **calculated free testosterone** be informative here?
+   <!-- A supporting citation belongs here once a source has actually been read.
+        Until then the question stands on its own, which is fine — a question
+        makes no claim. -->
 2. Is my current route of administration and dose likely to be achieving adequate
    levels for me, and how would we know?
 3. What monitoring schedule should I be on, and which tests?
