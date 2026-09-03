@@ -18,11 +18,28 @@ units: IU/L
 # does not support. Nothing containing the word "should".
 # ---------------------------------------------------------------------------
 
-what_it_is: ""
-made_where: ""
-controlled_by: ""
-functions: []
-female_note: ""
+what_it_is: >-
+  Follicle-stimulating hormone. In men it is the brain's instruction for
+  sperm production; in women it drives the development of eggs.
+made_where: >-
+  The anterior pituitary gland, alongside LH.
+controlled_by: >-
+  GnRH pulses from the hypothalamus. Inhibin B, made by the same
+  testicular cells FSH acts on, feeds back to suppress FSH specifically.
+  Oestradiol and testosterone also reduce it.
+functions:
+  - >-
+    Supports the Sertoli cells in the testicles, which sustain sperm
+    production.
+  - >-
+    Prompts those cells to release inhibin B, closing its own feedback
+    loop.
+  - >-
+    In women, drives the growth of ovarian follicles each cycle.
+female_note: >-
+  Cycle-day dependent, and usually measured early in the cycle. It rises
+  markedly around and after menopause, which is what makes it useful as a
+  marker of ovarian reserve.
 
 on_a_panel:
   commonly_measured: true
@@ -62,7 +79,7 @@ related: [lh, "inhibin-b", amh, "total-testosterone"]
 
 sources: []
 
-fill_status: stub
+fill_status: partial
 clinical_reviewer:
 reviewed_on:
 notes: ""

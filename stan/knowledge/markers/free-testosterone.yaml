@@ -18,11 +18,27 @@ units: pmol/L
 # does not support. Nothing containing the word "should".
 # ---------------------------------------------------------------------------
 
-what_it_is: ""
-made_where: ""
-controlled_by: ""
-functions: []
-female_note: ""
+what_it_is: >-
+  The portion of your total testosterone that is not locked to a carrier
+  protein — the part actually available to your tissues. It is usually
+  worked out by calculation rather than measured directly.
+made_where: >-
+  Not made separately. It is a fraction of your total testosterone, and
+  the size of that fraction is set by how much SHBG and albumin are
+  present to bind it.
+controlled_by: >-
+  Three numbers: total testosterone, SHBG and albumin. Anything that
+  raises SHBG shrinks the free portion, even when the total is unchanged.
+functions:
+  - >-
+    It is the testosterone that does the work — every function listed
+    under total testosterone happens through this fraction.
+  - >-
+    Gives a truer picture than the total when SHBG is unusually high or
+    low.
+female_note: >-
+  The same arithmetic applies, at much smaller absolute values. Some
+  laboratories report a free androgen index instead.
 
 on_a_panel:
   commonly_measured: true
@@ -62,7 +78,7 @@ related: ["total-testosterone", shbg, albumin]
 
 sources: []
 
-fill_status: stub
+fill_status: partial
 clinical_reviewer:
 reviewed_on:
 notes: ""

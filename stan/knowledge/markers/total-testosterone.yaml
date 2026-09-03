@@ -18,11 +18,38 @@ units: nmol/L
 # does not support. Nothing containing the word "should".
 # ---------------------------------------------------------------------------
 
-what_it_is: ""
-made_where: ""
-controlled_by: ""
-functions: []
-female_note: ""
+what_it_is: >-
+  The main androgen — the hormone most people mean when they say
+  "testosterone". The total figure counts everything in your blood: the
+  part your body can use and the part locked to carrier proteins.
+made_where: >-
+  In men, mostly the Leydig cells in the testicles, with a small amount
+  from the adrenal glands. In women, the ovaries and adrenal glands.
+controlled_by: >-
+  LH from the pituitary tells the Leydig cells to make it. Testosterone
+  then feeds back to the brain and turns that signal down. Testosterone
+  arriving from outside the body produces the same feedback.
+functions:
+  - >-
+    Builds and maintains muscle and bone.
+  - >-
+    Drives libido and is involved in erectile function.
+  - >-
+    Affects mood, drive and energy.
+  - >-
+    Stimulates red blood cell production.
+  - >-
+    Maintains body and facial hair.
+  - >-
+    Supports sperm production — through its concentration inside the
+    testicle, not the level in your blood.
+  - >-
+    Acts as the raw material for oestradiol and DHT.
+female_note: >-
+  Women produce testosterone too, from the ovaries and adrenal glands, in
+  far smaller amounts. It matters for libido, bone and muscle. The
+  reference ranges are entirely different and a level that is low for a
+  man may be high for a woman.
 
 on_a_panel:
   commonly_measured: true
@@ -62,7 +89,7 @@ related: [shbg, albumin, "free-testosterone", lh, oestradiol]
 
 sources: []
 
-fill_status: stub
+fill_status: partial
 clinical_reviewer:
 reviewed_on:
 notes: ""

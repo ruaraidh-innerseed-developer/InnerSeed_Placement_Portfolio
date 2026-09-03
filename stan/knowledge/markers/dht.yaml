@@ -18,11 +18,32 @@ units: nmol/L
 # does not support. Nothing containing the word "should".
 # ---------------------------------------------------------------------------
 
-what_it_is: ""
-made_where: ""
-controlled_by: ""
-functions: []
-female_note: ""
+what_it_is: >-
+  Dihydrotestosterone — a more potent androgen made from testosterone. It
+  binds the androgen receptor more strongly than testosterone does, and
+  acts mainly in skin, hair and prostate.
+made_where: >-
+  Converted from testosterone by an enzyme called 5-alpha-reductase, in
+  the skin, hair follicles, prostate and liver rather than in the
+  testicle.
+controlled_by: >-
+  How much testosterone is available, and how active 5-alpha-reductase is
+  in a given tissue. Medicines such as finasteride and dutasteride work by
+  blocking that enzyme.
+functions:
+  - >-
+    Drives prostate growth.
+  - >-
+    Produces body and facial hair.
+  - >-
+    Causes scalp hair loss in people genetically susceptible to it.
+  - >-
+    Responsible for genital development before birth and at puberty.
+  - >-
+    Contributes to libido.
+female_note: >-
+  Women produce DHT too. It contributes to unwanted hair growth and to
+  androgenic hair thinning where androgen levels are raised.
 
 on_a_panel:
   commonly_measured: true
@@ -62,7 +83,7 @@ related: ["total-testosterone", shbg]
 
 sources: []
 
-fill_status: stub
+fill_status: partial
 clinical_reviewer:
 reviewed_on:
 notes: ""

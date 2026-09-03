@@ -18,11 +18,27 @@ units: nmol/L
 # does not support. Nothing containing the word "should".
 # ---------------------------------------------------------------------------
 
-what_it_is: ""
-made_where: ""
-controlled_by: ""
-functions: []
-female_note: ""
+what_it_is: >-
+  Insulin-like growth factor 1 — the hormone through which most of growth
+  hormone's effects are actually delivered. It is usually measured instead
+  of growth hormone itself, because growth hormone is released in bursts
+  and a single reading of it means very little.
+made_where: >-
+  Mostly the liver, in response to growth hormone. Smaller amounts are
+  produced in other tissues.
+controlled_by: >-
+  Growth hormone from the pituitary. Also nutrition, insulin and liver
+  function — undernutrition and liver disease both lower it regardless of
+  how much growth hormone is present.
+functions:
+  - >-
+    Drives tissue growth and repair.
+  - >-
+    Builds muscle and bone.
+  - >-
+    Affects how the body handles glucose and fat.
+female_note: >-
+  No major difference in what it does. Levels fall with age in both sexes.
 
 on_a_panel:
   commonly_measured: true
@@ -62,7 +78,7 @@ related: ["total-testosterone"]
 
 sources: []
 
-fill_status: stub
+fill_status: partial
 clinical_reviewer:
 reviewed_on:
 notes: ""

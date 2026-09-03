@@ -18,11 +18,28 @@ units: g/L
 # does not support. Nothing containing the word "should".
 # ---------------------------------------------------------------------------
 
-what_it_is: ""
-made_where: ""
-controlled_by: ""
-functions: []
-female_note: ""
+what_it_is: >-
+  The most abundant protein in your blood. It binds testosterone loosely —
+  loosely enough that testosterone attached to albumin is generally
+  counted as available to the body, unlike testosterone bound to SHBG.
+made_where: >-
+  The liver.
+controlled_by: >-
+  Liver function, nutrition, inflammation and hydration. It falls in liver
+  disease, in malnutrition and during significant illness.
+functions:
+  - >-
+    Carries hormones, drugs and fatty acids around the bloodstream.
+  - >-
+    Holds fluid inside blood vessels rather than letting it leak into
+    tissue.
+  - >-
+    Is the third figure a calculated free testosterone needs, alongside
+    total testosterone and SHBG.
+  - >-
+    Serves as a general indicator of liver function and nutritional state.
+female_note: >-
+  No material difference between men and women.
 
 on_a_panel:
   commonly_measured: true
@@ -62,7 +79,7 @@ related: [shbg, "free-testosterone", "total-testosterone"]
 
 sources: []
 
-fill_status: stub
+fill_status: partial
 clinical_reviewer:
 reviewed_on:
 notes: ""
