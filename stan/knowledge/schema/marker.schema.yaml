@@ -27,6 +27,40 @@
 
 version: 1.0
 
+# ---------------------------------------------------------------------------
+# WHERE THE CONTENT COMES FROM
+#
+# Different fields need different sources, and pretending otherwise is how bad
+# information gets in. The rule is: the thinner the evidence base, the more the
+# field needs a real document read in full.
+#
+#   TIER 1 — settled physiology.
+#     what_it_is · made_where · controlled_by · functions
+#     Uncontested textbook material, repeated identically across every
+#     reputable source. Safe to draft from general knowledge and confirm
+#     against a textbook chapter or NHS page. This is also the fastest sweep,
+#     which is convenient: it makes the hub useful soonest at the lowest risk.
+#
+#   TIER 2 — clinical context, well documented.
+#     states.high.common_causes · states.low.common_causes ·
+#     on_a_panel.* · does_not_tell_you
+#     Standard clinical knowledge. Draft, then confirm against a guideline or
+#     textbook. Never quote a reference range as authoritative.
+#
+#   TIER 3 — needs a paper read in full. NO EXCEPTIONS.
+#     states.suppressed.* · states.recovery.*
+#     This is the ASIH literature: thin, contested, and the exact area where
+#     general knowledge is least reliable and most confidently wrong. Anything
+#     here must trace to a source in evidence/sources/ whose record says
+#     full_text_read: true. If no such source exists, leave the field empty and
+#     let coverage report the gap. An empty field is honest; a plausible one is
+#     not.
+#
+# Claude cannot fetch journal articles from the session environment — publisher
+# domains are blocked. Tier 3 therefore depends on documents being placed in
+# sources-inbox/ by hand. See that folder's README.
+# ---------------------------------------------------------------------------
+
 enums:
   category:
     - hormone
