@@ -18,28 +18,11 @@ units: mmol/mol
 # does not support. Nothing containing the word "should".
 # ---------------------------------------------------------------------------
 
-what_it_is: >-
-  A measure of your average blood sugar over roughly the previous two to
-  three months. It works by measuring how much glucose has attached itself
-  to the haemoglobin inside your red blood cells.
-made_where: >-
-  Not made by the body as such. It forms continuously in the bloodstream
-  as glucose binds to haemoglobin.
-controlled_by: >-
-  Average blood glucose across the lifespan of a red blood cell. Anything
-  that shortens that lifespan, such as some anaemias, can make the result
-  misleading.
-functions:
-  - >-
-    Not a working hormone — it is a diagnostic marker.
-  - >-
-    Used to diagnose and monitor diabetes, and to assess insulin
-    resistance.
-  - >-
-    Appears alongside hormone panels because insulin resistance lowers
-    SHBG.
-female_note: >-
-  No material difference, though pregnancy is assessed differently.
+what_it_is: ""
+made_where: ""
+controlled_by: ""
+functions: []
+female_note: ""
 
 on_a_panel:
   commonly_measured: true
@@ -79,7 +62,7 @@ related: [shbg]
 
 sources: []
 
-fill_status: partial
+fill_status: stub
 clinical_reviewer:
 reviewed_on:
 notes: ""

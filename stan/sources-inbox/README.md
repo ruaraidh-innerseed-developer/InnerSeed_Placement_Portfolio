@@ -51,7 +51,26 @@ applies regardless. Check the licence before quoting at length.
 
 ## What to get first
 
-Highest value first. The first five are already in the register as unread.
+**Start with the four foundation chapters.** They are free, open access, and
+between them they back the "what is it / where is it made / what controls it /
+what does it do" fields for every marker in the encyclopedia. Without them,
+those fields cannot honestly be written — a first attempt was made from general
+knowledge, found to be uncited, and reverted.
+
+| | Chapter | Backs |
+|---|---|---|
+| **A** | [Endocrinology of the Testis and Spermatogenesis](https://www.ncbi.nlm.nih.gov/books/NBK279031/) — Endotext | The whole axis. LH, FSH, testosterone, inhibin B, and the how-the-system-works page. **Get this one first.** |
+| **B** | [Laboratory Assessment of Testicular Function](https://www.ncbi.nlm.nih.gov/books/NBK279145/) — Endotext | Panel context, sample timing, total vs free, and the limits of each measurement. |
+| **C** | [Physiology, Testosterone](https://www.ncbi.nlm.nih.gov/books/NBK526128/) — StatPearls | Testosterone, free testosterone, DHT. |
+| **D** | [Physiology, Follicle Stimulating Hormone](https://www.ncbi.nlm.nih.gov/books/NBK535442/) — StatPearls | FSH and inhibin B. |
+
+All four are CC-BY-NC-ND. **NoDerivatives means STAN may cite and quote with
+attribution but may not publish adapted versions of the text.** That reinforces
+the Tier A rule rather than conflicting with it: report and attribute, never
+reproduce.
+
+Then the ASIH-specific papers. These are what unlock the `states` fields —
+suppression and recovery — which no textbook chapter covers.
 
 | Priority | Document | Why |
 |---|---|---|

@@ -18,28 +18,11 @@ units: nmol/L
 # does not support. Nothing containing the word "should".
 # ---------------------------------------------------------------------------
 
-what_it_is: >-
-  A steroid hormone best known for its role in the female cycle and in
-  pregnancy. Men have it too, at low levels, where it mainly serves as a
-  building block for other hormones.
-made_where: >-
-  In women, the ovaries after ovulation. In both sexes, the adrenal
-  glands, and it also appears as an intermediate step in the testicles.
-controlled_by: >-
-  In women, LH drives its production after ovulation. The adrenal
-  contribution follows ACTH from the pituitary.
-functions:
-  - >-
-    Prepares the lining of the uterus and supports early pregnancy.
-  - >-
-    Acts as a precursor in the manufacture of other steroid hormones,
-    including testosterone and cortisol.
-  - >-
-    Has effects on mood and sleep.
-female_note: >-
-  This is primarily a female marker and timing is everything — it is often
-  measured about a week after ovulation specifically to confirm ovulation
-  happened.
+what_it_is: ""
+made_where: ""
+controlled_by: ""
+functions: []
+female_note: ""
 
 on_a_panel:
   commonly_measured: true
@@ -79,7 +62,7 @@ related: [oestradiol, lh, prolactin]
 
 sources: []
 
-fill_status: partial
+fill_status: stub
 clinical_reviewer:
 reviewed_on:
 notes: ""

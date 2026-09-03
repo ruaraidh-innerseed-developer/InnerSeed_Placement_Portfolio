@@ -18,34 +18,11 @@ units: pmol/L
 # does not support. Nothing containing the word "should".
 # ---------------------------------------------------------------------------
 
-what_it_is: >-
-  The main form of oestrogen. Men produce it too, mostly by converting
-  testosterone, and men need it — it is not a contaminant or a side effect
-  to be eliminated.
-made_where: >-
-  In men, mostly converted from testosterone by an enzyme called
-  aromatase, which is active in fat tissue, the liver, the brain and the
-  testicles. In women, mainly the ovaries.
-controlled_by: >-
-  How much testosterone is available to convert, and how much aromatase
-  activity there is — more body fat generally means more conversion.
-  Aromatase inhibitor medicines block that conversion.
-functions:
-  - >-
-    Maintains bone density. This is one of its most important jobs in men.
-  - >-
-    Affects mood and cognition.
-  - >-
-    Contributes to libido and to erectile function.
-  - >-
-    Keeps joints comfortable.
-  - >-
-    Forms part of the feedback that tells the pituitary to reduce LH — at
-    that site it is a stronger signal than testosterone itself.
-female_note: >-
-  In women oestradiol is the primary sex hormone and drives the menstrual
-  cycle, so results shift substantially depending on cycle day. Levels are
-  far higher than in men and fall sharply after menopause.
+what_it_is: ""
+made_where: ""
+controlled_by: ""
+functions: []
+female_note: ""
 
 on_a_panel:
   commonly_measured: true
@@ -85,7 +62,7 @@ related: ["total-testosterone", lh, shbg]
 
 sources: []
 
-fill_status: partial
+fill_status: stub
 clinical_reviewer:
 reviewed_on:
 notes: ""

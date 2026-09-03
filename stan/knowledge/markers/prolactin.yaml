@@ -18,27 +18,11 @@ units: mIU/L
 # does not support. Nothing containing the word "should".
 # ---------------------------------------------------------------------------
 
-what_it_is: >-
-  A pituitary hormone best known for milk production, but active in both
-  sexes. When it is raised it interferes with the testosterone loop, which
-  is why it appears on male hormone panels.
-made_where: >-
-  The anterior pituitary gland.
-controlled_by: >-
-  Unusually, it is held down rather than switched on: dopamine from the
-  hypothalamus continuously suppresses it. Anything that reduces dopamine
-  signalling — including some medicines — allows it to rise.
-functions:
-  - >-
-    Drives milk production after childbirth.
-  - >-
-    Influences libido and sexual function in both sexes.
-  - >-
-    When persistently high, suppresses GnRH and therefore LH and FSH,
-    which lowers testosterone.
-female_note: >-
-  Rises normally in pregnancy and while breastfeeding. Outside those
-  situations a raised level is investigated the same way as in men.
+what_it_is: ""
+made_where: ""
+controlled_by: ""
+functions: []
+female_note: ""
 
 on_a_panel:
   commonly_measured: true
@@ -78,7 +62,7 @@ related: [lh, "total-testosterone", oestradiol]
 
 sources: []
 
-fill_status: partial
+fill_status: stub
 clinical_reviewer:
 reviewed_on:
 notes: ""

@@ -18,25 +18,11 @@ units: ng/L
 # does not support. Nothing containing the word "should".
 # ---------------------------------------------------------------------------
 
-what_it_is: >-
-  A hormone released by the cells that support sperm production. Because
-  it comes directly from those cells, it acts as a readout of whether that
-  machinery is working.
-made_where: >-
-  The Sertoli cells in the testicles. In women, the granulosa cells in
-  ovarian follicles.
-controlled_by: >-
-  FSH stimulates its release, and it feeds back to suppress FSH — a
-  self-regulating loop. It falls when sperm-producing tissue is damaged or
-  inactive.
-functions:
-  - >-
-    Provides selective negative feedback on FSH, without affecting LH.
-  - >-
-    Serves as a marker of Sertoli cell function and of sperm production.
-female_note: >-
-  Reflects the activity of developing ovarian follicles and is sometimes
-  used alongside AMH when assessing ovarian reserve.
+what_it_is: ""
+made_where: ""
+controlled_by: ""
+functions: []
+female_note: ""
 
 on_a_panel:
   commonly_measured: true
@@ -76,7 +62,7 @@ related: [fsh, amh, "total-testosterone"]
 
 sources: []
 
-fill_status: partial
+fill_status: stub
 clinical_reviewer:
 reviewed_on:
 notes: ""

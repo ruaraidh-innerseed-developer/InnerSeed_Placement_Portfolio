@@ -18,24 +18,11 @@ units: L/L
 # does not support. Nothing containing the word "should".
 # ---------------------------------------------------------------------------
 
-what_it_is: >-
-  The proportion of your blood volume made up of red blood cells. The
-  higher it goes, the thicker your blood becomes.
-made_where: >-
-  Red blood cells are made in bone marrow.
-controlled_by: >-
-  Erythropoietin from the kidneys, released when oxygen levels fall.
-  Androgens increase red cell production. Altitude, smoking, dehydration
-  and sleep apnoea all raise it.
-functions:
-  - >-
-    Carries oxygen from the lungs to tissue — the reason red cells exist.
-  - >-
-    Sets how thick and how freely blood flows, which is why a high value
-    matters for clot risk.
-female_note: >-
-  Reference ranges are lower in women than in men, and menstruation
-  affects them.
+what_it_is: ""
+made_where: ""
+controlled_by: ""
+functions: []
+female_note: ""
 
 on_a_panel:
   commonly_measured: true
@@ -75,7 +62,7 @@ related: ["total-testosterone"]
 
 sources: []
 
-fill_status: partial
+fill_status: stub
 clinical_reviewer:
 reviewed_on:
 notes: ""
