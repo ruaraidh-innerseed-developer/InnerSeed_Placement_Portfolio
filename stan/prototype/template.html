@@ -320,6 +320,53 @@
     gap: 10px;
   }
   .noresult strong { font-family: var(--display); font-size: 18px; }
+  .noresult form { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+  .noresult input {
+    flex: 1; min-width: 220px;
+    font-family: var(--body); font-size: 15px;
+    padding: 10px 12px;
+    background: var(--surface); color: var(--ink);
+    border: 1.5px solid var(--line-strong); border-radius: var(--radius);
+  }
+  .noresult input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .noresult button {
+    border: 0; background: var(--accent); color: var(--accent-ink);
+    font-family: var(--body); font-weight: 600; font-size: 14px;
+    padding: 0 18px; border-radius: var(--radius); cursor: pointer;
+  }
+  .noresult .logged {
+    font-family: var(--mono); font-size: 11.5px; color: var(--ink-3);
+  }
+
+  .related {
+    background: var(--surface);
+    padding: 15px 18px;
+    display: flex; gap: 9px; flex-wrap: wrap; align-items: baseline;
+  }
+  .related .lbl {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.09em;
+    text-transform: uppercase; color: var(--ink-3);
+  }
+  .related button {
+    font-family: var(--body); font-size: 13.5px;
+    padding: 4px 11px; cursor: pointer;
+    background: var(--surface-2); color: var(--ink-2);
+    border: 1px solid var(--line-strong); border-radius: 999px;
+  }
+  .related button:hover { border-color: var(--accent); color: var(--accent); }
+  .related button .dot {
+    display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+    margin-right: 6px; vertical-align: 1px;
+  }
+  .related button .dot.live    { background: var(--verified); }
+  .related button .dot.draft   { background: var(--draft); }
+  .related button .dot.planned { background: var(--absent); }
+
+  .panel .honest {
+    font-size: 14px; color: var(--ink-2);
+    border-left: 3px solid var(--draft);
+    padding: 2px 0 2px 13px;
+  }
   .noresult p { font-size: 15px; color: var(--ink-2); max-width: 66ch; }
 
   /* ----------------------------------------------------------------- routes */
@@ -692,9 +739,12 @@
           supraphysiological exposure — not just age-related low testosterone.</p>
         <ul>
           <li>Can interpret results and advise on treatment</li>
-          <li>Reviews everything published here before it goes live</li>
-          <li>Any fee STAN receives for a referral is shown on the page</li>
+          <li>Will review everything clinical before it goes live</li>
+          <li>Any fee STAN receives for a referral will be shown on that page</li>
         </ul>
+        <p class="honest"><b>None appointed yet.</b> Until one is, nothing that
+          interprets or advises gets published here — only things we can report
+          and attribute. We would rather say that than imply otherwise.</p>
       </div>
     </div>
   </div>
@@ -754,31 +804,109 @@
 
   var qEl = document.getElementById("q");
   var resEl = document.getElementById("results");
+  var RANK = { live: 0, draft: 1, planned: 2 };
+  var LOG_KEY = "stan.unmet.v1";
+
+  /* Every term must appear somewhere. Where it appears decides the score:
+     a hit in the question itself beats a hit in the body text. */
+  function score(item, terms) {
+    var title = item.t.toLowerCase();
+    var keys = (item.k || "").toLowerCase();
+    var body = (item.d || "").toLowerCase();
+    var total = 0;
+    for (var i = 0; i < terms.length; i++) {
+      var t = terms[i];
+      var hit = 0;
+      if (title.indexOf(t) !== -1) hit += 10;
+      if (keys.indexOf(t) !== -1) hit += 3;
+      if (body.indexOf(t) !== -1) hit += 1;
+      if (!hit) return 0;
+      total += hit;
+    }
+    if (terms.length > 1 && title.indexOf(terms.join(" ")) !== -1) total += 20;
+    return total;
+  }
+
+  function logUnmet(term) {
+    try {
+      var log = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
+      log.push({ q: term, at: new Date().toISOString().slice(0, 10) });
+      localStorage.setItem(LOG_KEY, JSON.stringify(log.slice(-200)));
+      return log.length;
+    } catch (e) { return 0; }
+  }
+
+  function relatedStrip(hits) {
+    /* Suggest the rest of the panel. A result set about SHBG should offer
+       total testosterone and albumin, because that is how a panel is read. */
+    var shown = {}, seen = {}, out = [];
+    hits.forEach(function (h) { if (h.m) shown[h.m] = true; });
+    Object.keys(shown).forEach(function (mid) {
+      var rel = STAN.relations[mid];
+      if (!rel) return;
+      rel.related.forEach(function (e) {
+        if (shown[e.id] || seen[e.id]) return;
+        seen[e.id] = true;
+        out.push(e);
+      });
+    });
+    return out.slice(0, 6);
+  }
 
   function search(term) {
     resEl.textContent = "";
-    term = term.trim().toLowerCase();
+    term = term.trim();
     if (!term) return;
 
-    var hits = INDEX.filter(function (it) {
-      return (it.t + " " + it.k + " " + it.d).toLowerCase().indexOf(term) !== -1;
+    var terms = term.toLowerCase().split(/\s+/).filter(Boolean);
+    var hits = [];
+    INDEX.forEach(function (it) {
+      var s = score(it, terms);
+      if (s) hits.push({ item: it, s: s });
+    });
+    hits.sort(function (a, b) {
+      var r = RANK[a.item.s] - RANK[b.item.s];
+      return r !== 0 ? r : b.s - a.s;
     });
 
     if (!hits.length) {
+      var count = logUnmet(term);
       var n = el("div", "noresult");
       n.appendChild(el("strong", null, "We haven't covered that yet."));
       n.appendChild(el("p", null,
-        "Rather than guess, we'd sooner say so. If it's urgent and clinical, an andrology " +
-        "or male fertility service will know far more than a website. If it's about how " +
-        "you're feeling tonight, the numbers at the bottom of this page are open now."));
+        "Rather than guess, we'd sooner say so. If it's urgent and clinical, an " +
+        "andrology or male fertility service will know far more than a website. " +
+        "If it's about how you're feeling tonight, the numbers at the bottom of " +
+        "this page are open now."));
       n.appendChild(el("p", null,
-        "Tell us what you searched for and it goes on the list — that's genuinely how " +
-        "the content plan gets written."));
+        "What were you hoping to find? It goes on the list — this is genuinely " +
+        "how the content plan gets written."));
+
+      var form = document.createElement("form");
+      var input = document.createElement("input");
+      input.type = "text";
+      input.value = term;
+      input.setAttribute("aria-label", "What were you looking for?");
+      var send = document.createElement("button");
+      send.type = "submit";
+      send.textContent = "Add it";
+      form.appendChild(input);
+      form.appendChild(send);
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (input.value.trim()) logUnmet(input.value.trim());
+        form.textContent = "Thanks — added.";
+      });
+      n.appendChild(form);
+      n.appendChild(el("p", "logged",
+        "Prototype: saved in this browser only. Nothing is sent anywhere. " +
+        count + " unmet search(es) logged here so far."));
       resEl.appendChild(n);
       return;
     }
 
-    hits.forEach(function (it) {
+    var items = hits.map(function (h) { return h.item; });
+    items.forEach(function (it) {
       var r = el("div", "result");
       r.appendChild(el("h4", null, it.t));
       r.appendChild(badge(it.s));
@@ -786,6 +914,26 @@
       if (it.u) r.appendChild(el("div", "unitline", it.u));
       resEl.appendChild(r);
     });
+
+    var rel = relatedStrip(items);
+    if (rel.length) {
+      var strip = el("div", "related");
+      strip.appendChild(el("span", "lbl", "A panel is read together — also look at"));
+      rel.forEach(function (e) {
+        var b = el("button");
+        b.type = "button";
+        var dot = el("span", "dot " + e.s);
+        b.appendChild(dot);
+        b.appendChild(document.createTextNode(e.name));
+        b.addEventListener("click", function () {
+          qEl.value = e.name;
+          search(e.name);
+          qEl.focus();
+        });
+        strip.appendChild(b);
+      });
+      resEl.appendChild(strip);
+    }
   }
 
   qEl.addEventListener("input", function () { search(qEl.value); });

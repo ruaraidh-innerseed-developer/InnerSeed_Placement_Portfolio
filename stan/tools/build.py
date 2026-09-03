@@ -150,6 +150,7 @@ def marker_qa(markers: dict) -> list:
         if fill == "stub":
             rows.append({
                 "id": f"marker:{mid}",
+                "m": mid,
                 "t": f"{name} — {rec.get('full_name', '')}",
                 "s": "planned",
                 "u": units,
@@ -165,6 +166,7 @@ def marker_qa(markers: dict) -> list:
                 continue
             rows.append({
                 "id": f"marker:{mid}:{path}",
+                "m": mid,
                 "t": template.format(name=name),
                 "s": status_of.get(fill, "draft"),
                 "u": units,
@@ -172,6 +174,30 @@ def marker_qa(markers: dict) -> list:
                 "k": f"{base_kw} {kw}",
             })
     return rows
+
+
+def build_relations(markers: dict) -> dict:
+    """The marker graph, resolved for the UI.
+
+    A panel is not a list of independent facts. These edges are what let the hub
+    answer "what else should I be looking at" without anyone writing that
+    sentence for each marker.
+    """
+    status_of = {"reviewed": "live", "complete": "draft",
+                 "partial": "draft", "stub": "planned"}
+    out = {}
+    for mid, rec in markers.items():
+        edges = []
+        for other in rec.get("related") or []:
+            if other not in markers:
+                continue
+            edges.append({
+                "id": other,
+                "name": markers[other].get("name", other),
+                "s": status_of.get(markers[other].get("fill_status", "stub"), "planned"),
+            })
+        out[mid] = {"name": rec.get("name", mid), "related": edges}
+    return out
 
 
 def build_routes(pages: dict, markers: dict) -> dict:
@@ -320,6 +346,7 @@ def main() -> int:
         data = {
             "index": build_index(pages, markers),
             "routes": build_routes(pages, markers),
+            "relations": build_relations(markers),
             "sessions": build_sessions(),
             "crisis": build_crisis(),
             "state": build_state(pages, markers),
