@@ -17,6 +17,7 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -354,11 +355,24 @@ def build_crisis() -> list:
             continue
         contact = s.get("contact") or {}
         num = contact.get("phone") or contact.get("text") or contact.get("web", "")
+
+        # Make it dialable. On a phone, at 3am, an untappable crisis number is
+        # a defect — the person has to memorise it and switch apps.
+        href = ""
+        if contact.get("phone"):
+            href = "tel:" + re.sub(r"[^0-9+]", "", contact["phone"])
+        elif contact.get("text"):
+            shortcode = re.search(r"\b(\d{5,6})\b", contact["text"])
+            if shortcode:
+                href = "sms:" + shortcode.group(1)
+        elif contact.get("web"):
+            href = contact["web"]
         hours = " ".join(str(s.get("hours", "")).split())
         always = any(tok in hours.lower() for tok in ALWAYS_OPEN)
         lines.append({
             "b": s["name"],
             "num": num,
+            "href": href,
             "hrs": hours,
             "warn": not always,
         })

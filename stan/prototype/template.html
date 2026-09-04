@@ -784,7 +784,14 @@
     background: var(--surface);
   }
   .line b { font-size: 15px; font-weight: 600; }
-  .line .num { font-family: var(--mono); font-size: 15.5px; color: var(--accent); font-weight: 500; }
+  .line .num {
+    font-family: var(--mono); font-size: 16.5px; color: var(--accent);
+    font-weight: 500; text-decoration: none; display: inline-block;
+    padding: 3px 0; letter-spacing: 0.01em;
+  }
+  a.line-num, a.num { border-bottom: 1px solid transparent; }
+  a.num:hover, a.num:focus-visible { border-bottom-color: var(--accent); }
+  a.num:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   .line .hrs { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); }
   .line .hrs.warn { color: var(--draft); }
 
@@ -1338,7 +1345,15 @@
   STAN.crisis.forEach(function (c) {
     var line = el("div", "line");
     line.appendChild(el("b", null, c.b));
-    line.appendChild(el("span", "num", c.num));
+    if (c.href) {
+      var a = document.createElement("a");
+      a.className = "num";
+      a.href = c.href;
+      a.textContent = c.num;
+      line.appendChild(a);
+    } else {
+      line.appendChild(el("span", "num", c.num));
+    }
     line.appendChild(el("span", "hrs" + (c.warn ? " warn" : ""), c.hrs));
     crisisEl.appendChild(line);
   });
