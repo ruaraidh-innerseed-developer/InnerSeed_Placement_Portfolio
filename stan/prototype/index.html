@@ -291,6 +291,15 @@
   }
   .searchhint button:hover { color: var(--accent); border-bottom-color: var(--accent); }
 
+  .aiquiet {
+    margin-top: 14px;
+    font-size: 13.5px;
+    color: var(--ink-3);
+    max-width: 62ch;
+  }
+  .aiquiet a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 2px; }
+  .aiquiet a:hover { color: var(--accent); }
+
   #results { margin-top: 26px; display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
   #results:empty { display: none; }
 
@@ -355,6 +364,28 @@
     font-family: var(--body); font-weight: 600; font-size: 14px;
     padding: 0 18px; border-radius: var(--radius); cursor: pointer;
   }
+  .noresult .chattip {
+    border-left: 3px solid var(--accent);
+    padding: 2px 0 2px 15px;
+    display: grid;
+    gap: 7px;
+  }
+  .noresult .chattip h5 {
+    margin: 0;
+    font-family: var(--body);
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .noresult .chattip ul {
+    margin: 0;
+    padding-left: 17px;
+    display: grid;
+    gap: 5px;
+    font-size: 14px;
+    color: var(--ink-2);
+  }
+
   .noresult .logged {
     font-family: var(--mono); font-size: 11.5px; color: var(--ink-3);
   }
@@ -795,7 +826,6 @@
     </div>
     <nav class="top">
       <a href="#routes">Start here</a>
-      <a href="#ai">How we use AI</a>
       <a href="#seminars">Seminars</a>
       <a href="#groups">Groups</a>
       <a href="#connect">Connect</a>
@@ -834,6 +864,9 @@
         <button type="button" data-eg="fertility">fertility</button>
         <button type="button" data-eg="hair loss">hair loss</button>
       </div>
+      <p class="aiquiet">Answers are drafted with AI and checked by people.
+        Every one shows its sources, its review date, and who signed it off.
+        <a href="#how-we-work">How that works</a>.</p>
       <div id="results" role="region" aria-live="polite" aria-label="Search results"></div>
     </div>
   </div>
@@ -849,50 +882,6 @@
 
     <div class="routes" id="routelist"></div>
     <div id="routepanel" hidden></div>
-  </div>
-</section>
-
-<section id="ai" class="tint">
-  <div class="wrap">
-    <div class="sechead">
-      <p class="eyebrow">Being straight with you about this</p>
-      <h2>You've probably already asked an AI about this</h2>
-      <p>Almost everyone does now, and it isn't a bad instinct. We use AI too —
-        these pages are drafted with it. We'd rather tell you that than let you
-        assume otherwise.</p>
-    </div>
-
-    <div class="twocol">
-      <div class="panel">
-        <p class="tag">What a chatbot is genuinely good at</p>
-        <p>Free, patient, awake at three in the morning, and it won't judge you or
-          sigh when you ask the same thing six times. For plenty of questions
-          that's exactly what you need.</p>
-      </div>
-      <div class="panel">
-        <p class="tag">What it can't do for this</p>
-        <ul>
-          <li><b>Tell you when the answer doesn't exist.</b> On recovery after
-            long-term use, the honest answer is often "nobody has studied this".
-            You'll get a confident one anyway.</li>
-          <li><b>Know whether the study fits you.</b> Most testosterone research is
-            about men in their sixties. You might be thirty-two and four years off
-            400mg a week.</li>
-          <li><b>Show its working</b>, so you can check it.</li>
-          <li><b>Be corrected and stay corrected.</b></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="rule-quote" style="margin-top: 28px;">
-      The difference isn't whether a machine was involved. <b>It's what happens
-      between the draft and you reading it</b> — a named source for every claim, a
-      record of what we haven't read yet, figures we refuse to print because we
-      can't stand behind them, and someone's name on the page.
-      <br><br>
-      We can't promise you'll be safe. Nobody can, and anyone who does is selling
-      something. We can make sure you're not guessing.
-    </div>
   </div>
 </section>
 
@@ -990,6 +979,10 @@
       services register and are pending confirmation against each provider's own website.</p>
     <p>STAN publishes general information. It does not assess, diagnose or prescribe, and it
       does not publish dosing protocols or tell anyone where to obtain anything.</p>
+    <p id="how-we-work"><b>How we work.</b> Answers are drafted with AI and checked by
+      people. Nothing clinical publishes without review. Every answer names its
+      sources and shows what we have not read yet — and where the evidence does
+      not exist, we say so rather than filling the gap.</p>
     <p class="state" id="state"></p>
   </div>
 </footer>
@@ -1121,6 +1114,21 @@
         form.textContent = "Thanks — added.";
       });
       n.appendChild(form);
+      var tip = el("div", "chattip");
+      tip.appendChild(el("h5", null, "Going to ask an AI instead? Fair enough."));
+      var ul = document.createElement("ul");
+      [
+        "Give it your real numbers with the units and your lab's range. " +
+          "\u201cMy testosterone is low\u201d gets a generic answer.",
+        "Ask what population the evidence came from. Most testosterone " +
+          "research is about men in their sixties.",
+        "Ask what it is unsure about, then ask again harder.",
+        "Ask for the sources, then go and check they exist.",
+        "Never let it tell you what to take."
+      ].forEach(function (t) { ul.appendChild(el("li", null, t)); });
+      tip.appendChild(ul);
+      n.appendChild(tip);
+
       n.appendChild(el("p", "logged",
         "Prototype: saved in this browser only. Nothing is sent anywhere. " +
         count + " unmet search(es) logged here so far."));
