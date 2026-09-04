@@ -219,6 +219,116 @@ def question_entries(questions: list, answers: dict) -> list:
     return rows
 
 
+def build_views(pages, markers, questions, sessions) -> dict:
+    """Every destination behind a card, as a routable inner page.
+
+    The artifact is one file, so "inner pages" are client-side views addressed
+    by hash — #/m/shbg, #/q/how-do-i-come-off-safely. Generated from the same
+    data as everything else, so a card and the page it opens can never drift.
+
+    The important case is `unwritten`. 84 of 86 destinations have no content
+    yet, so the empty state is not an edge case — it is most of the site. Each
+    one gets a real page that admits the gap, says what it will cover, routes
+    onward to something that does exist, and captures that somebody needed it.
+    """
+    views = {}
+    status_of = {"reviewed": "live", "complete": "draft",
+                 "partial": "draft", "stub": "unwritten"}
+
+    for mid, rec in markers.items():
+        st = status_of.get(rec.get("fill_status", "stub"), "unwritten")
+        views["m/" + mid] = {
+            "kind": "marker",
+            "s": st,
+            "title": rec.get("name", mid),
+            "sub": rec.get("full_name", ""),
+            "units": rec.get("units", ""),
+            "applies": rec.get("applies_to") or [],
+            "what": rec.get("what_it_is") or "",
+            "made": rec.get("made_where") or "",
+            "controls": rec.get("controlled_by") or "",
+            "does": rec.get("functions") or [],
+            "female": rec.get("female_note") or "",
+            "high": dig(rec, "states.high.meaning") or "",
+            "low": dig(rec, "states.low.meaning") or "",
+            "supp": dig(rec, "states.suppressed.what_happens") or "",
+            "recov": dig(rec, "states.recovery.what_is_known") or "",
+            "notme": rec.get("does_not_tell_you") or [],
+            "related": [
+                {"id": "m/" + o, "name": markers[o].get("name", o)}
+                for o in (rec.get("related") or []) if o in markers
+            ],
+            "sources": rec.get("sources") or [],
+            "willcover": [
+                "What it is and where your body makes it",
+                "What it does, and what controls it",
+                "What a high or low result points to",
+                "What happens to it on steroids, and afterwards",
+                "What the number does NOT tell you",
+            ],
+        }
+
+    for q in questions:
+        views["q/" + q["id"]] = {
+            "kind": "question",
+            "s": "draft" if q.get("answer") else "unwritten",
+            "title": q["question"],
+            "sub": q["_topic"].replace("-", " "),
+            "asked": q.get("variants") or [],
+            "priority": q.get("priority", 3),
+            "note": " ".join(str(q.get("notes", "")).split()),
+            "related": [
+                {"id": "m/" + m, "name": markers[m].get("name", m)}
+                for m in (q.get("markers") or []) if m in markers
+            ],
+            "willcover": [],
+        }
+
+    for g in sessions["groups"]:
+        views["g/" + g["id"]] = {
+            "kind": "group", "s": "draft",
+            "title": g["name"],
+            "sub": g["when"] + " · " + g["time"] + " · " + g["duration"],
+            "who": g["who"], "shape": g["shape"], "by": g["by"],
+            "size": g["size"], "cameras": g["cameras"], "joining": g["joining"],
+        }
+
+    for s in sessions["seminars"]:
+        views["s/" + s["id"]] = {
+            "kind": "seminar", "s": "draft",
+            "title": s["title"],
+            "sub": s["when"] + " · " + s["time"] + " · " + s["duration"],
+            "name": s["name"], "role": s["role"], "org": s["org"],
+            "tbc": s["tbc"], "summary": s["summary"], "audience": s["audience"],
+        }
+
+    doc = yaml.safe_load(ROUTES_PATH.read_text())
+    for r in doc.get("routes", []):
+        for it in r.get("items", []):
+            if it.get("page") or it.get("marker"):
+                continue
+            views["x/" + slug(it["title"])] = {
+                "kind": "planned",
+                "s": "unwritten",
+                "title": it["title"],
+                "sub": " ".join(str(it.get("note", "")).split()),
+                "willcover": [],
+            }
+
+    for pid, fm in pages.items():
+        views["p/" + pid] = {
+            "kind": "content",
+            "s": fm.get("status", "planned").replace("planned", "unwritten"),
+            "title": fm.get("title", pid),
+            "sub": "",
+            "blurb": " ".join(str(fm.get("blurb", "")).split()),
+            "tier": fm.get("publishing_tier", ""),
+            "willcover": [],
+        }
+
+    return views
+
+
 def build_relations(markers: dict) -> dict:
     """The marker graph, resolved for the UI.
 
@@ -241,6 +351,10 @@ def build_relations(markers: dict) -> dict:
             })
         out[mid] = {"name": rec.get("name", mid), "related": edges}
     return out
+
+
+def slug(text: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "-", str(text).lower()).strip("-")
 
 
 def build_routes(pages: dict, markers: dict) -> dict:
@@ -276,6 +390,11 @@ def build_routes(pages: dict, markers: dict) -> dict:
                 "title": it["title"],
                 "note": " ".join(str(it.get("note", "")).split()),
                 "status": status,
+                # Where the card goes. A card with no destination is a dead end,
+                # and dead ends are what the audit found everywhere.
+                "view": ("m/" + marker_id) if marker_id
+                        else ("p/" + page_id) if page_id
+                        else "x/" + slug(it["title"]),
             })
         out.append({
             "id": r["id"],
@@ -442,6 +561,8 @@ def main() -> int:
             "index": build_index(pages, markers),
             "routes": build_routes(pages, markers),
             "relations": build_relations(markers),
+            "views": build_views(pages, markers, load_questions(),
+                                 build_sessions()),
             "sessions": build_sessions(),
             "crisis": build_crisis(),
             "state": build_state(pages, markers),
@@ -485,6 +606,9 @@ def main() -> int:
     print(f"  qa        {sum(1 for r in data['index'] if r['id'].startswith('marker:'))}"
           f" generated entries")
     print(f"  routes    {len(data['routes']['routes'])}")
+    unwritten = sum(1 for v in data["views"].values() if v["s"] == "unwritten")
+    print(f"  views     {len(data['views'])} inner pages "
+          f"({unwritten} unwritten, each routing onward)")
     print(f"  seminars  {len(data['sessions']['seminars'])}")
     print(f"  groups    {len(data['sessions']['groups'])}")
     return 0
