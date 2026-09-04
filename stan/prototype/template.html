@@ -24,6 +24,13 @@
     --absent-bg:   #e2e6e3;
     --alarm:       #9c2f22;
 
+    --band-bg:     #17242a;
+    --band-ink:    #eef1ef;
+    --band-ink-2:  #a3b4b9;
+    --band-ink-3:  #7d8e94;
+    --band-line:   #2c3f47;
+    --band-accent: #e0a054;
+
     --display: "Bitter", Georgia, "Times New Roman", serif;
     --body:    "Archivo", "Helvetica Neue", Arial, sans-serif;
     --mono:    "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
@@ -52,6 +59,13 @@
       --absent:      #8b9a9f;
       --absent-bg:   #202f36;
       --alarm:       #e8705f;
+
+      --band-bg:     #1d2d34;
+      --band-ink:    #eef1ef;
+      --band-ink-2:  #a3b4b9;
+      --band-ink-3:  #7d8e94;
+      --band-line:   #344952;
+      --band-accent: #e8ab5e;
     }
   }
 
@@ -74,6 +88,13 @@
     --absent:      #8b9a9f;
     --absent-bg:   #202f36;
     --alarm:       #e8705f;
+
+    --band-bg:     #1d2d34;
+    --band-ink:    #eef1ef;
+    --band-ink-2:  #a3b4b9;
+    --band-ink-3:  #7d8e94;
+    --band-line:   #344952;
+    --band-accent: #e8ab5e;
   }
 
   * { box-sizing: border-box; }
@@ -371,10 +392,197 @@
 
   /* ----------------------------------------------------------------- routes */
 
-  section { padding: 62px 0; border-bottom: 1px solid var(--line); }
-  .sechead { display: grid; gap: 12px; margin-bottom: 34px; max-width: var(--measure); }
-  .sechead h2 { font-size: clamp(24px, 3.2vw, 33px); }
-  .sechead p { color: var(--ink-2); font-size: 16.5px; }
+  /* Rhythm: air separates sections, not borders on everything. Alternating
+     grounds and one inverted band give the page a pulse instead of a flat
+     run of identical boxes. */
+  section { padding: 76px 0; }
+  section.tint { background: var(--surface); }
+  section + section:not(.tint):not(.band) { border-top: 1px solid var(--line); }
+
+  .sechead { display: grid; gap: 13px; margin-bottom: 40px; max-width: var(--measure); }
+  .sechead h2 { font-size: clamp(28px, 4vw, 40px); }
+  .sechead p { color: var(--ink-2); font-size: 17px; }
+
+  /* ------------------------------------------------------------ the band */
+
+  .band {
+    background: var(--band-bg);
+    color: var(--band-ink);
+    padding: 82px 0;
+  }
+  .band .sechead h2 { color: var(--band-ink); }
+  .band .sechead p  { color: var(--band-ink-2); }
+  .band .eyebrow    { color: var(--band-accent); }
+
+  .seminars { display: grid; gap: 16px; }
+
+  .seminar {
+    display: grid;
+    grid-template-columns: 132px 1fr;
+    gap: 4px 30px;
+    padding: 24px 0;
+    border-top: 1px solid var(--band-line);
+    align-items: start;
+  }
+  .seminar:last-child { border-bottom: 1px solid var(--band-line); }
+
+  .seminar .date {
+    font-family: var(--mono);
+    font-size: 13.5px;
+    color: var(--band-accent);
+    line-height: 1.5;
+    font-weight: 500;
+  }
+  .seminar .date small {
+    display: block;
+    font-size: 11.5px;
+    color: var(--band-ink-3);
+    letter-spacing: 0.05em;
+  }
+  .seminar h3 {
+    font-size: 21px;
+    color: var(--band-ink);
+    margin-bottom: 3px;
+  }
+  .seminar .who {
+    font-size: 14.5px;
+    color: var(--band-ink-2);
+    margin-bottom: 9px;
+  }
+  .seminar .who b { color: var(--band-ink); font-weight: 600; }
+  .seminar .who .tbc {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--band-bg);
+    background: var(--band-accent);
+    padding: 2px 7px;
+    border-radius: 2px;
+    margin-left: 7px;
+    white-space: nowrap;
+  }
+  .seminar .sum { font-size: 15.5px; color: var(--band-ink-2); max-width: 64ch; }
+  .seminar .facts {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px;
+  }
+  .seminar .facts span {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--band-ink-2);
+    border: 1px solid var(--band-line);
+    padding: 4px 9px;
+    border-radius: 999px;
+  }
+
+  @media (max-width: 640px) {
+    .seminar { grid-template-columns: 1fr; gap: 10px; }
+  }
+
+  /* ----------------------------------------------------------- the groups */
+
+  .groups { display: grid; gap: 12px; }
+
+  .group {
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--line-strong);
+    border-radius: var(--radius);
+    background: var(--surface-2);
+    transition: border-left-color .14s;
+  }
+  .group:hover { border-left-color: var(--accent); }
+  .group[open] { border-left-color: var(--accent); }
+
+  .group summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 19px 20px;
+    display: grid;
+    grid-template-columns: 152px 1fr auto;
+    gap: 5px 24px;
+    align-items: baseline;
+  }
+  .group summary::-webkit-details-marker { display: none; }
+  .group summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .group .when {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .group .when small { display: block; color: var(--ink-3); font-size: 11.5px; }
+  .group .name { font-size: 17px; font-weight: 600; font-family: var(--body); }
+  .group .who { grid-column: 2 / -1; font-size: 14.5px; color: var(--ink-2); max-width: 64ch; }
+  .group .pill {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    border: 1px solid var(--line-strong);
+    padding: 3px 9px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .group .more {
+    grid-column: 2 / -1;
+    font-size: 13px;
+    color: var(--accent);
+    font-family: var(--mono);
+    margin-top: 5px;
+  }
+  .group[open] .more { visibility: hidden; height: 0; margin: 0; }
+
+  .group .detail {
+    padding: 4px 20px 22px;
+    display: grid;
+    gap: 18px;
+    border-top: 1px solid var(--line);
+    margin: 0 20px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .group .detail h4 {
+    margin: 0 0 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: 500;
+  }
+  .group .detail ol { margin: 0; padding-left: 19px; display: grid; gap: 6px;
+                      font-size: 14.5px; color: var(--ink-2); }
+  .group .facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px;
+    font-size: 14px;
+  }
+  .group .facts div b {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+  .group .facts div span { color: var(--ink-2); }
+
+  @media (max-width: 640px) {
+    .group summary { grid-template-columns: 1fr; }
+    .group .who, .group .more { grid-column: 1; }
+  }
+
+  .groups .empty {
+    background: var(--surface-2); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 26px 20px;
+    color: var(--ink-2); font-size: 15px;
+  }
 
   .routes {
     display: grid;
@@ -588,7 +796,8 @@
     <nav class="top">
       <a href="#routes">Start here</a>
       <a href="#ai">How we use AI</a>
-      <a href="#sessions">Sessions</a>
+      <a href="#seminars">Seminars</a>
+      <a href="#groups">Groups</a>
       <a href="#connect">Connect</a>
       <a href="#crisis">Urgent help</a>
     </nav>
@@ -643,7 +852,7 @@
   </div>
 </section>
 
-<section id="ai">
+<section id="ai" class="tint">
   <div class="wrap">
     <div class="sechead">
       <p class="eyebrow">Being straight with you about this</p>
@@ -687,13 +896,27 @@
   </div>
 </section>
 
-<section id="sessions">
+<section id="seminars" class="band">
   <div class="wrap">
     <div class="sechead">
-      <p class="eyebrow">Online · Free · Cameras optional</p>
-      <h2>Group sessions</h2>
-      <p>Small facilitated groups, run to a start and finish time. Not a forum, not a chat
-        room — a room with someone holding it.</p>
+      <p class="eyebrow">Free · Online · Recorded where we can</p>
+      <h2>Seminars</h2>
+      <p>Someone who actually knows the subject talks for forty minutes, then
+        answers whatever you ask. Recordings go into the library, so if the time
+        you need it is three in the morning, it is there.</p>
+    </div>
+    <div class="seminars" id="seminarlist"></div>
+  </div>
+</section>
+
+<section id="groups" class="tint">
+  <div class="wrap">
+    <div class="sechead">
+      <p class="eyebrow">Free · Online · Cameras optional · No commitment</p>
+      <h2>Groups</h2>
+      <p>Not a forum and not a chat room. A room with a start time, a finish
+        time, and two people holding it. Turn up and say nothing if you would
+        rather — plenty of people do for the first few weeks.</p>
     </div>
 
     <div class="sessioncontrols">
@@ -707,7 +930,7 @@
       </div>
     </div>
 
-    <div class="sessions" id="sessionlist"></div>
+    <div class="groups" id="grouplist"></div>
   </div>
 </section>
 
@@ -987,9 +1210,42 @@
     panelEl.hidden = false;
   }
 
-  /* ----------------------------------------------------------- sessions */
+  /* --------------------------------------------------------- the programme */
 
-  var sessEl = document.getElementById("sessionlist");
+  var semEl = document.getElementById("seminarlist");
+  STAN.sessions.seminars.forEach(function (s) {
+    var row = el("div", "seminar");
+
+    var date = el("div", "date");
+    date.appendChild(document.createTextNode(s.when));
+    var t = el("small", null, s.time + (s.duration ? " · " + s.duration : ""));
+    date.appendChild(t);
+    row.appendChild(date);
+
+    var body = el("div");
+    body.appendChild(el("h3", null, s.title));
+
+    var who = el("div", "who");
+    var name = el("b", null, s.name);
+    who.appendChild(name);
+    if (s.role) who.appendChild(document.createTextNode(" — " + s.role));
+    if (s.org) who.appendChild(document.createTextNode(", " + s.org));
+    if (s.tbc) who.appendChild(el("span", "tbc", "speaker not yet recruited"));
+    body.appendChild(who);
+
+    body.appendChild(el("p", "sum", s.summary));
+
+    var facts = el("div", "facts");
+    if (s.recording === "will-be-recorded") facts.appendChild(el("span", null, "Recorded"));
+    if (s.audience) facts.appendChild(el("span", null, s.audience));
+    facts.appendChild(el("span", null, "Live questions"));
+    body.appendChild(facts);
+
+    row.appendChild(body);
+    semEl.appendChild(row);
+  });
+
+  var groupEl = document.getElementById("grouplist");
   var countryEl = document.getElementById("country");
   var kindEl = document.getElementById("kind");
 
@@ -1004,34 +1260,69 @@
   fillSelect(countryEl, STAN.sessions.countries);
   fillSelect(kindEl, STAN.sessions.kinds);
 
-  function renderSessions() {
-    var c = countryEl.value, k = kindEl.value;
-    sessEl.textContent = "";
+  var KIND_LABEL = {};
+  STAN.sessions.kinds.forEach(function (k) { KIND_LABEL[k.id] = k.label; });
 
-    var rows = SESSIONS.filter(function (s) {
-      return (c === "all" || s.c.indexOf(c) !== -1) && (k === "all" || s.k === k);
+  function renderGroups() {
+    var c = countryEl.value, k = kindEl.value;
+    groupEl.textContent = "";
+
+    var rows = STAN.sessions.groups.filter(function (g) {
+      return (c === "all" || g.c.indexOf(c) !== -1) && (k === "all" || g.kind === k);
     });
 
     if (!rows.length) {
-      sessEl.appendChild(el("div", "empty",
-        "Nothing matching that yet. The cohort and the seminar run wherever you are " +
-        "— try clearing the filter."));
+      groupEl.appendChild(el("div", "empty",
+        "Nothing matching that combination yet. The cohort, the family group " +
+        "and the bloods clinic run wherever you are — try clearing the filter."));
       return;
     }
 
-    rows.forEach(function (s) {
-      var row = el("div", "session");
-      row.appendChild(el("span", "when", s.when));
-      row.appendChild(el("b", null, s.b));
-      row.appendChild(el("span", "place", s.tz));
-      row.appendChild(el("span", "who", s.who));
-      sessEl.appendChild(row);
+    rows.forEach(function (g) {
+      var d = document.createElement("details");
+      d.className = "group";
+
+      var sum = document.createElement("summary");
+      var when = el("span", "when");
+      when.appendChild(document.createTextNode(g.when));
+      when.appendChild(el("small", null, g.time + " · " + g.duration));
+      sum.appendChild(when);
+      sum.appendChild(el("span", "name", g.name));
+      sum.appendChild(el("span", "pill", (KIND_LABEL[g.kind] || g.kind).split(" — ")[0]));
+      sum.appendChild(el("span", "who", g.who));
+      sum.appendChild(el("span", "more", "What happens in a session →"));
+      d.appendChild(sum);
+
+      var det = el("div", "detail");
+
+      if (g.shape.length) {
+        var block = el("div");
+        block.appendChild(el("h4", null, "What happens"));
+        var ol = document.createElement("ol");
+        g.shape.forEach(function (step) { ol.appendChild(el("li", null, step)); });
+        block.appendChild(ol);
+        det.appendChild(block);
+      }
+
+      var facts = el("div", "facts");
+      [["Facilitated by", g.by], ["Group size", g.size],
+       ["Cameras", g.cameras], ["Joining", g.joining]].forEach(function (pair) {
+        if (!pair[1]) return;
+        var f = el("div");
+        f.appendChild(el("b", null, pair[0]));
+        f.appendChild(el("span", null, pair[1]));
+        facts.appendChild(f);
+      });
+      det.appendChild(facts);
+
+      d.appendChild(det);
+      groupEl.appendChild(d);
     });
   }
 
-  countryEl.addEventListener("change", renderSessions);
-  kindEl.addEventListener("change", renderSessions);
-  renderSessions();
+  countryEl.addEventListener("change", renderGroups);
+  kindEl.addEventListener("change", renderGroups);
+  renderGroups();
 
   /* ------------------------------------------------------------- crisis */
 

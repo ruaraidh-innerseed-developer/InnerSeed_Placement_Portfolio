@@ -287,28 +287,62 @@ def build_routes(pages: dict, markers: dict) -> dict:
 
 
 def build_sessions() -> dict:
+    """Seminars and groups, validated against the filter vocabularies.
+
+    Seminars and groups are separated deliberately: a talk with questions is a
+    different thing from a room of people, with different risk and different
+    governance (SUPPORT-MODEL.md §4).
+    """
     doc = yaml.safe_load(SESSIONS_PATH.read_text())
     valid = {c["id"] for c in doc["countries"]} - {"all"}
     kinds = {k["id"] for k in doc["kinds"]} - {"all"}
-    rows = []
-    for s in doc.get("sessions", []):
-        unknown = set(s["coverage"]) - valid
-        if unknown:
-            raise ValueError(f"session '{s['id']}': unknown coverage {sorted(unknown)}")
-        if s["kind"] not in kinds:
-            raise ValueError(f"session '{s['id']}': unknown kind '{s['kind']}'")
-        rows.append({
-            "when": s["when"],
-            "tz": s.get("tz", ""),
-            "b": s["title"],
-            "who": " ".join(str(s.get("who", "")).split()),
-            "c": s["coverage"],
-            "k": s["kind"],
+
+    seminars = []
+    for s in doc.get("seminars", []):
+        sp = s.get("speaker") or {}
+        seminars.append({
+            "id": s["id"],
+            "title": s["title"],
+            "name": sp.get("name", ""),
+            "role": sp.get("role", ""),
+            "org": sp.get("org", ""),
+            "when": s.get("when", ""),
+            "time": s.get("time", ""),
+            "duration": s.get("duration", ""),
+            "recording": s.get("recording", ""),
+            "audience": s.get("audience", ""),
+            "summary": " ".join(str(s.get("summary", "")).split()),
+            "tbc": "not yet recruited" in sp.get("name", "").lower(),
         })
+
+    groups = []
+    for g in doc.get("groups", []):
+        unknown = set(g["coverage"]) - valid
+        if unknown:
+            raise ValueError(f"group '{g['id']}': unknown coverage {sorted(unknown)}")
+        if g["kind"] not in kinds:
+            raise ValueError(f"group '{g['id']}': unknown kind '{g['kind']}'")
+        groups.append({
+            "id": g["id"],
+            "name": g["name"],
+            "kind": g["kind"],
+            "when": g.get("when", ""),
+            "time": g.get("time", ""),
+            "duration": g.get("duration", ""),
+            "c": g["coverage"],
+            "by": g.get("facilitated_by", ""),
+            "size": g.get("size", ""),
+            "cameras": g.get("cameras", ""),
+            "who": " ".join(str(g.get("who_for", "")).split()),
+            "shape": [" ".join(str(x).split()) for x in (g.get("what_happens") or [])],
+            "joining": g.get("joining", ""),
+        })
+
     return {
         "countries": doc["countries"],
         "kinds": doc["kinds"],
-        "sessions": rows,
+        "seminars": seminars,
+        "groups": groups,
     }
 
 
@@ -437,7 +471,8 @@ def main() -> int:
     print(f"  qa        {sum(1 for r in data['index'] if r['id'].startswith('marker:'))}"
           f" generated entries")
     print(f"  routes    {len(data['routes']['routes'])}")
-    print(f"  sessions  {len(data['sessions']['sessions'])}")
+    print(f"  seminars  {len(data['sessions']['seminars'])}")
+    print(f"  groups    {len(data['sessions']['groups'])}")
     return 0
 
 
