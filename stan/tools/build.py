@@ -25,6 +25,8 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 PAGES_DIR = ROOT / "content" / "pages"
 MARKERS_DIR = ROOT / "knowledge" / "markers"
+QUESTIONS_DIR = ROOT / "knowledge" / "questions"
+ANSWERS_DIR = ROOT / "knowledge" / "answers"
 ROUTES_PATH = ROOT / "data" / "routes.yaml"
 SESSIONS_PATH = ROOT / "data" / "sessions.yaml"
 SERVICES_PATH = ROOT / "services" / "crisis-services.yaml"
@@ -89,6 +91,7 @@ def build_index(pages: dict, markers: dict) -> list:
             "k": " ".join(str(fm.get("keywords", "")).split()).lower(),
         })
     rows.extend(marker_qa(markers))
+    rows.extend(question_entries(load_questions(), {}))
     rows.sort(key=lambda r: (rank.get(r["s"], 5), r["t"]))
     return rows
 
@@ -173,6 +176,45 @@ def marker_qa(markers: dict) -> list:
                 "d": " ".join(text.split()),
                 "k": f"{base_kw} {kw}",
             })
+    return rows
+
+
+def load_questions() -> list:
+    rows = []
+    for path in sorted(QUESTIONS_DIR.glob("*.yaml")):
+        doc = yaml.safe_load(path.read_text())
+        if not isinstance(doc, dict):
+            continue
+        for q in doc.get("questions") or []:
+            q["_topic"] = doc.get("topic", path.stem)
+            rows.append(q)
+    return rows
+
+
+def question_entries(questions: list, answers: dict) -> list:
+    """Put the question bank in the search index.
+
+    Unanswered questions are included deliberately. Someone searching "why am I
+    so tired since I stopped" should find that STAN knows the question and is
+    working on it, rather than finding nothing at all. The variants are what
+    make that match — 186 real phrasings beat any amount of clever ranking.
+    """
+    rows = []
+    for q in questions:
+        aid = q.get("answer")
+        answered = aid in answers if aid else False
+        rows.append({
+            "id": f"q:{q['id']}",
+            "m": (q.get("markers") or [None])[0],
+            "t": q["question"],
+            "s": "draft" if answered else "planned",
+            "u": "",
+            "d": (answers[aid].get("summary", "") if answered else
+                  "Catalogued, not answered yet. We know people ask this and it "
+                  "is on the list — we will not guess at it in the meantime."),
+            "k": " ".join([q["id"].replace("-", " "), q["_topic"].replace("-", " ")]
+                          + (q.get("variants") or [])).lower(),
+        })
     return rows
 
 
@@ -306,6 +348,9 @@ def build_state(pages: dict, markers: dict) -> dict:
         1 for s in svc_rows if (s.get("verification") or {}).get("status") == "verified"
     )
 
+    questions = load_questions()
+    q_answered = sum(1 for q in questions if q.get("answer"))
+
     counts = {"live": 0, "draft": 0, "planned": 0}
     for fm in pages.values():
         st = fm.get("status", "planned")
@@ -319,6 +364,8 @@ def build_state(pages: dict, markers: dict) -> dict:
             mcounts[st] += 1
 
     return {
+        "questions_total": len(questions),
+        "questions_answered": q_answered,
         "markers_total": len(markers),
         "markers_written": mcounts["partial"] + mcounts["complete"] + mcounts["reviewed"],
         "markers_reviewed": mcounts["reviewed"],
@@ -383,6 +430,8 @@ def main() -> int:
           f"{st['pages_planned']} planned")
     print(f"  sources   {st['sources_approved']} approved of {st['sources_total']}")
     print(f"  services  {st['services_verified']} verified of {st['services_total']}")
+    print(f"  questions {st['questions_answered']} answered of "
+          f"{st['questions_total']} catalogued")
     print(f"  markers   {st['markers_written']} written of {st['markers_total']}"
           f" ({st['markers_reviewed']} reviewed)")
     print(f"  qa        {sum(1 for r in data['index'] if r['id'].startswith('marker:'))}"

@@ -40,44 +40,25 @@ delivered kindly.
 
 ```
 stan/
-├── governance/
-│   ├── SCOPE.md              What STAN does and — more importantly — does not do
-│   ├── EVIDENCE-POLICY.md    How sources are graded, reviewed and approved
-│   ├── INTERIM-STANDARD.md   What may publish before a clinical lead exists
-│   ├── SUPPORT-MODEL.md      Tiers, boundaries, groups, the founder's role
-│   └── CRISIS-PROTOCOL.md    Suicidal disclosure, per channel, incl. email
-├── knowledge/                THE ENCYCLOPEDIA
-│   ├── schema/
-│   │   └── marker.schema.yaml
-│   └── markers/              One YAML record per marker. 16 seeded, 1 filled.
-├── content/
-│   └── pages/                Prose: concepts and journeys, not markers
-├── evidence/
-│   ├── schema/source.schema.yaml
-│   └── sources/              One record per source. 5 seeded, 0 approved.
-├── services/
-│   ├── schema/service.schema.yaml
-│   └── crisis-services.yaml  Scotland and England. 6-month review, enforced.
-├── data/
-│   ├── routes.yaml           The "Why are you here?" routes
-│   └── sessions.yaml         Group sessions, countries, types
-├── outreach/
-│   ├── clinical-lead-approach.md   Ready-to-send email and the target order
-│   └── specimen-shbg.md            The prose page to show a clinician
-├── prototype/
-│   ├── template.html         The shell. Edit this for layout and styling.
-│   └── index.html            GENERATED — never hand-edit
-├── tools/
-│   ├── validate.py           Enforces policy across all three registers
-│   ├── build.py              Compiles the repository into the hub page
-│   ├── coverage.py           How complete the encyclopedia is
-│   ├── query.py              Search and filter the evidence register
-│   └── new.py                Scaffold a page or a source
-└── templates/
-    ├── content-page.md       The governed prose unit
-    ├── hormone-explainer.md  Superseded by knowledge/ for markers; kept for
-    │                         reference on voice and section order
-    └── consultation-brief.md The sheet a reader takes to their GP
+├── BACKEND-PLAN.md        How content gets sourced, claimed and composed
+├── QA-ENGINE.md           How the AI-assisted search works, and its limits
+├── DATA-NOTE.md           Information in, information out; licence decision
+├── governance/            Scope, evidence policy, interim standard,
+│                          support model, crisis protocol
+├── knowledge/
+│   ├── schema/            marker · claim · question · answer
+│   ├── questions/         68 catalogued, 0 answered. The roadmap.
+│   ├── claims/            EMPTY — no source has been read yet
+│   ├── answers/           EMPTY — no claims to compose from yet
+│   └── markers/           16 identity-only stubs
+├── evidence/sources/      9 records, 0 read in full
+├── services/              Crisis signposting, Scotland and England
+├── sources-inbox/         Drop documents here. Gitignored — copyright.
+├── content/pages/         Prose that makes no clinical claim
+├── data/                  Routes and sessions for the front end
+├── outreach/              The clinical lead approach
+├── prototype/             template.html (edit) · index.html (GENERATED)
+└── tools/                 validate · build · coverage · query · new
 ```
 
 ## Using it
@@ -93,55 +74,40 @@ python3 stan/tools/query.py --topic asih --format full
 
 Requires Python 3.11+ and PyYAML.
 
-## The knowledge base — records, not essays
+## The knowledge base — claims, questions, answers
 
-**One marker is a record. A concept or a journey is a page.**
+**See `BACKEND-PLAN.md` and `QA-ENGINE.md` for the full design.** In short:
 
-"What is LH" is a record in `knowledge/markers/`. "How the system works" and
-"Coming off" are prose pages in `content/pages/`. Anything that is one substance,
-or one line on a blood panel, belongs in the encyclopedia.
-
-This distinction is the difference between a project that scales and one that
-doesn't. An essay has to be written whole, by one person, in one sitting. A record
-is filled a field at a time, by different people, over months — and progress can
-be measured.
-
-More importantly, **the reader-facing Q&A generates from the fields.** Fill in
-`states.low.meaning` for a marker and "my LH is low — what does that mean?"
-becomes a searchable answer, without anyone writing that sentence as prose. Each
-record yields up to five answers, and they read consistently because they came out
-of the same shape:
-
-| Filled field | Question it answers |
-|---|---|
-| `what_it_is` | What is LH? |
-| `states.high.meaning` | My LH is high — what does that mean? |
-| `states.low.meaning` | My LH is low — what does that mean? |
-| `states.suppressed.what_happens` | What happens to LH on steroids? |
-| `states.recovery.what_is_known` | Does LH recover after stopping? |
-
-Sixteen markers fully filled is around eighty answers nobody authored one by one.
-
-Two fields carry the differentiation and neither exists in mainstream health
-content: **`states.suppressed`**, because suppression is not deficiency, and
-**`does_not_tell_you`**, the reader-facing form of "what this must not be used to
-claim". `states.suppressed.unexpected_finding` — what it means when a marker moves
-the *opposite* way to expected — is frequently the most useful line on a record.
-
-Every record declares `applies_to: [male, female]`. Women using PEDs are the most
-under-served group in this field, and the model treats them as first-class rather
-than a footnote: `female_note` exists on the record and inside each state.
-
-```bash
-python3 stan/tools/coverage.py              # how complete is the encyclopedia
-python3 stan/tools/coverage.py --by field   # which section to sweep next
-python3 stan/tools/coverage.py --next       # highest-leverage thing to write
-python3 stan/tools/coverage.py --marker lh  # what's missing from one record
+```
+sources/    a document someone has READ in full
+   ↓
+claims/     one statement · one source · one VERBATIM quote
+   ↓
+answers/    one question answered, composed only of claims
+   ↓
+questions/  what people ask. Asserts nothing. Outnumbers answers.
+markers/    an index over claims, not a container for prose
 ```
 
-**Work by field, not by marker.** Writing `what_it_is` across all sixteen records
-in one sitting is faster than finishing one record, and the voice stays
-consistent. `--next` picks the sweep for you.
+**The rule that holds it together:** a claim needs a quote from a source that
+has been read. No quote, no claim. No claims, no answer. That makes
+"backed" a property the schema can check rather than a promise someone made.
+
+This replaced a marker-first design after the first content sweep produced
+sixty fields of prose citing nothing. The fault was structural — the schema
+permitted it — so the schema is where it got fixed.
+
+**The AI split, from `QA-ENGINE.md`:** at build time AI reads sources and
+proposes claims and drafts, all reviewed before publication. At query time it
+matches a reader's messy question to an already-approved answer and **writes
+nothing**. Every answer a reader sees was reviewed before they asked. That is
+what a clinician can actually sign off.
+
+```bash
+python3 stan/tools/coverage.py         # marker encyclopedia completeness
+python3 stan/tools/validate.py         # all registers against policy
+python3 stan/tools/build.py            # compile the hub
+```
 
 ## How the hub is built
 
