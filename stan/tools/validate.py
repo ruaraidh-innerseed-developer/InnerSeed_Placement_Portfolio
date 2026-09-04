@@ -155,6 +155,13 @@ def check_rules(report, rec_id, record, today):
     if status == "retired" and not (record.get("notes") or "").strip():
         report.error(rec_id, "retired-requires-reason: notes must explain the retirement")
 
+    if status == "screened-out" and not (record.get("notes") or "").strip():
+        report.error(
+            rec_id,
+            "screened-out-requires-reason: notes must record which screening "
+            "stage rejected it and why",
+        )
+
     # An approved record whose interval exceeds policy is a governance drift signal.
     if status == "approved":
         reviewed = parse_date(review.get("reviewed_on"))
