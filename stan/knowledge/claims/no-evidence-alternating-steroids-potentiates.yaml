@@ -1,0 +1,32 @@
+id: no-evidence-alternating-steroids-potentiates
+statement: The idea that alternating steroids with different structures makes them
+  work better was described as plausible in principle, with no direct scientific
+  evidence supporting the practice.
+source: taylor-2002-anabolic-steroids-athlete
+locator: Ch. 5, p. 63, 'The Third through Fifth Cycles' — The Science Behind the
+  Regime
+quote: Alternating these types of oral anabolic steroid preparations in cycles may
+  further potentiate anabolic actions by changing the body's enzymatic conversion
+  of them. However, there is no direct scientific evidence to support this practice.
+quote_verified: false
+kind: direct
+population: Not a population claim. A statement about the state of the evidence
+  for a practice, as at 2002.
+does_not_support:
+- A claim that alternating does not work. The author allows that it may. He says
+  it has not been shown.
+- A claim that alternating does work, on the strength of the molecular facts in
+  the preceding sentences. Those establish that the compounds differ, not that alternating
+  them achieves anything.
+- A statement about the CURRENT evidence. This must be re-checked before publication.
+- Any practical guidance on alternating. STAN does not publish it.
+topics:
+- harm-reduction
+- pharmacology
+extracted_by: Claude (Opus 5), from the founder's photographs of p. 63
+extracted_on: '2026-09-05'
+status: draft
+notes: 'THE WORKED EXAMPLE. Read the two sentences together and the whole editorial
+  problem is visible in miniature: a true mechanism, a plausible inference from
+  it, and the inference untested. The community keeps the first two and drops the
+  third.'

@@ -22,6 +22,10 @@ Step 4 is the one under pressure. The temptation is always to write the good
 sentence and then find a citation for it. That is how the first attempt at the
 encyclopedia produced fifteen records citing nothing.
 
+**How it is written** is `governance/EDITORIAL-VOICE.md`. The spine of it: true,
+proven and safe are three different questions, and the job is to find the
+specific untested link rather than to fight everything.
+
 **Two rules that override everything here.** No dosing, cycle length, stacking
 or tapering figures reach a published page, whatever the claims record
 (`governance/SCOPE.md`). And where a source reports a belief users hold, the
@@ -31,6 +35,24 @@ voice.
 ---
 
 ## Stack
+
+### 0. The sentence that gets left out — DRAFTED
+
+**File:** `the-sentence-that-gets-left-out.md`
+**Answers:** no catalogued question directly. It teaches a habit rather than
+answering a question, which makes it the odd one out here.
+**Claims used:** `stanozolol-non-aromatizable-by-structure`,
+`no-evidence-alternating-steroids-potentiates`,
+`stacking-evidence-comes-from-livestock`,
+`supratherapeutic-doses-increase-mass-and-strength`
+**Blocked by:** quote verification; a current evidence check on alternating and
+stacking; clinical review (tier B).
+
+Written first because it demonstrates the voice rather than because it is the
+most needed. It takes one paragraph of Taylor — stanozolol does not aromatise,
+alternating might therefore potentiate, no direct evidence supports it — and
+uses it to teach the split between true, proven and safe. If the tone is wrong,
+it is cheaper to find out here than on an article somebody urgently needs.
 
 ### 1. The break between cycles — what the evidence actually says
 
