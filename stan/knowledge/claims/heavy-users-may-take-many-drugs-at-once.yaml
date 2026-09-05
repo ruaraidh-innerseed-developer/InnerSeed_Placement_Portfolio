@@ -1,0 +1,27 @@
+id: heavy-users-may-take-many-drugs-at-once
+statement: Heavy users commonly add other drugs, both to enhance effects and to
+  treat adverse effects, and some are taking a dozen or more at the same time.
+source: taylor-2002-anabolic-steroids-athlete
+locator: Ch. 5, p. 64, 'Beyond the Fifth Cycle'
+quote: Drugs believed to enhance the effects of anabolic steroids, and drugs used
+  to treat the adverse effects from anabolic steroid use become common. Some heavy
+  users may be on a dozen or more various drugs at the same time.
+quote_verified: false
+kind: direct
+population: Heavy long-term anabolic steroid users, as characterised by the author
+  around 2002. Unquantified.
+does_not_support:
+- Naming any of these drugs. STAN does not publish that.
+- Any claim about interactions between them, which the passage does not address
+  and which would need a pharmacological source.
+- Any prevalence claim. 'Some' and 'may' are the author's words and both must survive
+  into anything STAN writes.
+topics:
+- harm-reduction
+- service-access-uk
+extracted_by: Claude (Opus 5), from the founder's photograph of p. 64
+extracted_on: '2026-09-05'
+status: draft
+notes: Pairs with the p. 63 claim about obtaining prescription drugs from dealers.
+  Together they describe unsupervised polypharmacy, which is a far larger clinical
+  problem than the steroids alone and is almost never what the conversation is about.

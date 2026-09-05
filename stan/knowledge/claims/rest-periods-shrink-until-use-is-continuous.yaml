@@ -1,0 +1,27 @@
+id: rest-periods-shrink-until-use-is-continuous
+statement: 'In long-term heavy use the cycle structure breaks down: cycles lengthen
+  until there is little or no rest, and for some the rest period becomes a period
+  of lower use rather than none.'
+source: taylor-2002-anabolic-steroids-athlete
+locator: Ch. 5, p. 64, 'Beyond the Fifth Cycle'
+quote: Cycles become long periods of anabolic steroid use with little or no rest
+  periods. In some users, rest periods become short periods of lower anabolic steroid
+  use.
+quote_verified: false
+kind: direct
+population: Long-term heavy anabolic steroid users beyond the fifth cycle, as characterised
+  by the author around 2002. Unquantified.
+does_not_support:
+- Any claim about how many people reach this point, or how quickly.
+- A claim that this outcome is inevitable. It describes a pattern, not a destiny.
+- Any dosing or cycle guidance, in either direction.
+topics:
+- harm-reduction
+- mental-health
+- asih
+extracted_by: Claude (Opus 5), from the founder's photograph of p. 64
+extracted_on: '2026-09-05'
+status: draft
+notes: 'The end of the arc that starts on p. 60 with a first cycle and a rest period.
+  Read the two pages together and the drift is visible: the structure erodes, step
+  by reasonable step.'

@@ -54,6 +54,30 @@ alternating might therefore potentiate, no direct evidence supports it — and
 uses it to teach the split between true, proven and safe. If the tone is wrong,
 it is cheaper to find out here than on an article somebody urgently needs.
 
+### 0b. Nobody decides to end up here — DRAFTED
+
+**File:** `nobody-decides-to-end-up-here.md`
+**Answers:** `am-i-addicted`, `is-it-too-late-for-me`, and part of
+`still-feel-awful-months-later`
+**Claims used:** nine, spanning pp. 60-64 — the withdrawal dip, the receptor
+mechanism, the author's own hedge on it, the erosion of rest periods,
+polypharmacy, the both-directions risk passage, the "no end in sight" passage,
+the unattributed "over half" figure, and the concession that steroids work.
+**Blocked by:** quote verification; clinical review, which here is not a
+formality; tracing or cutting the "over half" figure; a current source on mood
+after cessation.
+
+The strongest piece the chapter supports, because pages 60 and 64 are the two
+ends of one arc and nobody has joined them up for the person living it. A first
+cycle with a proper break becomes years with no break, through steps that were
+each reasonable at the time.
+
+**The safety-critical passage is in this one.** Taylor writes that abrupt
+withdrawal from heavy use can have devastating consequences, and in the next
+sentence that continuing can too. Both sentences appear together in the draft
+or neither appears at all. The article routes to clinical help and to the
+crisis numbers because of it.
+
 ### 1. The break between cycles — what the evidence actually says
 
 **Answers:** `do-i-need-pct`, `taper-or-stop`
