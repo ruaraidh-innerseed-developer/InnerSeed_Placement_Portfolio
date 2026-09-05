@@ -419,6 +419,7 @@
   .band .searchrow:focus-within { box-shadow: 0 0 0 3px rgba(224,160,84,.35); }
   .band.hero { border-bottom: 0; }
   header.site.band { border-bottom-color: var(--line); }
+  header.site.band + #home > .hero.band { padding-top: 60px; }
   footer.site.band { padding: 44px 0 60px; margin-top: 0; }
   footer.site.band .state { border-top-color: var(--line); }
 
@@ -1188,6 +1189,7 @@
     <strong>PROTOTYPE</strong>
     <span>Not a live service. No content here has been clinically reviewed. Example sessions are illustrative.</span>
     <span class="looks" id="looks" role="group" aria-label="Design look">Look
+      <button type="button" data-look="stan">STAN</button>
       <button type="button" data-look="paper">Paper</button>
       <button type="button" data-look="reverse">Reverse</button>
       <button type="button" data-look="mixed">Mixed</button>
@@ -2263,6 +2265,11 @@
      is a list of things to invert. Nothing else changes: same components,
      same copy, same data. */
   var LOOKS = {
+    /* The chosen one: petrol opening, paper middle with petrol insets,
+       petrol close. Everything else is kept for comparison. */
+    stan:    { band: ["#sitehead", "#hero", "#sitefoot"],
+               inv: ["#routepanel", "#clinical-panel", "#seminarlist .seminar"],
+               tint: ["#groups"] },
     paper:   { band: ["#seminars"], inv: [], tint: ["#groups"] },
     reverse: { band: ["#sitehead", "#hero", "#connect", "#sitefoot"], inv: [],
                tint: ["#seminars"] },
@@ -2274,7 +2281,7 @@
   var lookBtns = document.querySelectorAll("#looks button");
 
   function applyLook(name) {
-    var look = LOOKS[name] || LOOKS.paper;
+    var look = LOOKS[name] || LOOKS.stan;
     document.querySelectorAll(".band, .inv, section.tint").forEach(function (n) {
       if (n.classList.contains("nextstep")) return;   /* always inverted */
       n.classList.remove("band", "inv", "tint");
@@ -2297,8 +2304,9 @@
   lookBtns.forEach(function (b) {
     b.addEventListener("click", function () { applyLook(b.getAttribute("data-look")); });
   });
-  var savedLook = "paper";
-  try { savedLook = localStorage.getItem(LOOK_KEY) || "paper"; } catch (e) {}
+  var savedLook = "stan";
+  try { savedLook = localStorage.getItem(LOOK_KEY) || "stan"; } catch (e) {}
+  if (!LOOKS[savedLook]) savedLook = "stan";
 
   /* -------------------------------------------------------------- state */
 
