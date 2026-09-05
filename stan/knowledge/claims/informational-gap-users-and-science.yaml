@@ -1,0 +1,30 @@
+id: informational-gap-users-and-science
+statement: A physician writing on this subject identified an informational gap between
+  anabolic steroid users and the scientific community, and set out to illustrate
+  it.
+source: taylor-2002-anabolic-steroids-athlete
+locator: Ch. 5, p. 60, chapter preamble, immediately before 'The First Cycle'
+quote: None of the practices discussed in this chapter are meant as an endorsement.
+  The information is provided solely to illustrate the informational gap that exists
+  between anabolic steroid users and the scientific community.
+quote_verified: false
+kind: direct
+population: Not a population claim. A statement of the author's purpose, about the
+  field as a whole as at 2002.
+does_not_support:
+- A claim that the gap still exists in the same form. It is a 2002 statement. That
+  the gap persists is better evidenced by Grant 2023, which is current and peer-reviewed.
+- A claim that STAN is the answer to the gap, or that the author would endorse STAN.
+- Any suggestion that because clinicians and users disagree, the two are equivalent
+  authorities.
+topics:
+- harm-reduction
+- information-gap
+- peer-support
+extracted_by: Claude (Opus 5), from the founder's photographs of pp. 60-62
+extracted_on: '2026-09-05'
+status: draft
+notes: 'Useful to STAN as a citable statement that the gap is long-standing and
+  was named in print a quarter of a century ago. Pair with Grant 2023 for the current
+  position. Also note the disclaimer sentence: the author explicitly separates describing
+  a practice from endorsing it, which is the same line STAN has to hold.'

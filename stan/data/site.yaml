@@ -1,0 +1,19 @@
+# Deployment facts. Separate from content because they change for a different
+# reason: content changes when STAN learns something, this changes when STAN
+# moves house.
+
+# The canonical origin, no trailing slash. Used for canonical links, Open
+# Graph URLs and sitemap.xml — all three are wrong if this is wrong, and all
+# three matter for whether Google will rank the question bank.
+#
+# PLACEHOLDER until the domain is bought. Nothing published to a real domain
+# should carry this value; build.py --mode site warns while it is unset.
+origin: "https://example.invalid"
+origin_confirmed: false
+
+# Shown in the footer and in structured data. Not a real address yet.
+organisation:
+  name: STAN — Steroid Awareness Network
+  short_name: STAN
+  country: GB
+  email: ""          # no address exists yet

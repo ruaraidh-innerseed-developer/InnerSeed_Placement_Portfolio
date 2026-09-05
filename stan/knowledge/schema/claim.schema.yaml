@@ -1,0 +1,161 @@
+# STAN knowledge base — claim record schema
+# Version: 1.0
+#
+# THE ATOM OF THE WHOLE SYSTEM.
+#
+# A claim is one statement, tied to one source, carrying the verbatim text from
+# that source which supports it. Nothing else in STAN may assert anything about
+# physiology, risk or treatment except by composing claims.
+#
+# WHY THIS EXISTS
+#
+# The first attempt at the encyclopedia wrote prose into marker fields and left
+# `sources: []`. Fifteen of sixteen records cited nothing. The data model
+# permitted it, so it happened. Discipline is not a control; a schema is.
+#
+# The order of work is now enforced by the shape of the data:
+#
+#     you cannot write an answer without claims
+#     you cannot write a claim without a source AND a quote from it
+#     you cannot register a source as usable without reading it
+#
+# That makes "backed" a checkable property rather than an assertion about an
+# assertion. It also removes confirmation-shaped citation — you cannot write
+# first and go looking for agreement afterwards, because the quote comes before
+# the statement.
+
+version: 1.0
+
+enums:
+  # How the statement relates to the source text. Note what is absent.
+  kind:
+    - direct       # The source states this. The quote carries it plainly.
+    - paraphrase   # Our wording, the source's meaning. Quote must still carry it.
+    - synthesis    # Drawn from more than one passage in the SAME source.
+                   # Use sparingly and record every locator.
+    # There is deliberately no "inference" value. A statement that goes beyond
+    # what a source says is not a claim, it is an opinion, and it does not
+    # belong in the register at any status.
+
+  status:
+    - draft        # extracted, not checked
+    - checked      # a second person has confirmed the quote and the reading
+    - approved     # a clinical reviewer has signed it off
+    - retired      # withdrawn; kept so answers that used it stay auditable
+
+fields:
+
+  id:
+    required: true
+    type: str
+    pattern: '^[a-z0-9]+(-[a-z0-9]+)*$'
+    note: Describe the statement, not the source — "lh-made-in-anterior-pituitary".
+
+  statement:
+    required: true
+    type: str
+    note: >-
+      One sentence, in plain English, as STAN would say it to a reader. No
+      hedging language that the source does not itself use, and no strengthening
+      of it either.
+
+  source:
+    required: true
+    type: str
+    note: >-
+      An id in evidence/sources/. Its record must have full_text_read true —
+      for a book, that means read_scope names the chapter and this claim's
+      locator falls inside it.
+
+  locator:
+    required: true
+    type: str
+    note: >-
+      Where in the source. Section heading, page, table number — enough that
+      another person can find it in under a minute without searching the whole
+      document.
+
+  quote:
+    required: true
+    type: str
+    note: >-
+      VERBATIM text from the source, in quotation marks. Not a summary. If no
+      passage can be quoted that carries the statement, there is no claim to
+      make. Keep it short — enough to carry the point, no more, since the source
+      is copyrighted and STAN reports rather than reproduces.
+
+  quote_verified:
+    required: true
+    type: bool
+    note: >-
+      Has a person compared this quote against the document, character by
+      character? False until someone has. Nothing publishes on an unverified
+      quote.
+
+  kind:
+    required: true
+    type: str
+    enum: kind
+
+  population:
+    required: true
+    type: str
+    note: >-
+      Who the source's statement is actually about. THE MOST IMPORTANT FIELD
+      AFTER THE QUOTE. "Healthy adult men aged 20-40, no androgen exposure" is a
+      different claim from the same sentence about former AAS users, and the
+      commonest way health information goes wrong is by losing this distinction
+      between the source and the reader.
+
+  does_not_support:
+    required: true
+    type: list
+    note: >-
+      Foreseeable misuse. Written at extraction, while the source is open and
+      its limits are fresh, rather than later when only the statement remains.
+
+  topics:
+    required: true
+    type: list
+
+  markers:
+    required: false
+    type: list
+    note: Marker ids this claim bears on, if any.
+
+  extracted_by:  {required: true, type: str}
+  extracted_on:  {required: true, type: str, pattern: '^\d{4}-\d{2}-\d{2}$'}
+
+  status:
+    required: true
+    type: str
+    enum: status
+
+  checked_by:    {required: false, type: str}
+  checked_on:    {required: false, type: str, pattern: '^\d{4}-\d{2}-\d{2}$'}
+  notes:         {required: false, type: str}
+
+rules:
+  - id: source-must-be-read
+    description: >-
+      The source named must exist in evidence/sources/ and its record must have
+      verification.full_text_read = true. A claim cannot be extracted from a
+      document nobody has opened.
+
+  - id: quote-required
+    description: >-
+      quote must be non-empty. There is no claim without text from the source.
+
+  - id: checked-requires-verified-quote
+    description: >-
+      status "checked" requires quote_verified = true and a checked_by name.
+
+  - id: approved-requires-clinical-reviewer
+    description: >-
+      status "approved" requires a named clinical reviewer, per
+      EVIDENCE-POLICY.md §8.
+
+  - id: retired-keeps-history
+    description: >-
+      A retired claim is never deleted. Answers that relied on it must remain
+      traceable, and the corrections log needs the history.

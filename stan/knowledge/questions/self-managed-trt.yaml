@@ -1,0 +1,64 @@
+# Question bank — self-managed-trt
+#
+# Questions assert nothing, so this file can be written and extended freely.
+# Answers are a different matter entirely: see ../schema/answer.schema.yaml.
+#
+# `variants` is what makes the search bar work. Add to it every time the unmet
+# search log shows a phrasing nobody anticipated.
+
+topic: self-managed-trt
+
+questions:
+
+  - id: is-self-prescribing-trt-safe
+    question: "Is self-prescribing TRT safe?"
+    variants:
+      - "diy trt"
+      - "self medicating testosterone"
+      - "trt without a doctor"
+    topics: [self-managed-trt]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: trt-vs-cycle-difference
+    question: "What is the difference between TRT and a cycle?"
+    variants:
+      - "replacement vs enhancement"
+      - "trt dose vs cycle dose"
+    topics: [self-managed-trt]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: can-i-get-trt-on-nhs
+    question: "Can I get TRT on the NHS?"
+    variants:
+      - "nhs testosterone"
+      - "will my gp prescribe trt"
+      - "getting trt uk"
+    topics: [self-managed-trt]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: clinic-wont-test-what-i-want
+    question: "My private clinic won't test what I've asked for. What now?"
+    variants:
+      - "clinic refuses tests"
+      - "wont check my free testosterone"
+    topics: [self-managed-trt]
+    origin: proposed
+    frequency: unknown
+    priority: 2
+
+  - id: what-should-trt-monitoring-look-like
+    question: "What should proper TRT monitoring look like?"
+    variants:
+      - "trt follow up"
+      - "how should i be monitored"
+    topics: [self-managed-trt]
+    markers: [total-testosterone, haematocrit, shbg]
+    origin: proposed
+    frequency: unknown
+    priority: 1

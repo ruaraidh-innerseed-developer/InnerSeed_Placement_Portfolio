@@ -1,0 +1,260 @@
+# STAN crisis signposting register
+#
+# STAN operates no crisis service. This is the list of people who do, so that
+# anyone supporting on STAN's behalf can route someone correctly and without
+# hesitating.
+#
+# READ BEFORE USE: every entry below is at verification status "partial". The
+# details were gathered from search results, not confirmed against each
+# provider's own website. NO SUPPORT CHANNEL MAY OPEN until every entry has been
+# checked directly with the provider and promoted to "verified". A wrong crisis
+# number is worse than no number.
+
+version: 1.0
+last_full_review: '2026-09-01'
+next_full_review: '2027-03-01'
+reviewed_by: 'UNREVIEWED — drafted by R. (founder), no reviewer appointed'
+
+services:
+
+  # ---------------------------------------------------------------- emergency
+
+  - id: emergency-999
+    name: Emergency services (999)
+    kind: emergency
+    coverage: [uk]
+    contact:
+      phone: '999'
+    cost: free
+    hours: 24 hours a day, every day
+    audience: Anyone in immediate danger
+    what_it_is: >-
+      The emergency response. For immediate risk to life: someone has taken an
+      overdose, has seriously harmed themselves, is about to, or has chest pain,
+      collapse, or signs of a clot or stroke.
+    what_it_is_not: >-
+      Not a listening service and not for support with distress that is not
+      immediately dangerous. Routing someone here who needs Samaritans is its
+      own kind of failure, but hesitating when someone is in danger is worse.
+      If in doubt, 999.
+    verification:
+      status: verified
+      checked_on: '2026-09-01'
+      checked_by: R. (founder)
+      checked_against: Universal UK emergency number; no provider check required.
+
+  - id: nhs-111-england
+    name: NHS 111 (England) — mental health option
+    kind: urgent-health
+    coverage: [england]
+    contact:
+      phone: '111'
+      web: https://111.nhs.uk
+    cost: free
+    hours: 24 hours a day, every day
+    audience: Anyone in England needing urgent but non-emergency help
+    what_it_is: >-
+      Urgent health advice. Selecting the mental health option routes to local
+      urgent mental health support, including local crisis teams.
+    what_it_is_not: >-
+      Not for immediate danger to life — that is 999. Waiting times vary and it
+      is not an instant answer.
+    verification:
+      status: partial
+      checked_on: '2026-09-01'
+      checked_by: R. (founder)
+      checked_against: >-
+        Not yet confirmed against nhs.uk. Confirm the current mental health
+        option and how it is announced, as the menu wording has changed before.
+
+  - id: nhs-24-scotland
+    name: NHS 24 (Scotland)
+    kind: urgent-health
+    coverage: [scotland]
+    contact:
+      phone: '111'
+      web: https://www.nhs24.scot
+    cost: free
+    hours: 24 hours a day, every day
+    audience: Anyone in Scotland needing urgent but non-emergency help
+    what_it_is: >-
+      Scotland's urgent health advice line, including mental health support out
+      of hours.
+    what_it_is_not: Not for immediate danger to life — that is 999.
+    verification:
+      status: partial
+      checked_on: '2026-09-01'
+      checked_by: R. (founder)
+      checked_against: Not yet confirmed against nhs24.scot.
+
+  # -------------------------------------------------- emotional support (UK)
+
+  - id: samaritans
+    name: Samaritans
+    kind: crisis-emotional
+    coverage: [uk]
+    contact:
+      phone: '116 123'
+      email: jo@samaritans.org
+      web: https://www.samaritans.org
+    cost: free
+    hours: 24 hours a day, every day of the year
+    audience: Anyone, about anything, whether or not it involves suicide
+    what_it_is: >-
+      Confidential listening. The single most reliable thing to give someone at
+      any hour. No referral, no waiting list, no need to be in crisis to call.
+    what_it_is_not: >-
+      Not an emergency service, not clinical advice, and will not intervene or
+      call anyone on the person's behalf without consent.
+    verification:
+      status: partial
+      checked_on: '2026-09-01'
+      checked_by: R. (founder)
+      checked_against: >-
+        Search results only; samaritans.org not reachable at time of drafting.
+        Confirm number and the jo@ email against the provider site.
+
+  - id: shout
+    name: Shout
+    kind: crisis-emotional
+    coverage: [uk]
+    contact:
+      text: Text SHOUT to 85258
+      web: https://giveusashout.org
+    cost: free
+    hours: 24 hours a day, every day
+    audience: Anyone who would rather text than speak
+    what_it_is: >-
+      A free, confidential text conversation with a trained volunteer. Valuable
+      for people who cannot or will not speak on the phone — which in this
+      population is a great many of them.
+    what_it_is_not: Not an emergency service and not clinical advice.
+    verification:
+      status: partial
+      checked_on: '2026-09-01'
+      checked_by: R. (founder)
+      checked_against: Search results only. Confirm shortcode against giveusashout.org.
+
+  - id: calm
+    name: CALM (Campaign Against Living Miserably)
+    kind: crisis-emotional
+    coverage: [uk]
+    contact:
+      phone: '0800 58 58 58'
+      web: https://www.thecalmzone.net
+    cost: free
+    hours: 5pm to midnight, every day
+    audience: Anyone, with a particular focus on men
+    what_it_is: >-
+      Free, anonymous helpline and webchat. Explicitly oriented toward men, which
+      makes it a strong fit for much of STAN's readership.
+    what_it_is_not: >-
+      NOT 24 HOURS. Closed between midnight and 5pm. Never offer CALM as an
+      overnight or daytime option — offer Samaritans instead and CALM alongside.
+    verification:
+      status: partial
+      checked_on: '2026-09-01'
+      checked_by: R. (founder)
+      checked_against: Search results only. Confirm hours against thecalmzone.net.
+
+  - id: papyrus-hopeline247
+    name: Papyrus HOPELINE247
+    kind: crisis-mental-health
+    coverage: [uk]
+    contact:
+      phone: '0800 068 4141'
+      text: Text HOPE to 88247
+      email: pat@papyrus-uk.org
+      web: https://www.papyrus-uk.org
+    cost: free
+    hours: 24 hours a day, every day including bank holidays
+    audience: People under 35 with thoughts of suicide, and those worried about them
+    what_it_is: >-
+      Specialist suicide prevention advice for young people up to 35, and for
+      anyone concerned about a young person.
+    what_it_is_not: >-
+      Age-bounded. For someone over 35, use Samaritans. Not an emergency service.
+    verification:
+      status: partial
+      checked_on: '2026-09-01'
+      checked_by: R. (founder)
+      checked_against: >-
+        Search results only. Confirm number, text shortcode and the current
+        upper age limit against papyrus-uk.org.
+
+  # ------------------------------------------------------------ drugs advice
+
+  - id: talk-to-frank
+    name: FRANK
+    kind: drugs-alcohol
+    coverage: [england, wales]
+    contact:
+      phone: '0300 123 6600'
+      text: '82111'
+      web: https://www.talktofrank.com
+    cost: free
+    hours: 24 hours a day, every day
+    audience: Anyone worried about their own or someone else's drug use
+    what_it_is: >-
+      National drugs information and advice service for England and Wales.
+      Confidential, and can help locate local treatment services.
+    what_it_is_not: >-
+      Not a clinical service and not specialist in image and performance
+      enhancing drugs. Useful for navigation, not for endocrine questions.
+    verification:
+      status: partial
+      checked_on: '2026-09-01'
+      checked_by: R. (founder)
+      checked_against: >-
+        Search results only. Confirm number, textphone and text service against
+        talktofrank.com.
+
+  # ------------------------------------------------------- Scotland-specific
+
+  - id: breathing-space-scotland
+    name: Breathing Space
+    kind: crisis-emotional
+    coverage: [scotland]
+    contact:
+      phone: '0800 83 85 87'
+      web: https://www.breathingspace.scot
+    cost: free
+    hours: >-
+      Monday to Thursday 6pm to 2am. Friday 6pm through to Monday 6am,
+      continuously across the weekend.
+    audience: Anyone in Scotland experiencing low mood, anxiety or depression
+    what_it_is: >-
+      Scotland's confidential listening service, run through NHS 24. Well
+      regarded and specifically designed around out-of-hours need.
+    what_it_is_not: >-
+      NOT 24 HOURS ON WEEKDAYS. Closed weekday daytimes, from 2am to 6pm. Check
+      the day and time before offering it, and pair it with Samaritans so the
+      person always has something open.
+    verification:
+      status: partial
+      checked_on: '2026-09-01'
+      checked_by: R. (founder)
+      checked_against: >-
+        Search results only; breathingspace.scot not reachable at time of
+        drafting. Hours in particular must be confirmed — they are unusual and
+        getting them wrong sends someone to a closed line.
+
+# --------------------------------------------------------------------- gaps
+#
+# Known holes to close before this list is fit for use:
+#
+# 1. Scotland has no entry equivalent to FRANK here. Identify the current
+#    national drugs information route for Scotland (Scottish Drugs Forum and
+#    NHS inform are the likely starting points) and add it. Do not add a
+#    service whose current status has not been confirmed.
+# 2. No needle and syringe programme entries. NSPs are the services with the
+#    most direct experience of IPED users in both nations and belong here, but
+#    they are local rather than national. Decide whether to list a national
+#    finder rather than individual sites.
+# 3. No specialist IPED or steroid clinic entries. This is the gap STAN exists
+#    to address, and until a clinical lead is appointed there is nothing
+#    honest to put here.
+# 4. Wales and Northern Ireland are not covered. Either add them or state
+#    plainly on the site which nations STAN's signposting covers.
+# 5. Nothing here is checked for accessibility — BSL, textphone, and language
+#    options should be recorded per service.
