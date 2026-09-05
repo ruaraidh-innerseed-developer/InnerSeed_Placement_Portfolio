@@ -31,6 +31,7 @@ ANSWERS_DIR = ROOT / "knowledge" / "answers"
 ROUTES_PATH = ROOT / "data" / "routes.yaml"
 SESSIONS_PATH = ROOT / "data" / "sessions.yaml"
 LADDER_PATH = ROOT / "data" / "services.yaml"
+SITE_PATH = ROOT / "data" / "site.yaml"
 SERVICES_PATH = ROOT / "services" / "crisis-services.yaml"
 
 # Service ladder statuses, and how the front end treats each.
@@ -38,6 +39,7 @@ LADDER_STATUSES = {"ready", "soon", "planned"}
 SOURCES_DIR = ROOT / "evidence" / "sources"
 TEMPLATE_PATH = ROOT / "prototype" / "template.html"
 OUTPUT_PATH = ROOT / "prototype" / "index.html"
+DIST_DIR = ROOT / "dist"
 
 # Which service kinds appear in the hub's crisis footer.
 HUB_CRISIS_KINDS = {"emergency", "crisis-emotional"}
@@ -726,6 +728,19 @@ def main() -> int:
         "--check", action="store_true",
         help="exit non-zero if index.html differs from a fresh build",
     )
+    parser.add_argument(
+        "--mode", choices=("artifact", "site"), default="artifact",
+        help=(
+            "artifact: one file, hash routes, for the single-URL preview. "
+            "site: real paths for a static site, to be prerendered. "
+            "Hash routes are not separately indexed by search engines, so the "
+            "question bank is invisible to search in artifact mode."
+        ),
+    )
+    parser.add_argument(
+        "--out", type=Path, default=None,
+        help="output file (default: prototype/index.html, or dist/index.html for --mode site)",
+    )
     args = parser.parse_args()
 
     try:
@@ -733,6 +748,7 @@ def main() -> int:
         markers = load_markers()
         sessions = build_sessions()
         ladder = build_ladder()
+        site = yaml.safe_load(SITE_PATH.read_text())
         data = {
             "index": build_index(pages, markers),
             "routes": build_routes(pages, markers, sessions, ladder),
@@ -743,6 +759,8 @@ def main() -> int:
             "ladder": ladder,
             "crisis": build_crisis(),
             "state": build_state(pages, markers),
+            "mode": args.mode,
+            "origin": site.get("origin", ""),
         }
     except (ValueError, KeyError, yaml.YAMLError) as exc:
         print(f"build failed: {exc}", file=sys.stderr)
@@ -753,12 +771,28 @@ def main() -> int:
     blob = blob.replace("</", "<\\/")
 
     built = dt.date.today().isoformat()
-    html = TEMPLATE_PATH.read_text()
-    for token, value in (("{{DATA}}", blob), ("{{BUILT}}", built)):
+    html = TEMPLATE_PATH.read_text(encoding="utf-8")
+
+    if args.mode == "site":
+        datascript = '<script src="/data.js"></script>'
+    else:
+        datascript = "<script>window.STAN_DATA=" + blob + ";</script>"
+
+    for token, value in (("{{DATASCRIPT}}", datascript), ("{{BUILT}}", built)):
         if token not in html:
             print(f"build failed: template is missing {token}", file=sys.stderr)
             return 1
         html = html.replace(token, value)
+
+    out_path = args.out or (DIST_DIR / "index.html" if args.mode == "site" else OUTPUT_PATH)
+
+    if args.mode == "site" and not site.get("origin_confirmed"):
+        print(
+            f"warning: data/site.yaml origin is still the placeholder "
+            f"'{site.get('origin')}'. Canonical links, Open Graph URLs and "
+            "sitemap.xml will all be wrong until a real domain is set.",
+            file=sys.stderr,
+        )
 
     if args.check:
         current = OUTPUT_PATH.read_text() if OUTPUT_PATH.exists() else ""
@@ -768,10 +802,24 @@ def main() -> int:
         print("index.html is up to date.")
         return 0
 
-    OUTPUT_PATH.write_text(html)
+    # The artifact host wraps the file in its own document. A static site has
+    # no such host, so site mode emits a complete document — without it the
+    # browser guesses the encoding and every dash and middot arrives mangled.
+    if args.mode == "site":
+        html = (
+            '<!doctype html>\n<html lang="en-GB">\n<head>\n'
+            + html.replace("{{LANGHEAD}}", "")
+            + "\n</body>\n</html>\n"
+        )
+
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(html, encoding="utf-8")
+    if args.mode == "site":
+        (out_path.parent / "data.js").write_text(
+            "window.STAN_DATA=" + blob + ";", encoding="utf-8")
 
     st = data["state"]
-    print(f"Built {OUTPUT_PATH.relative_to(ROOT.parent)}")
+    print(f"Built {out_path.relative_to(ROOT.parent)}  [mode: {args.mode}]")
     print(f"  pages     {st['pages_live']} live · {st['pages_draft']} draft · "
           f"{st['pages_planned']} planned")
     print(f"  sources   {st['sources_approved']} approved of {st['sources_total']}")

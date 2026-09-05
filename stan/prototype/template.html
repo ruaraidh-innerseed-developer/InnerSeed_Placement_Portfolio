@@ -1,3 +1,5 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Steroid Awareness Network</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1379,13 +1381,30 @@
   </div>
 </footer>
 
+{{DATASCRIPT}}
 <script>
 (function () {
   "use strict";
 
-  /* Everything below is compiled from the repository by stan/tools/build.py.
-     Edit the data, not this file. */
-  var STAN = {{DATA}};
+  /* Compiled from the repository by stan/tools/build.py. Edit the data, not
+     this file. Inlined for the single-file artifact; a separate cached file
+     for the site, where 120 pages should not each carry their own copy. */
+  var STAN = window.STAN_DATA;
+
+  /* Routing has two modes and one set of link-building code.
+
+     ARTIFACT: one file served from a single URL with no path control, so
+     destinations are hash fragments — #/m/shbg.
+     SITE:     a static site where every destination is a real, indexable,
+     shareable, linkable URL — /m/shbg/ — prerendered to its own HTML file.
+
+     The mode is baked in at build time. Nothing below branches on it except
+     href() and the router, so the two builds cannot drift apart. */
+  var MODE = STAN.mode || "artifact";
+  var SITE = MODE === "site";
+
+  function href(view) { return SITE ? "/" + view + "/" : "#/" + view; }
+  function homeAnchor(id) { return SITE ? "/#" + id : "#" + id; }
 
   var INDEX = STAN.index;                       /* pre-sorted: written first */
   var ROUTES = STAN.routes.routes;
@@ -1414,7 +1433,7 @@
       /* Value first: the free room leads. The paid thing is a plain sentence
          underneath with no price on it — the price is on its own page. */
       var a = el("a", "btn ghost");
-      a.href = "#groups";
+      a.href = homeAnchor("groups");
       a.appendChild(document.createTextNode("Sit in an open group first"));
       a.appendChild(el("span", "arrow", "→"));
       host.appendChild(a);
@@ -1422,7 +1441,7 @@
         var fine = el("p", "fine");
         fine.appendChild(document.createTextNode("Camera off, say nothing, come back or don't. When you want forty-five minutes one-to-one going through your own bloods, "));
         var lk = el("a", null, "that exists too");
-        lk.href = "#/o/" + w.id;
+        lk.href = href("o/" + w.id);
         fine.appendChild(lk);
         fine.appendChild(document.createTextNode("."));
         host.appendChild(fine);
@@ -1432,7 +1451,7 @@
     var chost = document.getElementById("clinical-next");
     if (c && chost) {
       var b = el("a", "btn ghost");
-      b.href = "#/o/" + c.id;
+      b.href = href("o/" + c.id);
       b.appendChild(document.createTextNode("I would want this"));
       b.appendChild(el("span", "arrow", "→"));
       chost.appendChild(b);
@@ -1605,7 +1624,7 @@
                : "p/" + it.id;
       var known = STAN.views[view] !== undefined;
       var r = el(known ? "a" : "div", "result");
-      if (known) { r.href = "#/" + view; r.style.textDecoration = "none"; }
+      if (known) { r.href = href(view); r.style.textDecoration = "none"; }
       r.appendChild(el("h4", null, it.t));
       r.appendChild(badge(it.s));
       r.appendChild(el("p", null, it.d));
@@ -1691,7 +1710,7 @@
      door: this is the page behaving as a funnel rather than a leaflet. */
   function nextCard(n) {
     var card = el("a", "nextstep inv");
-    card.href = "#/" + n.view;
+    card.href = href(n.view);
     var body = el("div", "body");
     body.appendChild(el("p", "eyebrow", "Where to go from here"));
     body.appendChild(el("h4", null, n.title));
@@ -1743,7 +1762,7 @@
     body.appendChild(facts);
 
     var open = el("a", "btn");
-    open.href = "#/s/" + s.id;
+    open.href = href("s/" + s.id);
     open.appendChild(document.createTextNode("Details"));
     open.appendChild(el("span", "arrow", "→"));
     var wrapBtn = el("div");
@@ -1829,13 +1848,13 @@
       var tied = SERVICE_FOR_GROUP[g.id];
       if (tied) {
         var wl = el("a", "btn");
-        wl.href = "#/o/" + tied;
+        wl.href = href("o/" + tied);
         wl.appendChild(document.createTextNode("Join the waiting list"));
         wl.appendChild(el("span", "arrow", "→"));
         fw.appendChild(wl);
       }
       var full = el("a", "btn ghost");
-      full.href = "#/g/" + g.id;
+      full.href = href("g/" + g.id);
       full.appendChild(document.createTextNode("Full details"));
       full.appendChild(el("span", "arrow", "→"));
       fw.appendChild(full);
@@ -1890,7 +1909,7 @@
 
   function chip(id, label) {
     var a = el("a", "chip", label);
-    a.href = "#/" + id;
+    a.href = href(id);
     return a;
   }
   function h2(text) { return el("h2", null, text); }
@@ -1930,7 +1949,7 @@
         "If you would rather go through this with someone, one-to-one: " +
         s.line.charAt(0).toLowerCase() + s.line.slice(1)));
       var a = el("a", "btn ghost");
-      a.href = "#/o/" + s.id;
+      a.href = href("o/" + s.id);
       a.appendChild(document.createTextNode(s.name));
       a.appendChild(el("span", "arrow", "→"));
       box.appendChild(a);
@@ -1974,6 +1993,28 @@
     return box;
   }
 
+  /* A prerendered page is only worth having if its head describes it. The
+     app sets these client-side; the prerenderer dumps the DOM afterwards, so
+     the static file inherits them and there is no second templating layer. */
+  function setHead(title, desc, path) {
+    document.title = title;
+    function meta(sel, attr, val, value) {
+      var el = document.head.querySelector(sel);
+      if (!el) { el = document.createElement("meta"); el.setAttribute(attr, val); document.head.appendChild(el); }
+      el.setAttribute("content", value);
+    }
+    meta('meta[name="description"]', "name", "description", desc);
+    meta('meta[property="og:title"]', "property", "og:title", title);
+    meta('meta[property="og:description"]', "property", "og:description", desc);
+    var link = document.head.querySelector('link[rel="canonical"]');
+    if (!link) { link = document.createElement("link"); link.rel = "canonical"; document.head.appendChild(link); }
+    link.href = (STAN.origin || "") + path;
+  }
+
+  var HOME_TITLE = "STAN — Steroid Awareness Network";
+  var HOME_DESC = "Straight answers about steroids, from people who have been " +
+    "there and people who are qualified. Free, independent, no affiliate money.";
+
   function renderView(key) {
     var v = STAN.views[key];
     viewEl.textContent = "";
@@ -1992,7 +2033,9 @@
     var back = el("button", "backlink", "← Back");
     back.type = "button";
     back.addEventListener("click", function () {
-      if (history.length > 1) history.back(); else location.hash = "";
+      if (history.length > 1) history.back();
+      else if (SITE) { history.pushState(null, "", "/"); route(); }
+      else location.hash = "";
     });
     tw.appendChild(back);
     top.appendChild(tw);
@@ -2004,6 +2047,9 @@
 
     var KIND = { marker: "Marker", question: "Question", group: "Group",
                  seminar: "Seminar", content: "Page", service: "Service" };
+    setHead(v.title + " — STAN",
+            (v.sub || v.blurb || v.line || HOME_DESC).slice(0, 300),
+            SITE ? "/" + key + "/" : "/");
     inner.appendChild(el("p", "eyebrow",
       v.kind === "service" ? "Service · " + v.stage_label : (KIND[v.kind] || "")));
     inner.appendChild(el("h1", null, v.title));
@@ -2045,11 +2091,11 @@
         "with STAN's fee shown."));
       var back2 = el("div", "onward");
       var ch = el("a", "chip", "Everything that costs money here →");
-      ch.href = "#/p/what-costs";
+      ch.href = href("p/what-costs");
       back2.appendChild(ch);
       if (v.group) {
         var gch = el("a", "chip", "The group itself →");
-        gch.href = "#/g/" + v.group;
+        gch.href = href("g/" + v.group);
         back2.appendChild(gch);
       }
       inner.appendChild(back2);
@@ -2073,7 +2119,7 @@
         var list = el("div", "costlist");
         st.services.forEach(function (s) {
           var row = el("a", "costrow " + s.status);
-          row.href = "#/o/" + s.id;
+          row.href = href("o/" + s.id);
           row.appendChild(el("b", null, s.name));
           row.appendChild(el("span", "price", s.price));
           row.appendChild(el("span", "desc", s.line));
@@ -2201,7 +2247,7 @@
           "Want in when it runs? Put your name down and you hear first. " +
           "What it costs is on the next page, not a surprise."));
         var wla = el("a", "btn");
-        wla.href = "#/o/" + v.service;
+        wla.href = href("o/" + v.service);
         wla.appendChild(document.createTextNode("Join the waiting list"));
         wla.appendChild(el("span", "arrow", "→"));
         wlbox.appendChild(wla);
@@ -2239,8 +2285,16 @@
     viewEl.appendChild(page);
   }
 
+  function currentKey() {
+    if (SITE) {
+      var path = location.pathname.replace(/^\/+|\/+$/g, "");
+      return path;
+    }
+    return location.hash.replace(/^#\/?/, "");
+  }
+
   function route() {
-    var hash = location.hash.replace(/^#\/?/, "");
+    var hash = currentKey();
     if (hash && STAN.views[hash] !== undefined) {
       document.body.classList.add("viewing");
       viewEl.classList.add("on");
@@ -2255,9 +2309,35 @@
       document.body.classList.remove("viewing");
       viewEl.classList.remove("on");
       viewEl.textContent = "";
+      setHead(HOME_TITLE, HOME_DESC, "/");
     }
   }
   window.addEventListener("hashchange", route);
+  window.addEventListener("popstate", route);
+
+  /* In site mode every destination is a real URL, so a normal click would
+     reload the whole page. Intercept our own links and route in place —
+     but let the browser handle anything modified, external, or a tel:/sms:
+     crisis number, which must always behave like a real link. */
+  if (SITE) {
+    document.addEventListener("click", function (e) {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey ||
+          e.shiftKey || e.altKey) return;
+      var a = e.target.closest && e.target.closest("a");
+      if (!a || a.target || a.hasAttribute("download")) return;
+      var url;
+      try { url = new URL(a.href, location.href); } catch (err) { return; }
+      if (url.origin !== location.origin) return;
+      if (url.pathname === location.pathname && url.hash) return;  /* same-page anchor */
+      e.preventDefault();
+      history.pushState(null, "", url.pathname + url.hash);
+      route();
+      if (url.hash) {
+        var target = document.getElementById(url.hash.slice(1));
+        if (target) target.scrollIntoView();
+      }
+    });
+  }
 
   /* -------------------------------------------------------------- looks */
 

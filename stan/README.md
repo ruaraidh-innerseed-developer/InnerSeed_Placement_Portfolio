@@ -48,10 +48,10 @@ stan/
 ├── knowledge/
 │   ├── schema/            marker · claim · question · answer
 │   ├── questions/         68 catalogued, 0 answered. The roadmap.
-│   ├── claims/            10, all draft — quotes not yet verified
+│   ├── claims/            20, all draft — quotes not yet verified
 │   ├── answers/           EMPTY — no claims to compose from yet
 │   └── markers/           16 identity-only stubs
-├── evidence/sources/      10 records, 1 read (ch. 5 only)
+├── evidence/sources/      10 records, 1 read (one chapter)
 ├── evidence/reference-chase/  Numbered refs inside a source, waiting to be obtained
 ├── services/              Crisis signposting, Scotland and England
 ├── sources-inbox/         Drop documents here. Gitignored — copyright.
@@ -60,14 +60,19 @@ stan/
 ├── data/                  Routes, sessions and the service ladder for the front end
 ├── outreach/              The clinical lead approach
 ├── prototype/             template.html (edit) · index.html (GENERATED)
-└── tools/                 validate · build · coverage · query · new
+├── dist/                  GENERATED static site. Not committed.
+└── tools/                 validate · build · prerender · design-pdf ·
+                           coverage · query · new · bibliography
 ```
 
 ## Using it
 
 ```bash
-python3 stan/tools/validate.py         # check both registers against policy
-python3 stan/tools/build.py            # compile the repository into the hub page
+python3 stan/tools/validate.py         # check every register against policy
+python3 stan/tools/build.py            # compile into the single-file preview
+python3 stan/tools/build.py --mode site  # compile into dist/ with real URLs
+python3 stan/tools/prerender.py        # one indexable HTML file per destination
+python3 stan/tools/design-pdf.py       # a PDF of the front end, to show someone
 python3 stan/tools/new.py page shbg    # scaffold a new content page
 python3 stan/tools/new.py source x-2024-y
 python3 stan/tools/query.py --unread   # the reading list
@@ -131,6 +136,7 @@ data:
 | A statement STAN can make, its quote and its page | `knowledge/claims/*.yaml` |
 | Which articles are next, and what blocks each | `content/articles/README.md` |
 | Layout, styling, copy | `prototype/template.html` |
+| The domain, and whether it is confirmed | `data/site.yaml` |
 
 Then `python3 stan/tools/build.py` and republish. `build.py --check` fails if the
 generated page has drifted from the data, which is what a CI step would run.
