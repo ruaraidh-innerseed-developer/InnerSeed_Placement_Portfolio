@@ -7,11 +7,14 @@
 # STATUS: nothing here is bookable yet. `status` is honest about that:
 #
 #   ready     — deliverable now by the founder. Needs a calendar link and a
-#               payment link and nothing else. Rendered as a bookable card.
-#   soon      — deliverable once the named blocker clears. Rendered with a
-#               waiting-list button.
+#               payment link and nothing else.
+#   soon      — deliverable once the named blocker clears. Waiting list.
 #   planned   — depends on people or partners STAN does not yet have.
-#               Rendered muted, with the blocker stated.
+#
+# WHERE a paid service is shown is governed by `offer_on`: a list of inner
+# pages (by view key) that may offer it, each of which must have real content.
+# Nothing paid appears on the front door. The whole ladder is shown in one
+# place only, the transparency page, reached from the footer.
 #
 # Prices are in GBP and are the founder's decision. They are shown as ranges
 # where the range is real. The rule from COMMERCIAL.md §1: the audience anchors
@@ -63,7 +66,9 @@ services:
     time: 45 minutes, online, one-to-one
     price: "£45"
     status: ready
-    featured: true
+    # Offered ONLY here — after the person has had the free thing. Never on the
+    # front door, never on an empty page. The build enforces both.
+    offer_on: ["p/consultation-brief", "g/topic-bloods"]
     who_delivers: A trained peer. To begin with, the founder.
     what_happens:
       - You send your results ahead, or bring them on the day.

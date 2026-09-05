@@ -8,8 +8,12 @@
 # Each route ends with ONE `next` step — the hand-off that makes the page a
 # funnel rather than a leaflet. The door a person chose decides what they are
 # offered next; nothing else on the panel asks for anything. `next` points at
-# exactly one of: a service (data/services.yaml), a group or a seminar
-# (data/sessions.yaml). `line` is the sentence that introduces it for this
+# exactly one of: a page (content/pages), a group or a seminar
+# (data/sessions.yaml), or a service (data/services.yaml).
+#
+# The value-first rule: a door hands to something FREE. Nobody is offered a
+# paid step before they have been given something. Paid services are offered
+# only from the places named in their `offer_on` list, after value. `line` is the sentence that introduces it for this
 # door specifically.
 #
 # Cards currently reading `status: planned` were pages that got scrapped for
@@ -62,10 +66,11 @@ routes:
         note: Someone who has been on for years and is not going to tell you to stop.
         status: planned
     next:
-      service: walkthrough
+      group: topic-bloods
       line: >-
-        If you are staying on, the one thing that changes your odds is knowing
-        how to read your own bloods. Sit down with someone and learn the sheet.
+        Bring your panel to the bloods clinic. Free, once a month. Nobody will
+        read your individual numbers in a room — but you will leave knowing
+        what every line on the sheet is.
 
   - id: comingoff
     label: I want to come off
@@ -112,11 +117,11 @@ routes:
         note: The second number that makes the first one readable.
         marker: lh
     next:
-      service: walkthrough
+      page: consultation-brief
       line: >-
-        Bring the bloods that said you were normal. Forty-five minutes learning
-        what each line is, and you walk into your next appointment with the
-        right questions written down.
+        Start with the sheet. Fill it in and take it to your GP — it turns
+        "my doctor doesn't know this area" into "my doctor has something to
+        work with".
 
   - id: bloods
     label: I've got bloods I can't read
@@ -136,11 +141,10 @@ routes:
         note: Recovery is invisible week to week and obvious over a year.
         status: planned
     next:
-      service: walkthrough
+      seminar: reading-your-own-bloods
       line: >-
-        Sixteen lines and a fortnight. Go through the sheet with someone who
-        has read a hundred of them, and fill in the brief for your appointment
-        while you are at it.
+        Forty minutes on what a standard panel actually says, line by line,
+        from someone who reads them for a living. Bring yours and follow along.
 
   - id: worried
     label: I'm worried about someone else

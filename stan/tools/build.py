@@ -360,6 +360,20 @@ def build_views(pages, markers, questions, sessions, ladder) -> dict:
             "willcover": [],
         }
 
+    # Value-first, enforced: a paid service is offered only on the pages its
+    # offer_on names, and only if that page actually delivers something. An
+    # empty page followed by a price is the fastest way to lose someone.
+    for sv in ladder["services"]:
+        for key in sv["offer_on"]:
+            if key not in views:
+                raise ValueError(f"service '{sv['id']}': offer_on names unknown page '{key}'")
+            if views[key]["s"] == "unwritten":
+                raise ValueError(
+                    f"service '{sv['id']}': may not be offered on '{key}' — "
+                    f"that page has no content yet"
+                )
+            views[key].setdefault("offers", []).append(sv["id"])
+
     return views
 
 
@@ -391,20 +405,38 @@ def slug(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", str(text).lower()).strip("-")
 
 
-def resolve_next(owner: str, nxt: dict, sessions: dict, ladder: dict) -> dict:
-    """One hand-off. Exactly one of service / group / seminar, and it must exist.
+def resolve_next(owner: str, nxt: dict, sessions: dict, ladder: dict,
+                 pages: dict) -> dict:
+    """One hand-off. Exactly one of page / group / seminar / service, existing.
 
     This is the funnel mechanism: every door ends in a single next step. The
     build refuses a dangling one, because a dead end at the moment somebody
     has decided to act is the most expensive defect the site can have.
+
+    Value-first: a door may only hand to something free. A paid service is
+    offered from the places its `offer_on` names, after the person has been
+    given something — never from the front door.
     """
-    keys = [k for k in ("service", "group", "seminar") if nxt.get(k)]
+    keys = [k for k in ("page", "service", "group", "seminar") if nxt.get(k)]
     if len(keys) != 1:
-        raise ValueError(f"{owner}: next must name exactly one of service/group/seminar")
+        raise ValueError(f"{owner}: next must name exactly one of page/group/seminar/service")
     kind = keys[0]
     target = nxt[kind]
     line = " ".join(str(nxt.get("line", "")).split())
+    if kind == "page":
+        if target not in pages:
+            raise ValueError(f"{owner}: next points at unknown page '{target}'")
+        fm = pages[target]
+        return {"kind": kind, "view": "p/" + target, "title": fm.get("title", target),
+                "line": line, "price": "Free", "status": "ready",
+                "time": fm.get("format", "Read it here")}
     if kind == "service":
+        match = [s for s in ladder["services"] if s["id"] == target]
+        if match and match[0]["price"] != "Free":
+            raise ValueError(
+                f"{owner}: a door may not hand to a paid service — "
+                f"offer '{target}' via its offer_on list instead"
+            )
         match = [s for s in ladder["services"] if s["id"] == target]
         if not match:
             raise ValueError(f"{owner}: next points at unknown service '{target}'")
@@ -476,7 +508,8 @@ def build_routes(pages: dict, markers: dict, sessions: dict, ladder: dict) -> di
             "sub": r.get("sub", ""),
             "said": " ".join(str(r.get("said", "")).split()),
             "items": items,
-            "next": resolve_next(f"route '{r['id']}'", r["next"], sessions, ladder),
+            "next": resolve_next(f"route '{r['id']}'", r["next"], sessions,
+                                 ladder, pages),
         })
     return {"default_open": doc.get("default_open"), "routes": out}
 
@@ -557,7 +590,6 @@ def build_ladder() -> dict:
 
     rows = []
     seen = set()
-    featured = 0
     for s in doc.get("services", []):
         sid = s["id"]
         if sid in seen:
@@ -572,8 +604,6 @@ def build_ladder() -> dict:
             raise ValueError(f"service '{sid}': status '{status}' needs a blocker")
         if status == "ready" and s.get("price") != "Free" and not s.get("unlock"):
             raise ValueError(f"service '{sid}': a ready paid service must say what unlocks it")
-        if s.get("featured"):
-            featured += 1
 
         rows.append({
             "id": sid,
@@ -585,7 +615,7 @@ def build_ladder() -> dict:
             "price": str(s.get("price", "")),
             "fee": " ".join(str(s.get("fee", "")).split()),
             "status": status,
-            "featured": bool(s.get("featured")),
+            "offer_on": list(s.get("offer_on") or []),
             "by": s.get("who_delivers", ""),
             "steps": [" ".join(str(x).split()) for x in (s.get("what_happens") or [])],
             "not": " ".join(str(s.get("not_this", "")).split()),
@@ -593,9 +623,6 @@ def build_ladder() -> dict:
             "blocker": " ".join(str(s.get("blocker", "")).split()),
             "detail": " ".join(str(s.get("detail", "")).split()),
         })
-
-    if featured > 1:
-        raise ValueError("services.yaml: only one service may be featured")
 
     # A service may be tied to a group (the cohort). The group then offers the
     # waiting list, and the page for either points at the other.

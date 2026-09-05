@@ -37,6 +37,11 @@
 
     --measure: 63ch;
     --radius:  3px;
+
+    --btn-bg:    #17242a;
+    --btn-ink:   #eef1ef;
+    --btn-arrow: #e0a054;
+    --btn-hover: #0f181c;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -97,6 +102,71 @@
     --band-accent: #e8ab5e;
   }
 
+  /* ------------------------------------------------------ inversion sets */
+
+  /* The petrol band is a token set, not a section. Put `band` on a section
+     or `inv` on any element and everything inside it re-resolves: surfaces,
+     ink, lines, badges, buttons. Nest an `inv` inside a band and it flips
+     back to paper. This is what lets the page rhythm be rearranged without
+     touching a component. */
+  .band, .inv,
+  .band .inv .inv, .inv .inv .inv {
+    --ground:      #17242a;
+    --surface:     #1d2d34;
+    --surface-2:   #22343c;
+    --ink:         #eef1ef;
+    --ink-2:       #a3b4b9;
+    --ink-3:       #7d8e94;
+    --line:        #2c3f47;
+    --line-strong: #3b525b;
+    --accent:      #e0a054;
+    --accent-ink:  #17242a;
+    --accent-soft: #2e2317;
+    --verified:    #56bda6;
+    --verified-bg: #16302c;
+    --draft:       #d9a441;
+    --draft-bg:    #2e2617;
+    --absent:      #8b9a9f;
+    --absent-bg:   #202f36;
+    --alarm:       #e8705f;
+    --btn-bg:      #e0a054;
+    --btn-ink:     #17242a;
+    --btn-arrow:   #17242a;
+    --btn-hover:   #e8ab5e;
+    background: var(--ground);
+    color: var(--ink);
+  }
+  .band .inv, .inv .inv,
+  .band .inv .inv .inv, .inv .inv .inv .inv {
+    --ground:      #f7f8f6;
+    --surface:     #eef0ed;
+    --surface-2:   #ffffff;
+    --ink:         #17242a;
+    --ink-2:       #4a5a60;
+    --ink-3:       #74868c;
+    --line:        #d3d9d4;
+    --line-strong: #b9c2bc;
+    --accent:      #a85f1a;
+    --accent-ink:  #ffffff;
+    --accent-soft: #f2e4d2;
+    --verified:    #1a6355;
+    --verified-bg: #dfeae6;
+    --draft:       #8a5a00;
+    --draft-bg:    #f4e8d2;
+    --absent:      #6b767b;
+    --absent-bg:   #e2e6e3;
+    --alarm:       #9c2f22;
+    --btn-bg:      #17242a;
+    --btn-ink:     #eef1ef;
+    --btn-arrow:   #e0a054;
+    --btn-hover:   #0f181c;
+    background: var(--ground);
+    color: var(--ink);
+  }
+  .band .eyebrow, .inv .eyebrow { color: var(--accent); }
+  .band .inv .eyebrow, .inv .inv .eyebrow { color: var(--ink-3); }
+  section.band { padding: 82px 0; }
+
   * { box-sizing: border-box; }
 
   body {
@@ -154,6 +224,12 @@
   }
   .protobar strong { font-weight: 500; }
   .protobar span { opacity: 0.82; }
+  .protobar .looks { margin-left: auto; display: flex; gap: 6px; align-items: center; opacity: 1; }
+  .protobar .looks button {
+    background: none; border: 1px solid rgba(255,255,255,.45); color: inherit;
+    font: inherit; padding: 2px 9px; border-radius: 999px; cursor: pointer; opacity: .85;
+  }
+  .protobar .looks button[aria-pressed="true"] { background: rgba(255,255,255,.92); color: var(--accent); opacity: 1; }
 
   /* ----------------------------------------------------------------- header */
 
@@ -255,16 +331,16 @@
     font-weight: 600;
     padding: 12px 20px;
     border-radius: var(--radius);
-    border: 1px solid var(--band-bg);
-    background: var(--band-bg);
-    color: var(--band-ink);
+    border: 1px solid var(--btn-bg);
+    background: var(--btn-bg);
+    color: var(--btn-ink);
     text-decoration: none;
     cursor: pointer;
     transition: background .14s, border-color .14s;
   }
-  .btn:hover { background: var(--ink); border-color: var(--ink); }
+  .btn:hover { background: var(--btn-hover); border-color: var(--btn-hover); }
   .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-  .btn .arrow { color: var(--band-accent); font-weight: 400; }
+  .btn .arrow { color: var(--btn-arrow); font-weight: 400; }
 
   .btn.ghost {
     background: transparent;
@@ -274,9 +350,6 @@
   .btn.ghost:hover { border-color: var(--accent); color: var(--accent); background: transparent; }
   .btn.ghost .arrow { color: var(--accent); }
 
-  .band .btn { background: var(--band-accent); border-color: var(--band-accent); color: var(--band-bg); }
-  .band .btn:hover { filter: brightness(1.08); }
-  .band .btn .arrow { color: var(--band-bg); }
 
   /* ------------------------------------------------------------------- hero */
 
@@ -338,6 +411,26 @@
     min-width: 0;
   }
   .searchrow input::placeholder { color: var(--ink-3); }
+  /* In a petrol hero the search field stays paper: it is the one thing on
+     the page that must read as "type here" from across the room. */
+  .band .searchrow { background: #f7f8f6; border-color: transparent; }
+  .band .searchrow input { color: #17242a; }
+  .band .searchrow input::placeholder { color: #74868c; }
+  .band .searchrow:focus-within { box-shadow: 0 0 0 3px rgba(224,160,84,.35); }
+  .band.hero { border-bottom: 0; }
+  header.site.band { border-bottom-color: var(--line); }
+  footer.site.band { padding: 44px 0 60px; margin-top: 0; }
+  footer.site.band .state { border-top-color: var(--line); }
+
+  .rule-quote.inv {
+    padding: 24px 28px;
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius);
+    max-width: 64ch;
+  }
+  .rule-quote.inv b { color: var(--ink); }
+  #routepanel.inv { border-color: var(--line); border-top-color: var(--accent); }
+
   .searchrow button {
     border: 0;
     background: var(--accent);
@@ -514,15 +607,6 @@
 
   /* ------------------------------------------------------------ the band */
 
-  .band {
-    background: var(--band-bg);
-    color: var(--band-ink);
-    padding: 82px 0;
-  }
-  .band .sechead h2 { color: var(--band-ink); }
-  .band .sechead p  { color: var(--band-ink-2); }
-  .band .eyebrow    { color: var(--band-accent); }
-
   .seminars { display: grid; gap: 16px; }
 
   .seminar {
@@ -530,48 +614,48 @@
     grid-template-columns: 132px 1fr;
     gap: 4px 30px;
     padding: 24px 0;
-    border-top: 1px solid var(--band-line);
+    border-top: 1px solid var(--line);
     align-items: start;
   }
-  .seminar:last-child { border-bottom: 1px solid var(--band-line); }
+  .seminar:last-child { border-bottom: 1px solid var(--line); }
 
   .seminar .date {
     font-family: var(--mono);
     font-size: 13.5px;
-    color: var(--band-accent);
+    color: var(--accent);
     line-height: 1.5;
     font-weight: 500;
   }
   .seminar .date small {
     display: block;
     font-size: 11.5px;
-    color: var(--band-ink-3);
+    color: var(--ink-3);
     letter-spacing: 0.05em;
   }
   .seminar h3 {
     font-size: 21px;
-    color: var(--band-ink);
+    color: var(--ink);
     margin-bottom: 3px;
   }
   .seminar .who {
     font-size: 14.5px;
-    color: var(--band-ink-2);
+    color: var(--ink-2);
     margin-bottom: 9px;
   }
-  .seminar .who b { color: var(--band-ink); font-weight: 600; }
+  .seminar .who b { color: var(--ink); font-weight: 600; }
   .seminar .who .tbc {
     font-family: var(--mono);
     font-size: 10.5px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--band-bg);
-    background: var(--band-accent);
+    color: var(--accent-ink);
+    background: var(--accent);
     padding: 2px 7px;
     border-radius: 2px;
     margin-left: 7px;
     white-space: nowrap;
   }
-  .seminar .sum { font-size: 15.5px; color: var(--band-ink-2); max-width: 64ch; }
+  .seminar .sum { font-size: 15.5px; color: var(--ink-2); max-width: 64ch; }
   .seminar .facts {
     display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px;
   }
@@ -579,11 +663,20 @@
     font-family: var(--mono);
     font-size: 11px;
     letter-spacing: 0.06em;
-    color: var(--band-ink-2);
-    border: 1px solid var(--band-line);
+    color: var(--ink-2);
+    border: 1px solid var(--line);
     padding: 4px 9px;
     border-radius: 999px;
   }
+
+  /* Mixed look: each seminar becomes an inverted card on a light ground. */
+  .seminar.inv {
+    padding: 24px 26px;
+    border: 0;
+    border-radius: var(--radius);
+  }
+  .seminar.inv:last-child { border-bottom: 0; }
+  .seminar.inv .btn { --btn-bg: #e0a054; }
 
   @media (max-width: 640px) {
     .seminar { grid-template-columns: 1fr; gap: 10px; }
@@ -839,30 +932,27 @@
     color: var(--ink-3);
   }
 
-  /* The hand-off card at the foot of a route panel. */
+  /* The hand-off card at the foot of a route panel. Carries `inv`, so it is
+     petrol on paper and paper on petrol. */
   .nextstep {
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 18px 28px;
     align-items: center;
     text-decoration: none;
-    color: inherit;
-    background: var(--band-bg);
-    color: var(--band-ink);
     border-radius: var(--radius);
     padding: 22px 24px;
     margin-top: 6px;
   }
-  .nextstep .eyebrow { color: var(--band-accent); margin-bottom: 6px; }
-  .nextstep h4 { font-size: 20px; color: var(--band-ink); margin-bottom: 6px; font-family: var(--display); }
-  .nextstep .body p:not(.eyebrow) { font-size: 15px; color: var(--band-ink-2); max-width: 58ch; }
+  .nextstep .eyebrow { margin-bottom: 6px; }
+  .nextstep h4 { font-size: 20px; color: var(--ink); margin-bottom: 6px; font-family: var(--display); }
+  .nextstep .body p:not(.eyebrow) { font-size: 15px; color: var(--ink-2); max-width: 58ch; }
   .nextstep .side { display: grid; gap: 4px; justify-items: end; text-align: right; }
-  .nextstep .side b { font-family: var(--display); font-size: 28px; color: var(--band-accent); line-height: 1; }
-  .nextstep .side small { font-family: var(--mono); font-size: 11.5px; color: var(--band-ink-3); letter-spacing: 0.05em; }
-  .nextstep .side .btn { margin-top: 10px; background: var(--band-accent); border-color: var(--band-accent); color: var(--band-bg); }
-  .nextstep .side .btn .arrow { color: var(--band-bg); }
-  .nextstep:hover .side .btn { filter: brightness(1.06); }
-  .nextstep:focus-visible { outline: 2px solid var(--band-accent); outline-offset: 3px; }
+  .nextstep .side b { font-family: var(--display); font-size: 22px; color: var(--accent); line-height: 1; }
+  .nextstep .side small { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); letter-spacing: 0.05em; }
+  .nextstep .side .btn { margin-top: 10px; }
+  .nextstep:hover .side .btn { background: var(--btn-hover); }
+  .nextstep:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   @media (max-width: 640px) {
     .nextstep { grid-template-columns: 1fr; }
     .nextstep .side { justify-items: start; text-align: left; }
@@ -882,6 +972,7 @@
     display: grid; gap: 12px; justify-items: start;
   }
   .handoff p { font-size: 16px; color: var(--ink-2); margin: 0; max-width: 60ch; }
+  .handoff .fine { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); }
 
   /* The transparency page. */
   .costlist { display: grid; gap: 10px; margin: 14px 0 8px; }
@@ -1096,10 +1187,15 @@
   <div class="wrap">
     <strong>PROTOTYPE</strong>
     <span>Not a live service. No content here has been clinically reviewed. Example sessions are illustrative.</span>
+    <span class="looks" id="looks" role="group" aria-label="Design look">Look
+      <button type="button" data-look="paper">Paper</button>
+      <button type="button" data-look="reverse">Reverse</button>
+      <button type="button" data-look="mixed">Mixed</button>
+    </span>
   </div>
 </div>
 
-<header class="site">
+<header class="site" id="sitehead">
   <div class="wrap">
     <div class="brand">
       <b>STAN</b>
@@ -1119,7 +1215,7 @@
 </header>
 
 <div id="home">
-<div class="hero">
+<div class="hero" id="hero">
   <div class="wrap">
     <div class="stance">
       <p class="eyebrow">Free · Independent · No affiliate money, ever</p>
@@ -1129,7 +1225,7 @@
         <b>Nobody here will lecture you.</b></p>
     </div>
 
-    <div class="rule-quote">
+    <div class="rule-quote" id="stance-quote">
       We won't tell you what you can and can't do. We will tell you the truth:
       <b>there is nothing natural about staying unnatural for long</b>, and everything
       comes with a side effect. What you do with that is yours.
@@ -1230,7 +1326,7 @@
         </ul>
         <div class="next" id="peer-next"></div>
       </div>
-      <div class="panel">
+      <div class="panel" id="clinical-panel">
         <p class="tag">Clinical — registered professionals</p>
         <h3>Someone qualified to answer</h3>
         <p>Endocrinology, andrology and male fertility clinicians who understand
@@ -1263,7 +1359,7 @@
 
 <div id="view" aria-live="polite"></div>
 
-<footer class="site">
+<footer class="site" id="sitefoot">
   <div class="wrap">
     <p><b>Prototype.</b> Nothing on this page has been clinically reviewed and the group
       sessions shown are examples, not real bookings. Crisis numbers are drawn from STAN's
@@ -1312,15 +1408,23 @@
   (function () {
     var w = SERVICE.walkthrough;
     var host = document.getElementById("peer-next");
-    if (w && host) {
-      var a = el("a", "btn");
-      a.href = "#/o/" + w.id;
-      a.appendChild(document.createTextNode(w.name + " · " + w.price));
+    if (host) {
+      /* Value first: the free room leads. The paid thing is a plain sentence
+         underneath with no price on it — the price is on its own page. */
+      var a = el("a", "btn ghost");
+      a.href = "#groups";
+      a.appendChild(document.createTextNode("Sit in an open group first"));
       a.appendChild(el("span", "arrow", "→"));
       host.appendChild(a);
-      host.appendChild(el("p", "fine", w.time + ". " +
-        (w.status === "ready" ? "Booking opens shortly — the page takes your email."
-                              : "Waiting list open.")));
+      if (w) {
+        var fine = el("p", "fine");
+        fine.appendChild(document.createTextNode("Camera off, say nothing, come back or don't. When you want forty-five minutes one-to-one going through your own bloods, "));
+        var lk = el("a", null, "that exists too");
+        lk.href = "#/o/" + w.id;
+        fine.appendChild(lk);
+        fine.appendChild(document.createTextNode("."));
+        host.appendChild(fine);
+      }
     }
     var c = SERVICE["clinical-consult"];
     var chost = document.getElementById("clinical-next");
@@ -1584,10 +1688,10 @@
   /* The hand-off. Each door ends in exactly one next step, chosen for that
      door: this is the page behaving as a funnel rather than a leaflet. */
   function nextCard(n) {
-    var card = el("a", "nextstep");
+    var card = el("a", "nextstep inv");
     card.href = "#/" + n.view;
     var body = el("div", "body");
-    body.appendChild(el("p", "eyebrow", "Your next step"));
+    body.appendChild(el("p", "eyebrow", "Where to go from here"));
     body.appendChild(el("h4", null, n.title));
     body.appendChild(el("p", null, n.line));
     card.appendChild(body);
@@ -1596,8 +1700,9 @@
     side.appendChild(el("small", null, n.time));
     var cta = el("span", "btn");
     cta.appendChild(document.createTextNode(
-      n.kind === "service" ? (n.status === "ready" ? "Book it" : "Join the list")
-      : n.kind === "group" ? "Put my name down" : "Save me a seat"));
+      n.kind === "page" ? "Open it"
+      : n.kind === "group" ? (n.status === "soon" && /cohort/i.test(n.title) ? "Put my name down" : "Come and sit in")
+      : n.kind === "seminar" ? "Save me a seat" : "Join the list"));
     cta.appendChild(el("span", "arrow", "→"));
     side.appendChild(cta);
     card.appendChild(side);
@@ -1811,21 +1916,27 @@
     return box;
   }
 
-  /* The quiet hand-off at the foot of a marker page: the person reading
-     about SHBG has a sheet in front of them. One line, one link. */
-  function sheetLine() {
-    var w = SERVICE.walkthrough;
-    if (!w) return el("div");
-    var box = el("div", "handoff");
-    box.appendChild(el("p", null,
-      "Got your own sheet and can't read it? Go through it with someone — " +
-      "what each line is, and what to ask at your appointment."));
-    var a = el("a", "btn ghost");
-    a.href = "#/o/" + w.id;
-    a.appendChild(document.createTextNode(w.name + " · " + w.price + " · " + w.time.split(",")[0]));
-    a.appendChild(el("span", "arrow", "→"));
-    box.appendChild(a);
-    return box;
+  /* A paid service, offered only where the build allows it: on a page that
+     has already given the person something. One sentence, one link. */
+  function offersBlock(v) {
+    var frag = document.createDocumentFragment();
+    (v.offers || []).forEach(function (id) {
+      var s = SERVICE[id];
+      if (!s) return;
+      var box = el("div", "handoff");
+      box.appendChild(el("p", null,
+        "If you would rather go through this with someone, one-to-one: " +
+        s.line.charAt(0).toLowerCase() + s.line.slice(1)));
+      var a = el("a", "btn ghost");
+      a.href = "#/o/" + s.id;
+      a.appendChild(document.createTextNode(s.name));
+      a.appendChild(el("span", "arrow", "→"));
+      box.appendChild(a);
+      box.appendChild(el("p", "fine", s.time + " · " + s.price + " · " +
+        (s.status === "ready" ? "booking opens shortly" : "waiting list")));
+      frag.appendChild(box);
+    });
+    return frag;
   }
 
   /* The booking block on a service page. In the prototype nothing can be
@@ -2042,7 +2153,6 @@
         v.related.forEach(function (r) { on.appendChild(chip(r.id, r.name)); });
         inner.appendChild(on);
       }
-      inner.appendChild(sheetLine());
     }
 
     if (v.kind === "question") {
@@ -2086,8 +2196,8 @@
         var svc = SERVICE[v.service];
         var wlbox = el("div", "handoff");
         wlbox.appendChild(el("p", null,
-          "Want in when it runs? " + (svc ? svc.price + " for the six weeks. " : "") +
-          "Put your name down and you hear first."));
+          "Want in when it runs? Put your name down and you hear first. " +
+          "What it costs is on the next page, not a surprise."));
         var wla = el("a", "btn");
         wla.href = "#/o/" + v.service;
         wla.appendChild(document.createTextNode("Join the waiting list"));
@@ -2114,6 +2224,10 @@
 
     if (v.kind === "content" && v.blurb) {
       inner.appendChild(el("p", "lede", v.blurb));
+    }
+
+    if (v.offers && v.offers.length && v.s !== "unwritten") {
+      inner.appendChild(offersBlock(v));
     }
 
     if (v.s === "unwritten") inner.appendChild(needItBlock(v.title));
@@ -2143,6 +2257,49 @@
   }
   window.addEventListener("hashchange", route);
 
+  /* -------------------------------------------------------------- looks */
+
+  /* Three arrangements of the same page, for comparing on the eye. Each look
+     is a list of things to invert. Nothing else changes: same components,
+     same copy, same data. */
+  var LOOKS = {
+    paper:   { band: ["#seminars"], inv: [], tint: ["#groups"] },
+    reverse: { band: ["#sitehead", "#hero", "#connect", "#sitefoot"], inv: [],
+               tint: ["#seminars"] },
+    mixed:   { band: ["#sitefoot"],
+               inv: ["#stance-quote", "#routepanel", "#clinical-panel", "#seminarlist .seminar"],
+               tint: ["#groups"] }
+  };
+  var LOOK_KEY = "stan.look.v1";
+  var lookBtns = document.querySelectorAll("#looks button");
+
+  function applyLook(name) {
+    var look = LOOKS[name] || LOOKS.paper;
+    document.querySelectorAll(".band, .inv, section.tint").forEach(function (n) {
+      if (n.classList.contains("nextstep")) return;   /* always inverted */
+      n.classList.remove("band", "inv", "tint");
+    });
+    look.band.forEach(function (sel) {
+      document.querySelectorAll(sel).forEach(function (n) { n.classList.add("band"); });
+    });
+    look.inv.forEach(function (sel) {
+      document.querySelectorAll(sel).forEach(function (n) { n.classList.add("inv"); });
+    });
+    look.tint.forEach(function (sel) {
+      document.querySelectorAll(sel).forEach(function (n) { n.classList.add("tint"); });
+    });
+    lookBtns.forEach(function (b) {
+      b.setAttribute("aria-pressed", b.getAttribute("data-look") === name ? "true" : "false");
+    });
+    document.body.setAttribute("data-look", name);
+    try { localStorage.setItem(LOOK_KEY, name); } catch (e) {}
+  }
+  lookBtns.forEach(function (b) {
+    b.addEventListener("click", function () { applyLook(b.getAttribute("data-look")); });
+  });
+  var savedLook = "paper";
+  try { savedLook = localStorage.getItem(LOOK_KEY) || "paper"; } catch (e) {}
+
   /* -------------------------------------------------------------- state */
 
   var st = STAN.state;
@@ -2160,5 +2317,6 @@
   for (var i = 0; i < ROUTES.length; i++) {
     if (ROUTES[i].id === d) { pick(ROUTES[i], buttons[i]); break; }
   }
+  applyLook(savedLook);
 })();
 </script>

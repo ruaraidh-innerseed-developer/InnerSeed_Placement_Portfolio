@@ -301,17 +301,28 @@ tagged by stage, so that when a real mailing tool arrives it is wired in once.
 
 ### 7.2 Which door hands to what
 
-| Door | Next step | Why this one |
-|---|---|---|
-| Thinking about starting | Seminar: *What actually happens when you stop* | Know the exit before the entrance. Free, low commitment, right tone. |
-| Using and staying on | Bloods walkthrough | The one thing that changes his odds is reading his own panel. |
-| Want to come off | Coming-off cohort waiting list | Nobody should do the first six weeks alone. |
-| Stopped and feel wrong | Bloods walkthrough | He has the sheet that said he was "normal". Start there. |
-| Bloods I can't read | Bloods walkthrough | The obvious one. |
-| Worried about someone | Partners and family group | He will get more from them than from the person he is worried about. |
+**The value-first rule, which overrides everything above it:** a door hands
+to something *free*. Nobody is offered a paid step before they have been given
+something. Language that expects payment before value loses the person for
+good, and this audience has been sold to by everyone. A paid service is
+offered only from the places named in its `offer_on` list, each of which must
+have real content, and the build refuses anything else. No price appears on
+the front door at all.
 
-Three of six doors hand to the walkthrough. That is the wedge doing its job.
-The copy on each card is different because the person arriving is different.
+| Door | Next step (free) | Why this one |
+|---|---|---|
+| Thinking about starting | Seminar: *What actually happens when you stop* | Know the exit before the entrance. |
+| Using and staying on | Bloods clinic group | Bring the panel, learn the sheet, nobody reads his numbers. |
+| Want to come off | Coming-off cohort waiting list | Nobody should do the first six weeks alone. |
+| Stopped and feel wrong | The consultation brief | The free deliverable. He leaves with something in his hand. |
+| Bloods I can't read | Seminar: *Reading your own bloods without panicking* | Forty minutes, line by line, bring yours. |
+| Worried about someone | Partners and family group | She will get more from them than from him, for now. |
+
+**Where the walkthrough is offered:** the foot of the consultation brief, once
+someone has used it; the bloods clinic group page, after they have sat in;
+and the transparency page. Nowhere else. In Connect, the peer panel leads
+with the free room and mentions the walkthrough in one sentence with no
+price on it.
 
 ## 8. Sequence
 

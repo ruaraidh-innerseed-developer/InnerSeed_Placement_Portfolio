@@ -122,7 +122,8 @@ data:
 | What search finds, and its status badge | `content/pages/*.md` frontmatter |
 | The "Why are you here?" routes and their cards | `data/routes.yaml` |
 | Group sessions, countries, session types | `data/sessions.yaml` |
-| The service ladder — what can be booked, at which stage, for how much | `data/services.yaml` |
+| The service ladder — what can be booked, at which stage, for how much, and where it may be offered | `data/services.yaml` |
+| The page's colour rhythm — three looks switchable in the prototype bar (`LOOKS` in the template) | `prototype/template.html` |
 | The crisis numbers in the footer | `services/crisis-services.yaml` |
 | Layout, styling, copy | `prototype/template.html` |
 
