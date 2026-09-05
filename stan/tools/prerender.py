@@ -120,11 +120,21 @@ def main() -> int:
             errors: list[str] = []
             page.on("pageerror", lambda e: errors.append(str(e)))
 
+            # Load once, then move between destinations client-side. A full
+            # navigation per route means reparsing the shell and re-executing
+            # 106KB of data 121 times, which took ten minutes; pushState plus
+            # a popstate event drives the same router in a few milliseconds.
+            page.goto(f"{base}/", wait_until="load")
+
             for route in paths:
-                url = f"{base}/{route}/" if route else f"{base}/"
+                target = f"/{route}/" if route else "/"
                 before = len(errors)
-                page.goto(url, wait_until="load")
-                page.wait_for_timeout(60)
+                page.evaluate(
+                    "path => { history.pushState(null, '', path);"
+                    " window.dispatchEvent(new PopStateEvent('popstate')); }",
+                    target,
+                )
+                page.wait_for_timeout(15)
 
                 title = page.title()
                 if not title or (route and title == "STAN — Steroid Awareness Network"):
@@ -132,8 +142,21 @@ def main() -> int:
                 if len(errors) > before:
                     failures.append(f"{route or '/'}: {errors[-1]}")
 
+                # An inner page that also carries the whole homepage gives 121
+                # files a large identical block, two <h1>s each, and a poor
+                # ratio of content to boilerplate. Strip it for the dump only;
+                # the live DOM keeps it so the next route still renders.
                 html = "<!doctype html>\n" + page.evaluate(
-                    "document.documentElement.outerHTML"
+                    """route => {
+                        const home = document.getElementById("home");
+                        if (!route || !home) return document.documentElement.outerHTML;
+                        const parent = home.parentNode, next = home.nextSibling;
+                        home.remove();
+                        const out = document.documentElement.outerHTML;
+                        parent.insertBefore(home, next);
+                        return out;
+                    }""",
+                    route,
                 )
                 out = DIST / route / "index.html" if route else DIST / "index.html"
                 out.parent.mkdir(parents=True, exist_ok=True)

@@ -1349,6 +1349,11 @@
   </div>
 </section>
 
+
+</div>
+
+<div id="view" aria-live="polite"></div>
+
 <div class="crisis" id="crisis">
   <div class="wrap">
     <h2>If tonight is bad</h2>
@@ -1358,10 +1363,6 @@
     <div class="lines" id="crisislines"></div>
   </div>
 </div>
-
-</div>
-
-<div id="view" aria-live="polite"></div>
 
 <footer class="site" id="sitefoot">
   <div class="wrap">
@@ -1430,6 +1431,7 @@
     var w = SERVICE.walkthrough;
     var host = document.getElementById("peer-next");
     if (host) {
+      host.textContent = "";
       /* Value first: the free room leads. The paid thing is a plain sentence
          underneath with no price on it — the price is on its own page. */
       var a = el("a", "btn ghost");
@@ -1450,6 +1452,7 @@
     var c = SERVICE["clinical-consult"];
     var chost = document.getElementById("clinical-next");
     if (c && chost) {
+      chost.textContent = "";
       var b = el("a", "btn ghost");
       b.href = href("o/" + c.id);
       b.appendChild(document.createTextNode("I would want this"));
@@ -1654,9 +1657,14 @@
     }
   }
 
-  qEl.addEventListener("input", function () { search(qEl.value); });
-  document.getElementById("go").addEventListener("click", function () { search(qEl.value); });
-  qEl.addEventListener("keydown", function (e) { if (e.key === "Enter") search(qEl.value); });
+  /* Prerendered inner pages ship without the home block, so everything that
+     wires up the front door has to tolerate its absence. */
+  if (qEl) {
+    qEl.addEventListener("input", function () { search(qEl.value); });
+    qEl.addEventListener("keydown", function (e) { if (e.key === "Enter") search(qEl.value); });
+    var goEl = document.getElementById("go");
+    if (goEl) goEl.addEventListener("click", function () { search(qEl.value); });
+  }
 
   Array.prototype.forEach.call(document.querySelectorAll("[data-eg]"), function (b) {
     b.addEventListener("click", function () {
@@ -1672,7 +1680,8 @@
   var panelEl = document.getElementById("routepanel");
   var buttons = [];
 
-  ROUTES.forEach(function (r) {
+  if (listEl) listEl.textContent = "";
+  if (listEl) ROUTES.forEach(function (r) {
     var btn = el("button", "route");
     btn.type = "button";
     btn.setAttribute("aria-pressed", "false");
@@ -1733,7 +1742,8 @@
   /* --------------------------------------------------------- the programme */
 
   var semEl = document.getElementById("seminarlist");
-  STAN.sessions.seminars.forEach(function (s) {
+  if (semEl) semEl.textContent = "";
+  if (semEl) STAN.sessions.seminars.forEach(function (s) {
     var row = el("div", "seminar");
 
     var date = el("div", "date");
@@ -1779,6 +1789,7 @@
   var kindEl = document.getElementById("kind");
 
   function fillSelect(sel, opts) {
+    sel.textContent = "";
     opts.forEach(function (o) {
       var opt = document.createElement("option");
       opt.value = o.id;
@@ -1786,8 +1797,8 @@
       sel.appendChild(opt);
     });
   }
-  fillSelect(countryEl, STAN.sessions.countries);
-  fillSelect(kindEl, STAN.sessions.kinds);
+  if (countryEl) fillSelect(countryEl, STAN.sessions.countries);
+  if (kindEl) fillSelect(kindEl, STAN.sessions.kinds);
 
   var KIND_LABEL = {};
   STAN.sessions.kinds.forEach(function (k) { KIND_LABEL[k.id] = k.label; });
@@ -1865,14 +1876,17 @@
     });
   }
 
-  countryEl.addEventListener("change", renderGroups);
-  kindEl.addEventListener("change", renderGroups);
-  renderGroups();
+  if (countryEl && kindEl) {
+    countryEl.addEventListener("change", renderGroups);
+    kindEl.addEventListener("change", renderGroups);
+    renderGroups();
+  }
 
   /* ------------------------------------------------------------- crisis */
 
   var crisisEl = document.getElementById("crisislines");
-  STAN.crisis.forEach(function (c) {
+  if (crisisEl) crisisEl.textContent = "";
+  if (crisisEl) STAN.crisis.forEach(function (c) {
     var line = el("div", "line");
     line.appendChild(el("b", null, c.b));
     if (c.href) {
@@ -2034,6 +2048,7 @@
     back.type = "button";
     back.addEventListener("click", function () {
       if (history.length > 1) history.back();
+      else if (SITE && !document.getElementById("home")) location.href = "/";
       else if (SITE) { history.pushState(null, "", "/"); route(); }
       else location.hash = "";
     });
@@ -2329,6 +2344,10 @@
       try { url = new URL(a.href, location.href); } catch (err) { return; }
       if (url.origin !== location.origin) return;
       if (url.pathname === location.pathname && url.hash) return;  /* same-page anchor */
+      /* Prerendered inner pages ship without the home block, so that 121 files
+         do not each carry a duplicate copy of it. Going home from one is a
+         real navigation rather than a client-side route. */
+      if (url.pathname === "/" && !document.getElementById("home")) return;
       e.preventDefault();
       history.pushState(null, "", url.pathname + url.hash);
       route();
@@ -2402,7 +2421,7 @@
 
   /* Open on a route so the page shows what it does, not an empty shell. */
   var d = STAN.routes.default_open;
-  for (var i = 0; i < ROUTES.length; i++) {
+  if (listEl) for (var i = 0; i < ROUTES.length; i++) {
     if (ROUTES[i].id === d) { pick(ROUTES[i], buttons[i]); break; }
   }
   applyLook(savedLook);
