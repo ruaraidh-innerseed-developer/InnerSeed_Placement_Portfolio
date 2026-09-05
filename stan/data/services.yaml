@@ -1,0 +1,182 @@
+# The STAN service ladder — what can be bought, at which stage, for how much.
+#
+# This is the commercial spine of the project, encoded as data so the site
+# renders it the same way it renders everything else. The reasoning behind
+# each row lives in COMMERCIAL.md §2–3; this file is the part that ships.
+#
+# STATUS: nothing here is bookable yet. `status` is honest about that:
+#
+#   ready     — deliverable now by the founder. Needs a calendar link and a
+#               payment link and nothing else. Rendered as a bookable card.
+#   soon      — deliverable once the named blocker clears. Rendered with a
+#               waiting-list button.
+#   planned   — depends on people or partners STAN does not yet have.
+#               Rendered muted, with the blocker stated.
+#
+# Prices are in GBP and are the founder's decision. They are shown as ranges
+# where the range is real. The rule from COMMERCIAL.md §1: the audience anchors
+# against what they spend on compounds and private bloods, not against a
+# charity leaflet. Do not underprice.
+#
+# The line every paid peer service holds: a peer teaches someone to read a
+# panel; a peer does not read *their* panel. Interpretation is clinical and
+# stays on the clinical rungs. SCOPE.md governs; this file does not override it.
+
+# Funnel stages, in the order a person moves through them. Used for grouping
+# and for the stage label on each card.
+stages:
+  - id: free
+    label: Free
+    line: Where trust is built. No account, no cost, nothing recorded.
+  - id: first
+    label: First step
+    line: One session, one price. Proves to both of us that this is worth it.
+  - id: committed
+    label: Committed
+    line: For the person who has decided to do this properly.
+  - id: clinical
+    label: Clinical
+    line: A registered clinician who understands this population. Not us — them.
+  - id: member
+    label: Member
+    line: Ongoing. The library, the tracker, the people.
+
+services:
+  # ----------------------------------------------------------------- free
+  - id: hub
+    stage: free
+    name: The hub
+    line: Search, the six doors, seminars, open groups, crisis routing.
+    time: ""
+    price: Free
+    status: ready
+    detail: >
+      Everything on this page. It stays free, it stays independent, and it
+      never carries affiliate money. If you get one true thing from it and
+      never come back, that is a good outcome.
+
+  # ----------------------------------------------------------------- first £
+  - id: walkthrough
+    stage: first
+    name: Bloods walkthrough
+    line: Bring your panel. Leave knowing what each marker is and what to ask.
+    time: 45 minutes, online, one-to-one
+    price: "£45"
+    status: ready
+    featured: true
+    who_delivers: A trained peer. To begin with, the founder.
+    what_happens:
+      - You send your results ahead, or bring them on the day.
+      - We go through what each marker on the sheet actually is — not what your number means.
+      - Together we fill in the consultation brief, so your next appointment starts from the right questions.
+      - You leave with the brief, and with a plain answer on who can interpret the numbers.
+    not_this: >
+      This is not an interpretation of your results and it is not medical
+      advice. Nobody in the session is a clinician. If your numbers need
+      reading, the session ends by telling you who can do that.
+    unlock: A calendar link and a payment link. Nothing else.
+
+  - id: peer
+    stage: first
+    name: Peer session
+    line: Forty-five minutes with someone who has been where you are.
+    time: 45 minutes, online, one-to-one
+    price: "£45"
+    status: ready
+    who_delivers: A trained peer with lived experience.
+    what_happens:
+      - You say what is going on, in whatever order it comes out.
+      - They tell you what it was like for them, honestly.
+      - You work out together what you need next, and what to ask whom.
+    not_this: >
+      Not counselling, not therapy, not advice on what to take. Listening,
+      orientation, and someone who does not flinch.
+    unlock: A calendar link and a payment link.
+
+  - id: seminar-live
+    stage: free
+    name: Live seminars
+    line: Forty minutes from someone who knows, then your questions.
+    time: 60 minutes, online
+    price: Free live
+    status: soon
+    blocker: One speaker booked.
+    detail: >
+      Free to attend live. Recordings go into the library, which becomes
+      part of membership later. The speaker is paid; that cost is met by
+      members, not attendees.
+
+  # ----------------------------------------------------------------- committed
+  - id: cohort
+    stage: committed
+    name: Coming-off cohort
+    line: Six weeks. The same eight people. Two facilitators. Starts and finishes together.
+    time: 6 × 90 minutes, weekly, online
+    price: "£200–240"
+    status: soon
+    blocker: A second facilitator, and eight people ready to start.
+    detail: >
+      A closed group for people coming off or recently stopped. Week one
+      is what to expect; week six is what you are taking with you. A
+      waiting list opens before the first cohort is scheduled.
+
+  - id: staying-on
+    stage: committed
+    name: Staying-on programme
+    line: For the person who is not stopping and wants to do it less blindly.
+    time: 45 minutes a month, online
+    price: "£35 / month"
+    status: soon
+    blocker: The monitoring content written and reviewed.
+    detail: >
+      Nobody else will work with you if you are not stopping. We will. A
+      monthly check-in, a monitoring plan, and the markers to keep an eye on
+      and why. Still not interpretation — that is the clinical rung.
+
+  - id: bloods-package
+    stage: committed
+    name: Bloods package
+    line: A partner-lab panel, the walkthrough, and a route to someone who can read it.
+    time: 45 minutes plus the lab visit
+    price: "£120–160"
+    status: planned
+    blocker: A lab partner and a clinician on the panel. STAN does not sell a test without a route to interpretation.
+
+  # ----------------------------------------------------------------- clinical
+  - id: clinical-consult
+    stage: clinical
+    name: Clinical consultation
+    line: A vetted clinician who understands supraphysiological use sees you.
+    time: 30–45 minutes, the clinician's
+    price: Set by the clinician, typically £150–300
+    fee: STAN's fee is 15–25% and is printed on this page.
+    status: planned
+    blocker: One clinician on the panel. None appointed yet.
+    detail: >
+      The clinician sets the price and does the medicine. STAN does the
+      finding, the vetting and the booking, and takes a published fee for
+      it. That fee is what pays for the free tier.
+
+  - id: clinical-monitoring
+    stage: clinical
+    name: Clinical monitoring
+    line: Ongoing, through the same panel.
+    time: The clinician's
+    price: As above, recurring
+    fee: STAN's fee is 15–25% and is printed on this page.
+    status: planned
+    blocker: As above.
+
+  # ----------------------------------------------------------------- member
+  - id: membership
+    stage: member
+    name: Membership
+    line: Your bloods tracked over time, a quarterly walkthrough, the recorded library, members' groups.
+    time: Ongoing
+    price: "£15–25 / month"
+    status: planned
+    blocker: Enough in the library to be worth it, and the tracker built. Month six at the earliest.
+    detail: >
+      Membership is the moat, not the wedge. It comes last on purpose,
+      once there is a library worth paying for and enough people to fill
+      the members' rooms.

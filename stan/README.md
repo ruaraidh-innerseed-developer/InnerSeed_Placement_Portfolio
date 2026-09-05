@@ -55,7 +55,7 @@ stan/
 ├── services/              Crisis signposting, Scotland and England
 ├── sources-inbox/         Drop documents here. Gitignored — copyright.
 ├── content/pages/         Prose that makes no clinical claim
-├── data/                  Routes and sessions for the front end
+├── data/                  Routes, sessions and the service ladder for the front end
 ├── outreach/              The clinical lead approach
 ├── prototype/             template.html (edit) · index.html (GENERATED)
 └── tools/                 validate · build · coverage · query · new
@@ -122,6 +122,7 @@ data:
 | What search finds, and its status badge | `content/pages/*.md` frontmatter |
 | The "Why are you here?" routes and their cards | `data/routes.yaml` |
 | Group sessions, countries, session types | `data/sessions.yaml` |
+| The service ladder — what can be booked, at which stage, for how much | `data/services.yaml` |
 | The crisis numbers in the footer | `services/crisis-services.yaml` |
 | Layout, styling, copy | `prototype/template.html` |
 

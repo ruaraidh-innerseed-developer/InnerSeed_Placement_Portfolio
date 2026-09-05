@@ -30,7 +30,11 @@ QUESTIONS_DIR = ROOT / "knowledge" / "questions"
 ANSWERS_DIR = ROOT / "knowledge" / "answers"
 ROUTES_PATH = ROOT / "data" / "routes.yaml"
 SESSIONS_PATH = ROOT / "data" / "sessions.yaml"
+LADDER_PATH = ROOT / "data" / "services.yaml"
 SERVICES_PATH = ROOT / "services" / "crisis-services.yaml"
+
+# Service ladder statuses, and how the front end treats each.
+LADDER_STATUSES = {"ready", "soon", "planned"}
 SOURCES_DIR = ROOT / "evidence" / "sources"
 TEMPLATE_PATH = ROOT / "prototype" / "template.html"
 OUTPUT_PATH = ROOT / "prototype" / "index.html"
@@ -219,7 +223,7 @@ def question_entries(questions: list, answers: dict) -> list:
     return rows
 
 
-def build_views(pages, markers, questions, sessions) -> dict:
+def build_views(pages, markers, questions, sessions, ladder) -> dict:
     """Every destination behind a card, as a routable inner page.
 
     The artifact is one file, so "inner pages" are client-side views addressed
@@ -301,6 +305,16 @@ def build_views(pages, markers, questions, sessions) -> dict:
             "name": s["name"], "role": s["role"], "org": s["org"],
             "tbc": s["tbc"], "summary": s["summary"], "audience": s["audience"],
         }
+
+    stage_label = {s["id"]: s["label"] for s in ladder["stages"]}
+    for sv in ladder["services"]:
+        views["o/" + sv["id"]] = dict(sv, **{
+            "kind": "service",
+            "s": {"ready": "live", "soon": "draft"}.get(sv["status"], "unwritten"),
+            "title": sv["name"],
+            "sub": sv["line"],
+            "stage_label": stage_label[sv["stage"]],
+        })
 
     doc = yaml.safe_load(ROUTES_PATH.read_text())
     for r in doc.get("routes", []):
@@ -466,6 +480,69 @@ def build_sessions() -> dict:
     }
 
 
+def build_ladder() -> dict:
+    """The service ladder: what can be bought, at which stage, for how much.
+
+    This is the commercial spine (COMMERCIAL.md §2–3) as data. Validated
+    against its own stage vocabulary so a card can never claim a stage the
+    funnel does not have, and every non-ready rung must say what unblocks it —
+    an unexplained "coming soon" is the thing this site refuses to do.
+    """
+    doc = yaml.safe_load(LADDER_PATH.read_text())
+    stages = doc.get("stages") or []
+    stage_ids = [s["id"] for s in stages]
+    if len(set(stage_ids)) != len(stage_ids):
+        raise ValueError("services.yaml: duplicate stage id")
+
+    rows = []
+    seen = set()
+    featured = 0
+    for s in doc.get("services", []):
+        sid = s["id"]
+        if sid in seen:
+            raise ValueError(f"services.yaml: duplicate service id '{sid}'")
+        seen.add(sid)
+        if s["stage"] not in stage_ids:
+            raise ValueError(f"service '{sid}': unknown stage '{s['stage']}'")
+        status = s.get("status", "planned")
+        if status not in LADDER_STATUSES:
+            raise ValueError(f"service '{sid}': unknown status '{status}'")
+        if status != "ready" and not s.get("blocker"):
+            raise ValueError(f"service '{sid}': status '{status}' needs a blocker")
+        if status == "ready" and s.get("price") != "Free" and not s.get("unlock"):
+            raise ValueError(f"service '{sid}': a ready paid service must say what unlocks it")
+        if s.get("featured"):
+            featured += 1
+
+        rows.append({
+            "id": sid,
+            "stage": s["stage"],
+            "name": s["name"],
+            "line": " ".join(str(s.get("line", "")).split()),
+            "time": s.get("time", ""),
+            "price": str(s.get("price", "")),
+            "fee": " ".join(str(s.get("fee", "")).split()),
+            "status": status,
+            "featured": bool(s.get("featured")),
+            "by": s.get("who_delivers", ""),
+            "steps": [" ".join(str(x).split()) for x in (s.get("what_happens") or [])],
+            "not": " ".join(str(s.get("not_this", "")).split()),
+            "unlock": " ".join(str(s.get("unlock", "")).split()),
+            "blocker": " ".join(str(s.get("blocker", "")).split()),
+            "detail": " ".join(str(s.get("detail", "")).split()),
+        })
+
+    if featured > 1:
+        raise ValueError("services.yaml: only one service may be featured")
+
+    return {
+        "stages": [{"id": s["id"], "label": s["label"],
+                    "line": " ".join(str(s.get("line", "")).split())}
+                   for s in stages],
+        "services": rows,
+    }
+
+
 def build_crisis() -> list:
     doc = yaml.safe_load(SERVICES_PATH.read_text())
     lines = []
@@ -557,13 +634,16 @@ def main() -> int:
     try:
         pages = load_pages()
         markers = load_markers()
+        sessions = build_sessions()
+        ladder = build_ladder()
         data = {
             "index": build_index(pages, markers),
             "routes": build_routes(pages, markers),
             "relations": build_relations(markers),
             "views": build_views(pages, markers, load_questions(),
-                                 build_sessions()),
-            "sessions": build_sessions(),
+                                 sessions, ladder),
+            "sessions": sessions,
+            "ladder": ladder,
             "crisis": build_crisis(),
             "state": build_state(pages, markers),
         }
@@ -611,6 +691,11 @@ def main() -> int:
           f"({unwritten} unwritten, each routing onward)")
     print(f"  seminars  {len(data['sessions']['seminars'])}")
     print(f"  groups    {len(data['sessions']['groups'])}")
+    ld = data["ladder"]["services"]
+    print(f"  ladder    {len(ld)} services · "
+          f"{sum(1 for s in ld if s['status'] == 'ready')} ready · "
+          f"{sum(1 for s in ld if s['status'] == 'soon')} soon · "
+          f"{sum(1 for s in ld if s['status'] == 'planned')} planned")
     return 0
 
 

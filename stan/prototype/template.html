@@ -839,6 +839,28 @@
     color: var(--ink-3);
   }
 
+  /* Service inner page: the booking block. */
+  .book {
+    border: 1px solid var(--line-strong);
+    border-top: 3px solid var(--accent);
+    border-radius: var(--radius);
+    background: var(--surface-2);
+    padding: 24px;
+    display: grid; gap: 12px;
+    margin: 30px 0 34px;
+  }
+  .book .price { font-family: var(--display); font-size: 36px; font-weight: 600; line-height: 1; }
+  .book .price small { display: block; font-family: var(--mono); font-size: 12px; color: var(--ink-3); margin-top: 8px; font-weight: 400; letter-spacing: 0.05em; }
+  .book p { font-size: 15px; margin: 0; }
+  .book form { display: flex; gap: 9px; flex-wrap: wrap; }
+  .book input {
+    flex: 1; min-width: 220px; font-family: var(--body); font-size: 15px;
+    padding: 11px 13px; background: var(--surface); color: var(--ink);
+    border: 1.5px solid var(--line-strong); border-radius: var(--radius);
+  }
+  .book input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .book .said { font-family: var(--mono); font-size: 12px; color: var(--verified); }
+
   /* ----------------------------------------------------------------- crisis */
 
   .crisis {
@@ -1551,6 +1573,14 @@
   kindEl.addEventListener("change", renderGroups);
   renderGroups();
 
+  /* ------------------------------------------------------- the ladder */
+
+  /* Service data is loaded but not rendered as a list on the home page. A
+     page with a price catalogue reads as a shop; STAN is a funnel, and each
+     service appears only where it is the natural next step. */
+  var LADDER = STAN.ladder;
+  var ST_LABEL = { ready: "Ready", soon: "Waiting list", planned: "Planned" };
+
   /* ------------------------------------------------------------- crisis */
 
   var crisisEl = document.getElementById("crisislines");
@@ -1634,6 +1664,56 @@
     return box;
   }
 
+  var INTEREST_KEY = "stan.interest.v1";
+
+  /* The booking block on a service page. In the prototype nothing can be
+     bought, so the honest version of "Book" is "tell me when I can" — and
+     that is the email capture COMMERCIAL.md §7 asks for at every stage. */
+  function bookBlock(v) {
+    var box = el("div", "book");
+    var price = el("div", "price", v.price);
+    var sub = v.status === "ready" ? "ready · booking link not yet live"
+            : v.status === "soon" ? "waiting list" : "planned";
+    price.appendChild(el("small", null, sub));
+    box.appendChild(price);
+    if (v.fee) box.appendChild(el("p", null, v.fee));
+    box.appendChild(el("p", null,
+      v.status === "ready"
+        ? "This can run now. What it is waiting on is a calendar and a way to " +
+          "pay, not a person. Leave an email and you hear the day it opens."
+        : v.status === "soon"
+        ? "Join the waiting list. When there are enough people and the blocker " +
+          "below clears, you are first to know."
+        : "Not yet. The blocker is stated below and we will not pretend it " +
+          "away. If you want it, say so — demand is how the order gets set."));
+
+    var form = document.createElement("form");
+    var input = document.createElement("input");
+    input.type = "email";
+    input.placeholder = "Email — nothing else, and no newsletter";
+    input.setAttribute("aria-label", "Email address");
+    var btn = el("button", "btn");
+    btn.type = "submit";
+    btn.appendChild(document.createTextNode(
+      v.status === "ready" ? "Tell me when booking opens"
+      : v.status === "soon" ? "Join the waiting list" : "I would want this"));
+    form.appendChild(input);
+    form.appendChild(btn);
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      try {
+        var log = JSON.parse(localStorage.getItem(INTEREST_KEY) || "[]");
+        log.push({ svc: v.id, email: input.value, at: new Date().toISOString().slice(0, 10) });
+        localStorage.setItem(INTEREST_KEY, JSON.stringify(log.slice(-200)));
+      } catch (err) {}
+      form.replaceWith(el("p", "said", "Noted. You will hear when it is real."));
+    });
+    box.appendChild(form);
+    box.appendChild(el("p", "said",
+      "Prototype: saved in this browser only. Nothing is sent anywhere yet."));
+    return box;
+  }
+
   function renderView(key) {
     var v = STAN.views[key];
     viewEl.textContent = "";
@@ -1663,10 +1743,57 @@
     var inner = el("div", "inner");
 
     var KIND = { marker: "Marker", question: "Question", group: "Group",
-                 seminar: "Seminar", content: "Page" };
-    inner.appendChild(el("p", "eyebrow", KIND[v.kind] || ""));
+                 seminar: "Seminar", content: "Page", service: "Service" };
+    inner.appendChild(el("p", "eyebrow",
+      v.kind === "service" ? "Service · " + v.stage_label : (KIND[v.kind] || "")));
     inner.appendChild(el("h1", null, v.title));
     if (v.sub) inner.appendChild(el("p", "sub", v.sub));
+
+    if (v.kind === "service") {
+      inner.appendChild(bookBlock(v));
+      var fgs = el("div", "factgrid");
+      [["Who runs it", v.by], ["How long", v.time],
+       ["Status", ST_LABEL[v.status]],
+       ["What unlocks it", v.status === "ready" ? v.unlock : v.blocker]].forEach(function (p) {
+        if (!p[1]) return;
+        var d = el("div");
+        d.appendChild(el("b", null, p[0]));
+        d.appendChild(el("span", null, p[1]));
+        fgs.appendChild(d);
+      });
+      inner.appendChild(fgs);
+      if (v.detail) inner.appendChild(el("p", "lede", v.detail));
+      if (v.steps.length) {
+        inner.appendChild(h2("What happens"));
+        var ols = document.createElement("ol");
+        ols.style.cssText = "padding-left:20px;display:grid;gap:8px;font-size:16px;color:var(--ink-2)";
+        v.steps.forEach(function (x) { ols.appendChild(el("li", null, x)); });
+        inner.appendChild(ols);
+      }
+      if (v.not) {
+        inner.appendChild(h2("What it is not"));
+        var gp = el("div", "gap");
+        gp.appendChild(el("b", null, "Read this before you book."));
+        gp.appendChild(el("p", null, v.not));
+        inner.appendChild(gp);
+      }
+      inner.appendChild(h2("Where it sits"));
+      inner.appendChild(el("p", null,
+        "Everything you can read on STAN is free and stays free. What costs " +
+        "is a person's time. Peers do not interpret results or advise on what " +
+        "to take; that is the clinical step, and it is priced by the clinician " +
+        "with STAN's fee shown."));
+      var back2 = el("div", "onward");
+      var ch = el("a", "chip", "← Back to the hub");
+      ch.href = "#connect";
+      back2.appendChild(ch);
+      inner.appendChild(back2);
+
+      w.appendChild(inner);
+      page.appendChild(w);
+      viewEl.appendChild(page);
+      return;
+    }
 
     var row = el("div", "statusrow");
     row.appendChild(statusPill(v.s));
