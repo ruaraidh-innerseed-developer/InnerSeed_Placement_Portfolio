@@ -133,15 +133,15 @@ alone.**
 
 ## What the stack is short of
 
-All five need work outside the book, which is the honest position: one
+All six need work outside the book, which is the honest position: one
 twenty-four-year-old secondary source cannot carry an article by itself, and
 should not.
 
 Two things unblock most of it, in order:
 
-1. **Verify the ten quotes** against pages 60–62. The book is in hand, the
+1. **Verify the fifteen quotes** against pages 60–63. The book is in hand, the
    quotes are transcribed from photographs, and none has been checked
-   character by character. An hour, and it moves ten claims from draft to
+   character by character. An hour, and it moves fifteen claims from draft to
    checked.
 2. **Photograph the Chapter 5 endnotes.** See
    `evidence/reference-chase/taylor-2002-chapter-5.md`. One photo turns this
