@@ -1,0 +1,27 @@
+id: enzyme-induction-escalation-unproven
+statement: The idea that returning to a steroid after a long break provokes a stronger
+  enzyme response, and so blunts the effect, was described as plausible but unproven.
+source: taylor-2002-anabolic-steroids-athlete
+locator: Ch. 5, p. 61, 'The Second Cycle' — The Science Behind the Regime
+quote: There is little or no scientific evidence to indicate that reintroducing
+  a previously taken anabolic steroid, after a lengthy rest period, will cause an
+  even greater induction of these enzymes to higher activity levels. It may occur,
+  but it remains unproven.
+quote_verified: false
+kind: direct
+population: Not a population claim. A statement about the state of the evidence
+  for a proposed mechanism, as at 2002.
+does_not_support:
+- A claim that the mechanism does not exist. The author says it may occur.
+- A claim that the mechanism does exist. The author says it is unproven. Both errors
+  are available here and STAN must make neither.
+- Any inference about what dose would be needed for anything.
+topics:
+- harm-reduction
+- pharmacology
+extracted_by: Claude (Opus 5), from the founder's photographs of pp. 60-62
+extracted_on: '2026-09-05'
+status: draft
+notes: 'Worth holding as an example of how to write about an open question: names
+  the idea, says it may be true, says it is not shown, stops. That is the register
+  STAN should write in.'

@@ -1,15 +1,42 @@
 # Literature held by STAN
 
-**Generated 2026-09-04 by `tools/bibliography.py`. Do not edit by hand** —
+**Generated 2026-09-05 by `tools/bibliography.py`. Do not edit by hand** —
 regenerate it. The register at `evidence/sources/` is the source of truth.
 
-**9 items · 0 read in full · 0 approved for citation**
+**10 items · 1 read in full · 0 approved for citation**
 
 Nothing may be cited in published content until it is approved, which
 requires the full text read and a named clinical reviewer
 (`governance/EVIDENCE-POLICY.md` §4, §8). Items screened out are kept
 rather than deleted — a register that shows what was considered and
 rejected is worth more than one that only shows what survived.
+
+---
+
+## Read, in review (1)
+
+### taylor-2002-anabolic-steroids-athlete
+
+Taylor WN *Anabolic Steroids and the Athlete, 2nd edition*. McFarland & Company, Jefferson NC, 2002.
+
+`textbook` · grade **C** · relevance **direct** · bibliography **verified** · **read**
+
+`NCBI:9780786411283`
+
+**May be cited for**
+- Descriptive account of anabolic steroid user regimens as they stood around 2002 — first cycle through fifth cycle, stacking, pyramiding, cycling — and the reasoning users gave for them.
+- That users obtain their information from other users rather than from clinicians, and that a documented informational gap exists between the user community and the scientific community. The author states this explicitly as the reason for writing the chapter.
+- Statements about where scientific evidence was ABSENT as at 2002 — for instance for the rest phase between cycles. These are citable as a historical position, and as a prompt to check whether the gap has since been filled. They are not citable as the current state of evidence.
+- As a bibliography. The chapter's numbered references point to the primary literature STAN actually wants, and chasing them is the point of holding this record.
+
+**Must NOT be cited for**
+- Any dosing, cycle length, stacking or tapering guidance. The book describes these practices and explicitly disclaims endorsement of them; STAN does not publish them at all, per SCOPE.md. Claims extracted from these passages exist so STAN can UNDERSTAND and DISCUSS user practice, never to instruct.
+- Any current statement of cardiovascular risk. The 2002 position is superseded and repeating it would understate what is now known.
+- Any statement about recovery of the hypothalamic-pituitary-gonadal axis, fertility, or ASIH management as current clinical fact. Use Grant 2023, Solanki 2023 and the current literature.
+- Any claim that a practice is safe or effective because the book reports that users believe it is. The book is reporting a belief, not endorsing it, and STAN must preserve that distinction in every sentence it writes.
+- Anything outside Chapter 5. The rest of the book has not been read.
+
+> FIRST SOURCE TO PRODUCE CLAIMS. Ten claims extracted, all at status draft with quote_verified false. Two jobs for the founder, in order. First, verify the ten quotes against pages 60-62 — read each quote against the page and set quote_verified true, or correct it. They were transcribed from photographs taken at an angle and one or two line-break joins are the likely errors. Second, and worth more, photograph the endnotes for Chapter 5: references 1-26 are the primary literature this chapter rests on, and they are listed in evidence/reference-chase/taylor-2002-chapter-5.md waiting to be filled in. On why this book earns its place despite its age: its structure is the one STAN is trying to build. Every section states what users do, then states separately what the science does and does not support, and says plainly when the answer is "unproven". That is the translator role, executed in print, in 2002. Read it as a model as well as a source.
 
 ---
 

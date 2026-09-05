@@ -62,7 +62,10 @@ fields:
   source:
     required: true
     type: str
-    note: An id in evidence/sources/. Its record must say full_text_read: true.
+    note: >-
+      An id in evidence/sources/. Its record must have full_text_read true —
+      for a book, that means read_scope names the chapter and this claim's
+      locator falls inside it.
 
   locator:
     required: true

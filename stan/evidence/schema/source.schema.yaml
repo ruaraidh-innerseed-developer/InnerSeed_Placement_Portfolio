@@ -187,8 +187,16 @@ fields:
     subfields:
       bibliographic: {required: true, type: str, enum: bibliographic_verification}
       full_text_read: {required: true, type: bool}
+      read_scope: {required: false, type: str}
       verified_by: {required: true, type: str}
       verified_on: {required: true, type: str, pattern: '^\d{4}-\d{2}-\d{2}$'}
+    note: >-
+      read_scope exists because "full text" is the wrong unit for a book. Nobody
+      reads 384 pages before quoting chapter 5, and pretending otherwise would
+      either block honest work or invite a false `true`. For a book, textbook or
+      other long work, full_text_read means "the scope named in read_scope was
+      read in full", and claims may only cite locators inside that scope. For a
+      paper, leave read_scope empty and full_text_read means what it says.
 
   review:
     required: true
@@ -239,6 +247,12 @@ rules:
       catalogued question, design cannot establish the claim, inaccessible.
       One clause is enough. The point is that the same paper is never assessed
       twice, and that the rejection is visible to a reviewer.
+
+  - id: long-work-needs-read-scope
+    description: >
+      A textbook or narrative-review record claiming full_text_read must state
+      verification.read_scope — which chapter or section was actually read.
+      Claims extracted from it may only cite locators within that scope.
 
   - id: identifier-present
     description: At least one of doi, pmid, pmcid, isbn, url must be present.

@@ -51,10 +51,12 @@ stan/
 │   ├── claims/            EMPTY — no source has been read yet
 │   ├── answers/           EMPTY — no claims to compose from yet
 │   └── markers/           16 identity-only stubs
-├── evidence/sources/      9 records, 0 read in full
+├── evidence/sources/      10 records, 1 read (ch. 5 only)
+├── evidence/reference-chase/  Numbered refs inside a source, waiting to be obtained
 ├── services/              Crisis signposting, Scotland and England
 ├── sources-inbox/         Drop documents here. Gitignored — copyright.
 ├── content/pages/         Prose that makes no clinical claim
+├── content/articles/      The article stack — what is writeable, and what each still needs
 ├── data/                  Routes, sessions and the service ladder for the front end
 ├── outreach/              The clinical lead approach
 ├── prototype/             template.html (edit) · index.html (GENERATED)
@@ -125,6 +127,9 @@ data:
 | The service ladder — what can be booked, at which stage, for how much, and where it may be offered | `data/services.yaml` |
 | The page's colour rhythm — three looks switchable in the prototype bar (`LOOKS` in the template) | `prototype/template.html` |
 | The crisis numbers in the footer | `services/crisis-services.yaml` |
+| What a source may and may not be cited for | `evidence/sources/*.yaml` |
+| A statement STAN can make, its quote and its page | `knowledge/claims/*.yaml` |
+| Which articles are next, and what blocks each | `content/articles/README.md` |
 | Layout, styling, copy | `prototype/template.html` |
 
 Then `python3 stan/tools/build.py` and republish. `build.py --check` fails if the

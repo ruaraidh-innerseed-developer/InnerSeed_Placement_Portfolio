@@ -44,6 +44,13 @@ REVIEW_INTERVAL_DAYS = {
 }
 DEFAULT_REVIEW_INTERVAL_DAYS = 730
 
+# Works too long to read end to end before quoting one chapter. These may claim
+# full_text_read only alongside a read_scope naming what was actually read.
+LONG_WORK_TYPES = {"textbook", "narrative-review", "systematic-review", "guideline"}
+
+CLAIM_SCHEMA_PATH = ROOT / "knowledge" / "schema" / "claim.schema.yaml"
+CLAIMS_DIR = ROOT / "knowledge" / "claims"
+
 
 class Report:
     def __init__(self) -> None:
@@ -151,6 +158,18 @@ def check_rules(report, rec_id, record, today):
             report.warn(
                 rec_id, f"review overdue: next_review_due was {due.isoformat()}"
             )
+
+    # "Full text" is the wrong unit for a book. A long work may claim it only
+    # by naming the chapter that was actually read.
+    if (record.get("type") in LONG_WORK_TYPES
+            and verification.get("full_text_read")
+            and not (verification.get("read_scope") or "").strip()):
+        report.error(
+            rec_id,
+            "long-work-needs-read-scope: a "
+            f"'{record.get('type')}' claiming full_text_read must name "
+            "verification.read_scope (which chapter or section was read)",
+        )
 
     if status == "retired" and not (record.get("notes") or "").strip():
         report.error(rec_id, "retired-requires-reason: notes must explain the retirement")
@@ -354,6 +373,101 @@ def validate_markers(report) -> dict:
     return counts
 
 
+def validate_claims(report, sources: dict) -> dict:
+    """Validate the claim register against knowledge/schema/claim.schema.yaml.
+
+    A claim is the atom of the whole system, and an unenforced schema is how
+    the first attempt at the encyclopedia ended up with fifteen records citing
+    nothing. The cross-source rule is the one that matters: a claim may not be
+    extracted from a document nobody has opened.
+    """
+    counts = {"total": 0, "draft": 0, "checked": 0, "approved": 0,
+              "retired": 0, "quotes_verified": 0}
+    if not CLAIM_SCHEMA_PATH.exists():
+        return counts
+
+    schema = yaml.safe_load(CLAIM_SCHEMA_PATH.read_text())
+    enums, fields = schema["enums"], schema["fields"]
+    seen = set()
+
+    for path in sorted(CLAIMS_DIR.glob("*.yaml")):
+        stem = path.stem
+        try:
+            rec = yaml.safe_load(path.read_text())
+        except yaml.YAMLError as exc:
+            report.error(stem, f"claim: YAML parse error: {exc}")
+            continue
+        if not isinstance(rec, dict):
+            report.error(stem, "claim: record is not a mapping")
+            continue
+
+        cid = rec.get("id", stem)
+        if cid != stem:
+            report.error(stem, f"claim id-matches-filename: id is '{cid}'")
+        if cid in seen:
+            report.error(stem, f"claim: duplicate id '{cid}'")
+        seen.add(cid)
+        counts["total"] += 1
+
+        for name, spec in fields.items():
+            if name not in rec or rec[name] in (None, "", []):
+                if spec.get("required"):
+                    report.error(cid, f"claim {name}: missing required field")
+                continue
+            check_value(report, cid, name, rec[name], spec, enums)
+
+        for name in sorted(set(rec) - set(fields)):
+            report.warn(cid, f"claim {name}: field not in schema")
+
+        status = rec.get("status", "draft")
+        if status in counts:
+            counts[status] += 1
+        if rec.get("quote_verified"):
+            counts["quotes_verified"] += 1
+
+        # quote-required
+        if not (rec.get("quote") or "").strip():
+            report.error(cid, "quote-required: there is no claim without text from the source")
+
+        # source-must-be-read
+        src_id = rec.get("source")
+        src = sources.get(src_id)
+        if src_id and src is None:
+            report.error(cid, f"source-must-be-read: unknown source '{src_id}'")
+        elif src is not None:
+            if not (src.get("verification") or {}).get("full_text_read"):
+                report.error(
+                    cid,
+                    f"source-must-be-read: source '{src_id}' has full_text_read false — "
+                    "a claim cannot be extracted from a document nobody has opened",
+                )
+
+        # checked-requires-verified-quote
+        if status in ("checked", "approved"):
+            if not rec.get("quote_verified"):
+                report.error(
+                    cid,
+                    f"checked-requires-verified-quote: status '{status}' needs "
+                    "quote_verified true",
+                )
+            if not (rec.get("checked_by") or "").strip():
+                report.error(
+                    cid, f"checked-requires-verified-quote: status '{status}' needs checked_by"
+                )
+
+        # approved-requires-clinical-reviewer
+        if status == "approved":
+            reviewer = (src or {}).get("review", {}).get("clinical_reviewer")
+            if not reviewer:
+                report.error(
+                    cid,
+                    "approved-requires-clinical-reviewer: no clinical reviewer on the "
+                    "source record (EVIDENCE-POLICY.md §8)",
+                )
+
+    return counts
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--quiet", action="store_true", help="print errors only")
@@ -405,6 +519,7 @@ def main() -> int:
 
     service_counts = validate_services(report)
     marker_counts = validate_markers(report)
+    claim_counts = validate_claims(report, records)
 
     # A record that failed validation is never citable, whatever its status says.
     citable = [
@@ -434,6 +549,16 @@ def main() -> int:
                       marker_counts["reviewed"])
         if mt:
             print(f"\nMarker encyclopedia: {mw} written of {mt}, {mr} clinically reviewed")
+
+        ct = claim_counts["total"]
+        if ct:
+            print(f"\nClaim register: {ct} claim(s) — "
+                  f"{claim_counts['draft']} draft, {claim_counts['checked']} checked, "
+                  f"{claim_counts['approved']} approved")
+            unver = ct - claim_counts["quotes_verified"]
+            if unver:
+                print(f"  {unver} quote(s) NOT yet verified against the source document.\n"
+                      "  Nothing publishes on an unverified quote (claim.schema.yaml).")
 
         total, verified = service_counts["total"], service_counts["verified"]
         print(f"\nCrisis services: {total} listed, {verified} verified")
