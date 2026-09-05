@@ -5,6 +5,13 @@
 # the build script pulls that page's live status so badges never go stale.
 # A card with no `page` or `marker` is planned but unwritten.
 #
+# Each route ends with ONE `next` step — the hand-off that makes the page a
+# funnel rather than a leaflet. The door a person chose decides what they are
+# offered next; nothing else on the panel asks for anything. `next` points at
+# exactly one of: a service (data/services.yaml), a group or a seminar
+# (data/sessions.yaml). `line` is the sentence that introduces it for this
+# door specifically.
+#
 # Cards currently reading `status: planned` were pages that got scrapped for
 # being unbacked. They come back when they are written FROM a source that has
 # been read, not before.
@@ -31,6 +38,11 @@ routes:
           If you go ahead, a before picture is the single most useful thing you
           will ever have.
         status: planned
+    next:
+      seminar: what-happens-when-you-stop
+      line: >-
+        Before you decide, hear what the exit looks like. Forty minutes from
+        someone who knows, then ask whatever you like.
 
   - id: using
     label: I'm using and staying on for now
@@ -49,6 +61,11 @@ routes:
       - title: Talk to a peer, not a lecture
         note: Someone who has been on for years and is not going to tell you to stop.
         status: planned
+    next:
+      service: walkthrough
+      line: >-
+        If you are staying on, the one thing that changes your odds is knowing
+        how to read your own bloods. Sit down with someone and learn the sheet.
 
   - id: comingoff
     label: I want to come off
@@ -70,6 +87,11 @@ routes:
       - title: The coming-off cohort
         note: Six weeks, same small group, someone facilitating. See sessions below.
         status: planned
+    next:
+      group: cohort-comingoff
+      line: >-
+        Nobody should do the first six weeks alone. Eight people, two
+        facilitators, same room every Monday. Put your name down.
 
   - id: stopped
     label: I've stopped and I feel wrong
@@ -89,6 +111,12 @@ routes:
       - title: LH — where the problem actually sits
         note: The second number that makes the first one readable.
         marker: lh
+    next:
+      service: walkthrough
+      line: >-
+        Bring the bloods that said you were normal. Forty-five minutes learning
+        what each line is, and you walk into your next appointment with the
+        right questions written down.
 
   - id: bloods
     label: I've got bloods I can't read
@@ -107,6 +135,12 @@ routes:
       - title: Track them over time
         note: Recovery is invisible week to week and obvious over a year.
         status: planned
+    next:
+      service: walkthrough
+      line: >-
+        Sixteen lines and a fortnight. Go through the sheet with someone who
+        has read a hundred of them, and fill in the brief for your appointment
+        while you are at it.
 
   - id: worried
     label: I'm worried about someone else
@@ -125,3 +159,8 @@ routes:
       - title: How to raise it without a row
         note: Approaches that tend not to end the conversation.
         status: planned
+    next:
+      group: family-monthly
+      line: >-
+        A room of partners, parents and mates in the same position, once a
+        month. You will get more from them than from him, for now.

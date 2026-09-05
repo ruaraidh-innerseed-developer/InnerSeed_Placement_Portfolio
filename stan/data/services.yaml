@@ -82,7 +82,8 @@ services:
     line: Forty-five minutes with someone who has been where you are.
     time: 45 minutes, online, one-to-one
     price: "£45"
-    status: ready
+    status: soon
+    blocker: The walkthrough running first. Peer sessions open after the first ten walkthroughs, so the line between the two is learned in the room before it is offered twice.
     who_delivers: A trained peer with lived experience.
     what_happens:
       - You say what is going on, in whatever order it comes out.
@@ -113,6 +114,7 @@ services:
     line: Six weeks. The same eight people. Two facilitators. Starts and finishes together.
     time: 6 × 90 minutes, weekly, online
     price: "£200–240"
+    group: cohort-comingoff
     status: soon
     blocker: A second facilitator, and eight people ready to start.
     detail: >

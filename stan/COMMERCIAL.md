@@ -272,13 +272,53 @@ tier plus a grant. That is the structure working as designed.
 | Member | Show what membership includes, and let someone join. |
 | Advocate | Give them something worth sharing — the belief register page. |
 
-**The immediate build:** the service ladder on the front end, with the
-walkthrough as a real-looking booking card. Encoded as data in
-`data/services.yaml` so it renders like everything else.
+**The build rule:** the ladder is encoded as data in `data/services.yaml`, but
+it is **not** rendered as a list on the front door. A price catalogue reads as
+a shop, and a shop is not what earns this audience's trust. Each service
+appears only where it is the natural next step, and the whole list lives on
+one transparency page reached from the footer.
+
+### 7.1 The funnel on the page
+
+This table is the contract between this document and the website. Each row is
+one stage, where it lives on the site, the single thing it asks for, and where
+it hands the person on. If a section of the site asks for more than one thing,
+or asks for nothing, it has drifted from this table.
+
+| Stage | Where on the site | The one ask | Hands off to |
+|---|---|---|---|
+| Awareness | Search bar, six doors | Pick a door. On an unmet search: what were you looking for? | The door's panel |
+| First value | Route panel, marker and question pages, seminars, open groups | Nothing. Read, watch, sit in. | The route's **next step** card, chosen per door |
+| First £ | The `next` card on three doors (using, stopped, bloods); the peer panel in Connect; the foot of every marker page | Book the walkthrough. Until booking is live: leave an email. | The consultation brief, then the clinical rung |
+| Committed | The cohort in Groups, and the `next` card on the coming-off door | Join the waiting list | The cohort itself, then membership |
+| Clinical | The clinical panel in Connect | "I would want this" — demand capture until a clinician exists | The clinician; STAN's fee printed |
+| Member | Not on the site yet | — | — |
+| Advocate | Not on the site yet | — | — |
+| Transparency | Footer link: *What costs money here, and why* | Nothing. Read it. | Any service page |
+
+Every capture on the site goes through one mechanism with one storage key,
+tagged by stage, so that when a real mailing tool arrives it is wired in once.
+
+### 7.2 Which door hands to what
+
+| Door | Next step | Why this one |
+|---|---|---|
+| Thinking about starting | Seminar: *What actually happens when you stop* | Know the exit before the entrance. Free, low commitment, right tone. |
+| Using and staying on | Bloods walkthrough | The one thing that changes his odds is reading his own panel. |
+| Want to come off | Coming-off cohort waiting list | Nobody should do the first six weeks alone. |
+| Stopped and feel wrong | Bloods walkthrough | He has the sheet that said he was "normal". Start there. |
+| Bloods I can't read | Bloods walkthrough | The obvious one. |
+| Worried about someone | Partners and family group | He will get more from them than from the person he is worried about. |
+
+Three of six doors hand to the walkthrough. That is the wedge doing its job.
+The copy on each card is different because the person arriving is different.
 
 ## 8. Sequence
 
-1. **This week.** Services encoded as data; ladder visible on the site.
+1. **This week.** Services encoded as data; each door hands to its next
+   step; the walkthrough is in Connect; the transparency page exists. *Done.*
+   The walkthrough goes first, **alone**. Peer sessions follow after the
+   first ten, once the line between the two has been held in the room.
 2. **Next.** Public URL, STAN email, a calendar link and a payment link. The
    walkthrough is then live — genuinely bookable, genuinely paid.
 3. **First ten walkthroughs.** Learn what people actually bring, what they ask,

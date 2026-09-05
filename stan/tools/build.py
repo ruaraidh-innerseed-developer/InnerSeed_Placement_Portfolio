@@ -288,6 +288,7 @@ def build_views(pages, markers, questions, sessions, ladder) -> dict:
             "willcover": [],
         }
 
+    service_for_group = {s["group"]: s["id"] for s in ladder["services"] if s["group"]}
     for g in sessions["groups"]:
         views["g/" + g["id"]] = {
             "kind": "group", "s": "draft",
@@ -295,6 +296,7 @@ def build_views(pages, markers, questions, sessions, ladder) -> dict:
             "sub": g["when"] + " · " + g["time"] + " · " + g["duration"],
             "who": g["who"], "shape": g["shape"], "by": g["by"],
             "size": g["size"], "cameras": g["cameras"], "joining": g["joining"],
+            "service": service_for_group.get(g["id"], ""),
         }
 
     for s in sessions["seminars"]:
@@ -315,6 +317,24 @@ def build_views(pages, markers, questions, sessions, ladder) -> dict:
             "sub": sv["line"],
             "stage_label": stage_label[sv["stage"]],
         })
+
+    # The one place the whole ladder is shown: a transparency page, not a shop.
+    # Every service, its status, its blocker, and the fee rule — reached from
+    # the footer and from the service pages, never from the front door.
+    if "what-costs" in pages:
+        raise ValueError("content page id 'what-costs' is reserved for the generated ladder page")
+    views["p/what-costs"] = {
+        "kind": "ladder",
+        "s": "draft",
+        "title": "What costs money here, and why",
+        "sub": "Everything you can read is free. What costs is a person's time. "
+               "This is the whole list, including the parts that do not exist yet.",
+        "stages": [
+            dict(st, services=[s for s in ladder["services"] if s["stage"] == st["id"]])
+            for st in ladder["stages"]
+        ],
+        "willcover": [],
+    }
 
     doc = yaml.safe_load(ROUTES_PATH.read_text())
     for r in doc.get("routes", []):
@@ -371,7 +391,45 @@ def slug(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", str(text).lower()).strip("-")
 
 
-def build_routes(pages: dict, markers: dict) -> dict:
+def resolve_next(owner: str, nxt: dict, sessions: dict, ladder: dict) -> dict:
+    """One hand-off. Exactly one of service / group / seminar, and it must exist.
+
+    This is the funnel mechanism: every door ends in a single next step. The
+    build refuses a dangling one, because a dead end at the moment somebody
+    has decided to act is the most expensive defect the site can have.
+    """
+    keys = [k for k in ("service", "group", "seminar") if nxt.get(k)]
+    if len(keys) != 1:
+        raise ValueError(f"{owner}: next must name exactly one of service/group/seminar")
+    kind = keys[0]
+    target = nxt[kind]
+    line = " ".join(str(nxt.get("line", "")).split())
+    if kind == "service":
+        match = [s for s in ladder["services"] if s["id"] == target]
+        if not match:
+            raise ValueError(f"{owner}: next points at unknown service '{target}'")
+        s = match[0]
+        return {"kind": kind, "view": "o/" + target, "title": s["name"],
+                "line": line, "price": s["price"], "status": s["status"],
+                "time": s["time"]}
+    if kind == "group":
+        match = [g for g in sessions["groups"] if g["id"] == target]
+        if not match:
+            raise ValueError(f"{owner}: next points at unknown group '{target}'")
+        g = match[0]
+        return {"kind": kind, "view": "g/" + target, "title": g["name"],
+                "line": line, "price": "Free", "status": "soon",
+                "time": g["when"] + " · " + g["time"]}
+    match = [s for s in sessions["seminars"] if s["id"] == target]
+    if not match:
+        raise ValueError(f"{owner}: next points at unknown seminar '{target}'")
+    s = match[0]
+    return {"kind": kind, "view": "s/" + target, "title": s["title"],
+            "line": line, "price": "Free", "status": "soon",
+            "time": s["when"] + " · " + s["time"]}
+
+
+def build_routes(pages: dict, markers: dict, sessions: dict, ladder: dict) -> dict:
     doc = yaml.safe_load(ROUTES_PATH.read_text())
     marker_status = {"reviewed": "live", "complete": "draft",
                      "partial": "draft", "stub": "planned"}
@@ -410,12 +468,15 @@ def build_routes(pages: dict, markers: dict) -> dict:
                         else ("p/" + page_id) if page_id
                         else "x/" + slug(it["title"]),
             })
+        if not r.get("next"):
+            raise ValueError(f"route '{r['id']}' has no next step — every door ends somewhere")
         out.append({
             "id": r["id"],
             "label": r["label"],
             "sub": r.get("sub", ""),
             "said": " ".join(str(r.get("said", "")).split()),
             "items": items,
+            "next": resolve_next(f"route '{r['id']}'", r["next"], sessions, ladder),
         })
     return {"default_open": doc.get("default_open"), "routes": out}
 
@@ -517,6 +578,7 @@ def build_ladder() -> dict:
         rows.append({
             "id": sid,
             "stage": s["stage"],
+            "group": s.get("group", ""),
             "name": s["name"],
             "line": " ".join(str(s.get("line", "")).split()),
             "time": s.get("time", ""),
@@ -534,6 +596,14 @@ def build_ladder() -> dict:
 
     if featured > 1:
         raise ValueError("services.yaml: only one service may be featured")
+
+    # A service may be tied to a group (the cohort). The group then offers the
+    # waiting list, and the page for either points at the other.
+    sess = yaml.safe_load(SESSIONS_PATH.read_text())
+    group_ids = {g["id"] for g in sess.get("groups", [])}
+    for r in rows:
+        if r["group"] and r["group"] not in group_ids:
+            raise ValueError(f"service '{r['id']}': unknown group '{r['group']}'")
 
     return {
         "stages": [{"id": s["id"], "label": s["label"],
@@ -638,7 +708,7 @@ def main() -> int:
         ladder = build_ladder()
         data = {
             "index": build_index(pages, markers),
-            "routes": build_routes(pages, markers),
+            "routes": build_routes(pages, markers, sessions, ladder),
             "relations": build_relations(markers),
             "views": build_views(pages, markers, load_questions(),
                                  sessions, ladder),

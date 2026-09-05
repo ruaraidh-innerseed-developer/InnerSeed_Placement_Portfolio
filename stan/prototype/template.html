@@ -839,6 +839,77 @@
     color: var(--ink-3);
   }
 
+  /* The hand-off card at the foot of a route panel. */
+  .nextstep {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 18px 28px;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    background: var(--band-bg);
+    color: var(--band-ink);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    margin-top: 6px;
+  }
+  .nextstep .eyebrow { color: var(--band-accent); margin-bottom: 6px; }
+  .nextstep h4 { font-size: 20px; color: var(--band-ink); margin-bottom: 6px; font-family: var(--display); }
+  .nextstep .body p:not(.eyebrow) { font-size: 15px; color: var(--band-ink-2); max-width: 58ch; }
+  .nextstep .side { display: grid; gap: 4px; justify-items: end; text-align: right; }
+  .nextstep .side b { font-family: var(--display); font-size: 28px; color: var(--band-accent); line-height: 1; }
+  .nextstep .side small { font-family: var(--mono); font-size: 11.5px; color: var(--band-ink-3); letter-spacing: 0.05em; }
+  .nextstep .side .btn { margin-top: 10px; background: var(--band-accent); border-color: var(--band-accent); color: var(--band-bg); }
+  .nextstep .side .btn .arrow { color: var(--band-bg); }
+  .nextstep:hover .side .btn { filter: brightness(1.06); }
+  .nextstep:focus-visible { outline: 2px solid var(--band-accent); outline-offset: 3px; }
+  @media (max-width: 640px) {
+    .nextstep { grid-template-columns: 1fr; }
+    .nextstep .side { justify-items: start; text-align: left; }
+  }
+
+  /* One action inside a Connect panel. */
+  .panel .next { display: grid; gap: 8px; margin-top: 6px; justify-items: start; }
+  .panel .next .fine { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); margin: 0; }
+
+  .group .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  /* Quiet hand-off at the foot of a page. */
+  .handoff {
+    border-top: 1px solid var(--line);
+    margin: 30px 0 10px;
+    padding-top: 22px;
+    display: grid; gap: 12px; justify-items: start;
+  }
+  .handoff p { font-size: 16px; color: var(--ink-2); margin: 0; max-width: 60ch; }
+
+  /* The transparency page. */
+  .costlist { display: grid; gap: 10px; margin: 14px 0 8px; }
+  .costrow {
+    display: grid; grid-template-columns: 1fr auto; gap: 4px 20px;
+    padding: 15px 17px; text-decoration: none; color: inherit;
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--surface-2); align-items: baseline;
+  }
+  .costrow:hover { border-color: var(--accent); }
+  .costrow:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .costrow b { font-size: 16.5px; font-family: var(--body); }
+  .costrow .price { font-family: var(--display); font-size: 18px; font-weight: 600; text-align: right; }
+  .costrow .desc { grid-column: 1 / -1; font-size: 14.5px; color: var(--ink-2); }
+  .costrow .st { grid-column: 1 / -1; font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); margin-top: 3px; }
+  .costrow.ready .st { color: var(--verified); }
+  .costrow.soon .st { color: var(--draft); }
+  .costrow.planned b, .costrow.planned .price { color: var(--ink-3); }
+
+  /* The single capture form. */
+  form.capture { display: flex; gap: 9px; flex-wrap: wrap; }
+  form.capture input {
+    flex: 1; min-width: 220px; font-family: var(--body); font-size: 15px;
+    padding: 11px 13px; background: var(--surface); color: var(--ink);
+    border: 1.5px solid var(--line-strong); border-radius: var(--radius);
+  }
+  form.capture input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
   /* Service inner page: the booking block. */
   .book {
     border: 1px solid var(--line-strong);
@@ -1157,6 +1228,7 @@
           <li>Will help you work out what to ask</li>
           <li><b>Will not</b> tell you what to take, or read your bloods</li>
         </ul>
+        <div class="next" id="peer-next"></div>
       </div>
       <div class="panel">
         <p class="tag">Clinical — registered professionals</p>
@@ -1171,6 +1243,7 @@
         <p class="honest"><b>None appointed yet.</b> Until one is, nothing that
           interprets or advises gets published here — only things we can report
           and attribute. We would rather say that than imply otherwise.</p>
+        <div class="next" id="clinical-next"></div>
       </div>
     </div>
   </div>
@@ -1201,6 +1274,9 @@
       people. Nothing clinical publishes without review. Every answer names its
       sources and shows what we have not read yet — and where the evidence does
       not exist, we say so rather than filling the gap.</p>
+    <p><b>Money.</b> Reading is free. A person's time costs, and the whole list,
+      including what does not exist yet, is on one page:
+      <a href="#/p/what-costs">what costs money here, and why</a>.</p>
     <p class="state" id="state"></p>
   </div>
 </footer>
@@ -1216,6 +1292,49 @@
   var INDEX = STAN.index;                       /* pre-sorted: written first */
   var ROUTES = STAN.routes.routes;
   var SESSIONS = STAN.sessions.sessions;
+
+  /* ------------------------------------------------------- the ladder */
+
+  /* Service data is loaded but not rendered as a list on the home page. A
+     page with a price catalogue reads as a shop; STAN is a funnel, and each
+     service appears only where it is the natural next step. */
+  var LADDER = STAN.ladder;
+  var ST_LABEL = { ready: "Ready", soon: "Waiting list", planned: "Planned" };
+  var SERVICE = {};
+  var SERVICE_FOR_GROUP = {};
+  LADDER.services.forEach(function (s) {
+    SERVICE[s.id] = s;
+    if (s.group) SERVICE_FOR_GROUP[s.group] = s.id;
+  });
+
+  /* The walkthrough lives in Connect, because Connect is already the section
+     about a peer's time and a clinician's time. One button, one price. */
+  (function () {
+    var w = SERVICE.walkthrough;
+    var host = document.getElementById("peer-next");
+    if (w && host) {
+      var a = el("a", "btn");
+      a.href = "#/o/" + w.id;
+      a.appendChild(document.createTextNode(w.name + " · " + w.price));
+      a.appendChild(el("span", "arrow", "→"));
+      host.appendChild(a);
+      host.appendChild(el("p", "fine", w.time + ". " +
+        (w.status === "ready" ? "Booking opens shortly — the page takes your email."
+                              : "Waiting list open.")));
+    }
+    var c = SERVICE["clinical-consult"];
+    var chost = document.getElementById("clinical-next");
+    if (c && chost) {
+      var b = el("a", "btn ghost");
+      b.href = "#/o/" + c.id;
+      b.appendChild(document.createTextNode("I would want this"));
+      b.appendChild(el("span", "arrow", "→"));
+      chost.appendChild(b);
+      chost.appendChild(el("p", "fine",
+        "Demand is part of how we recruit one. Say so and it counts."));
+    }
+  })();
+
 
   var BADGE = {
     live:    ["approved", "Reviewed"],
@@ -1239,7 +1358,44 @@
   var qEl = document.getElementById("q");
   var resEl = document.getElementById("results");
   var RANK = { live: 0, draft: 1, planned: 2 };
-  var LOG_KEY = "stan.unmet.v1";
+  /* One capture mechanism for the whole site. Every stage of the funnel asks
+     for exactly one thing — an unmet search, a page somebody needed, an email
+     for a waiting list — and they all land in the same place, so when a real
+     mailing tool arrives it is wired in once. */
+  var CAPTURE_KEY = "stan.capture.v1";
+
+  function saveCapture(kind, ref, value) {
+    try {
+      var log = JSON.parse(localStorage.getItem(CAPTURE_KEY) || "[]");
+      log.push({ kind: kind, ref: ref, v: value, at: new Date().toISOString().slice(0, 10) });
+      localStorage.setItem(CAPTURE_KEY, JSON.stringify(log.slice(-300)));
+      return log.filter(function (x) { return x.kind === kind; }).length;
+    } catch (e) { return 0; }
+  }
+
+  /* opts: kind, ref, type, placeholder, button, value, done */
+  function captureForm(opts) {
+    var form = document.createElement("form");
+    form.className = "capture";
+    var input = document.createElement("input");
+    input.type = opts.type || "text";
+    input.placeholder = opts.placeholder || "";
+    if (opts.value) input.value = opts.value;
+    input.setAttribute("aria-label", opts.placeholder || opts.button);
+    var btn = el("button", "btn");
+    btn.type = "submit";
+    btn.appendChild(document.createTextNode(opts.button));
+    form.appendChild(input);
+    form.appendChild(btn);
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var v = input.value.trim();
+      if (!v && !opts.allowEmpty) { input.focus(); return; }
+      saveCapture(opts.kind, opts.ref || "", v || opts.ref || "");
+      form.replaceWith(el("p", "said", opts.done || "Noted. Thank you."));
+    });
+    return form;
+  }
 
   /* Every term must appear somewhere. Where it appears decides the score:
      a hit in the question itself beats a hit in the body text. */
@@ -1261,14 +1417,7 @@
     return total;
   }
 
-  function logUnmet(term) {
-    try {
-      var log = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
-      log.push({ q: term, at: new Date().toISOString().slice(0, 10) });
-      localStorage.setItem(LOG_KEY, JSON.stringify(log.slice(-200)));
-      return log.length;
-    } catch (e) { return 0; }
-  }
+  function logUnmet(term) { return saveCapture("unmet", "search", term); }
 
   function relatedStrip(hits) {
     /* Suggest the rest of the panel. A result set about SHBG should offer
@@ -1316,22 +1465,11 @@
         "What were you hoping to find? It goes on the list — this is genuinely " +
         "how the content plan gets written."));
 
-      var form = document.createElement("form");
-      var input = document.createElement("input");
-      input.type = "text";
-      input.value = term;
-      input.setAttribute("aria-label", "What were you looking for?");
-      var send = document.createElement("button");
-      send.type = "submit";
-      send.textContent = "Add it";
-      form.appendChild(input);
-      form.appendChild(send);
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        if (input.value.trim()) logUnmet(input.value.trim());
-        form.textContent = "Thanks — added.";
-      });
-      n.appendChild(form);
+      n.appendChild(captureForm({
+        kind: "unmet", ref: "search", value: term,
+        placeholder: "What were you looking for?", button: "Add it",
+        done: "Thanks — added."
+      }));
       var tip = el("div", "chattip");
       tip.appendChild(el("h5", null, "Going to ask an AI instead? Fair enough."));
       var ul = document.createElement("ul");
@@ -1439,7 +1577,31 @@
       grid.appendChild(card);
     });
     panelEl.appendChild(grid);
+    panelEl.appendChild(nextCard(r.next));
     panelEl.hidden = false;
+  }
+
+  /* The hand-off. Each door ends in exactly one next step, chosen for that
+     door: this is the page behaving as a funnel rather than a leaflet. */
+  function nextCard(n) {
+    var card = el("a", "nextstep");
+    card.href = "#/" + n.view;
+    var body = el("div", "body");
+    body.appendChild(el("p", "eyebrow", "Your next step"));
+    body.appendChild(el("h4", null, n.title));
+    body.appendChild(el("p", null, n.line));
+    card.appendChild(body);
+    var side = el("div", "side");
+    side.appendChild(el("b", null, n.price));
+    side.appendChild(el("small", null, n.time));
+    var cta = el("span", "btn");
+    cta.appendChild(document.createTextNode(
+      n.kind === "service" ? (n.status === "ready" ? "Book it" : "Join the list")
+      : n.kind === "group" ? "Put my name down" : "Save me a seat"));
+    cta.appendChild(el("span", "arrow", "→"));
+    side.appendChild(cta);
+    card.appendChild(side);
+    return card;
   }
 
   /* --------------------------------------------------------- the programme */
@@ -1556,11 +1718,19 @@
       });
       det.appendChild(facts);
 
+      var fw = el("div", "actions");
+      var tied = SERVICE_FOR_GROUP[g.id];
+      if (tied) {
+        var wl = el("a", "btn");
+        wl.href = "#/o/" + tied;
+        wl.appendChild(document.createTextNode("Join the waiting list"));
+        wl.appendChild(el("span", "arrow", "→"));
+        fw.appendChild(wl);
+      }
       var full = el("a", "btn ghost");
       full.href = "#/g/" + g.id;
       full.appendChild(document.createTextNode("Full details"));
       full.appendChild(el("span", "arrow", "→"));
-      var fw = el("div");
       fw.appendChild(full);
       det.appendChild(fw);
 
@@ -1572,14 +1742,6 @@
   countryEl.addEventListener("change", renderGroups);
   kindEl.addEventListener("change", renderGroups);
   renderGroups();
-
-  /* ------------------------------------------------------- the ladder */
-
-  /* Service data is loaded but not rendered as a list on the home page. A
-     page with a price catalogue reads as a shop; STAN is a funnel, and each
-     service appears only where it is the natural next step. */
-  var LADDER = STAN.ladder;
-  var ST_LABEL = { ready: "Ready", soon: "Waiting list", planned: "Planned" };
 
   /* ------------------------------------------------------------- crisis */
 
@@ -1639,32 +1801,32 @@
     box.appendChild(el("p", null,
       "Tell us and it moves up the list. This is genuinely how the order gets " +
       "decided — what people came looking for and could not find."));
-    var form = document.createElement("form");
-    var input = document.createElement("input");
-    input.type = "text";
-    input.placeholder = "What were you hoping to find?";
-    input.setAttribute("aria-label", "What were you hoping to find?");
-    var btn = el("button", "btn");
-    btn.type = "submit";
-    btn.appendChild(document.createTextNode("Send"));
-    form.appendChild(input);
-    form.appendChild(btn);
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      try {
-        var log = JSON.parse(localStorage.getItem(LOG_KEY) || "[]");
-        log.push({ q: input.value || what, at: new Date().toISOString().slice(0, 10) });
-        localStorage.setItem(LOG_KEY, JSON.stringify(log.slice(-200)));
-      } catch (err) {}
-      form.replaceWith(el("p", "said", "Added. Thank you — that is useful."));
-    });
-    box.appendChild(form);
+    box.appendChild(captureForm({
+      kind: "needed", ref: what, allowEmpty: true,
+      placeholder: "What were you hoping to find?", button: "Send",
+      done: "Added. Thank you — that is useful."
+    }));
     box.appendChild(el("p", "said",
       "Prototype: saved in this browser only. Nothing is sent anywhere."));
     return box;
   }
 
-  var INTEREST_KEY = "stan.interest.v1";
+  /* The quiet hand-off at the foot of a marker page: the person reading
+     about SHBG has a sheet in front of them. One line, one link. */
+  function sheetLine() {
+    var w = SERVICE.walkthrough;
+    if (!w) return el("div");
+    var box = el("div", "handoff");
+    box.appendChild(el("p", null,
+      "Got your own sheet and can't read it? Go through it with someone — " +
+      "what each line is, and what to ask at your appointment."));
+    var a = el("a", "btn ghost");
+    a.href = "#/o/" + w.id;
+    a.appendChild(document.createTextNode(w.name + " · " + w.price + " · " + w.time.split(",")[0]));
+    a.appendChild(el("span", "arrow", "→"));
+    box.appendChild(a);
+    return box;
+  }
 
   /* The booking block on a service page. In the prototype nothing can be
      bought, so the honest version of "Book" is "tell me when I can" — and
@@ -1687,28 +1849,13 @@
         : "Not yet. The blocker is stated below and we will not pretend it " +
           "away. If you want it, say so — demand is how the order gets set."));
 
-    var form = document.createElement("form");
-    var input = document.createElement("input");
-    input.type = "email";
-    input.placeholder = "Email — nothing else, and no newsletter";
-    input.setAttribute("aria-label", "Email address");
-    var btn = el("button", "btn");
-    btn.type = "submit";
-    btn.appendChild(document.createTextNode(
-      v.status === "ready" ? "Tell me when booking opens"
-      : v.status === "soon" ? "Join the waiting list" : "I would want this"));
-    form.appendChild(input);
-    form.appendChild(btn);
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      try {
-        var log = JSON.parse(localStorage.getItem(INTEREST_KEY) || "[]");
-        log.push({ svc: v.id, email: input.value, at: new Date().toISOString().slice(0, 10) });
-        localStorage.setItem(INTEREST_KEY, JSON.stringify(log.slice(-200)));
-      } catch (err) {}
-      form.replaceWith(el("p", "said", "Noted. You will hear when it is real."));
-    });
-    box.appendChild(form);
+    box.appendChild(captureForm({
+      kind: "interest", ref: v.id, type: "email",
+      placeholder: "Email — nothing else, and no newsletter",
+      button: v.status === "ready" ? "Tell me when booking opens"
+            : v.status === "soon" ? "Join the waiting list" : "I would want this",
+      done: "Noted. You will hear when it is real."
+    }));
     box.appendChild(el("p", "said",
       "Prototype: saved in this browser only. Nothing is sent anywhere yet."));
     return box;
@@ -1784,11 +1931,57 @@
         "to take; that is the clinical step, and it is priced by the clinician " +
         "with STAN's fee shown."));
       var back2 = el("div", "onward");
-      var ch = el("a", "chip", "← Back to the hub");
-      ch.href = "#connect";
+      var ch = el("a", "chip", "Everything that costs money here →");
+      ch.href = "#/p/what-costs";
       back2.appendChild(ch);
+      if (v.group) {
+        var gch = el("a", "chip", "The group itself →");
+        gch.href = "#/g/" + v.group;
+        back2.appendChild(gch);
+      }
       inner.appendChild(back2);
 
+      w.appendChild(inner);
+      page.appendChild(w);
+      viewEl.appendChild(page);
+      return;
+    }
+
+    if (v.kind === "ladder") {
+      inner.appendChild(el("p", "lede",
+        "STAN is set up so that the paid part funds the free part. That only " +
+        "works if the paid part is visible and honest, so here it is in full — " +
+        "what exists, what is waiting on something, and what is only an " +
+        "intention. Nothing on this list is hidden behind a conversation."));
+      v.stages.forEach(function (st) {
+        if (!st.services.length) return;
+        inner.appendChild(h2(st.label));
+        inner.appendChild(el("p", null, st.line));
+        var list = el("div", "costlist");
+        st.services.forEach(function (s) {
+          var row = el("a", "costrow " + s.status);
+          row.href = "#/o/" + s.id;
+          row.appendChild(el("b", null, s.name));
+          row.appendChild(el("span", "price", s.price));
+          row.appendChild(el("span", "desc", s.line));
+          if (s.fee) row.appendChild(el("span", "desc", s.fee));
+          row.appendChild(el("span", "st",
+            s.status === "ready" ? "Ready" + (s.unlock ? " · needs only: " + s.unlock : "")
+            : ST_LABEL[s.status] + " · needs first: " + s.blocker));
+          list.appendChild(row);
+        });
+        inner.appendChild(list);
+      });
+      inner.appendChild(h2("The rules this list is held to"));
+      var rules = document.createElement("ul");
+      [
+        "Everything you can read on STAN is free and stays free.",
+        "A peer teaches you to read a panel. A peer never reads your panel. Interpretation is a clinician's, and priced by the clinician.",
+        "Where STAN takes a fee from a clinician's price, the percentage is printed on the page. Always.",
+        "No affiliate money. No supplement links. No lab kickbacks. If a lab partner is ever named, the arrangement is named with it.",
+        "Nothing sells a test without a route to someone qualified to read it."
+      ].forEach(function (t) { rules.appendChild(el("li", null, t)); });
+      inner.appendChild(rules);
       w.appendChild(inner);
       page.appendChild(w);
       viewEl.appendChild(page);
@@ -1849,6 +2042,7 @@
         v.related.forEach(function (r) { on.appendChild(chip(r.id, r.name)); });
         inner.appendChild(on);
       }
+      inner.appendChild(sheetLine());
     }
 
     if (v.kind === "question") {
@@ -1888,6 +2082,19 @@
       inner.appendChild(el("p", null,
         "This group does not exist yet. It runs once there are trained " +
         "facilitators, a crisis protocol and insurance in place — not before."));
+      if (v.service) {
+        var svc = SERVICE[v.service];
+        var wlbox = el("div", "handoff");
+        wlbox.appendChild(el("p", null,
+          "Want in when it runs? " + (svc ? svc.price + " for the six weeks. " : "") +
+          "Put your name down and you hear first."));
+        var wla = el("a", "btn");
+        wla.href = "#/o/" + v.service;
+        wla.appendChild(document.createTextNode("Join the waiting list"));
+        wla.appendChild(el("span", "arrow", "→"));
+        wlbox.appendChild(wla);
+        inner.appendChild(wlbox);
+      }
     }
 
     if (v.kind === "seminar") {
