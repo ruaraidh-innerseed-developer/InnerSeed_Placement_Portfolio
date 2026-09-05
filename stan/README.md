@@ -48,7 +48,7 @@ stan/
 ├── knowledge/
 │   ├── schema/            marker · claim · question · answer
 │   ├── questions/         68 catalogued, 0 answered. The roadmap.
-│   ├── claims/            EMPTY — no source has been read yet
+│   ├── claims/            10, all draft — quotes not yet verified
 │   ├── answers/           EMPTY — no claims to compose from yet
 │   └── markers/           16 identity-only stubs
 ├── evidence/sources/      10 records, 1 read (ch. 5 only)
