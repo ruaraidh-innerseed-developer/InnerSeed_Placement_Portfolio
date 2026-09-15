@@ -2,10 +2,16 @@
 
 Read the root `CLAUDE.md` too. This file covers what is specific to STAN.
 
-STAN is a planned UK organisation for people affected by anabolic steroid use.
-Whether it is a support network, a coaching business, or something else is
-**not settled** — see `STRATEGY.md` and `COMMERCIAL.md`, and do not write as
-though the model is decided.
+STAN is an independent UK resource for people affected by anabolic steroid use.
+It is **not the business**. The business is Ruaraidh's practice as a recovery
+coach specialising in coming off; STAN gives it credibility and reach. See
+`STRATEGY.md`.
+
+**Read `DECISIONS.md` first.** It lists what is settled and what is open. Do not
+reopen anything on the settled list, and do not treat anything on the open list
+as decided — especially prices, which are placeholders.
+
+STAN has no affiliation with InnerSeed. Nothing in here references it.
 
 ## The three rules that keep getting broken
 
@@ -46,19 +52,25 @@ untested link, and never let "it works" imply "it's safe".
 Don't fight everything, don't moralise, and don't repeat a belief in STAN's own
 voice when the source is only reporting that users hold it.
 
-## Facts that are still open
+## Data and marketing
 
-Do not assume these are decided, and do not quietly pick one:
+Binding, and in `DECISIONS.md`:
 
-- **Where Ruaraidh is based.** Scotland and England differ for commissioning
-  and for signposting. Ask.
-- **Prices.** Every figure in `data/services.yaml` and `COMMERCIAL.md` is
-  provisional and some were invented by an earlier assistant. Treat them as
-  placeholders.
-- **The business model.** Support network, coaching practice, standards body,
-  or none of them.
-- **The entity.** No company or charity exists.
-- **The domain.** `data/site.yaml` holds a placeholder. The build warns.
+- **No advertising or analytics pixels** on any page about steroid use, coming
+  off, or symptoms. That leaks health data to ad platforms.
+- **Never infer** someone's drug use from their behaviour and market on it.
+- **Email is consent-based and segmented by what people tell us.** An address
+  given for one purpose is not used for another. This is special category health
+  data under UK GDPR, and PECR governs the marketing.
+- **No list is ever sold, rented or shared.**
+- Forming groups from what people have told us is a service, and fine.
+- The aggregate — the unmet-question log, outcomes later — is anonymous and is
+  the long-term asset.
+
+## Still open
+
+`DECISIONS.md` has the full list. The ones that bite most often: where Ruaraidh
+is based, what the coaching is called and costs, the domain, and the entity.
 
 ## Current state, honestly
 

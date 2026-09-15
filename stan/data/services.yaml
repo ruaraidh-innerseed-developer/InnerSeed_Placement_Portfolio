@@ -16,8 +16,10 @@
 # Nothing paid appears on the front door. The whole ladder is shown in one
 # place only, the transparency page, reached from the footer.
 #
-# Prices are in GBP and are the founder's decision. They are shown as ranges
-# where the range is real. The rule from COMMERCIAL.md §1: the audience anchors
+# PRICES ARE PROVISIONAL. Several were invented by an assistant and were never
+# set by Ruaraidh — treat every figure here as a placeholder until DECISIONS.md
+# records it as settled. Prices are in GBP and shown as ranges where the range
+# is real. The rule from COMMERCIAL.md §1: the audience anchors
 # against what they spend on compounds and private bloods, not against a
 # charity leaflet. Do not underprice.
 #
@@ -173,6 +175,41 @@ services:
     fee: STAN's fee is 15–25% and is printed on this page.
     status: planned
     blocker: As above.
+
+
+  # --------------------------------------------------- the coaching practice
+  # NOT a STAN service. Ruaraidh's own practice, listed here because the site
+  # points at it and everything the site points at is described in this file.
+  # DECISIONS.md holds the disclosure rule: wherever STAN points at this, the
+  # page says it is run by the same person who built STAN, that he charges, and
+  # shows other routes including free ones.
+  - id: coming-off-coaching
+    stage: committed
+    name: Coming-off coaching
+    line: Structured one-to-one support through stopping, and the months after.
+    time: Not decided
+    price: "Not set"
+    provider: Ruaraidh, independently of STAN
+    disclose: >
+      Run by the same person who built STAN. He charges for it. STAN is not paid
+      a fee and takes no cut, because it is the same person — which is exactly
+      why this line is here.
+    status: soon
+    blocker: >
+      A name, a defined shape, a price, and a decision on training and
+      insurance. None of these has been set. See DECISIONS.md.
+    what_happens:
+      - Not written yet. To be defined before anything is offered.
+    not_this: >
+      Not clinical care and not therapy. No tapering plans, nothing about what
+      to take, and no management of the medical side — that routes to a
+      clinician every time. Accountability, structure, knowing what to expect,
+      help getting seen, and someone who has been through it.
+    detail: >
+      The gap this sits in: free NHS and needle-exchange provision at one end,
+      residential rehab at £18,000-40,000 at the other, and nothing in between.
+      The rehab framing also loses most of the people who want to stop but do
+      not accept the word addict.
 
   # ----------------------------------------------------------------- member
   - id: membership
