@@ -1,0 +1,34 @@
+id: supratherapeutic-doses-increase-mass-and-strength
+statement: Doses above the clinically prescribed range have been shown to increase
+  muscle mass and strength in trained, healthy athletes by more than weight training
+  produces on its own.
+source: taylor-2002-anabolic-steroids-athlete
+locator: Ch. 5, p. 60, 'The First Cycle' — The Science Behind the Regime; cites
+  refs 1-11
+quote: Studies have shown that low to moderate supratherapeutic (larger than clinically
+  prescribed) doses of anabolic steroids can significantly enhance muscle mass and
+  strength in previously trained, otherwise healthy, athletes over and above the
+  effects of weight training alone. The duration of anabolic steroid use in these
+  studies varied from 4-24 weeks.
+quote_verified: false
+kind: direct
+population: Previously weight-trained, otherwise healthy athletes in studies of
+  4 to 24 weeks. Short duration and healthy at entry — neither matches the long-term
+  user, and neither matches somebody presenting with symptoms after years of use.
+does_not_support:
+- Any claim about safety. That something works is not that it is safe, and the studies
+  cited are short.
+- Any claim about what happens beyond 24 weeks. The evidence base described here
+  stops there, while real-world use does not.
+- Any dose guidance whatsoever.
+- A claim about people who are not healthy at the outset, or who are not weight
+  training.
+topics:
+- harm-reduction
+- epidemiology
+extracted_by: Claude (Opus 5), from the founder's photographs of pp. 60-62
+extracted_on: '2026-09-05'
+status: draft
+notes: 'This is the honest concession STAN has to be willing to make: they work.
+  A translator that cannot say so is not trusted on anything else. Refs 1-11 are
+  the primary literature and are the top of the chase list.'

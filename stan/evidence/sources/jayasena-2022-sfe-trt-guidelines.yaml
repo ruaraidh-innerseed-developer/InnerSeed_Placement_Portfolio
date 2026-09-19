@@ -1,0 +1,112 @@
+id: jayasena-2022-sfe-trt-guidelines
+type: guideline
+title: >-
+  Society for Endocrinology guidelines for testosterone replacement therapy in
+  male hypogonadism
+authors:
+  - Jayasena CN
+  - Anderson RA
+  - Llahana S
+  - Barth J
+  - MacKenzie F
+  - Wilkes S
+  - Smith ND
+  - Sooriakumaran P
+  - Minhas S
+  - Wu FCW
+  - Tomlinson JW
+  - Quinton R
+year: 2022
+venue: Clinical Endocrinology
+identifiers:
+  doi: 10.1111/cen.14633
+  pmid: '34811785'
+  url: https://onlinelibrary.wiley.com/doi/abs/10.1111/cen.14633
+open_access: false
+
+evidence_level:
+  scheme: STAN-EL-1
+  grade: A
+  rationale: >-
+    Formal guideline from a recognised UK professional body (Society for
+    Endocrinology), developed multidisciplinarily across endocrinology, primary
+    care, clinical biochemistry, urology and reproductive medicine.
+
+population_relevance:
+  rating: partial
+  notes: >-
+    Addresses male hypogonadism broadly, across mixed aetiologies. It is NOT an
+    ASIH guideline and does not set out a post-AAS pathway. Highly relevant for
+    general principles of diagnosis, biochemical assessment and monitoring;
+    only partially relevant to a post-AAS population. This distinction is the
+    single most important thing to preserve when citing it.
+
+topics:
+  - trt-initiation
+  - trt-monitoring
+  - shbg-free-testosterone
+  - delivery-routes
+  - service-access-uk
+
+claims_supported:
+  - >-
+    That UK professional-body guidance exists for the diagnosis and management
+    of male hypogonadism, and what that guidance recommends.
+  - >-
+    That where SHBG is abnormal, total testosterone may not accurately reflect
+    biological androgen effect, and calculated free testosterone (Vermeulen
+    formula) is the appropriate assessment.
+  - >-
+    Recommended biochemical assessment, monitoring intervals and safety
+    parameters for men on testosterone replacement, as stated in the guideline.
+  - >-
+    That a clinician not applying the SHBG / free testosterone provision is
+    departing from UK guidance — useful in a consultation brief.
+
+claims_not_supported:
+  - >-
+    Any protocol for managing anabolic-steroid-induced hypogonadism. The
+    guideline does not cover ASIH and must never be presented as though it does.
+  - >-
+    Any endorsement of post-cycle therapy, SERMs, hCG restart protocols, or
+    aromatase inhibitor use outside licensed indications.
+  - Any individual dosing recommendation for any specific person.
+  - >-
+    Any claim about recovery of the HPG axis after exogenous androgen cessation.
+
+limitations: >-
+  Population is male hypogonadism of mixed aetiology; men with a history of
+  supraphysiological AAS exposure are not the guideline's subject. Guidelines
+  date: this is a 2022 document and should be checked against any subsequent
+  Society for Endocrinology revision at each review. Full text not yet read by
+  STAN — page range (reported as 96(2):200-219) requires confirmation against
+  the publisher record.
+
+conflicts_of_interest: >-
+  Not yet assessed — full text not read. Guideline author groups in this field
+  commonly include members with industry relationships; the declaration section
+  must be read and summarised here before approval.
+
+verification:
+  bibliographic: partial
+  full_text_read: false
+  verified_by: R. (founder) via Claude-assisted search
+  verified_on: '2026-09-01'
+
+review:
+  status: added
+
+provenance:
+  added_by: R. (founder)
+  added_on: '2026-09-01'
+  discovered_via: >-
+    Identified as the governing UK guideline for the SHBG / calculated free
+    testosterone question raised in the founder's index case.
+
+notes: >-
+  This is the anchor guideline for the first planned content page (high SHBG,
+  low free testosterone, inadequate transdermal replacement). Note the tension
+  worth stating openly on that page: the guideline provides the biochemical
+  reasoning but does not address the post-AAS population, so the page must be
+  explicit that it is applying general guidance to a population the guidance
+  does not name. Lead author Jayasena is also the priority outreach contact.

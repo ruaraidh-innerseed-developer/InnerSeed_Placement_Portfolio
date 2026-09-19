@@ -1,0 +1,19 @@
+# Source documents are NOT committed.
+#
+# Journal PDFs and guideline documents are copyrighted. Putting them in a public
+# repository is infringement, regardless of how they were obtained. They live
+# here locally so Claude can read them, and they stay out of git.
+#
+# What IS committed is the record produced from reading them:
+# evidence/sources/*.yaml and the marker fields they support. Facts are not
+# copyrightable; expression is. STAN reports what a source says. It never
+# reproduces it.
+
+*.pdf
+*.PDF
+*.epub
+*.docx
+*.html
+*.txt
+!README.md
+!.gitignore

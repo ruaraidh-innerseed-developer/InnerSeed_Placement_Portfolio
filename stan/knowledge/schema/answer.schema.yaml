@@ -1,0 +1,114 @@
+# STAN knowledge base — answer record schema
+# Version: 1.0
+#
+# What a reader actually meets. Composed ONLY from approved claims.
+#
+# THE HARD RULE
+#
+#   No substantive statement in `body` may appear that is not carried by a
+#   claim listed in `claims`.
+#
+# Connective prose is fine — "so", "which means", "in practice". New assertions
+# are not. A reviewer reads the body against the claims sentence by sentence,
+# and anything left over either gets a claim or gets cut.
+#
+# This is what a clinician is actually asked to sign off: a finite, checkable
+# document, not a model's future behaviour.
+
+version: 1.0
+
+enums:
+  status:
+    - draft               # composed, nobody has checked it
+    - second-read         # a non-clinician has checked body against claims
+    - clinically-reviewed # a registered clinician has approved it
+    - live                # serving to readers
+    - retired             # withdrawn; kept for the corrections log
+
+fields:
+  id: {required: true, type: str, pattern: '^[a-z0-9]+(-[a-z0-9]+)*$'}
+
+  answers:
+    required: true
+    type: list
+    note: >-
+      Question ids this answers. Usually several — "why am I tired", "no energy
+      since stopping" and "is this normal after coming off" are one answer.
+
+  body:
+    required: true
+    type: str
+    note: >-
+      The prose. Plain English, NHS reading level, question answered in the
+      first sentence. Every substantive statement traceable to `claims`.
+
+  claims:
+    required: true
+    type: list
+    note: >-
+      Claim ids. Non-empty. An answer with no claims is an opinion.
+
+  uncertainty:
+    required: true
+    type: str
+    note: >-
+      MANDATORY AND NEVER EMPTY. What is not known, what is contested, where
+      practice runs ahead of evidence. In this field it is often the most
+      useful part of the answer, and an answer without it is misleading by
+      omission. If genuinely everything here is settled, say that explicitly —
+      do not leave the field blank.
+
+  does_not_tell_you:
+    required: true
+    type: list
+    note: Reader-facing limits. What they might wrongly take from this.
+
+  signpost:
+    required: true
+    type: str
+    note: >-
+      Who can actually answer this for them personally. Every answer ends by
+      pointing somewhere, because no general answer settles an individual case.
+
+  red_flag:
+    required: false
+    type: str
+    note: >-
+      If the question could be asked by someone in danger, the urgent-care
+      instruction goes at the TOP of the rendered answer, not the bottom.
+
+  topics:  {required: true, type: list}
+  markers: {required: false, type: list}
+
+  author:            {required: true, type: str}
+  second_reader:     {required: false, type: str}
+  clinical_reviewer: {required: false, type: str}
+  reviewed_on:       {required: false, type: str, pattern: '^\d{4}-\d{2}-\d{2}$'}
+  next_review_due:   {required: false, type: str, pattern: '^\d{4}-\d{2}-\d{2}$'}
+
+  status:  {required: true, type: str, enum: status}
+  version: {required: true, type: str}
+  notes:   {required: false, type: str}
+
+rules:
+  - id: claims-non-empty
+    description: An answer must be built from at least one claim.
+  - id: claims-must-exist-and-be-approved
+    description: >-
+      Every id in `claims` must exist and, for status live, be at claim status
+      "approved".
+  - id: second-read-before-clinical
+    description: >-
+      status "clinically-reviewed" requires second_reader already set. The
+      clinician's time is not spent catching typos.
+  - id: live-requires-clinical-review
+    description: >-
+      status "live" requires clinical_reviewer and reviewed_on — EXCEPT where
+      the answer qualifies as Tier A under INTERIM-STANDARD.md, in which case a
+      second reader suffices and the page carries the interim notice.
+  - id: uncertainty-non-empty
+    description: >-
+      `uncertainty` must not be blank. Enforced, because it is the field most
+      likely to be skipped and the one that matters most here.
+  - id: questions-must-exist
+    description: Every id in `answers` must be a question in knowledge/questions/.

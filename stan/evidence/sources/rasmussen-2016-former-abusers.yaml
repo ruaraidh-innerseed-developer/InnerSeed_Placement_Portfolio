@@ -1,0 +1,105 @@
+id: rasmussen-2016-former-abusers
+type: primary-research
+title: >-
+  Former Abusers of Anabolic Androgenic Steroids Exhibit Decreased Testosterone
+  Levels and Hypogonadal Symptoms Years after Cessation: A Case-Control Study
+authors:
+  - Rasmussen JJ
+  - Selmer C
+  - Østergren PB
+  - Pedersen KB
+  - Schou M
+  - Gustafsson F
+  - Faber J
+  - Juul A
+  - Kistorp C
+year: 2016
+venue: PLoS ONE
+identifiers:
+  doi: 10.1371/journal.pone.0161208
+  pmid: '27532478'
+  pmcid: PMC4988681
+  url: https://journals.plos.org/plosone/article?id=10.1371%2Fjournal.pone.0161208
+open_access: true
+
+evidence_level:
+  scheme: STAN-EL-1
+  grade: B
+  rationale: >-
+    Peer-reviewed primary research with a control group and a directly relevant
+    population. Cross-sectional design and self-reported exposure history hold
+    it below grade A.
+
+population_relevance:
+  rating: direct
+  notes: >-
+    Danish recreational athletes with self-reported AAS history — current users,
+    former users, and controls. This is close to STAN's core population, with
+    the caveat that a Danish gym-going cohort may differ from UK users in
+    substances, dosing patterns and access to care.
+
+topics:
+  - asih
+  - hpg-axis-recovery
+  - fertility-spermatogenesis
+  - epidemiology
+
+claims_supported:
+  - >-
+    That men who had ceased AAS use showed significantly lower plasma
+    testosterone and a higher frequency of hypogonadal symptoms than controls,
+    years after cessation.
+  - >-
+    That current AAS users showed markedly decreased AMH and inhibin B,
+    consistent with impaired spermatogenesis.
+  - >-
+    That recovery of the HPG axis after AAS cessation is not assured and may
+    remain incomplete over a period of years — a central and defensible claim
+    for STAN's core educational content.
+
+claims_not_supported:
+  - >-
+    Any estimate of the probability that a specific individual will or will not
+    recover. The study reports group differences, not individual prognosis.
+  - >-
+    Any dose-response or duration threshold ("X years at Y mg causes permanent
+    damage"). The design does not support causal dose-response inference.
+  - Any treatment recommendation whatsoever.
+  - >-
+    Any claim that recovery is impossible. The study shows incomplete recovery
+    in a group, not absence of recovery in all individuals — an important
+    distinction for readers who may be frightened into fatalism, which is its
+    own harm.
+
+limitations: >-
+  Cross-sectional case-control design cannot establish causation or trajectory.
+  AAS exposure history self-reported and therefore subject to recall and
+  reporting bias. Single-country recreational athlete cohort. No pre-exposure
+  baseline. Possible confounding by indication and by concurrent substance use.
+  Full text not yet read by STAN.
+
+conflicts_of_interest: >-
+  Not yet assessed — full text not read. Record the declaration and funding
+  source (Danish academic/hospital group, Rigshospitalet and Herlev) before
+  approval.
+
+verification:
+  bibliographic: partial
+  full_text_read: false
+  verified_by: R. (founder) via Claude-assisted search
+  verified_on: '2026-09-01'
+
+review:
+  status: added
+
+provenance:
+  added_by: R. (founder)
+  added_on: '2026-09-01'
+  discovered_via: Widely cited landmark in the ASIH literature; identified in initial scoping.
+
+notes: >-
+  Frequently the most-cited paper in this field and correspondingly the most
+  frequently over-stretched. Note both directions of misuse: by people
+  minimising risk ("it's only a small difference") and by people catastrophising
+  ("you can never recover"). The claims_not_supported list is deliberately
+  written to block both.

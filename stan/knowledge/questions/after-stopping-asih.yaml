@@ -1,0 +1,109 @@
+# Question bank — after-stopping-asih
+#
+# Questions assert nothing, so this file can be written and extended freely.
+# Answers are a different matter entirely: see ../schema/answer.schema.yaml.
+#
+# `variants` is what makes the search bar work. Add to it every time the unmet
+# search log shows a phrasing nobody anticipated.
+
+topic: after-stopping-asih
+
+questions:
+
+  - id: why-so-tired-since-stopping
+    question: "Why am I so tired since I stopped?"
+    variants:
+      - "no energy after coming off"
+      - "exhausted since stopping"
+      - "fatigue post cycle"
+      - "knackered all the time"
+    topics: [after-stopping-asih]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: libido-not-come-back
+    question: "Why has my libido not come back?"
+    variants:
+      - "no sex drive after stopping"
+      - "libido still gone"
+      - "dead down there"
+    topics: [after-stopping-asih]
+    markers: [total-testosterone, prolactin]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: still-feel-awful-months-later
+    question: "I stopped months ago and still feel awful. Is that normal?"
+    variants:
+      - "still bad after 6 months"
+      - "when does it get better"
+      - "how long does this last"
+    topics: [after-stopping-asih]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: bloods-normal-but-feel-terrible
+    question: "My doctor says my bloods are normal but I feel terrible."
+    variants:
+      - "told im in range but feel rubbish"
+      - "normal testosterone still symptoms"
+      - "gp says im fine"
+    topics: [after-stopping-asih]
+    markers: [total-testosterone, shbg, free-testosterone]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+    notes: >-
+      The index case. Usually a total-versus-free question, sometimes not.
+      Must not diagnose — must give them the right question to ask.
+
+  - id: testicles-back-to-normal
+    question: "Will my testicles go back to normal size?"
+    variants:
+      - "balls shrunk"
+      - "testicular atrophy reversible"
+      - "will my balls come back"
+    topics: [after-stopping-asih]
+    origin: proposed
+    frequency: unknown
+    priority: 2
+
+  - id: depression-from-stopping
+    question: "Is my depression from stopping, or something else?"
+    variants:
+      - "low mood after coming off"
+      - "depressed since stopping"
+      - "mental health after steroids"
+    topics: [after-stopping-asih]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+    notes: >-
+      RED FLAG CANDIDATE. Any answer must carry crisis signposting at the
+      top.
+
+  - id: how-do-i-know-axis-restarted
+    question: "How do I know if my system has restarted?"
+    variants:
+      - "has my axis recovered"
+      - "am i producing my own test again"
+      - "signs of recovery"
+    topics: [after-stopping-asih]
+    markers: [lh, fsh, total-testosterone]
+    origin: proposed
+    frequency: unknown
+    priority: 2
+
+  - id: what-is-asih
+    question: "What is steroid-induced hypogonadism?"
+    variants:
+      - "asih meaning"
+      - "what is it called when steroids shut you down"
+      - "hypogonadism from steroids"
+    topics: [after-stopping-asih]
+    origin: proposed
+    frequency: unknown
+    priority: 1

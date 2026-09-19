@@ -1,0 +1,77 @@
+# Question bank — fertility
+#
+# Questions assert nothing, so this file can be written and extended freely.
+# Answers are a different matter entirely: see ../schema/answer.schema.yaml.
+#
+# `variants` is what makes the search bar work. Add to it every time the unmet
+# search log shows a phrasing nobody anticipated.
+
+topic: fertility
+
+questions:
+
+  - id: can-i-still-have-kids
+    question: "Can I still have children?"
+    variants:
+      - "am i infertile"
+      - "will i be able to have kids"
+      - "fertility ruined"
+    topics: [fertility]
+    markers: [fsh, inhibin-b, amh]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: sperm-count-zero
+    question: "Why is my sperm count zero?"
+    variants:
+      - "azoospermia steroids"
+      - "no sperm in sample"
+      - "sperm test came back zero"
+    topics: [fertility]
+    markers: [fsh, inhibin-b]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: how-long-till-fertility-returns
+    question: "How long until my fertility comes back?"
+    variants:
+      - "sperm recovery time"
+      - "when will sperm return"
+    topics: [fertility]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: protect-fertility-while-on
+    question: "Can I protect my fertility while I'm on?"
+    variants:
+      - "hcg for fertility"
+      - "keep sperm while on cycle"
+    topics: [fertility]
+    origin: proposed
+    frequency: unknown
+    priority: 2
+
+  - id: partner-and-i-are-trying
+    question: "My partner and I are trying for a baby. What should we do?"
+    variants:
+      - "trying to conceive on steroids"
+      - "ttc after cycle"
+    topics: [fertility]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: what-tests-show-fertility
+    question: "What tests show whether I'm fertile?"
+    variants:
+      - "semen analysis"
+      - "fertility bloods"
+      - "how do i get tested"
+    topics: [fertility]
+    markers: [fsh, inhibin-b, amh]
+    origin: proposed
+    frequency: unknown
+    priority: 2

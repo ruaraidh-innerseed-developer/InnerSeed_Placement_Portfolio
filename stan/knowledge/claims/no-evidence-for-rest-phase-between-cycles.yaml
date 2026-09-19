@@ -1,0 +1,30 @@
+id: no-evidence-for-rest-phase-between-cycles
+statement: As at 2002, there was little scientific evidence that the rest phase
+  users take between cycles makes the next cycle either safer or more effective.
+source: taylor-2002-anabolic-steroids-athlete
+locator: Ch. 5, p. 61, 'The First Cycle' — The Science Behind the Regime (boxed
+  by the founder)
+quote: There is little scientific evidence to validate the user's practice of a
+  rest phase for either safety or effectiveness of the next anabolic steroid cycle.
+quote_verified: false
+kind: direct
+population: Not a population claim. A statement about the state of the evidence
+  as at 2002.
+does_not_support:
+- A claim that rest phases are useless or pointless. Absence of evidence is not
+  evidence of absence, and the author says evidence is lacking, not that the practice
+  fails.
+- A claim that continuous use is therefore preferable. That inversion would be dangerous
+  and the source does not remotely support it.
+- A statement about the CURRENT evidence. Twenty-four years have passed and this
+  must be re-checked before publication.
+topics:
+- harm-reduction
+- pct-restart
+extracted_by: Claude (Opus 5), from the founder's photographs of pp. 60-62
+extracted_on: '2026-09-05'
+status: draft
+notes: STRONG ARTICLE MATERIAL. A near-universal community practice, and the evidence
+  for it was thin enough to say so in print. The article writes itself only after
+  somebody checks whether the gap has since been filled — that check is the work,
+  and it must be done before a word is published.

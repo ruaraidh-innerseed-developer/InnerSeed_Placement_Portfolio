@@ -1,0 +1,114 @@
+# STAN services register — schema
+# Version: 1.0
+#
+# Loaded by stan/tools/validate.py. Services are governed separately from the
+# evidence register because they have different fields and a shorter review
+# cycle: a study does not change its findings, but a helpline changes its hours.
+#
+# A wrong crisis number is more dangerous than a missing one. Every entry must
+# be checked against the provider's own website, not against a directory.
+
+version: 1.0
+
+enums:
+  kind:
+    - emergency
+    - crisis-emotional
+    - crisis-mental-health
+    - urgent-health
+    - drugs-alcohol
+    - peer-support
+    - navigation
+
+  coverage:
+    - uk
+    - england
+    - scotland
+    - wales
+    - northern-ireland
+
+  cost:
+    - free
+    - free-from-landline
+    - standard-rate
+    - varies
+
+  verification_status:
+    - verified
+    - partial
+    - unverified
+
+top_level:
+  version: {required: true, type: float}
+  last_full_review: {required: true, type: str, pattern: '^\d{4}-\d{2}-\d{2}$'}
+  next_full_review: {required: true, type: str, pattern: '^\d{4}-\d{2}-\d{2}$'}
+  reviewed_by: {required: true, type: str}
+  services: {required: true, type: list}
+
+fields:
+  id:
+    required: true
+    type: str
+    pattern: '^[a-z0-9]+(-[a-z0-9]+)*$'
+
+  name: {required: true, type: str}
+
+  kind:
+    required: true
+    type: str
+    enum: kind
+
+  coverage:
+    required: true
+    type: list
+    enum: coverage
+
+  contact:
+    required: true
+    type: map
+    note: Any of phone, text, email, web. At least one required.
+
+  cost:
+    required: true
+    type: str
+    enum: cost
+
+  hours:
+    required: true
+    type: str
+    note: >-
+      Write hours in full. "24/7" is a claim that must be true. Partial-hours
+      services are the ones most likely to fail someone at 3am, so the hours
+      string is displayed to users verbatim, never summarised.
+
+  audience: {required: true, type: str}
+
+  what_it_is: {required: true, type: str}
+
+  what_it_is_not:
+    required: true
+    type: str
+    note: >-
+      Required. Prevents a supporter routing someone to a listening service when
+      they need an emergency response, or vice versa.
+
+  verification:
+    required: true
+    type: map
+    subfields:
+      status: {required: true, type: str, enum: verification_status}
+      checked_on: {required: true, type: str, pattern: '^\d{4}-\d{2}-\d{2}$'}
+      checked_by: {required: true, type: str}
+      checked_against: {required: true, type: str}
+
+  notes: {required: false, type: str}
+
+rules:
+  - id: contact-present
+    description: At least one of phone, text, email, web must be present.
+  - id: review-interval
+    description: >-
+      next_full_review must be no more than 183 days after last_full_review.
+      Crisis information goes stale faster than anything else STAN holds.
+  - id: unique-ids
+    description: Service ids must be unique.

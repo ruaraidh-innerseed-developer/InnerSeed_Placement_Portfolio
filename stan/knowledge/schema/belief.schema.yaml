@@ -1,0 +1,117 @@
+# STAN knowledge base — community belief record schema
+# Version: 1.0
+#
+# WHAT THIS IS FOR
+#
+# There are things the bodybuilding and PED community holds to be true that the
+# literature has never tested. Discarding them is wrong twice over: it is often
+# the only information anyone has, and it is what people are actually acting on
+# tonight. Presenting them as fact is wrong too.
+#
+# So they get their own register. Recorded, named, and held against the
+# evidence — never mixed in with claims.
+#
+#     claim   = a statement traceable to a quote in a source that was read
+#     belief  = a statement widely held, whose evidential status is a FINDING
+#
+# THE BRIDGE
+#
+# This is also how STAN earns the community rather than lecturing it. A page
+# saying "here are twelve things widely believed — three are supported, two are
+# contradicted, seven have never been studied" respects what people know while
+# being completely honest about what is established. Nobody else publishes that,
+# and it is the single most shareable thing STAN could put out.
+#
+# It runs the other way too. `what_would_settle_it` turns a piece of gym lore
+# into a named research question, which makes this register genuinely useful to
+# the academics STAN wants on board. Very few patient organisations can hand a
+# researcher a ranked list of what to study next.
+
+version: 1.0
+
+enums:
+  status:
+    - supported      # approved claims support it
+    - contradicted   # approved claims contradict it
+    - mixed          # claims point both ways, or it depends on conditions
+    - untested       # nobody has studied it. EXPECT THIS TO BE THE COMMON CASE.
+    - unclear        # STAN has not looked yet. Not the same as untested.
+
+  spread:
+    - universal      # essentially everyone in the community holds it
+    - widespread
+    - contested      # actively argued about within the community
+    - niche
+
+fields:
+  id: {required: true, type: str, pattern: '^[a-z0-9]+(-[a-z0-9]+)*$'}
+
+  belief:
+    required: true
+    type: str
+    note: The belief stated plainly and fairly, as its holders would recognise it.
+
+  how_stated:
+    required: false
+    type: list
+    note: >-
+      How it actually gets said — forum phrasing, coach shorthand. Doubles as
+      search variants, so someone arriving with the belief finds the entry.
+
+  spread:  {required: true, type: str, enum: spread}
+  status:  {required: true, type: str, enum: status}
+
+  claims_supporting:    {required: true, type: list}
+  claims_contradicting: {required: true, type: list}
+
+  assessment:
+    required: true
+    type: str
+    note: >-
+      A fair, unsmug summary of where this stands. Not a debunking. If the
+      community is right, say so plainly — that is what makes the entries where
+      they are wrong worth reading.
+
+  what_would_settle_it:
+    required: true
+    type: str
+    note: >-
+      The study that would answer it. Population, comparison, outcome, roughly.
+      This is the field that turns lore into a research question and makes the
+      register valuable to people who run studies.
+
+  harm_if_wrong:
+    required: true
+    type: str
+    note: >-
+      What happens to someone who acts on this and it turns out to be false.
+      Used to rank which beliefs matter most to investigate — an untested belief
+      that is harmless if wrong is far less urgent than one that is not.
+
+  questions: {required: false, type: list, note: Question bank ids this bears on.}
+  topics:    {required: true,  type: list}
+  markers:   {required: false, type: list}
+
+  recorded_by: {required: true, type: str}
+  recorded_on: {required: true, type: str, pattern: '^\d{4}-\d{2}-\d{2}$'}
+  notes:       {required: false, type: str}
+
+rules:
+  - id: status-matches-claims
+    description: >-
+      status "supported" requires a non-empty claims_supporting;
+      "contradicted" requires claims_contradicting; "mixed" requires both.
+      "untested" requires BOTH to be empty — if there are claims either way it
+      is not untested.
+
+  - id: untested-is-a-finding-not-a-gap
+    description: >-
+      "untested" is a positive statement — we looked and the research does not
+      exist. It requires `assessment` to say where we looked. "unclear" is the
+      value for not having looked yet, and the two must not be conflated.
+
+  - id: never-rendered-as-a-claim
+    description: >-
+      A belief may never be cited as support for anything in an answer. It may
+      be reported AS a belief, with its status shown. The renderer must label
+      belief content distinctly from claim content, always.

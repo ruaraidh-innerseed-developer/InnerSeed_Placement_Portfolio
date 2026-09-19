@@ -1,0 +1,138 @@
+# Question bank — coming-off
+#
+# Questions assert nothing, so this file can be written and extended freely.
+# Answers are a different matter entirely: see ../schema/answer.schema.yaml.
+#
+# `variants` is what makes the search bar work. Add to it every time the unmet
+# search log shows a phrasing nobody anticipated.
+
+topic: coming-off
+
+questions:
+
+  - id: how-do-i-come-off-safely
+    question: "How do I come off safely?"
+    variants:
+      - "how to stop taking steroids"
+      - "safest way to come off"
+      - "coming off gear"
+      - "how do i quit"
+    topics: [coming-off]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+    notes: >-
+      The most-asked and most-dangerous question here. The honest answer
+      includes that there is no agreed clinical pathway, which will
+      disappoint. Say it anyway.
+
+  - id: do-i-need-pct
+    question: "Do I need post cycle therapy?"
+    variants:
+      - "is pct necessary"
+      - "do i have to do pct"
+      - "pct or not"
+    topics: [coming-off]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+    notes: >-
+      Enormous gap between what the community treats as settled and what
+      the evidence supports. Handle carefully.
+
+  - id: how-long-to-recover
+    question: "How long will it take to recover?"
+    variants:
+      - "recovery time after stopping"
+      - "when will i feel normal"
+      - "how long till my test comes back"
+    topics: [coming-off]
+    markers: [lh, total-testosterone]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+    notes: >-
+      The withheld-figure question. Do not answer with a number lifted
+      from a population that does not match the reader.
+
+  - id: taper-or-stop
+    question: "Is it better to taper off or stop suddenly?"
+    variants:
+      - "should i taper"
+      - "cold turkey or taper"
+      - "wean off or just stop"
+    topics: [coming-off]
+    origin: proposed
+    frequency: unknown
+    priority: 2
+
+  - id: first-weeks-after-stopping
+    question: "What happens in the first few weeks after stopping?"
+    variants:
+      - "what to expect when coming off"
+      - "first month off"
+      - "the crash"
+    topics: [coming-off]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: hcg-when-coming-off
+    question: "Should I use hCG when coming off?"
+    variants:
+      - "hcg for recovery"
+      - "does hcg help restart"
+      - "hcg before pct"
+    topics: [coming-off]
+    origin: proposed
+    frequency: unknown
+    priority: 2
+
+  - id: can-my-doctor-help-me-come-off
+    question: "Can my doctor help me come off?"
+    variants:
+      - "will my gp help"
+      - "what can the nhs do"
+      - "who do i see to come off"
+    topics: [coming-off]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: years-without-a-break
+    question: "What if I've been on for years without a break?"
+    variants:
+      - "ten years on"
+      - "never came off"
+      - "long term use recovery"
+    topics: [coming-off]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: is-it-too-late-for-me
+    question: "Is it too late for me to recover?"
+    variants:
+      - "have i done permanent damage"
+      - "am i stuck on this forever"
+      - "too late to stop"
+    topics: [coming-off]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+    notes: >-
+      Often asked by someone frightened. Must avoid both false reassurance
+      and fatalism — the evidence supports neither extreme.
+
+  - id: will-i-lose-my-gains
+    question: "Will I lose all my gains?"
+    variants:
+      - "losing size after stopping"
+      - "keep gains off cycle"
+    topics: [coming-off]
+    origin: proposed
+    frequency: unknown
+    priority: 2
+    notes: >-
+      Sounds vain, often is not. Frequently the real barrier to someone
+      stopping.

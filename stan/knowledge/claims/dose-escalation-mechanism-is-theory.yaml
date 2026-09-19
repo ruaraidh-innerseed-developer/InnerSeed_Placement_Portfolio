@@ -1,0 +1,33 @@
+id: dose-escalation-mechanism-is-theory
+statement: The author proposed that more receptors require more steroid to occupy
+  them, which would explain why users escalate doses, and stated plainly that the
+  theory needs further investigation.
+source: taylor-2002-anabolic-steroids-athlete
+locator: Ch. 5, p. 62, continuation of 'The Second Cycle' — The Science Behind the
+  Regime (boxed by the founder); cites ref 15
+quote: It is likely that this mechanism is the reason that increases in the dose
+  of anabolic steroids are required to extend muscle mass gains. However, this theory
+  needs further investigation.
+quote_verified: false
+kind: direct
+population: Not a population claim. A proposed mechanism, offered as theory by the
+  author as at 2002.
+does_not_support:
+- A claim that escalation is physiologically necessary, or inevitable, or justified.
+  The author is explaining a pattern, not endorsing it.
+- Any claim that this mechanism is established. The author's own final sentence
+  forbids it.
+- Any dose guidance, explicitly and absolutely.
+- A claim that tolerance to anabolic steroids is proven.
+topics:
+- harm-reduction
+- muscle-physiology
+- mental-health
+extracted_by: Claude (Opus 5), from the founder's photographs of pp. 60-62
+extracted_on: '2026-09-05'
+status: draft
+notes: Useful to STAN because escalation is the thing that turns one cycle into
+  ten years, and a person who understands why the same dose stops working is better
+  placed than one who just feels it stop working. Note carefully that a mechanistic
+  explanation for escalation is not a permission for it — the article must not read
+  as one.

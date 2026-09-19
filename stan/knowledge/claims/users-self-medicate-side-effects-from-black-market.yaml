@@ -1,0 +1,32 @@
+id: users-self-medicate-side-effects-from-black-market
+statement: By the third cycle and beyond, users become more aware of adverse effects
+  and begin taking prescription drugs to counter them, often without medical supervision
+  and obtained through black market dealers.
+source: taylor-2002-anabolic-steroids-athlete
+locator: Ch. 5, p. 63, 'The Third through Fifth Cycles', opening paragraphs; cites
+  ref 16
+quote: In an attempt to deal with adverse side effects, users often begin taking
+  prescription drugs, with or without medical supervision, in an attempt to counter
+  these effects. They can usually obtain these prescription drugs through black
+  market steroid dealers.
+quote_verified: false
+kind: direct
+population: Anabolic steroid users at their third cycle or beyond, as characterised
+  by the author around 2002.
+does_not_support:
+- Naming any of those drugs, or anything about what they are used for. That would
+  be a protocol and STAN does not publish protocols.
+- Any claim about how common this is now, or in the UK. The characterisation is
+  unquantified and twenty-four years old.
+- Any claim about the safety or composition of black-market medicines, though the
+  risk is obvious and worth stating from a current source.
+topics:
+- harm-reduction
+- service-access-uk
+extracted_by: Claude (Opus 5), from the founder's photographs of p. 63
+extracted_on: '2026-09-05'
+status: draft
+notes: Directly relevant to STAN's purpose. It describes a person who knows something
+  is wrong and is treating it himself with unregulated medicines, because no clinician
+  will engage with him. That is the person STAN exists for, and it is an argument
+  for the clinical panel.

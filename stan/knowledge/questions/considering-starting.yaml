@@ -1,0 +1,89 @@
+# Question bank — considering-starting
+#
+# Questions assert nothing, so this file can be written and extended freely.
+# Answers are a different matter entirely: see ../schema/answer.schema.yaml.
+#
+# `variants` is what makes the search bar work. Add to it every time the unmet
+# search log shows a phrasing nobody anticipated.
+
+topic: considering-starting
+
+questions:
+
+  - id: what-happens-if-i-start
+    question: "What actually happens to my body if I start?"
+    variants:
+      - "what do steroids do"
+      - "first cycle effects"
+      - "what to expect"
+    topics: [considering-starting]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: will-i-be-on-forever
+    question: "Will I be on this forever?"
+    variants:
+      - "can i ever stop"
+      - "is it a lifetime thing"
+      - "once you start"
+    topics: [considering-starting]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: what-are-the-real-risks
+    question: "What are the real risks?"
+    variants:
+      - "how dangerous is it really"
+      - "actual risks of steroids"
+      - "worst that can happen"
+    topics: [considering-starting]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: children-afterwards
+    question: "Will I still be able to have children afterwards?"
+    variants:
+      - "fertility after steroids"
+      - "can i have kids later"
+    topics: [considering-starting]
+    markers: [fsh, inhibin-b]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: trt-vs-steroid-use
+    question: "Is TRT different from steroid use?"
+    variants:
+      - "trt vs cycle"
+      - "is trt safe"
+      - "difference between trt and gear"
+    topics: [considering-starting]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: test-before-i-start
+    question: "What should I get tested before I start?"
+    variants:
+      - "baseline bloods"
+      - "pre cycle bloodwork"
+      - "what to check first"
+    topics: [considering-starting]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+    notes: >-
+      The cheapest, highest-value intervention available to this reader.
+
+  - id: what-nobody-tells-you
+    question: "What do I need to know that nobody tells you?"
+    variants:
+      - "things they dont mention"
+      - "what i wish id known"
+    topics: [considering-starting]
+    origin: proposed
+    frequency: unknown
+    priority: 2

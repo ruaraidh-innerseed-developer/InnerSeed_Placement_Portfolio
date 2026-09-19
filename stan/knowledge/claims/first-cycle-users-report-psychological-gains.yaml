@@ -1,0 +1,31 @@
+id: first-cycle-users-report-psychological-gains
+statement: First-time users report psychological changes alongside physical ones,
+  including improved body image and increased self-esteem, and commonly conclude
+  from a first cycle that anabolic steroids are harmless.
+source: taylor-2002-anabolic-steroids-athlete
+locator: Ch. 5, p. 60, 'The First Cycle' — The Anabolic Steroid User's Regime
+quote: First-time anabolic steroid users usually experience a significant increase
+  in muscle mass and strength and report psychological changes such as improved
+  body image and increased self-esteem. At the very least, they conclude that anabolic
+  steroids are harmless supplements.
+quote_verified: false
+kind: direct
+population: First-time non-medical anabolic steroid users who had previously weight
+  trained, as characterised by the author around 2002.
+does_not_support:
+- A claim that anabolic steroids improve mental health. The source reports what
+  users experience and conclude in the short term, immediately before describing
+  the withdrawal that follows.
+- A claim that anabolic steroids are harmless. The sentence is reporting a user's
+  erroneous conclusion, and the whole chapter is constructed to show why it is erroneous.
+  Quoting the second sentence without the framing would invert the author's meaning.
+- Any measured prevalence of psychological effects.
+topics:
+- mental-health
+- harm-reduction
+extracted_by: Claude (Opus 5), from the founder's photographs of pp. 60-62
+extracted_on: '2026-09-05'
+status: draft
+notes: HIGH RISK OF MISQUOTATION. 'They conclude that anabolic steroids are harmless
+  supplements' is the author describing a mistaken belief. Any article using this
+  must make that unmistakable in the same breath.

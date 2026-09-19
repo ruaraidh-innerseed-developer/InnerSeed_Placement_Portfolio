@@ -1,0 +1,31 @@
+id: half-of-first-time-users-reach-fifth-cycle-without-plans-to-quit
+statement: Over half of first-time users go on to a fifth cycle and beyond with
+  no real plans of quitting, and users tend to underestimate the addiction potential.
+source: taylor-2002-anabolic-steroids-athlete
+locator: 'Ch. 5, p. 64, ''Summary: The Blind Leading the Blind'''
+quote: They underestimate the addiction potential and withdrawal behaviors. They
+  know little or nothing about the altered neurochemical effects. Over half of the
+  first-time users will go into the fifth cycle and beyond with no real plans of
+  quitting.
+quote_verified: false
+kind: direct
+population: First-time anabolic steroid users, as characterised by the author around
+  2002. The 'over half' figure is stated without a citation on this page; its origin
+  must be traced before the number is published.
+does_not_support:
+- Publishing the 'over half' figure as established. It is unattributed on the page.
+  Trace it or state it as the author's assertion, and do not present it as a statistic.
+- A claim that anyone will become dependent.
+- Any statement about addiction as a formal diagnosis, which this passage does not
+  establish.
+topics:
+- harm-reduction
+- mental-health
+- epidemiology
+extracted_by: Claude (Opus 5), from the founder's photograph of p. 64
+extracted_on: '2026-09-05'
+status: draft
+notes: 'An unattributed number in a referenced book is a flag, not a finding. Worth
+  chasing: if it holds up it is one of the most useful things STAN could tell a
+  first-time user, and if it does not, better that STAN found out than repeated
+  it.'

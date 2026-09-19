@@ -1,0 +1,34 @@
+id: both-stopping-abruptly-and-continuing-carry-serious-risk
+statement: For heavy long-term users, the author states that stopping abruptly can
+  have severe consequences and that continuing can too.
+source: taylor-2002-anabolic-steroids-athlete
+locator: Ch. 5, p. 64, 'Beyond the Fifth Cycle'
+quote: Abrupt withdrawal from heavy anabolic steroid use can have devastating consequences.
+  Continued heavy anabolic steroid use can also have devastating consequences.
+quote_verified: false
+kind: direct
+population: Heavy long-term anabolic steroid users, as characterised by the author
+  around 2002. Not defined by dose or duration, which is a real limit on the claim.
+does_not_support:
+- ANY guidance on how to stop, taper, or continue. This claim states that a person
+  in this position needs qualified help; it does not and must not substitute for
+  it.
+- A claim that anyone should keep using. Reading the first sentence without the
+  second inverts the passage and could keep somebody using out of fear.
+- A claim that anyone should stop immediately. Reading the second without the first
+  is the opposite error.
+- Any statement about what those consequences are. The passage does not enumerate
+  them and STAN must not fill the gap.
+- Any prediction about an individual.
+topics:
+- harm-reduction
+- mental-health
+- asih
+- service-access-uk
+extracted_by: Claude (Opus 5), from the founder's photograph of p. 64
+extracted_on: '2026-09-05'
+status: draft
+notes: SAFETY CRITICAL, IN BOTH DIRECTIONS. Never quote one sentence without the
+  other. The passage describes a person with no good unsupervised option, which
+  is precisely the argument for the clinical panel. Any article using this must
+  route to qualified help and to the crisis numbers in the same breath.

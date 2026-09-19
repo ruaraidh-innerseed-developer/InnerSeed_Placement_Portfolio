@@ -1,0 +1,68 @@
+id: prolactin
+name: Prolactin
+full_name: Serum prolactin
+aka: [PRL]
+category: hormone
+applies_to: [male, female]
+units: mIU/L
+
+# ---------------------------------------------------------------------------
+# STUB. Identity only. Everything below needs filling.
+#
+# Fill in whatever order suits — a field at a time across many markers is a
+# perfectly good way to work, and often better than finishing one record.
+# Run tools/coverage.py to see what is still missing across the whole set.
+#
+# Discipline (INTERIM-STANDARD.md): report and attribute, never advise. No
+# reference ranges quoted as authoritative. No recovery timelines the evidence
+# does not support. Nothing containing the word "should".
+# ---------------------------------------------------------------------------
+
+what_it_is: ""
+made_where: ""
+controlled_by: ""
+functions: []
+female_note: ""
+
+on_a_panel:
+  commonly_measured: true
+  measured_with: []
+  timing_matters: ""
+  range_note: ""
+
+states:
+  high:
+    meaning: ""
+    common_causes: []
+    symptoms_reported: []
+    what_else_to_check: []
+    questions_to_ask: []
+    female_note: ""
+  low:
+    meaning: ""
+    common_causes: []
+    symptoms_reported: []
+    what_else_to_check: []
+    questions_to_ask: []
+    female_note: ""
+  suppressed:
+    expected_direction: unknown
+    what_happens: ""
+    why: ""
+    unexpected_finding: ""
+    female_note: ""
+  recovery:
+    what_is_known: ""
+    evidence_state: unknown
+    do_not_claim: []
+
+does_not_tell_you: []
+
+related: [lh, "total-testosterone", oestradiol]
+
+sources: []
+
+fill_status: stub
+clinical_reviewer:
+reviewed_on:
+notes: ""

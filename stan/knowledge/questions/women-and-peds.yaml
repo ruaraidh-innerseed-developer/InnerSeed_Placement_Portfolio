@@ -1,0 +1,80 @@
+# Question bank — women-and-peds
+#
+# Questions assert nothing, so this file can be written and extended freely.
+# Answers are a different matter entirely: see ../schema/answer.schema.yaml.
+#
+# `variants` is what makes the search bar work. Add to it every time the unmet
+# search log shows a phrasing nobody anticipated.
+
+topic: women-and-peds
+
+questions:
+
+  - id: what-do-steroids-do-to-women
+    question: "What do steroids do to a woman's body?"
+    variants:
+      - "effects on women"
+      - "female steroid use"
+      - "women on gear"
+    topics: [women-and-peds]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+    notes: >-
+      Badly served everywhere. Treat as a priority, not an appendix.
+
+  - id: are-effects-permanent-for-women
+    question: "Are the effects permanent for women?"
+    variants:
+      - "reversible for females"
+      - "will it undo itself"
+    topics: [women-and-peds]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: what-happens-to-my-periods
+    question: "What happens to my periods?"
+    variants:
+      - "periods stopped"
+      - "cycle disrupted"
+      - "amenorrhea steroids"
+    topics: [women-and-peds]
+    markers: [lh, fsh, progesterone]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: will-my-voice-change-back
+    question: "Will my voice change back?"
+    variants:
+      - "deeper voice permanent"
+      - "voice deepening reversible"
+    topics: [women-and-peds]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: is-anavar-safer-for-women
+    question: "Is anavar safer for women?"
+    variants:
+      - "mild steroid for females"
+      - "safest for women"
+    topics: [women-and-peds]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+    notes: >-
+      Widely believed. Whether the evidence supports 'safer' at all needs
+      care.
+
+  - id: what-bloods-should-women-get
+    question: "What bloods should women get?"
+    variants:
+      - "female hormone panel"
+      - "testing for women on ped"
+    topics: [women-and-peds]
+    markers: [total-testosterone, shbg, oestradiol]
+    origin: proposed
+    frequency: unknown
+    priority: 2

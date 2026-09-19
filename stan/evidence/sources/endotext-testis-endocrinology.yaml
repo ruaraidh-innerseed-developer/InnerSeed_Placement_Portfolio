@@ -1,0 +1,73 @@
+id: endotext-testis-endocrinology
+type: textbook
+title: >-
+  Endocrinology of the Testis and Spermatogenesis
+authors:
+  - "(chapter authors — record on reading)"
+year: 2022
+venue: Endotext [Internet], NCBI Bookshelf
+identifiers:
+  url: https://www.ncbi.nlm.nih.gov/books/NBK279031/
+  isbn: NBK279031
+open_access: true
+
+evidence_level:
+  scheme: STAN-EL-1
+  grade: C
+  rationale: >-
+    Endotext is a continuously updated, peer-reviewed endocrinology reference written by subject specialists. Graded C rather than D because chapters are authored by field experts and revised, making it stronger than general reference material — though still a synthesis rather than primary evidence.
+
+population_relevance:
+  rating: indirect
+  notes: >-
+    General endocrine physiology, not a PED-using population. Cited for
+    mechanism and definition, which generalise. Must NOT be stretched to say
+    anything about suppression or recovery in people with supraphysiological
+    exposure — that is a different question and this is not the source for it.
+
+topics: [hpg-axis-recovery, fertility-spermatogenesis, trt-monitoring]
+
+claims_supported:
+  - >-
+    The structure and regulation of the hypothalamic-pituitary-testicular axis: GnRH pulsatility, LH and FSH action on Leydig and Sertoli cells, intratesticular testosterone concentration, and negative feedback — the single best backstop for the lh, fsh, total-testosterone and inhibin-b records and for the how-the-system-works page.
+
+claims_not_supported:
+  - >-
+    Anything about anabolic steroid use, suppression, or recovery. This is
+    baseline physiology in an unexposed population.
+  - >-
+    Any reference range quoted as authoritative for an individual reader.
+  - Any statement about what a particular person's result means.
+
+limitations: >-
+  Full text not yet read by STAN. Chapter authorship, publication and last
+  revision dates all require confirmation on reading. Textbook material is a
+  synthesis by its authors rather than primary evidence.
+
+conflicts_of_interest: >-
+  Not yet assessed — full text not read. NCBI Bookshelf chapters carry
+  disclosure statements; record them on reading.
+
+verification:
+  bibliographic: unverified
+  full_text_read: false
+  verified_by: R. (founder) via Claude-assisted search
+  verified_on: '2026-09-03'
+
+review:
+  status: added
+
+provenance:
+  added_by: R. (founder)
+  added_on: '2026-09-03'
+  discovered_via: >-
+    Search for a citable open-access backstop for Tier 1 encyclopedia content,
+    after the first Tier 1 sweep was found to be uncited and was reverted.
+
+notes: >-
+  LICENCE: NCBI Bookshelf content of this kind is published CC-BY-NC-ND.
+  NoDerivatives means STAN may cite and quote with attribution but may NOT
+  publish adapted versions of the text. This reinforces rather than conflicts
+  with the Tier A rule — report and attribute, never reproduce.
+  TIER 1 BACKSTOP: this is one of the sources the foundational marker fields
+  should be written FROM, rather than written first and cited afterwards.
