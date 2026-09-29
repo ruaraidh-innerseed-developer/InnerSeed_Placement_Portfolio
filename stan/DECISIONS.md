@@ -67,9 +67,10 @@ No price appears on the front door. Every route hands to something free. Paid
 services are offered only on pages that have already given the reader something,
 enforced by the build.
 
-**2026-09-15 — STAN is independent of InnerSeed.**
-No affiliation of any kind. STAN moves to its own repository. Nothing in STAN
-references InnerSeed and nothing should.
+**2026-09-15 — STAN is an independent project, built solo.**
+It is not connected to any employer, past or present, and no prior employer is
+named anywhere in it. STAN lives in its own repository, under an account of its
+own.
 
 ---
 

@@ -82,7 +82,7 @@ Instagram, and forum language are all unchecked. See `DECISIONS.md`.
 
 ## Sequence
 
-1. Split STAN into its own repository. Independent of InnerSeed.
+1. Split STAN into its own repository, under an account of its own.
 2. Domain and email address. Gates everything. About £12.
 3. Name the coaching service and decide what it includes. Not generic
    "recovery coaching" — specifically coming off.

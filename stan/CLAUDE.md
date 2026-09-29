@@ -11,7 +11,7 @@ coach specialising in coming off; STAN gives it credibility and reach. See
 reopen anything on the settled list, and do not treat anything on the open list
 as decided — especially prices, which are placeholders.
 
-STAN has no affiliation with InnerSeed. Nothing in here references it.
+STAN is built solo and is not affiliated with any employer, past or present.
 
 ## The three rules that keep getting broken
 
