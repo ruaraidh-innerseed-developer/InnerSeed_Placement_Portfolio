@@ -11,7 +11,7 @@ Open questions are at the bottom. Those are fair game.
 ## Settled
 
 **2026-09-15 — STAN is not the business.**
-STAN is the public, evidence-governed resource. The business is Ruaraidh's
+STAN is the public, evidence-governed resource. The business is the founder's
 practice as a recovery coach specialising in coming off anabolic steroids. STAN
 provides credibility and reach; the coaching is what earns. Documents that treat
 STAN as the revenue-generating entity are out of date.
@@ -76,11 +76,11 @@ own.
 
 ## Open
 
-- **Where Ruaraidh is based.** Scotland or England. Affects commissioning,
+- **Where the founder is based.** Scotland or England. Affects commissioning,
   signposting, and whether the Edinburgh IPED clinic is a doorstep conversation.
   Asked repeatedly, never recorded.
 - **What the coaching is called.** Not "recovery coaching" generically.
-- **What it costs.** No figure has been set by Ruaraidh. Every price currently
+- **What it costs.** No figure has been set by the founder. Every price currently
   in `data/services.yaml` and `COMMERCIAL.md` is provisional, and some were
   invented by an assistant and should be treated as placeholders.
 - **Coaching training and insurance.** Which qualification, and whether it is

@@ -14,7 +14,7 @@ anabolic steroid use: a question bank, marker pages, seminars, groups, and
 crisis signposting. Free, no affiliate money, no advertising. Its job is to be
 found, to be true, and to be trusted.
 
-Ruaraidh works as a recovery coach specialising in **coming off**. That is what
+The founder works as a recovery coach specialising in **coming off**. That is what
 earns. STAN makes it credible and brings people within reach of it.
 
 Neither one pretends to be the other. Wherever STAN points at the coaching, it

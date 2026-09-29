@@ -17,7 +17,7 @@
 # place only, the transparency page, reached from the footer.
 #
 # PRICES ARE PROVISIONAL. Several were invented by an assistant and were never
-# set by Ruaraidh — treat every figure here as a placeholder until DECISIONS.md
+# set by the founder — treat every figure as a placeholder until DECISIONS.md
 # records it as settled. Prices are in GBP and shown as ranges where the range
 # is real. The rule from COMMERCIAL.md §1: the audience anchors
 # against what they spend on compounds and private bloods, not against a
@@ -178,7 +178,7 @@ services:
 
 
   # --------------------------------------------------- the coaching practice
-  # NOT a STAN service. Ruaraidh's own practice, listed here because the site
+  # NOT a STAN service. The founder's own practice, listed here because the site
   # points at it and everything the site points at is described in this file.
   # DECISIONS.md holds the disclosure rule: wherever STAN points at this, the
   # page says it is run by the same person who built STAN, that he charges, and
@@ -189,7 +189,7 @@ services:
     line: Structured one-to-one support through stopping, and the months after.
     time: Not decided
     price: "Not set"
-    provider: Ruaraidh, independently of STAN
+    provider: The founder, independently of STAN
     disclose: >
       Run by the same person who built STAN. He charges for it. STAN is not paid
       a fee and takes no cut, because it is the same person — which is exactly

@@ -3,9 +3,9 @@
 Read the root `CLAUDE.md` too. This file covers what is specific to STAN.
 
 STAN is an independent UK resource for people affected by anabolic steroid use.
-It is **not the business**. The business is Ruaraidh's practice as a recovery
-coach specialising in coming off; STAN gives it credibility and reach. See
-`STRATEGY.md`.
+It is **not the business**. The business is the founder's practice as a
+recovery coach specialising in coming off; STAN gives it credibility and reach.
+See `STRATEGY.md`.
 
 **Read `DECISIONS.md` first.** It lists what is settled and what is open. Do not
 reopen anything on the settled list, and do not treat anything on the open list
@@ -69,8 +69,9 @@ Binding, and in `DECISIONS.md`:
 
 ## Still open
 
-`DECISIONS.md` has the full list. The ones that bite most often: where Ruaraidh
-is based, what the coaching is called and costs, the domain, and the entity.
+`DECISIONS.md` has the full list. The ones that bite most often: where the
+founder is based, what the coaching is called and costs, the domain, and the
+entity.
 
 ## Current state, honestly
 
