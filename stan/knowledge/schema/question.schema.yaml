@@ -1,0 +1,78 @@
+# STAN knowledge base — question record schema
+# Version: 1.0
+#
+# A question asserts nothing, so the bank can be built immediately and without
+# sources. It is the roadmap, the matching index for the search bar, and the
+# honest public measure of how much of the job is done: "312 catalogued, 47
+# answered".
+#
+# Questions may — and should — outnumber answers for a long time. A question
+# with no answer is not a failure. It is a commitment recorded in public.
+
+version: 1.0
+
+enums:
+  origin:
+    - proposed      # enumerated from the topic map. Safe: naming a question
+                    # claims nothing about its answer.
+    - search-log    # a real person typed this and got nothing. Best source.
+    - founder       # what he was actually asking at the time.
+    - clinician     # what they get asked in clinic.
+    - community     # raised in a group or by a peer supporter.
+
+  frequency:
+    - unknown       # default until the log says otherwise
+    - occasional
+    - common
+    - very-common
+
+  priority:
+    - 1             # people are asking this now and getting hurt by bad answers
+    - 2             # important, not urgent
+    - 3             # completeness
+
+fields:
+  id:       {required: true, type: str, pattern: '^[a-z0-9]+(-[a-z0-9]+)*$'}
+
+  question:
+    required: true
+    type: str
+    note: >-
+      Canonical phrasing, in the reader's voice rather than a clinician's.
+      "Why am I so tired since I stopped?" not "Fatigue in post-cessation ASIH".
+
+  variants:
+    required: true
+    type: list
+    note: >-
+      How people actually type it — slang, gym vernacular, misspellings, the
+      abrupt three-word version. This is what makes matching work and it costs
+      nothing to extend. Add to it every time the log shows a new phrasing.
+
+  topics:   {required: true, type: list}
+  markers:  {required: false, type: list}
+
+  origin:    {required: true, type: str, enum: origin}
+  frequency: {required: true, type: str, enum: frequency}
+  priority:  {required: true, type: int, enum: priority}
+
+  answer:
+    required: false
+    type: str
+    note: An id in knowledge/answers/. Absent means unanswered, which is fine.
+
+  notes:
+    required: false
+    type: str
+    note: >-
+      Anything the person writing the answer needs to know — a trap in the
+      question, a common misconception behind it, why it is harder than it looks.
+
+rules:
+  - id: answer-must-exist
+    description: If `answer` is set, that answer record must exist.
+  - id: unique-ids
+  - id: variants-non-empty
+    description: >-
+      At least one variant. A question with no alternative phrasing will only
+      ever match people who happen to type it exactly as written.

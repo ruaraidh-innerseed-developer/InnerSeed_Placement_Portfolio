@@ -1,0 +1,261 @@
+# STAN evidence register — source record schema
+# Version: 1.0
+#
+# This file is loaded by stan/tools/validate.py. Editing it changes what the
+# validator enforces, so treat changes as governance changes, not code changes.
+#
+# Field spec format:
+#   required: must be present and non-empty
+#   type:     str | int | list | bool | map
+#   enum:     permitted values
+#   pattern:  regex the value must match
+
+version: 1.0
+
+enums:
+  # Widened to cover the fields STAN actually needs to draw on: trials,
+  # clinical data, animal work, pharmacology, and the specialties that own
+  # the consequences — cardiology, endocrinology, andrology.
+  #
+  # Type is not the same as weight. A well-run cohort study in the right
+  # population beats a randomised trial in the wrong one. `type` records what
+  # kind of thing it is; `evidence_level.grade` and `population_relevance`
+  # record what weight it can bear.
+  type:
+    # --- human evidence, roughly by strength of design
+    - meta-analysis
+    - systematic-review
+    - randomised-trial
+    - cohort-study
+    - case-control
+    - cross-sectional
+    - case-report
+    - registry
+    - survey
+
+    # --- non-human and mechanistic
+    # Citable for MECHANISM only. An animal or cell finding is never a human
+    # outcome, and population_relevance must say so on every such record.
+    - animal-study
+    - in-vitro
+    - pharmacokinetic
+
+    # --- synthesis and authority
+    - guideline
+    - position-statement
+    - textbook
+    - narrative-review
+    - scoping-review
+
+    # --- other
+    - regulatory
+    - service-record
+    - grey-literature
+    - lived-experience
+
+    # --- legacy catch-all. Existing records use it. Replace with the specific
+    #     design when the full text is read and the design is known.
+    - primary-research
+
+  grade:
+    - A
+    - B
+    - C
+    - D
+
+  population_relevance:
+    - direct
+    - partial
+    - indirect
+    - unclear
+
+  bibliographic_verification:
+    - verified
+    - partial
+    - unverified
+
+  status:
+    - added          # held, not yet screened or read
+    - screened-out   # assessed and rejected. KEPT, never deleted — a register
+                     # showing what was considered and why it was rejected is
+                     # worth more than one showing only survivors, and it is the
+                     # difference between "we looked" and "we never looked".
+    - in-review      # full text read, claims being extracted
+    - approved       # citable
+    - retired        # was approved, now withdrawn
+
+  topics:
+    - asih
+    - hpg-axis-recovery
+    - trt-initiation
+    - trt-monitoring
+    - shbg-free-testosterone
+    - oestradiol-management
+    - fertility-spermatogenesis
+    - cardiovascular
+    - mental-health
+    - pct-restart
+    - delivery-routes
+    - harm-reduction
+    - peer-support
+    - women-and-peds
+    - adolescents
+    - service-access-uk
+    - epidemiology
+
+fields:
+  id:
+    required: true
+    type: str
+    pattern: '^[a-z0-9]+(-[a-z0-9]+)*$'
+    note: Stable slug. Never change it once content cites this record.
+
+  type:
+    required: true
+    type: str
+    enum: type
+
+  title:
+    required: true
+    type: str
+
+  authors:
+    required: true
+    type: list
+    note: Surname + initials. Use ["(corporate author)"] for body-authored works.
+
+  year:
+    required: true
+    type: int
+
+  venue:
+    required: true
+    type: str
+    note: Journal, publisher, or issuing body.
+
+  identifiers:
+    required: true
+    type: map
+    note: Any of doi, pmid, pmcid, isbn, url. At least one must be present.
+
+  open_access:
+    required: false
+    type: bool
+
+  evidence_level:
+    required: true
+    type: map
+    subfields:
+      scheme: {required: true, type: str}
+      grade: {required: true, type: str, enum: grade}
+      rationale: {required: true, type: str}
+
+  population_relevance:
+    required: true
+    type: map
+    subfields:
+      rating: {required: true, type: str, enum: population_relevance}
+      notes: {required: true, type: str}
+
+  topics:
+    required: true
+    type: list
+    enum: topics
+
+  claims_supported:
+    required: true
+    type: list
+    note: What this source may be cited for. Required non-empty at status approved.
+
+  claims_not_supported:
+    required: true
+    type: list
+    note: What it must never be cited for. Foreseeable misuse goes here.
+
+  limitations:
+    required: true
+    type: str
+
+  conflicts_of_interest:
+    required: true
+    type: str
+    note: Use "not stated in source" where none is declared. Never "none".
+
+  verification:
+    required: true
+    type: map
+    subfields:
+      bibliographic: {required: true, type: str, enum: bibliographic_verification}
+      full_text_read: {required: true, type: bool}
+      read_scope: {required: false, type: str}
+      verified_by: {required: true, type: str}
+      verified_on: {required: true, type: str, pattern: '^\d{4}-\d{2}-\d{2}$'}
+    note: >-
+      read_scope exists because "full text" is the wrong unit for a book. Nobody
+      reads 384 pages before quoting chapter 5, and pretending otherwise would
+      either block honest work or invite a false `true`. For a book, textbook or
+      other long work, full_text_read means "the scope named in read_scope was
+      read in full", and claims may only cite locators inside that scope. For a
+      paper, leave read_scope empty and full_text_read means what it says.
+
+  review:
+    required: true
+    type: map
+    subfields:
+      status: {required: true, type: str, enum: status}
+      clinical_reviewer: {required: false, type: str}
+      reviewed_on: {required: false, type: str, pattern: '^\d{4}-\d{2}-\d{2}$'}
+      next_review_due: {required: false, type: str, pattern: '^\d{4}-\d{2}-\d{2}$'}
+
+  provenance:
+    required: true
+    type: map
+    subfields:
+      added_by: {required: true, type: str}
+      added_on: {required: true, type: str, pattern: '^\d{4}-\d{2}-\d{2}$'}
+      discovered_via: {required: false, type: str}
+
+  notes:
+    required: false
+    type: str
+
+# Cross-field rules enforced by the validator beyond simple field checks.
+rules:
+  - id: approved-requires-reviewer
+    description: >
+      A record at review.status "approved" must name a clinical reviewer and
+      carry both reviewed_on and next_review_due dates.
+
+  - id: approved-requires-verified-bibliography
+    description: >
+      A record at review.status "approved" must have
+      verification.bibliographic == "verified" and full_text_read == true.
+
+  - id: approved-requires-claims
+    description: >
+      A record at review.status "approved" must have a non-empty
+      claims_supported list.
+
+  - id: retired-requires-reason
+    description: >
+      A record at review.status "retired" must explain why in notes.
+
+  - id: screened-out-requires-reason
+    description: >
+      A record at review.status "screened-out" must record in notes which
+      screening stage rejected it and why — population mismatch, bears on no
+      catalogued question, design cannot establish the claim, inaccessible.
+      One clause is enough. The point is that the same paper is never assessed
+      twice, and that the rejection is visible to a reviewer.
+
+  - id: long-work-needs-read-scope
+    description: >
+      A textbook or narrative-review record claiming full_text_read must state
+      verification.read_scope — which chapter or section was actually read.
+      Claims extracted from it may only cite locators within that scope.
+
+  - id: identifier-present
+    description: At least one of doi, pmid, pmcid, isbn, url must be present.
+
+  - id: id-matches-filename
+    description: The record id must equal the filename without its .yaml suffix.

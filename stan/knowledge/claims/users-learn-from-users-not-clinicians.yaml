@@ -1,0 +1,35 @@
+id: users-learn-from-users-not-clinicians
+statement: Anabolic steroid users take their information about how to use from other,
+  more experienced users rather than from clinicians.
+source: taylor-2002-anabolic-steroids-athlete
+locator: Ch. 5, p. 60, 'The First Cycle' — The Anabolic Steroid User's Regime, opening
+  sentences
+quote: Most first-time anabolic steroid users begin with a single oral preparation.
+  Based on information obtained from other more experienced users, they take anabolic
+  steroid pills in moderate doses (2-5 times greater than clinically recommended
+  dose) for 6-8 weeks.
+quote_verified: false
+kind: direct
+population: First-time non-medical anabolic steroid users, athletes and bodybuilders,
+  as characterised by the author around 2002. Predominantly male; the chapter does
+  not state a sex breakdown. Pre-internet-sourcing era.
+does_not_support:
+- Any republication of the dose multiple or the cycle length. The numbers are recorded
+  here because a register must record what a source says; SCOPE.md forbids STAN
+  publishing them, and no article drawing on this claim may reproduce them.
+- A claim about how users source information TODAY. The mechanism has almost certainly
+  shifted to forums, social media and AI chatbots since 2002, and that shift is
+  itself worth researching rather than assuming.
+- A claim that peer information is necessarily wrong. The source says where information
+  comes from, not that it is inaccurate.
+- Any quantification. 'Most' is the author's characterisation, not a measured proportion.
+topics:
+- harm-reduction
+- peer-support
+- information-gap
+extracted_by: Claude (Opus 5), from the founder's photographs of pp. 60-62
+extracted_on: '2026-09-05'
+status: draft
+notes: CONTAINS DOSE FIGURES. Held for understanding, never for publication. This
+  claim is the evidential basis for STAN's core premise, so it is worth verifying
+  first.

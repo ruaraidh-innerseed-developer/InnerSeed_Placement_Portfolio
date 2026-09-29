@@ -1,0 +1,36 @@
+id: first-withdrawal-loss-and-low-mood
+statement: In the break after a first cycle, users describe losing some of their
+  gains, training less hard, healing more slowly and feeling low, and many shorten
+  the break as a result.
+source: taylor-2002-anabolic-steroids-athlete
+locator: Ch. 5, p. 60, 'The First Cycle' — The Anabolic Steroid User's Regime, final
+  paragraph
+quote: During the period of anabolic steroid withdrawal, first-time users experience
+  some loss of muscle mass and strength gains even though their work-outs continue.
+  Workout intensity and amount of weight lifted decreases. Minor injuries heal more
+  slowly. Many experience some level of depression. They become impatient for the
+  next cycle, and often cut short their rest periods.
+quote_verified: false
+kind: direct
+population: First-time non-medical anabolic steroid users in the interval after
+  a first cycle, as characterised by the author around 2002. Not a clinical sample
+  and not a diagnosed population.
+does_not_support:
+- A diagnosis of clinical depression. 'Some level of depression' is the author's
+  descriptive phrase for low mood in this group, not a diagnostic statement, and
+  STAN must not convert it into one.
+- A claim about how long these effects last, or about their severity.
+- A claim about the biological mechanism of the low mood. This passage describes
+  the experience only.
+- Any statement about anabolic steroid dependence or withdrawal as a formal syndrome.
+topics:
+- mental-health
+- asih
+- harm-reduction
+extracted_by: Claude (Opus 5), from the founder's photographs of pp. 60-62
+extracted_on: '2026-09-05'
+status: draft
+notes: 'The most directly useful claim in the set for STAN''s largest audience —
+  the person who has stopped and feels wrong. It names the experience in a citable
+  source, which is worth a great deal to somebody who has been told nothing is wrong
+  with them. Escalation driver: the low is what shortens the break.'

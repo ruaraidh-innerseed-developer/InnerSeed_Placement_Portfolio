@@ -1,0 +1,67 @@
+# Question bank — mental-health-and-dependence
+#
+# Questions assert nothing, so this file can be written and extended freely.
+# Answers are a different matter entirely: see ../schema/answer.schema.yaml.
+#
+# `variants` is what makes the search bar work. Add to it every time the unmet
+# search log shows a phrasing nobody anticipated.
+
+topic: mental-health-and-dependence
+
+questions:
+
+  - id: mood-all-over-the-place
+    question: "Why is my mood all over the place?"
+    variants:
+      - "emotional on cycle"
+      - "mood swings steroids"
+      - "up and down"
+    topics: [mental-health-and-dependence]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: am-i-addicted
+    question: "Am I addicted to this?"
+    variants:
+      - "steroid dependence"
+      - "cant stop using"
+      - "is it addictive"
+    topics: [mental-health-and-dependence]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: feel-low-after-stopping
+    question: "Why do I feel so low after stopping?"
+    variants:
+      - "depression after coming off"
+      - "cant cope since stopping"
+    topics: [mental-health-and-dependence]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+    notes: >-
+      RED FLAG. Crisis signposting at the top of any answer.
+
+  - id: is-the-anger-from-steroids
+    question: "Is the anger from the steroids?"
+    variants:
+      - "roid rage real"
+      - "irritable on cycle"
+      - "temper since starting"
+    topics: [mental-health-and-dependence]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: where-can-i-get-help
+    question: "Where can I get help with this?"
+    variants:
+      - "who do i talk to"
+      - "support for steroid users"
+      - "mental health help"
+    topics: [mental-health-and-dependence]
+    origin: proposed
+    frequency: unknown
+    priority: 1

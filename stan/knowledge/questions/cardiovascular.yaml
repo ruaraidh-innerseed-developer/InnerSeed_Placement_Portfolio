@@ -1,0 +1,64 @@
+# Question bank — cardiovascular
+#
+# Questions assert nothing, so this file can be written and extended freely.
+# Answers are a different matter entirely: see ../schema/answer.schema.yaml.
+#
+# `variants` is what makes the search bar work. Add to it every time the unmet
+# search log shows a phrasing nobody anticipated.
+
+topic: cardiovascular
+
+questions:
+
+  - id: what-is-this-doing-to-my-heart
+    question: "What is this doing to my heart?"
+    variants:
+      - "heart damage steroids"
+      - "cardiac risk"
+      - "is it bad for my heart"
+    topics: [cardiovascular]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: why-is-my-blood-pressure-high
+    question: "Why is my blood pressure high?"
+    variants:
+      - "hypertension on cycle"
+      - "bp went up"
+    topics: [cardiovascular]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: what-is-lvh
+    question: "What is left ventricular hypertrophy?"
+    variants:
+      - "enlarged heart"
+      - "thickened heart wall"
+      - "lvh steroids"
+    topics: [cardiovascular]
+    origin: proposed
+    frequency: unknown
+    priority: 2
+
+  - id: are-heart-effects-reversible
+    question: "Are the heart effects reversible?"
+    variants:
+      - "does the heart recover"
+      - "cardiac damage permanent"
+    topics: [cardiovascular]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: cholesterol-from-this
+    question: "My cholesterol is bad. Is that from this?"
+    variants:
+      - "lipids on cycle"
+      - "hdl crashed"
+      - "cholesterol steroids"
+    topics: [cardiovascular]
+    origin: proposed
+    frequency: unknown
+    priority: 1

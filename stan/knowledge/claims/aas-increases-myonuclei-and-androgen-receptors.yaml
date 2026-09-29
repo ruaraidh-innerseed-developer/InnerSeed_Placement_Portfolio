@@ -1,0 +1,36 @@
+id: aas-increases-myonuclei-and-androgen-receptors
+statement: Anabolic steroid use has been shown to increase the number of muscle
+  cells, the number of nuclei within muscle cells, and the androgen receptors within
+  those nuclei.
+source: taylor-2002-anabolic-steroids-athlete
+locator: Ch. 5, p. 61, 'The Second Cycle' — The Science Behind the Regime (boxed
+  by the founder); cites refs 13-14
+quote: Recent scientific studies have shown that anabolic steroid use causes a statistically
+  significant increase in skeletal muscle cell numbers, muscle cell nuclei, and
+  androgen receptors within these nuclei.
+quote_verified: false
+kind: direct
+population: Not stated in this passage. Refs 13-14 must be obtained to establish
+  whether these were human or animal studies — a decisive question, since much myonuclear
+  work of this era was done in rodents. Until then the population is unknown.
+does_not_support:
+- Anything about 'muscle memory' as the community uses the term. That the nuclei
+  increase is not that they persist, and persistence is the whole of the popular
+  claim. This passage does not address it.
+- A claim that the changes are permanent, or that they confer any lasting advantage.
+- A human claim, until refs 13-14 confirm the studies were in humans.
+- Any suggestion that a former user retains an unfair or lasting physical advantage.
+  That is a contested question with real consequences for people, and this sentence
+  settles none of it.
+topics:
+- harm-reduction
+- muscle-physiology
+extracted_by: Claude (Opus 5), from the founder's photographs of pp. 60-62
+extracted_on: '2026-09-05'
+status: draft
+notes: This is the scientific root of one of the most-repeated claims in the bodybuilding
+  community, which makes it high value and high risk. The community says 'muscle
+  memory is real, the nuclei never go away'. This passage does not say that. Getting
+  refs 13-14 and reading them properly is how STAN earns the right to write about
+  it — and the modern literature on myonuclear permanence is substantial and contested,
+  so this needs a current search, not just the 2002 citations.

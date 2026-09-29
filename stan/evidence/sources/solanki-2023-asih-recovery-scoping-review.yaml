@@ -1,0 +1,98 @@
+id: solanki-2023-asih-recovery-scoping-review
+type: scoping-review
+title: >-
+  Physical, psychological and biochemical recovery from anabolic
+  steroid-induced hypogonadism: a scoping review
+authors:
+  - Solanki P
+  - Eu B
+  - Smith J
+  - Allan C
+  - Lee K
+year: 2023
+venue: Endocrine Connections
+identifiers:
+  doi: 10.1530/EC-23-0358
+  pmid: '37855241'
+  pmcid: PMC10620455
+  url: https://ec.bioscientifica.com/view/journals/ec/12/12/EC-23-0358.xml
+open_access: true
+
+evidence_level:
+  scheme: STAN-EL-1
+  grade: C
+  rationale: >-
+    Scoping review, not a systematic review with pooled analysis. Maps the
+    literature and identifies gaps; does not produce effect estimates. Valuable
+    as an orientation document and gap map rather than as a source of
+    quantitative claims.
+
+population_relevance:
+  rating: direct
+  notes: >-
+    Explicitly about recovery from ASIH across physical, psychological and
+    biochemical domains. Directly on topic, though the included studies vary
+    considerably in their own populations.
+
+topics:
+  - asih
+  - hpg-axis-recovery
+  - mental-health
+  - fertility-spermatogenesis
+  - pct-restart
+
+claims_supported:
+  - >-
+    As a map of what has and has not been studied regarding recovery from ASIH
+    — the best single orientation document currently available.
+  - >-
+    That the recovery literature spans biochemical, physical and psychological
+    domains and that these do not necessarily recover in step with one another.
+  - >-
+    That evidence gaps in ASIH recovery are formally identified in the
+    peer-reviewed literature.
+
+claims_not_supported:
+  - >-
+    Any specific recovery timeline presented as applicable to an individual.
+    See notes below — this is the highest misuse risk in the register.
+  - Pooled effect estimates. A scoping review does not produce them.
+  - Any treatment or restart protocol.
+  - >-
+    Any claim that recovery is typical, expected, or reliable, on the basis of
+    timelines reported in a subset of included studies.
+
+limitations: >-
+  Scoping review methodology: broad inclusion, no quality-weighted synthesis, no
+  meta-analysis. Included studies are heterogeneous in population, exposure
+  history and outcome measurement. Full text not yet read by STAN.
+
+conflicts_of_interest: >-
+  Not yet assessed — full text not read. Note that authors include clinicians
+  practising in sexual health and andrology; declaration must be read before
+  approval.
+
+verification:
+  bibliographic: partial
+  full_text_read: false
+  verified_by: R. (founder) via Claude-assisted search
+  verified_on: '2026-09-01'
+
+review:
+  status: added
+
+provenance:
+  added_by: R. (founder)
+  added_on: '2026-09-01'
+  discovered_via: Literature search on ASIH recovery, 2026-09-01.
+
+notes: >-
+  FLAGGED FOR CAREFUL HANDLING. A secondary summary of this review states that
+  "near complete recovery of testosterone is seen over months, and complete
+  gonadotropin recovery is expected over 3-6 months." That figure has NOT been
+  verified against the full text and must not be quoted until it has been, and
+  even then must not be presented without the exposure profile of the included
+  populations attached. A reader with six years of supraphysiological exposure
+  who takes "3-6 months" as applying to them is precisely the harm this register
+  exists to prevent. Read the full text and record the actual population
+  characteristics behind that figure before any content page cites it.

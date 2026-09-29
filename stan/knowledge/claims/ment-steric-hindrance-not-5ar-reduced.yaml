@@ -1,0 +1,27 @@
+id: ment-steric-hindrance-not-5ar-reduced
+statement: MENT has a molecular alteration creating steric hindrance, and is not
+  reduced by the enzyme 5-alpha reductase.
+source: taylor-2002-anabolic-steroids-athlete
+locator: Ch. 5, p. 63, 'The Third through Fifth Cycles' — The Science Behind the
+  Regime; cites refs 17-20
+quote: For instance, the oral anabolic steroid, 7-alpha-methyl-19-nortestosterone
+  (MENT), has a molecular alteration that creates a steric hindrance and it is not
+  reduced by the enzyme 5-alpha reductase.
+quote_verified: false
+kind: direct
+population: Not a population claim. A statement about molecular structure and enzyme
+  interaction.
+does_not_support:
+- Any clinical outcome. Resisting one enzyme is a mechanism, not a result in a person.
+- Any claim that MENT is safer, or milder, or preferable to anything.
+- Any dosing or usage guidance whatsoever.
+topics:
+- pharmacology
+- harm-reduction
+extracted_by: Claude (Opus 5), from the founder's photographs of p. 63
+extracted_on: '2026-09-05'
+status: draft
+notes: 'Flag for the reader who knows the field: the book calls MENT an oral anabolic
+  steroid, and MENT is generally described elsewhere as parenteral. Check refs 17-20
+  before repeating that characterisation. A small error in a source is worth recording
+  rather than passing on.'

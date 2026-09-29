@@ -1,0 +1,170 @@
+# The "Why are you here?" routes on the hub front door.
+#
+# Order here is the order on the page. Each route's `items` are the cards shown
+# when it is selected; a card's `page` id links it to stan/content/pages/, and
+# the build script pulls that page's live status so badges never go stale.
+# A card with no `page` or `marker` is planned but unwritten.
+#
+# Each route ends with ONE `next` step — the hand-off that makes the page a
+# funnel rather than a leaflet. The door a person chose decides what they are
+# offered next; nothing else on the panel asks for anything. `next` points at
+# exactly one of: a page (content/pages), a group or a seminar
+# (data/sessions.yaml), or a service (data/services.yaml).
+#
+# The value-first rule: a door hands to something FREE. Nobody is offered a
+# paid step before they have been given something. Paid services are offered
+# only from the places named in their `offer_on` list, after value. `line` is the sentence that introduces it for this
+# door specifically.
+#
+# Cards currently reading `status: planned` were pages that got scrapped for
+# being unbacked. They come back when they are written FROM a source that has
+# been read, not before.
+
+default_open: stopped
+
+routes:
+
+  - id: considering
+    label: I'm thinking about starting
+    sub: You want a straight account before you decide
+    said: >-
+      Good. This is the cheapest moment there will ever be to get the full
+      picture — before anything is suppressed and before anything needs undoing.
+    items:
+      - title: Read how the system works first
+        note: Understand the loop you would be switching off. Ten minutes.
+        status: planned
+      - title: What everything costs
+        note: Every compound has effects you want and effects you don't. Both get named.
+        status: planned
+      - title: Get baseline bloods now
+        note: >-
+          If you go ahead, a before picture is the single most useful thing you
+          will ever have.
+        status: planned
+    next:
+      seminar: what-happens-when-you-stop
+      line: >-
+        Before you decide, hear what the exit looks like. Forty minutes from
+        someone who knows, then ask whatever you like.
+
+  - id: using
+    label: I'm using and staying on for now
+    sub: You are not looking to stop, you want to do less damage
+    said: >-
+      That is a legitimate place to be and you will not be lectured here. What we
+      can do is tell you what to watch, and what tends to go wrong quietly over
+      years.
+    items:
+      - title: Markers worth monitoring
+        note: Which bloods, how often, and what a drifting number actually means.
+        status: planned
+      - title: Oestradiol, and what happens when you crush it
+        note: One of the most commonly mismanaged parts of a cycle.
+        marker: oestradiol
+      - title: Talk to a peer, not a lecture
+        note: Someone who has been on for years and is not going to tell you to stop.
+        status: planned
+    next:
+      group: topic-bloods
+      line: >-
+        Bring your panel to the bloods clinic. Free, once a month. Nobody will
+        read your individual numbers in a room — but you will leave knowing
+        what every line on the sheet is.
+
+  - id: comingoff
+    label: I want to come off
+    sub: You have decided, or you are close to deciding
+    said: >-
+      This is where the honest answer is uncomfortable: there is no agreed
+      clinical pathway, and the popular protocols are not backed by good
+      evidence. What we can do is get you to someone who actually works in this,
+      and make you ready for that conversation.
+    items:
+      - title: What the evidence supports, and what it doesn't
+        note: Including how much is genuinely unknown.
+        status: planned
+      - title: Consultation brief
+        note: >-
+          Fill it in, take it with you. Makes a GP who doesn't know this area far
+          more useful.
+        page: consultation-brief
+      - title: The coming-off cohort
+        note: Six weeks, same small group, someone facilitating. See sessions below.
+        status: planned
+    next:
+      group: cohort-comingoff
+      line: >-
+        Nobody should do the first six weeks alone. Eight people, two
+        facilitators, same room every Monday. Put your name down.
+
+  - id: stopped
+    label: I've stopped and I feel wrong
+    sub: Tired, flat, no libido, and told your bloods are fine
+    said: >-
+      You are describing something with a name and a research literature, even
+      though your GP may not have used it: steroid-induced hypogonadism. Being
+      told you are normal when you feel like this often means the wrong thing was
+      measured.
+    items:
+      - title: Why "normal" testosterone can still be too low
+        note: SHBG, and the difference between total and free.
+        marker: shbg
+      - title: How the system works
+        note: Low testosterone with low LH points somewhere quite specific.
+        status: planned
+      - title: LH — where the problem actually sits
+        note: The second number that makes the first one readable.
+        marker: lh
+    next:
+      page: consultation-brief
+      line: >-
+        Start with the sheet. Fill it in and take it to your GP — it turns
+        "my doctor doesn't know this area" into "my doctor has something to
+        work with".
+
+  - id: bloods
+    label: I've got bloods I can't read
+    sub: Sixteen lines, no explanation, and an appointment in a fortnight
+    said: >-
+      Start with the loop rather than the list. A panel is not sixteen separate
+      facts — the markers move together, and once you know how, most of it reads
+      itself.
+    items:
+      - title: Read the system before the numbers
+        note: The one page that makes the rest legible.
+        status: planned
+      - title: Testosterone — total and free
+        note: The number everyone looks at, and the one most often misread.
+        marker: total-testosterone
+      - title: Track them over time
+        note: Recovery is invisible week to week and obvious over a year.
+        status: planned
+    next:
+      seminar: reading-your-own-bloods
+      line: >-
+        Forty minutes on what a standard panel actually says, line by line,
+        from someone who reads them for a living. Bring yours and follow along.
+
+  - id: worried
+    label: I'm worried about someone else
+    sub: Partner, son, brother, mate
+    said: >-
+      You are probably getting very little from him and quite a lot of
+      defensiveness. Understanding what is physically happening tends to help
+      more than confronting it does.
+    items:
+      - title: What is actually going on in his body
+        note: Including the mood and irritability, which are not just personality.
+        status: planned
+      - title: Partners and family group
+        note: A room of people in the same position. Monthly.
+        status: planned
+      - title: How to raise it without a row
+        note: Approaches that tend not to end the conversation.
+        status: planned
+    next:
+      group: family-monthly
+      line: >-
+        A room of partners, parents and mates in the same position, once a
+        month. You will get more from them than from him, for now.

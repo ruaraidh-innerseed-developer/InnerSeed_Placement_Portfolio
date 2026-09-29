@@ -1,0 +1,105 @@
+# Question bank — on-cycle-harm-reduction
+#
+# Questions assert nothing, so this file can be written and extended freely.
+# Answers are a different matter entirely: see ../schema/answer.schema.yaml.
+#
+# `variants` is what makes the search bar work. Add to it every time the unmet
+# search log shows a phrasing nobody anticipated.
+
+topic: on-cycle-harm-reduction
+
+questions:
+
+  - id: what-bloods-while-on
+    question: "What bloods should I be getting while I'm on?"
+    variants:
+      - "monitoring on cycle"
+      - "what to test while using"
+      - "bloodwork on gear"
+    topics: [on-cycle-harm-reduction]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: how-often-check-bloods
+    question: "How often should I check my bloods?"
+    variants:
+      - "how frequently to test"
+      - "bloods every how many months"
+    topics: [on-cycle-harm-reduction]
+    origin: proposed
+    frequency: unknown
+    priority: 2
+
+  - id: warning-signs-to-stop
+    question: "What are the warning signs that I should stop?"
+    variants:
+      - "when is it dangerous"
+      - "red flags on cycle"
+      - "signs somethings wrong"
+    topics: [on-cycle-harm-reduction]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+    notes: >-
+      RED FLAG. Acute symptoms must route to urgent care before anything
+      else.
+
+  - id: blood-pressure-related
+    question: "Is my blood pressure related to this?"
+    variants:
+      - "high bp on cycle"
+      - "blood pressure up since starting"
+    topics: [on-cycle-harm-reduction]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: what-is-haematocrit
+    question: "What is haematocrit and why does it matter?"
+    variants:
+      - "thick blood"
+      - "hct too high"
+      - "do i need to donate blood"
+    topics: [on-cycle-harm-reduction]
+    markers: [haematocrit]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: do-i-need-an-ai
+    question: "Do I need an aromatase inhibitor?"
+    variants:
+      - "should i take an ai"
+      - "arimidex necessary"
+      - "controlling estrogen"
+    topics: [on-cycle-harm-reduction]
+    markers: [oestradiol]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+    notes: >-
+      Community practice and evidence diverge sharply. Crushing oestradiol
+      causes real harm and is widely treated as routine.
+
+  - id: safer-way-to-do-this
+    question: "Is there a safer way to do this?"
+    variants:
+      - "harm reduction steroids"
+      - "lower risk approach"
+      - "doing it sensibly"
+    topics: [on-cycle-harm-reduction]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: damage-i-cant-feel
+    question: "What damage might be happening that I can't feel?"
+    variants:
+      - "silent damage"
+      - "whats happening i dont notice"
+      - "long term effects"
+    topics: [on-cycle-harm-reduction]
+    origin: proposed
+    frequency: unknown
+    priority: 1

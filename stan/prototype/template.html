@@ -1,0 +1,2429 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Steroid Awareness Network</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Bitter:wght@600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+  :root {
+    --ground:      #eaece9;
+    --surface:     #f7f8f6;
+    --surface-2:   #ffffff;
+    --ink:         #17242a;
+    --ink-2:       #4a5a60;
+    --ink-3:       #74868c;
+    --line:        #d3d9d4;
+    --line-strong: #b9c2bc;
+    --accent:      #a85f1a;
+    --accent-ink:  #ffffff;
+    --accent-soft: #f2e4d2;
+    --verified:    #1a6355;
+    --verified-bg: #dfeae6;
+    --draft:       #8a5a00;
+    --draft-bg:    #f4e8d2;
+    --absent:      #6b767b;
+    --absent-bg:   #e2e6e3;
+    --alarm:       #9c2f22;
+
+    --band-bg:     #17242a;
+    --band-ink:    #eef1ef;
+    --band-ink-2:  #a3b4b9;
+    --band-ink-3:  #7d8e94;
+    --band-line:   #2c3f47;
+    --band-accent: #e0a054;
+
+    --display: "Bitter", Georgia, "Times New Roman", serif;
+    --body:    "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --mono:    "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+
+    --measure: 63ch;
+    --radius:  3px;
+
+    --btn-bg:    #17242a;
+    --btn-ink:   #eef1ef;
+    --btn-arrow: #e0a054;
+    --btn-hover: #0f181c;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #121c21;
+      --surface:     #17242a;
+      --surface-2:   #1d2d34;
+      --ink:         #e8ecea;
+      --ink-2:       #a5b4b9;
+      --ink-3:       #7d8e94;
+      --line:        #2a3d45;
+      --line-strong: #3b525b;
+      --accent:      #e0a054;
+      --accent-ink:  #121c21;
+      --accent-soft: #2e2317;
+      --verified:    #56bda6;
+      --verified-bg: #16302c;
+      --draft:       #d9a441;
+      --draft-bg:    #2e2617;
+      --absent:      #8b9a9f;
+      --absent-bg:   #202f36;
+      --alarm:       #e8705f;
+
+      --band-bg:     #1d2d34;
+      --band-ink:    #eef1ef;
+      --band-ink-2:  #a3b4b9;
+      --band-ink-3:  #7d8e94;
+      --band-line:   #344952;
+      --band-accent: #e8ab5e;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:      #121c21;
+    --surface:     #17242a;
+    --surface-2:   #1d2d34;
+    --ink:         #e8ecea;
+    --ink-2:       #a5b4b9;
+    --ink-3:       #7d8e94;
+    --line:        #2a3d45;
+    --line-strong: #3b525b;
+    --accent:      #e0a054;
+    --accent-ink:  #121c21;
+    --accent-soft: #2e2317;
+    --verified:    #56bda6;
+    --verified-bg: #16302c;
+    --draft:       #d9a441;
+    --draft-bg:    #2e2617;
+    --absent:      #8b9a9f;
+    --absent-bg:   #202f36;
+    --alarm:       #e8705f;
+
+    --band-bg:     #1d2d34;
+    --band-ink:    #eef1ef;
+    --band-ink-2:  #a3b4b9;
+    --band-ink-3:  #7d8e94;
+    --band-line:   #344952;
+    --band-accent: #e8ab5e;
+  }
+
+  /* ------------------------------------------------------ inversion sets */
+
+  /* The petrol band is a token set, not a section. Put `band` on a section
+     or `inv` on any element and everything inside it re-resolves: surfaces,
+     ink, lines, badges, buttons. Nest an `inv` inside a band and it flips
+     back to paper. This is what lets the page rhythm be rearranged without
+     touching a component. */
+  .band, .inv,
+  .band .inv .inv, .inv .inv .inv {
+    --ground:      #17242a;
+    --surface:     #1d2d34;
+    --surface-2:   #22343c;
+    --ink:         #eef1ef;
+    --ink-2:       #a3b4b9;
+    --ink-3:       #7d8e94;
+    --line:        #2c3f47;
+    --line-strong: #3b525b;
+    --accent:      #e0a054;
+    --accent-ink:  #17242a;
+    --accent-soft: #2e2317;
+    --verified:    #56bda6;
+    --verified-bg: #16302c;
+    --draft:       #d9a441;
+    --draft-bg:    #2e2617;
+    --absent:      #8b9a9f;
+    --absent-bg:   #202f36;
+    --alarm:       #e8705f;
+    --btn-bg:      #e0a054;
+    --btn-ink:     #17242a;
+    --btn-arrow:   #17242a;
+    --btn-hover:   #e8ab5e;
+    background: var(--ground);
+    color: var(--ink);
+  }
+  .band .inv, .inv .inv,
+  .band .inv .inv .inv, .inv .inv .inv .inv {
+    --ground:      #f7f8f6;
+    --surface:     #eef0ed;
+    --surface-2:   #ffffff;
+    --ink:         #17242a;
+    --ink-2:       #4a5a60;
+    --ink-3:       #74868c;
+    --line:        #d3d9d4;
+    --line-strong: #b9c2bc;
+    --accent:      #a85f1a;
+    --accent-ink:  #ffffff;
+    --accent-soft: #f2e4d2;
+    --verified:    #1a6355;
+    --verified-bg: #dfeae6;
+    --draft:       #8a5a00;
+    --draft-bg:    #f4e8d2;
+    --absent:      #6b767b;
+    --absent-bg:   #e2e6e3;
+    --alarm:       #9c2f22;
+    --btn-bg:      #17242a;
+    --btn-ink:     #eef1ef;
+    --btn-arrow:   #e0a054;
+    --btn-hover:   #0f181c;
+    background: var(--ground);
+    color: var(--ink);
+  }
+  .band .eyebrow, .inv .eyebrow { color: var(--accent); }
+  .band .inv .eyebrow, .inv .inv .eyebrow { color: var(--ink-3); }
+  section.band { padding: 82px 0; }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 16.5px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--display);
+    font-weight: 700;
+    line-height: 1.14;
+    text-wrap: balance;
+    margin: 0;
+    letter-spacing: -0.012em;
+  }
+
+  p { margin: 0; }
+  a { color: inherit; }
+
+  .wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin: 0;
+  }
+
+  /* ---------------------------------------------------------- prototype bar */
+
+  .protobar {
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    padding: 9px 0;
+  }
+  .protobar .wrap {
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+    flex-wrap: wrap;
+  }
+  .protobar strong { font-weight: 500; }
+  .protobar span { opacity: 0.82; }
+  .protobar .looks { margin-left: auto; display: flex; gap: 6px; align-items: center; opacity: 1; }
+  .protobar .looks button {
+    background: none; border: 1px solid rgba(255,255,255,.45); color: inherit;
+    font: inherit; padding: 2px 9px; border-radius: 999px; cursor: pointer; opacity: .85;
+  }
+  .protobar .looks button[aria-pressed="true"] { background: rgba(255,255,255,.92); color: var(--accent); opacity: 1; }
+
+  /* ----------------------------------------------------------------- header */
+
+  header.site {
+    border-bottom: 1px solid var(--line);
+    background: var(--surface);
+  }
+  header.site .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 11px;
+  }
+  .brand b {
+    font-family: var(--display);
+    font-size: 22px;
+    letter-spacing: 0.02em;
+  }
+  .brand em {
+    font-style: normal;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  nav.top {
+    display: flex;
+    gap: 24px;
+    font-size: 14.5px;
+  }
+  nav.top a {
+    text-decoration: none;
+    color: var(--ink-2);
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+  }
+  nav.top a:hover { color: var(--ink); border-bottom-color: var(--accent); }
+
+  .navtoggle {
+    display: none;
+    background: none;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    color: var(--ink);
+    padding: 9px 13px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    align-items: center;
+    gap: 9px;
+  }
+  .navtoggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .navtoggle .bars { display: grid; gap: 3px; }
+  .navtoggle .bars i { display: block; width: 15px; height: 1.5px; background: currentColor; }
+
+  /* The header was wrapping into a pile on a phone. Below 780 the links
+     collapse behind a toggle and stack as full-width rows — a tap target
+     each, rather than six words fighting for one line. */
+  @media (max-width: 780px) {
+    header.site .wrap { flex-wrap: wrap; padding-top: 14px; padding-bottom: 14px; }
+    .navtoggle { display: inline-flex; }
+    nav.top {
+      display: none;
+      width: 100%;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+    nav.top.open { display: flex; }
+    nav.top a {
+      padding: 14px 2px;
+      border-bottom: 1px solid var(--line);
+      font-size: 16px;
+    }
+    nav.top a:hover { border-bottom-color: var(--line); }
+  }
+
+  /* ---------------------------------------------------------------- buttons */
+
+  /* The dark tone brought out of the seminars band and put to work as the
+     primary action colour, so a pathway reads as a pathway everywhere. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: var(--body);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 12px 20px;
+    border-radius: var(--radius);
+    border: 1px solid var(--btn-bg);
+    background: var(--btn-bg);
+    color: var(--btn-ink);
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .14s, border-color .14s;
+  }
+  .btn:hover { background: var(--btn-hover); border-color: var(--btn-hover); }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .btn .arrow { color: var(--btn-arrow); font-weight: 400; }
+
+  .btn.ghost {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--line-strong);
+  }
+  .btn.ghost:hover { border-color: var(--accent); color: var(--accent); background: transparent; }
+  .btn.ghost .arrow { color: var(--accent); }
+
+
+  /* ------------------------------------------------------------------- hero */
+
+  .hero {
+    padding: 68px 0 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .stance {
+    max-width: var(--measure);
+    display: grid;
+    gap: 20px;
+  }
+  .stance h1 {
+    font-size: clamp(32px, 5vw, 50px);
+  }
+  .stance .lede {
+    font-size: 18.5px;
+    color: var(--ink-2);
+    max-width: 58ch;
+  }
+  .stance .lede b {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .rule-quote {
+    margin-top: 34px;
+    padding: 18px 0 18px 22px;
+    border-left: 3px solid var(--accent);
+    max-width: 60ch;
+    font-size: 17px;
+    color: var(--ink-2);
+  }
+  .rule-quote b { color: var(--ink); font-weight: 600; }
+
+  /* ----------------------------------------------------------------- search */
+
+  .searchblock { margin-top: 46px; }
+  .searchrow {
+    display: flex;
+    border: 1.5px solid var(--line-strong);
+    border-radius: var(--radius);
+    background: var(--surface-2);
+    overflow: hidden;
+  }
+  .searchrow:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+  .searchrow input {
+    flex: 1;
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    padding: 17px 18px;
+    outline: none;
+    min-width: 0;
+  }
+  .searchrow input::placeholder { color: var(--ink-3); }
+  /* In a petrol hero the search field stays paper: it is the one thing on
+     the page that must read as "type here" from across the room. */
+  .band .searchrow { background: #f7f8f6; border-color: transparent; }
+  .band .searchrow input { color: #17242a; }
+  .band .searchrow input::placeholder { color: #74868c; }
+  .band .searchrow:focus-within { box-shadow: 0 0 0 3px rgba(224,160,84,.35); }
+  .band.hero { border-bottom: 0; }
+  header.site.band { border-bottom-color: var(--line); }
+  header.site.band + #home > .hero.band { padding-top: 60px; }
+  footer.site.band { padding: 44px 0 60px; margin-top: 0; }
+  footer.site.band .state { border-top-color: var(--line); }
+
+  .rule-quote.inv {
+    padding: 24px 28px;
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius);
+    max-width: 64ch;
+  }
+  .rule-quote.inv b { color: var(--ink); }
+  #routepanel.inv { border-color: var(--line); border-top-color: var(--accent); }
+
+  .searchrow button {
+    border: 0;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-family: var(--body);
+    font-weight: 600;
+    font-size: 15px;
+    padding: 0 26px;
+    cursor: pointer;
+  }
+  .searchhint {
+    margin-top: 10px;
+    font-size: 13.5px;
+    color: var(--ink-3);
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: baseline;
+  }
+  .searchhint button {
+    background: none;
+    border: 0;
+    border-bottom: 1px dashed var(--line-strong);
+    color: var(--ink-2);
+    font-family: var(--mono);
+    font-size: 12.5px;
+    padding: 0 0 1px;
+    cursor: pointer;
+  }
+  .searchhint button:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+  .aiquiet {
+    margin-top: 14px;
+    font-size: 13.5px;
+    color: var(--ink-3);
+    max-width: 62ch;
+  }
+  .aiquiet a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 2px; }
+  .aiquiet a:hover { color: var(--accent); }
+
+  #results { margin-top: 26px; display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  #results:empty { display: none; }
+
+  .result {
+    background: var(--surface-2);
+    padding: 16px 18px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 6px 18px;
+    align-items: start;
+  }
+  .result h4 {
+    margin: 0;
+    font-family: var(--body);
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .result p {
+    grid-column: 1 / -1;
+    font-size: 14.5px;
+    color: var(--ink-2);
+    max-width: 70ch;
+  }
+  .result .unitline {
+    grid-column: 1 / -1;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+
+  .badge {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .badge.approved { background: var(--verified-bg); color: var(--verified); }
+  .badge.draft    { background: var(--draft-bg);    color: var(--draft); }
+  .badge.absent   { background: var(--absent-bg);   color: var(--absent); }
+
+  .noresult {
+    background: var(--surface-2);
+    padding: 22px 18px;
+    display: grid;
+    gap: 10px;
+  }
+  .noresult strong { font-family: var(--display); font-size: 18px; }
+  .noresult form { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+  .noresult input {
+    flex: 1; min-width: 220px;
+    font-family: var(--body); font-size: 15px;
+    padding: 10px 12px;
+    background: var(--surface); color: var(--ink);
+    border: 1.5px solid var(--line-strong); border-radius: var(--radius);
+  }
+  .noresult input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .noresult button {
+    border: 0; background: var(--accent); color: var(--accent-ink);
+    font-family: var(--body); font-weight: 600; font-size: 14px;
+    padding: 0 18px; border-radius: var(--radius); cursor: pointer;
+  }
+  .noresult .chattip {
+    border-left: 3px solid var(--accent);
+    padding: 2px 0 2px 15px;
+    display: grid;
+    gap: 7px;
+  }
+  .noresult .chattip h5 {
+    margin: 0;
+    font-family: var(--body);
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .noresult .chattip ul {
+    margin: 0;
+    padding-left: 17px;
+    display: grid;
+    gap: 5px;
+    font-size: 14px;
+    color: var(--ink-2);
+  }
+
+  .noresult .logged {
+    font-family: var(--mono); font-size: 11.5px; color: var(--ink-3);
+  }
+
+  .related {
+    background: var(--surface);
+    padding: 15px 18px;
+    display: flex; gap: 9px; flex-wrap: wrap; align-items: baseline;
+  }
+  .related .lbl {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.09em;
+    text-transform: uppercase; color: var(--ink-3);
+  }
+  .related button {
+    font-family: var(--body); font-size: 13.5px;
+    padding: 4px 11px; cursor: pointer;
+    background: var(--surface-2); color: var(--ink-2);
+    border: 1px solid var(--line-strong); border-radius: 999px;
+  }
+  .related button:hover { border-color: var(--accent); color: var(--accent); }
+  .related button .dot {
+    display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+    margin-right: 6px; vertical-align: 1px;
+  }
+  .related button .dot.live    { background: var(--verified); }
+  .related button .dot.draft   { background: var(--draft); }
+  .related button .dot.planned { background: var(--absent); }
+
+  .panel .honest {
+    font-size: 14px; color: var(--ink-2);
+    border-left: 3px solid var(--draft);
+    padding: 2px 0 2px 13px;
+  }
+  .noresult p { font-size: 15px; color: var(--ink-2); max-width: 66ch; }
+
+  /* ----------------------------------------------------------------- routes */
+
+  /* Rhythm: air separates sections, not borders on everything. Alternating
+     grounds and one inverted band give the page a pulse instead of a flat
+     run of identical boxes. */
+  section { padding: 76px 0; }
+  section.tint { background: var(--surface); }
+  section + section:not(.tint):not(.band) { border-top: 1px solid var(--line); }
+
+  .sechead { display: grid; gap: 13px; margin-bottom: 40px; max-width: var(--measure); }
+  .sechead h2 { font-size: clamp(28px, 4vw, 40px); }
+  .sechead p { color: var(--ink-2); font-size: 17px; }
+
+  /* ------------------------------------------------------------ the band */
+
+  .seminars { display: grid; gap: 16px; }
+
+  .seminar {
+    display: grid;
+    grid-template-columns: 132px 1fr;
+    gap: 4px 30px;
+    padding: 24px 0;
+    border-top: 1px solid var(--line);
+    align-items: start;
+  }
+  .seminar:last-child { border-bottom: 1px solid var(--line); }
+
+  .seminar .date {
+    font-family: var(--mono);
+    font-size: 13.5px;
+    color: var(--accent);
+    line-height: 1.5;
+    font-weight: 500;
+  }
+  .seminar .date small {
+    display: block;
+    font-size: 11.5px;
+    color: var(--ink-3);
+    letter-spacing: 0.05em;
+  }
+  .seminar h3 {
+    font-size: 21px;
+    color: var(--ink);
+    margin-bottom: 3px;
+  }
+  .seminar .who {
+    font-size: 14.5px;
+    color: var(--ink-2);
+    margin-bottom: 9px;
+  }
+  .seminar .who b { color: var(--ink); font-weight: 600; }
+  .seminar .who .tbc {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    background: var(--accent);
+    padding: 2px 7px;
+    border-radius: 2px;
+    margin-left: 7px;
+    white-space: nowrap;
+  }
+  .seminar .sum { font-size: 15.5px; color: var(--ink-2); max-width: 64ch; }
+  .seminar .facts {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px;
+  }
+  .seminar .facts span {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--ink-2);
+    border: 1px solid var(--line);
+    padding: 4px 9px;
+    border-radius: 999px;
+  }
+
+  /* Mixed look: each seminar becomes an inverted card on a light ground. */
+  .seminar.inv {
+    padding: 24px 26px;
+    border: 0;
+    border-radius: var(--radius);
+  }
+  .seminar.inv:last-child { border-bottom: 0; }
+  .seminar.inv .btn { --btn-bg: #e0a054; }
+
+  @media (max-width: 640px) {
+    .seminar { grid-template-columns: 1fr; gap: 10px; }
+  }
+
+  /* ----------------------------------------------------------- the groups */
+
+  .groups { display: grid; gap: 12px; }
+
+  .group {
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--line-strong);
+    border-radius: var(--radius);
+    background: var(--surface-2);
+    transition: border-left-color .14s;
+  }
+  .group:hover { border-left-color: var(--accent); }
+  .group[open] { border-left-color: var(--accent); }
+
+  .group summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 19px 20px;
+    display: grid;
+    grid-template-columns: 152px 1fr auto;
+    gap: 5px 24px;
+    align-items: baseline;
+  }
+  .group summary::-webkit-details-marker { display: none; }
+  .group summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .group .when {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .group .when small { display: block; color: var(--ink-3); font-size: 11.5px; }
+  .group .name { font-size: 17px; font-weight: 600; font-family: var(--body); }
+  .group .who { grid-column: 2 / -1; font-size: 14.5px; color: var(--ink-2); max-width: 64ch; }
+  .group .pill {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    border: 1px solid var(--line-strong);
+    padding: 3px 9px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .group .more {
+    grid-column: 2 / -1;
+    font-size: 13px;
+    color: var(--accent);
+    font-family: var(--mono);
+    margin-top: 5px;
+  }
+  .group[open] .more { visibility: hidden; height: 0; margin: 0; }
+
+  .group .detail {
+    padding: 4px 20px 22px;
+    display: grid;
+    gap: 18px;
+    border-top: 1px solid var(--line);
+    margin: 0 20px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .group .detail h4 {
+    margin: 0 0 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: 500;
+  }
+  .group .detail ol { margin: 0; padding-left: 19px; display: grid; gap: 6px;
+                      font-size: 14.5px; color: var(--ink-2); }
+  .group .facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px;
+    font-size: 14px;
+  }
+  .group .facts div b {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+  .group .facts div span { color: var(--ink-2); }
+
+  @media (max-width: 640px) {
+    .group summary { grid-template-columns: 1fr; }
+    .group .who, .group .more { grid-column: 1; }
+  }
+
+  .groups .empty {
+    background: var(--surface-2); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 26px 20px;
+    color: var(--ink-2); font-size: 15px;
+  }
+
+  .routes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(288px, 1fr));
+    gap: 14px;
+  }
+  .route {
+    text-align: left;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--line-strong);
+    border-radius: var(--radius);
+    padding: 20px 20px 18px;
+    cursor: pointer;
+    font-family: var(--body);
+    color: var(--ink);
+    display: grid;
+    gap: 7px;
+    transition: border-left-color .14s, background .14s;
+  }
+  .route:hover { border-left-color: var(--accent); background: var(--surface-2); }
+  .route[aria-pressed="true"] {
+    border-left-color: var(--accent);
+    background: var(--surface-2);
+    box-shadow: inset 0 0 0 1px var(--accent-soft);
+  }
+  .route b { font-size: 17px; font-weight: 600; line-height: 1.3; }
+  .route span { font-size: 14px; color: var(--ink-2); }
+  .route:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  #routepanel {
+    margin-top: 22px;
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--accent);
+    border-radius: var(--radius);
+    background: var(--surface-2);
+    padding: 26px 24px;
+    display: grid;
+    gap: 18px;
+  }
+  #routepanel[hidden] { display: none !important; }
+  #routepanel h3 { font-size: 21px; }
+  #routepanel .said { color: var(--ink-2); font-size: 16px; max-width: 64ch; }
+  .panelgrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+  }
+  .panelitem {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px 15px;
+    display: grid;
+    gap: 7px;
+    align-content: start;
+    background: var(--surface);
+  }
+  .panelitem b { font-size: 15px; font-weight: 600; }
+  .panelitem span { font-size: 13.5px; color: var(--ink-2); }
+
+  /* --------------------------------------------------------------- sessions */
+
+  .sessioncontrols {
+    display: flex;
+    gap: 14px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    margin-bottom: 26px;
+  }
+  .field { display: grid; gap: 6px; }
+  .field label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .field select {
+    font-family: var(--body);
+    font-size: 15.5px;
+    padding: 11px 13px;
+    background: var(--surface-2);
+    color: var(--ink);
+    border: 1.5px solid var(--line-strong);
+    border-radius: var(--radius);
+    min-width: 230px;
+  }
+  .field select:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  .sessions { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .session {
+    background: var(--surface-2);
+    padding: 17px 18px;
+    display: grid;
+    grid-template-columns: 150px 1fr auto;
+    gap: 6px 20px;
+    align-items: baseline;
+  }
+  .session .when {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .session b { font-size: 16px; font-weight: 600; }
+  .session .who { grid-column: 2 / -1; font-size: 14px; color: var(--ink-2); max-width: 62ch; }
+  .session .place {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--ink-3);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .sessions .empty { background: var(--surface-2); padding: 24px 18px; color: var(--ink-2); font-size: 15px; }
+
+  @media (max-width: 620px) {
+    .session { grid-template-columns: 1fr; }
+    .session .who, .session .place { grid-column: 1; }
+  }
+
+  /* ---------------------------------------------------------------- connect */
+
+  .twocol {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 18px;
+  }
+  .panel {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    padding: 24px 22px;
+    display: grid;
+    gap: 12px;
+    align-content: start;
+  }
+  .panel h3 { font-size: 19px; }
+  .panel p { font-size: 15px; color: var(--ink-2); }
+  .panel ul { margin: 0; padding-left: 18px; display: grid; gap: 7px; font-size: 15px; color: var(--ink-2); }
+  .panel .tag {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  /* The hand-off card at the foot of a route panel. Carries `inv`, so it is
+     petrol on paper and paper on petrol. */
+  .nextstep {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 18px 28px;
+    align-items: center;
+    text-decoration: none;
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    margin-top: 6px;
+  }
+  .nextstep .eyebrow { margin-bottom: 6px; }
+  .nextstep h4 { font-size: 20px; color: var(--ink); margin-bottom: 6px; font-family: var(--display); }
+  .nextstep .body p:not(.eyebrow) { font-size: 15px; color: var(--ink-2); max-width: 58ch; }
+  .nextstep .side { display: grid; gap: 4px; justify-items: end; text-align: right; }
+  .nextstep .side b { font-family: var(--display); font-size: 22px; color: var(--accent); line-height: 1; }
+  .nextstep .side small { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); letter-spacing: 0.05em; }
+  .nextstep .side .btn { margin-top: 10px; }
+  .nextstep:hover .side .btn { background: var(--btn-hover); }
+  .nextstep:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  @media (max-width: 640px) {
+    .nextstep { grid-template-columns: 1fr; }
+    .nextstep .side { justify-items: start; text-align: left; }
+  }
+
+  /* One action inside a Connect panel. */
+  .panel .next { display: grid; gap: 8px; margin-top: 6px; justify-items: start; }
+  .panel .next .fine { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); margin: 0; }
+
+  .group .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  /* Quiet hand-off at the foot of a page. */
+  .handoff {
+    border-top: 1px solid var(--line);
+    margin: 30px 0 10px;
+    padding-top: 22px;
+    display: grid; gap: 12px; justify-items: start;
+  }
+  .handoff p { font-size: 16px; color: var(--ink-2); margin: 0; max-width: 60ch; }
+  .handoff .fine { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); }
+
+  /* The transparency page. */
+  .costlist { display: grid; gap: 10px; margin: 14px 0 8px; }
+  .costrow {
+    display: grid; grid-template-columns: 1fr auto; gap: 4px 20px;
+    padding: 15px 17px; text-decoration: none; color: inherit;
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--surface-2); align-items: baseline;
+  }
+  .costrow:hover { border-color: var(--accent); }
+  .costrow:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .costrow b { font-size: 16.5px; font-family: var(--body); }
+  .costrow .price { font-family: var(--display); font-size: 18px; font-weight: 600; text-align: right; }
+  .costrow .desc { grid-column: 1 / -1; font-size: 14.5px; color: var(--ink-2); }
+  .costrow .st { grid-column: 1 / -1; font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); margin-top: 3px; }
+  .costrow.ready .st { color: var(--verified); }
+  .costrow.soon .st { color: var(--draft); }
+  .costrow.planned b, .costrow.planned .price { color: var(--ink-3); }
+
+  /* The single capture form. */
+  form.capture { display: flex; gap: 9px; flex-wrap: wrap; }
+  form.capture input {
+    flex: 1; min-width: 220px; font-family: var(--body); font-size: 15px;
+    padding: 11px 13px; background: var(--surface); color: var(--ink);
+    border: 1.5px solid var(--line-strong); border-radius: var(--radius);
+  }
+  form.capture input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  /* Service inner page: the booking block. */
+  .book {
+    border: 1px solid var(--line-strong);
+    border-top: 3px solid var(--accent);
+    border-radius: var(--radius);
+    background: var(--surface-2);
+    padding: 24px;
+    display: grid; gap: 12px;
+    margin: 30px 0 34px;
+  }
+  .book .price { font-family: var(--display); font-size: 36px; font-weight: 600; line-height: 1; }
+  .book .price small { display: block; font-family: var(--mono); font-size: 12px; color: var(--ink-3); margin-top: 8px; font-weight: 400; letter-spacing: 0.05em; }
+  .book p { font-size: 15px; margin: 0; }
+  .book form { display: flex; gap: 9px; flex-wrap: wrap; }
+  .book input {
+    flex: 1; min-width: 220px; font-family: var(--body); font-size: 15px;
+    padding: 11px 13px; background: var(--surface); color: var(--ink);
+    border: 1.5px solid var(--line-strong); border-radius: var(--radius);
+  }
+  .book input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .book .said { font-family: var(--mono); font-size: 12px; color: var(--verified); }
+
+  /* ----------------------------------------------------------------- crisis */
+
+  .crisis {
+    background: var(--surface-2);
+    border-top: 3px solid var(--alarm);
+    padding: 34px 0;
+  }
+  .crisis h2 { font-size: 20px; margin-bottom: 6px; }
+  .crisis .note { font-size: 14.5px; color: var(--ink-2); margin-bottom: 20px; max-width: 68ch; }
+  .lines {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(216px, 1fr));
+    gap: 14px;
+  }
+  .line {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 13px 15px;
+    display: grid;
+    gap: 3px;
+    background: var(--surface);
+  }
+  .line b { font-size: 15px; font-weight: 600; }
+  .line .num {
+    font-family: var(--mono); font-size: 16.5px; color: var(--accent);
+    font-weight: 500; text-decoration: none; display: inline-block;
+    padding: 3px 0; letter-spacing: 0.01em;
+  }
+  a.line-num, a.num { border-bottom: 1px solid transparent; }
+  a.num:hover, a.num:focus-visible { border-bottom-color: var(--accent); }
+  a.num:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .line .hrs { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); }
+  .line .hrs.warn { color: var(--draft); }
+
+  /* ----------------------------------------------------------------- footer */
+
+  footer.site {
+    padding: 30px 0 46px;
+    font-size: 13.5px;
+    color: var(--ink-3);
+    display: grid;
+    gap: 8px;
+  }
+  footer.site p { max-width: 76ch; }
+  footer.site .state {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--ink-3);
+    padding-top: 6px;
+    border-top: 1px solid var(--line);
+  }
+
+  /* --------------------------------------------------------------- inner pages */
+
+  #view { display: none; }
+  #view.on { display: block; }
+  body.viewing #home { display: none; }
+
+  .pagetop { background: var(--surface); border-bottom: 1px solid var(--line); padding: 18px 0; }
+  .backlink {
+    background: none; border: 0; cursor: pointer;
+    font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.06em;
+    color: var(--ink-2); padding: 4px 0;
+    display: inline-flex; gap: 8px; align-items: center;
+  }
+  .backlink:hover { color: var(--accent); }
+  .backlink:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .page { padding: 46px 0 80px; }
+  .page .inner { max-width: 74ch; }
+  .page .eyebrow { margin-bottom: 13px; }
+  .page h1 { font-size: clamp(28px, 4.6vw, 42px); margin-bottom: 12px; }
+  .page .sub { font-size: 17.5px; color: var(--ink-2); margin-bottom: 22px; }
+  .page .statusrow { display: flex; gap: 9px; flex-wrap: wrap; margin-bottom: 34px; }
+
+  .page h2 {
+    font-size: 21px; margin: 38px 0 12px;
+    padding-top: 22px; border-top: 1px solid var(--line);
+  }
+  .page h2:first-of-type { border-top: 0; padding-top: 0; margin-top: 26px; }
+  .page p { font-size: 16.5px; color: var(--ink-2); margin-bottom: 13px; }
+  .page ul { margin: 0 0 15px; padding-left: 20px; display: grid; gap: 7px;
+             font-size: 16px; color: var(--ink-2); }
+  .page .lede { font-size: 18.5px; color: var(--ink); }
+
+  .factgrid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px; margin: 8px 0 30px;
+    padding: 20px; background: var(--surface); border-radius: var(--radius);
+  }
+  .factgrid div b {
+    display: block; font-family: var(--mono); font-size: 10.5px;
+    letter-spacing: 0.09em; text-transform: uppercase; color: var(--ink-3);
+    font-weight: 500; margin-bottom: 3px;
+  }
+  .factgrid div span { font-size: 15px; color: var(--ink); }
+
+  /* The empty state is most of the site, so it is designed as a destination
+     rather than an apology: what it will cover, where to go now, and a way to
+     tell us you needed it. */
+  .gap {
+    border-left: 3px solid var(--draft);
+    background: var(--draft-bg);
+    padding: 20px 22px;
+    border-radius: var(--radius);
+    margin-bottom: 30px;
+  }
+  .gap b { display: block; font-size: 17px; color: var(--ink); margin-bottom: 6px;
+           font-family: var(--display); }
+  .gap p { font-size: 15.5px; color: var(--ink-2); margin: 0; }
+
+  .onward { display: flex; gap: 10px; flex-wrap: wrap; margin: 6px 0 32px; }
+
+  .needit {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 22px;
+    background: var(--surface-2);
+    display: grid; gap: 12px;
+    margin-top: 34px;
+  }
+  .needit h3 { font-size: 18px; }
+  .needit p { font-size: 15px; margin: 0; }
+  .needit form { display: flex; gap: 9px; flex-wrap: wrap; }
+  .needit input {
+    flex: 1; min-width: 220px; font-family: var(--body); font-size: 15px;
+    padding: 11px 13px; background: var(--surface); color: var(--ink);
+    border: 1.5px solid var(--line-strong); border-radius: var(--radius);
+  }
+  .needit input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .needit .said { font-family: var(--mono); font-size: 12px; color: var(--verified); }
+
+  .chip {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 14px; text-decoration: none; cursor: pointer;
+    padding: 8px 14px; border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    background: var(--surface-2); color: var(--ink-2);
+    font-family: var(--body);
+  }
+  .chip:hover { border-color: var(--accent); color: var(--accent); }
+  .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* Cards and results become pathways. */
+  .route, .panelitem, .result { cursor: pointer; }
+  .panelitem:hover b, .result:hover h4 { color: var(--accent); }
+  .panelitem:focus-visible, .result:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: -2px;
+  }
+  .panelitem .go, .result .go {
+    grid-column: 1 / -1;
+    font-family: var(--mono); font-size: 11.5px; color: var(--accent);
+    margin-top: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+
+<div class="protobar">
+  <div class="wrap">
+    <strong>PROTOTYPE</strong>
+    <span>Not a live service. No content here has been clinically reviewed. Example sessions are illustrative.</span>
+    <span class="looks" id="looks" role="group" aria-label="Design look">Look
+      <button type="button" data-look="stan">STAN</button>
+      <button type="button" data-look="paper">Paper</button>
+      <button type="button" data-look="reverse">Reverse</button>
+      <button type="button" data-look="mixed">Mixed</button>
+    </span>
+  </div>
+</div>
+
+<header class="site" id="sitehead">
+  <div class="wrap">
+    <div class="brand">
+      <b>STAN</b>
+      <em>Steroid Awareness Network</em>
+    </div>
+    <button class="navtoggle" id="navtoggle" aria-expanded="false" aria-controls="nav">
+      <span class="bars"><i></i><i></i><i></i></span> Menu
+    </button>
+    <nav class="top" id="nav">
+      <a href="#routes">Start here</a>
+      <a href="#seminars">Seminars</a>
+      <a href="#groups">Groups</a>
+      <a href="#connect">Connect</a>
+      <a href="#crisis">Urgent help</a>
+    </nav>
+  </div>
+</header>
+
+<div id="home">
+<div class="hero" id="hero">
+  <div class="wrap">
+    <div class="stance">
+      <p class="eyebrow">Free · Independent · No affiliate money, ever</p>
+      <h1>Straight answers about steroids, from people who have been there and people who are qualified.</h1>
+      <p class="lede">Whether you are on, coming off, or thinking about starting — you can find out
+        what is actually happening in your body, and talk to someone who understands it.
+        <b>Nobody here will lecture you.</b></p>
+    </div>
+
+    <div class="rule-quote" id="stance-quote">
+      We won't tell you what you can and can't do. We will tell you the truth:
+      <b>there is nothing natural about staying unnatural for long</b>, and everything
+      comes with a side effect. What you do with that is yours.
+    </div>
+
+    <div class="searchblock">
+      <div class="searchrow">
+        <input id="q" type="search" autocomplete="off" aria-label="Search the resource hub"
+               placeholder="Search — try &ldquo;SHBG&rdquo;, &ldquo;coming off&rdquo;, &ldquo;low LH&rdquo;, &ldquo;fertility&rdquo;">
+        <button type="button" id="go">Search</button>
+      </div>
+      <div class="searchhint">
+        <span>Only shows what we have checked.</span>
+        <button type="button" data-eg="SHBG">SHBG</button>
+        <button type="button" data-eg="coming off">coming off</button>
+        <button type="button" data-eg="LH">LH</button>
+        <button type="button" data-eg="fertility">fertility</button>
+        <button type="button" data-eg="hair loss">hair loss</button>
+      </div>
+      <p class="aiquiet">Answers are drafted with AI and checked by people.
+        Every one shows its sources, its review date, and who signed it off.
+        <a href="#how-we-work">How that works</a>.</p>
+      <div id="results" role="region" aria-live="polite" aria-label="Search results"></div>
+    </div>
+  </div>
+</div>
+
+<section id="routes">
+  <div class="wrap">
+    <div class="sechead">
+      <p class="eyebrow">No account needed</p>
+      <h2>Why are you here?</h2>
+      <p>Pick whichever is closest. You can change it, and nothing is recorded.</p>
+    </div>
+
+    <div class="routes" id="routelist"></div>
+    <div id="routepanel" hidden></div>
+  </div>
+</section>
+
+<section id="seminars" class="band">
+  <div class="wrap">
+    <div class="sechead">
+      <p class="eyebrow">Free · Online · Recorded where we can</p>
+      <h2>Seminars</h2>
+      <p>Someone who actually knows the subject talks for forty minutes, then
+        answers whatever you ask. Recordings go into the library, so if the time
+        you need it is three in the morning, it is there.</p>
+    </div>
+    <div class="seminars" id="seminarlist"></div>
+  </div>
+</section>
+
+<section id="groups" class="tint">
+  <div class="wrap">
+    <div class="sechead">
+      <p class="eyebrow">Free · Online · Cameras optional · No commitment</p>
+      <h2>Groups</h2>
+      <p>Not a forum and not a chat room. A room with a start time, a finish
+        time, and two people holding it. Turn up and say nothing if you would
+        rather — plenty of people do for the first few weeks.</p>
+    </div>
+
+    <div class="sessioncontrols">
+      <div class="field">
+        <label for="country">Where are you</label>
+        <select id="country"></select>
+      </div>
+      <div class="field">
+        <label for="kind">What kind</label>
+        <select id="kind"></select>
+      </div>
+    </div>
+
+    <div class="groups" id="grouplist"></div>
+  </div>
+</section>
+
+<section id="connect">
+  <div class="wrap">
+    <div class="sechead">
+      <p class="eyebrow">The part that actually helps</p>
+      <h2>Connecting people who have no clue with people who do</h2>
+      <p>Two different kinds of knowing, and you need both. Neither one substitutes for
+        the other, and we keep the line between them clear on purpose.</p>
+    </div>
+
+    <div class="twocol">
+      <div class="panel">
+        <p class="tag">Peer — lived experience</p>
+        <h3>Someone who has been where you are</h3>
+        <p>Trained volunteers who have used, come off, and come out the other side. They will
+          tell you what it was like and sit with you while it's hard.</p>
+        <ul>
+          <li>Will share their own experience, openly</li>
+          <li>Will help you work out what to ask</li>
+          <li><b>Will not</b> tell you what to take, or read your bloods</li>
+        </ul>
+        <div class="next" id="peer-next"></div>
+      </div>
+      <div class="panel" id="clinical-panel">
+        <p class="tag">Clinical — registered professionals</p>
+        <h3>Someone qualified to answer</h3>
+        <p>Endocrinology, andrology and male fertility clinicians who understand
+          supraphysiological exposure — not just age-related low testosterone.</p>
+        <ul>
+          <li>Can interpret results and advise on treatment</li>
+          <li>Will review everything clinical before it goes live</li>
+          <li>Any fee STAN receives for a referral will be shown on that page</li>
+        </ul>
+        <p class="honest"><b>None appointed yet.</b> Until one is, nothing that
+          interprets or advises gets published here — only things we can report
+          and attribute. We would rather say that than imply otherwise.</p>
+        <div class="next" id="clinical-next"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+</div>
+
+<div id="view" aria-live="polite"></div>
+
+<div class="crisis" id="crisis">
+  <div class="wrap">
+    <h2>If tonight is bad</h2>
+    <p class="note">STAN is not a crisis service and nobody here is on call. These people are,
+      and they are better at it than we are. Check the hours — two of these are not open
+      around the clock.</p>
+    <div class="lines" id="crisislines"></div>
+  </div>
+</div>
+
+<footer class="site" id="sitefoot">
+  <div class="wrap">
+    <p><b>Prototype.</b> Nothing on this page has been clinically reviewed and the group
+      sessions shown are examples, not real bookings. Crisis numbers are drawn from STAN's
+      services register and are pending confirmation against each provider's own website.</p>
+    <p>STAN publishes general information. It does not assess, diagnose or prescribe, and it
+      does not publish dosing protocols or tell anyone where to obtain anything.</p>
+    <p id="how-we-work"><b>How we work.</b> Answers are drafted with AI and checked by
+      people. Nothing clinical publishes without review. Every answer names its
+      sources and shows what we have not read yet — and where the evidence does
+      not exist, we say so rather than filling the gap.</p>
+    <p><b>Money.</b> Reading is free. A person's time costs, and the whole list,
+      including what does not exist yet, is on one page:
+      <a href="#/p/what-costs">what costs money here, and why</a>.</p>
+    <p class="state" id="state"></p>
+  </div>
+</footer>
+
+{{DATASCRIPT}}
+<script>
+(function () {
+  "use strict";
+
+  /* Compiled from the repository by stan/tools/build.py. Edit the data, not
+     this file. Inlined for the single-file artifact; a separate cached file
+     for the site, where 120 pages should not each carry their own copy. */
+  var STAN = window.STAN_DATA;
+
+  /* Routing has two modes and one set of link-building code.
+
+     ARTIFACT: one file served from a single URL with no path control, so
+     destinations are hash fragments — #/m/shbg.
+     SITE:     a static site where every destination is a real, indexable,
+     shareable, linkable URL — /m/shbg/ — prerendered to its own HTML file.
+
+     The mode is baked in at build time. Nothing below branches on it except
+     href() and the router, so the two builds cannot drift apart. */
+  var MODE = STAN.mode || "artifact";
+  var SITE = MODE === "site";
+
+  function href(view) { return SITE ? "/" + view + "/" : "#/" + view; }
+  function homeAnchor(id) { return SITE ? "/#" + id : "#" + id; }
+
+  var INDEX = STAN.index;                       /* pre-sorted: written first */
+  var ROUTES = STAN.routes.routes;
+  var SESSIONS = STAN.sessions.sessions;
+
+  /* ------------------------------------------------------- the ladder */
+
+  /* Service data is loaded but not rendered as a list on the home page. A
+     page with a price catalogue reads as a shop; STAN is a funnel, and each
+     service appears only where it is the natural next step. */
+  var LADDER = STAN.ladder;
+  var ST_LABEL = { ready: "Ready", soon: "Waiting list", planned: "Planned" };
+  var SERVICE = {};
+  var SERVICE_FOR_GROUP = {};
+  LADDER.services.forEach(function (s) {
+    SERVICE[s.id] = s;
+    if (s.group) SERVICE_FOR_GROUP[s.group] = s.id;
+  });
+
+  /* The walkthrough lives in Connect, because Connect is already the section
+     about a peer's time and a clinician's time. One button, one price. */
+  (function () {
+    var w = SERVICE.walkthrough;
+    var host = document.getElementById("peer-next");
+    if (host) {
+      host.textContent = "";
+      /* Value first: the free room leads. The paid thing is a plain sentence
+         underneath with no price on it — the price is on its own page. */
+      var a = el("a", "btn ghost");
+      a.href = homeAnchor("groups");
+      a.appendChild(document.createTextNode("Sit in an open group first"));
+      a.appendChild(el("span", "arrow", "→"));
+      host.appendChild(a);
+      if (w) {
+        var fine = el("p", "fine");
+        fine.appendChild(document.createTextNode("Camera off, say nothing, come back or don't. When you want forty-five minutes one-to-one going through your own bloods, "));
+        var lk = el("a", null, "that exists too");
+        lk.href = href("o/" + w.id);
+        fine.appendChild(lk);
+        fine.appendChild(document.createTextNode("."));
+        host.appendChild(fine);
+      }
+    }
+    var c = SERVICE["clinical-consult"];
+    var chost = document.getElementById("clinical-next");
+    if (c && chost) {
+      chost.textContent = "";
+      var b = el("a", "btn ghost");
+      b.href = href("o/" + c.id);
+      b.appendChild(document.createTextNode("I would want this"));
+      b.appendChild(el("span", "arrow", "→"));
+      chost.appendChild(b);
+      chost.appendChild(el("p", "fine",
+        "Demand is part of how we recruit one. Say so and it counts."));
+    }
+  })();
+
+
+  var BADGE = {
+    live:    ["approved", "Reviewed"],
+    draft:   ["draft",    "Draft · unreviewed"],
+    planned: ["absent",   "Not written yet"]
+  };
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text !== undefined) n.textContent = text;
+    return n;
+  }
+  function badge(status) {
+    var b = BADGE[status] || BADGE.planned;
+    return el("span", "badge " + b[0], b[1]);
+  }
+
+  /* ------------------------------------------------------------- search */
+
+  var qEl = document.getElementById("q");
+  var resEl = document.getElementById("results");
+  var RANK = { live: 0, draft: 1, planned: 2 };
+  /* One capture mechanism for the whole site. Every stage of the funnel asks
+     for exactly one thing — an unmet search, a page somebody needed, an email
+     for a waiting list — and they all land in the same place, so when a real
+     mailing tool arrives it is wired in once. */
+  var CAPTURE_KEY = "stan.capture.v1";
+
+  function saveCapture(kind, ref, value) {
+    try {
+      var log = JSON.parse(localStorage.getItem(CAPTURE_KEY) || "[]");
+      log.push({ kind: kind, ref: ref, v: value, at: new Date().toISOString().slice(0, 10) });
+      localStorage.setItem(CAPTURE_KEY, JSON.stringify(log.slice(-300)));
+      return log.filter(function (x) { return x.kind === kind; }).length;
+    } catch (e) { return 0; }
+  }
+
+  /* opts: kind, ref, type, placeholder, button, value, done */
+  function captureForm(opts) {
+    var form = document.createElement("form");
+    form.className = "capture";
+    var input = document.createElement("input");
+    input.type = opts.type || "text";
+    input.placeholder = opts.placeholder || "";
+    if (opts.value) input.value = opts.value;
+    input.setAttribute("aria-label", opts.placeholder || opts.button);
+    var btn = el("button", "btn");
+    btn.type = "submit";
+    btn.appendChild(document.createTextNode(opts.button));
+    form.appendChild(input);
+    form.appendChild(btn);
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var v = input.value.trim();
+      if (!v && !opts.allowEmpty) { input.focus(); return; }
+      saveCapture(opts.kind, opts.ref || "", v || opts.ref || "");
+      form.replaceWith(el("p", "said", opts.done || "Noted. Thank you."));
+    });
+    return form;
+  }
+
+  /* Every term must appear somewhere. Where it appears decides the score:
+     a hit in the question itself beats a hit in the body text. */
+  function score(item, terms) {
+    var title = item.t.toLowerCase();
+    var keys = (item.k || "").toLowerCase();
+    var body = (item.d || "").toLowerCase();
+    var total = 0;
+    for (var i = 0; i < terms.length; i++) {
+      var t = terms[i];
+      var hit = 0;
+      if (title.indexOf(t) !== -1) hit += 10;
+      if (keys.indexOf(t) !== -1) hit += 3;
+      if (body.indexOf(t) !== -1) hit += 1;
+      if (!hit) return 0;
+      total += hit;
+    }
+    if (terms.length > 1 && title.indexOf(terms.join(" ")) !== -1) total += 20;
+    return total;
+  }
+
+  function logUnmet(term) { return saveCapture("unmet", "search", term); }
+
+  function relatedStrip(hits) {
+    /* Suggest the rest of the panel. A result set about SHBG should offer
+       total testosterone and albumin, because that is how a panel is read. */
+    var shown = {}, seen = {}, out = [];
+    hits.forEach(function (h) { if (h.m) shown[h.m] = true; });
+    Object.keys(shown).forEach(function (mid) {
+      var rel = STAN.relations[mid];
+      if (!rel) return;
+      rel.related.forEach(function (e) {
+        if (shown[e.id] || seen[e.id]) return;
+        seen[e.id] = true;
+        out.push(e);
+      });
+    });
+    return out.slice(0, 6);
+  }
+
+  function search(term) {
+    resEl.textContent = "";
+    term = term.trim();
+    if (!term) return;
+
+    var terms = term.toLowerCase().split(/\s+/).filter(Boolean);
+    var hits = [];
+    INDEX.forEach(function (it) {
+      var s = score(it, terms);
+      if (s) hits.push({ item: it, s: s });
+    });
+    hits.sort(function (a, b) {
+      var r = RANK[a.item.s] - RANK[b.item.s];
+      return r !== 0 ? r : b.s - a.s;
+    });
+
+    if (!hits.length) {
+      var count = logUnmet(term);
+      var n = el("div", "noresult");
+      n.appendChild(el("strong", null, "We haven't covered that yet."));
+      n.appendChild(el("p", null,
+        "Rather than guess, we'd sooner say so. If it's urgent and clinical, an " +
+        "andrology or male fertility service will know far more than a website. " +
+        "If it's about how you're feeling tonight, the numbers at the bottom of " +
+        "this page are open now."));
+      n.appendChild(el("p", null,
+        "What were you hoping to find? It goes on the list — this is genuinely " +
+        "how the content plan gets written."));
+
+      n.appendChild(captureForm({
+        kind: "unmet", ref: "search", value: term,
+        placeholder: "What were you looking for?", button: "Add it",
+        done: "Thanks — added."
+      }));
+      var tip = el("div", "chattip");
+      tip.appendChild(el("h5", null, "Going to ask an AI instead? Fair enough."));
+      var ul = document.createElement("ul");
+      [
+        "Give it your real numbers with the units and your lab's range. " +
+          "\u201cMy testosterone is low\u201d gets a generic answer.",
+        "Ask what population the evidence came from. Most testosterone " +
+          "research is about men in their sixties.",
+        "Ask what it is unsure about, then ask again harder.",
+        "Ask for the sources, then go and check they exist.",
+        "Never let it tell you what to take."
+      ].forEach(function (t) { ul.appendChild(el("li", null, t)); });
+      tip.appendChild(ul);
+      n.appendChild(tip);
+
+      n.appendChild(el("p", "logged",
+        "Prototype: saved in this browser only. Nothing is sent anywhere. " +
+        count + " unmet search(es) logged here so far."));
+      resEl.appendChild(n);
+      return;
+    }
+
+    var items = hits.map(function (h) { return h.item; });
+    items.forEach(function (it) {
+      var view = it.id.indexOf("q:") === 0 ? "q/" + it.id.slice(2)
+               : it.id.indexOf("marker:") === 0 ? "m/" + it.id.slice(7).split(":")[0]
+               : "p/" + it.id;
+      var known = STAN.views[view] !== undefined;
+      var r = el(known ? "a" : "div", "result");
+      if (known) { r.href = href(view); r.style.textDecoration = "none"; }
+      r.appendChild(el("h4", null, it.t));
+      r.appendChild(badge(it.s));
+      r.appendChild(el("p", null, it.d));
+      if (it.u) r.appendChild(el("div", "unitline", it.u));
+      if (known) r.appendChild(el("span", "go", "Open →"));
+      resEl.appendChild(r);
+    });
+
+    var rel = relatedStrip(items);
+    if (rel.length) {
+      var strip = el("div", "related");
+      strip.appendChild(el("span", "lbl", "A panel is read together — also look at"));
+      rel.forEach(function (e) {
+        var b = el("button");
+        b.type = "button";
+        var dot = el("span", "dot " + e.s);
+        b.appendChild(dot);
+        b.appendChild(document.createTextNode(e.name));
+        b.addEventListener("click", function () {
+          qEl.value = e.name;
+          search(e.name);
+          qEl.focus();
+        });
+        strip.appendChild(b);
+      });
+      resEl.appendChild(strip);
+    }
+  }
+
+  /* Prerendered inner pages ship without the home block, so everything that
+     wires up the front door has to tolerate its absence. */
+  if (qEl) {
+    qEl.addEventListener("input", function () { search(qEl.value); });
+    qEl.addEventListener("keydown", function (e) { if (e.key === "Enter") search(qEl.value); });
+    var goEl = document.getElementById("go");
+    if (goEl) goEl.addEventListener("click", function () { search(qEl.value); });
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll("[data-eg]"), function (b) {
+    b.addEventListener("click", function () {
+      qEl.value = b.getAttribute("data-eg");
+      search(qEl.value);
+      qEl.focus();
+    });
+  });
+
+  /* ------------------------------------------------------------- routes */
+
+  var listEl = document.getElementById("routelist");
+  var panelEl = document.getElementById("routepanel");
+  var buttons = [];
+
+  if (listEl) listEl.textContent = "";
+  if (listEl) ROUTES.forEach(function (r) {
+    var btn = el("button", "route");
+    btn.type = "button";
+    btn.setAttribute("aria-pressed", "false");
+    btn.appendChild(el("b", null, r.label));
+    btn.appendChild(el("span", null, r.sub));
+    btn.addEventListener("click", function () { pick(r, btn); });
+    listEl.appendChild(btn);
+    buttons.push(btn);
+  });
+
+  function pick(r, btn) {
+    var open = btn.getAttribute("aria-pressed") === "true";
+    buttons.forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
+    if (open) { panelEl.hidden = true; return; }
+
+    btn.setAttribute("aria-pressed", "true");
+    panelEl.textContent = "";
+    panelEl.appendChild(el("h3", null, r.label));
+    panelEl.appendChild(el("p", "said", r.said));
+
+    var grid = el("div", "panelgrid");
+    r.items.forEach(function (it) {
+      var card = el("div", "panelitem");
+      card.appendChild(el("b", null, it.title));
+      card.appendChild(el("span", null, it.note));
+      card.appendChild(badge(it.status));
+      grid.appendChild(card);
+    });
+    panelEl.appendChild(grid);
+    panelEl.appendChild(nextCard(r.next));
+    panelEl.hidden = false;
+  }
+
+  /* The hand-off. Each door ends in exactly one next step, chosen for that
+     door: this is the page behaving as a funnel rather than a leaflet. */
+  function nextCard(n) {
+    var card = el("a", "nextstep inv");
+    card.href = href(n.view);
+    var body = el("div", "body");
+    body.appendChild(el("p", "eyebrow", "Where to go from here"));
+    body.appendChild(el("h4", null, n.title));
+    body.appendChild(el("p", null, n.line));
+    card.appendChild(body);
+    var side = el("div", "side");
+    side.appendChild(el("b", null, n.price));
+    side.appendChild(el("small", null, n.time));
+    var cta = el("span", "btn");
+    cta.appendChild(document.createTextNode(
+      n.kind === "page" ? "Open it"
+      : n.kind === "group" ? (n.status === "soon" && /cohort/i.test(n.title) ? "Put my name down" : "Come and sit in")
+      : n.kind === "seminar" ? "Save me a seat" : "Join the list"));
+    cta.appendChild(el("span", "arrow", "→"));
+    side.appendChild(cta);
+    card.appendChild(side);
+    return card;
+  }
+
+  /* --------------------------------------------------------- the programme */
+
+  var semEl = document.getElementById("seminarlist");
+  if (semEl) semEl.textContent = "";
+  if (semEl) STAN.sessions.seminars.forEach(function (s) {
+    var row = el("div", "seminar");
+
+    var date = el("div", "date");
+    date.appendChild(document.createTextNode(s.when));
+    var t = el("small", null, s.time + (s.duration ? " · " + s.duration : ""));
+    date.appendChild(t);
+    row.appendChild(date);
+
+    var body = el("div");
+    body.appendChild(el("h3", null, s.title));
+
+    var who = el("div", "who");
+    var name = el("b", null, s.name);
+    who.appendChild(name);
+    if (s.role) who.appendChild(document.createTextNode(" — " + s.role));
+    if (s.org) who.appendChild(document.createTextNode(", " + s.org));
+    if (s.tbc) who.appendChild(el("span", "tbc", "speaker not yet recruited"));
+    body.appendChild(who);
+
+    body.appendChild(el("p", "sum", s.summary));
+
+    var facts = el("div", "facts");
+    if (s.recording === "will-be-recorded") facts.appendChild(el("span", null, "Recorded"));
+    if (s.audience) facts.appendChild(el("span", null, s.audience));
+    facts.appendChild(el("span", null, "Live questions"));
+    body.appendChild(facts);
+
+    var open = el("a", "btn");
+    open.href = href("s/" + s.id);
+    open.appendChild(document.createTextNode("Details"));
+    open.appendChild(el("span", "arrow", "→"));
+    var wrapBtn = el("div");
+    wrapBtn.style.marginTop = "14px";
+    wrapBtn.appendChild(open);
+    body.appendChild(wrapBtn);
+
+    row.appendChild(body);
+    semEl.appendChild(row);
+  });
+
+  var groupEl = document.getElementById("grouplist");
+  var countryEl = document.getElementById("country");
+  var kindEl = document.getElementById("kind");
+
+  function fillSelect(sel, opts) {
+    sel.textContent = "";
+    opts.forEach(function (o) {
+      var opt = document.createElement("option");
+      opt.value = o.id;
+      opt.textContent = o.label;
+      sel.appendChild(opt);
+    });
+  }
+  if (countryEl) fillSelect(countryEl, STAN.sessions.countries);
+  if (kindEl) fillSelect(kindEl, STAN.sessions.kinds);
+
+  var KIND_LABEL = {};
+  STAN.sessions.kinds.forEach(function (k) { KIND_LABEL[k.id] = k.label; });
+
+  function renderGroups() {
+    var c = countryEl.value, k = kindEl.value;
+    groupEl.textContent = "";
+
+    var rows = STAN.sessions.groups.filter(function (g) {
+      return (c === "all" || g.c.indexOf(c) !== -1) && (k === "all" || g.kind === k);
+    });
+
+    if (!rows.length) {
+      groupEl.appendChild(el("div", "empty",
+        "Nothing matching that combination yet. The cohort, the family group " +
+        "and the bloods clinic run wherever you are — try clearing the filter."));
+      return;
+    }
+
+    rows.forEach(function (g) {
+      var d = document.createElement("details");
+      d.className = "group";
+
+      var sum = document.createElement("summary");
+      var when = el("span", "when");
+      when.appendChild(document.createTextNode(g.when));
+      when.appendChild(el("small", null, g.time + " · " + g.duration));
+      sum.appendChild(when);
+      sum.appendChild(el("span", "name", g.name));
+      sum.appendChild(el("span", "pill", (KIND_LABEL[g.kind] || g.kind).split(" — ")[0]));
+      sum.appendChild(el("span", "who", g.who));
+      sum.appendChild(el("span", "more", "What happens in a session →"));
+      d.appendChild(sum);
+
+      var det = el("div", "detail");
+
+      if (g.shape.length) {
+        var block = el("div");
+        block.appendChild(el("h4", null, "What happens"));
+        var ol = document.createElement("ol");
+        g.shape.forEach(function (step) { ol.appendChild(el("li", null, step)); });
+        block.appendChild(ol);
+        det.appendChild(block);
+      }
+
+      var facts = el("div", "facts");
+      [["Facilitated by", g.by], ["Group size", g.size],
+       ["Cameras", g.cameras], ["Joining", g.joining]].forEach(function (pair) {
+        if (!pair[1]) return;
+        var f = el("div");
+        f.appendChild(el("b", null, pair[0]));
+        f.appendChild(el("span", null, pair[1]));
+        facts.appendChild(f);
+      });
+      det.appendChild(facts);
+
+      var fw = el("div", "actions");
+      var tied = SERVICE_FOR_GROUP[g.id];
+      if (tied) {
+        var wl = el("a", "btn");
+        wl.href = href("o/" + tied);
+        wl.appendChild(document.createTextNode("Join the waiting list"));
+        wl.appendChild(el("span", "arrow", "→"));
+        fw.appendChild(wl);
+      }
+      var full = el("a", "btn ghost");
+      full.href = href("g/" + g.id);
+      full.appendChild(document.createTextNode("Full details"));
+      full.appendChild(el("span", "arrow", "→"));
+      fw.appendChild(full);
+      det.appendChild(fw);
+
+      d.appendChild(det);
+      groupEl.appendChild(d);
+    });
+  }
+
+  if (countryEl && kindEl) {
+    countryEl.addEventListener("change", renderGroups);
+    kindEl.addEventListener("change", renderGroups);
+    renderGroups();
+  }
+
+  /* ------------------------------------------------------------- crisis */
+
+  var crisisEl = document.getElementById("crisislines");
+  if (crisisEl) crisisEl.textContent = "";
+  if (crisisEl) STAN.crisis.forEach(function (c) {
+    var line = el("div", "line");
+    line.appendChild(el("b", null, c.b));
+    if (c.href) {
+      var a = document.createElement("a");
+      a.className = "num";
+      a.href = c.href;
+      a.textContent = c.num;
+      line.appendChild(a);
+    } else {
+      line.appendChild(el("span", "num", c.num));
+    }
+    line.appendChild(el("span", "hrs" + (c.warn ? " warn" : ""), c.hrs));
+    crisisEl.appendChild(line);
+  });
+
+  /* -------------------------------------------------------- mobile nav */
+
+  var navEl = document.getElementById("nav");
+  var navBtn = document.getElementById("navtoggle");
+  navBtn.addEventListener("click", function () {
+    var open = navEl.classList.toggle("open");
+    navBtn.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+  navEl.addEventListener("click", function (e) {
+    if (e.target.tagName === "A") {
+      navEl.classList.remove("open");
+      navBtn.setAttribute("aria-expanded", "false");
+    }
+  });
+
+  /* -------------------------------------------------------- inner pages */
+
+  var viewEl = document.getElementById("view");
+
+  function chip(id, label) {
+    var a = el("a", "chip", label);
+    a.href = href(id);
+    return a;
+  }
+  function h2(text) { return el("h2", null, text); }
+
+  function statusPill(s) {
+    var map = { live: ["approved", "Reviewed"], draft: ["draft", "Draft · unreviewed"],
+                unwritten: ["absent", "Not written yet"] };
+    var b = map[s] || map.unwritten;
+    return el("span", "badge " + b[0], b[1]);
+  }
+
+  function needItBlock(what) {
+    var box = el("div", "needit");
+    box.appendChild(el("h3", null, "Needed this today?"));
+    box.appendChild(el("p", null,
+      "Tell us and it moves up the list. This is genuinely how the order gets " +
+      "decided — what people came looking for and could not find."));
+    box.appendChild(captureForm({
+      kind: "needed", ref: what, allowEmpty: true,
+      placeholder: "What were you hoping to find?", button: "Send",
+      done: "Added. Thank you — that is useful."
+    }));
+    box.appendChild(el("p", "said",
+      "Prototype: saved in this browser only. Nothing is sent anywhere."));
+    return box;
+  }
+
+  /* A paid service, offered only where the build allows it: on a page that
+     has already given the person something. One sentence, one link. */
+  function offersBlock(v) {
+    var frag = document.createDocumentFragment();
+    (v.offers || []).forEach(function (id) {
+      var s = SERVICE[id];
+      if (!s) return;
+      var box = el("div", "handoff");
+      box.appendChild(el("p", null,
+        "If you would rather go through this with someone, one-to-one: " +
+        s.line.charAt(0).toLowerCase() + s.line.slice(1)));
+      var a = el("a", "btn ghost");
+      a.href = href("o/" + s.id);
+      a.appendChild(document.createTextNode(s.name));
+      a.appendChild(el("span", "arrow", "→"));
+      box.appendChild(a);
+      box.appendChild(el("p", "fine", s.time + " · " + s.price + " · " +
+        (s.status === "ready" ? "booking opens shortly" : "waiting list")));
+      frag.appendChild(box);
+    });
+    return frag;
+  }
+
+  /* The booking block on a service page. In the prototype nothing can be
+     bought, so the honest version of "Book" is "tell me when I can" — and
+     that is the email capture COMMERCIAL.md §7 asks for at every stage. */
+  function bookBlock(v) {
+    var box = el("div", "book");
+    var price = el("div", "price", v.price);
+    var sub = v.status === "ready" ? "ready · booking link not yet live"
+            : v.status === "soon" ? "waiting list" : "planned";
+    price.appendChild(el("small", null, sub));
+    box.appendChild(price);
+    if (v.fee) box.appendChild(el("p", null, v.fee));
+    box.appendChild(el("p", null,
+      v.status === "ready"
+        ? "This can run now. What it is waiting on is a calendar and a way to " +
+          "pay, not a person. Leave an email and you hear the day it opens."
+        : v.status === "soon"
+        ? "Join the waiting list. When there are enough people and the blocker " +
+          "below clears, you are first to know."
+        : "Not yet. The blocker is stated below and we will not pretend it " +
+          "away. If you want it, say so — demand is how the order gets set."));
+
+    box.appendChild(captureForm({
+      kind: "interest", ref: v.id, type: "email",
+      placeholder: "Email — nothing else, and no newsletter",
+      button: v.status === "ready" ? "Tell me when booking opens"
+            : v.status === "soon" ? "Join the waiting list" : "I would want this",
+      done: "Noted. You will hear when it is real."
+    }));
+    box.appendChild(el("p", "said",
+      "Prototype: saved in this browser only. Nothing is sent anywhere yet."));
+    return box;
+  }
+
+  /* A prerendered page is only worth having if its head describes it. The
+     app sets these client-side; the prerenderer dumps the DOM afterwards, so
+     the static file inherits them and there is no second templating layer. */
+  function setHead(title, desc, path) {
+    document.title = title;
+    function meta(sel, attr, val, value) {
+      var el = document.head.querySelector(sel);
+      if (!el) { el = document.createElement("meta"); el.setAttribute(attr, val); document.head.appendChild(el); }
+      el.setAttribute("content", value);
+    }
+    meta('meta[name="description"]', "name", "description", desc);
+    meta('meta[property="og:title"]', "property", "og:title", title);
+    meta('meta[property="og:description"]', "property", "og:description", desc);
+    var link = document.head.querySelector('link[rel="canonical"]');
+    if (!link) { link = document.createElement("link"); link.rel = "canonical"; document.head.appendChild(link); }
+    link.href = (STAN.origin || "") + path;
+  }
+
+  var HOME_TITLE = "STAN — Steroid Awareness Network";
+  var HOME_DESC = "Straight answers about steroids, from people who have been " +
+    "there and people who are qualified. Free, independent, no affiliate money.";
+
+  function renderView(key) {
+    var v = STAN.views[key];
+    viewEl.textContent = "";
+    if (!v) {
+      var miss = el("div", "page");
+      var w0 = el("div", "wrap");
+      w0.appendChild(el("h1", null, "We could not find that page"));
+      w0.appendChild(el("p", null, "It may have moved. Try the search on the home page."));
+      miss.appendChild(w0);
+      viewEl.appendChild(miss);
+      return;
+    }
+
+    var top = el("div", "pagetop");
+    var tw = el("div", "wrap");
+    var back = el("button", "backlink", "← Back");
+    back.type = "button";
+    back.addEventListener("click", function () {
+      if (history.length > 1) history.back();
+      else if (SITE && !document.getElementById("home")) location.href = "/";
+      else if (SITE) { history.pushState(null, "", "/"); route(); }
+      else location.hash = "";
+    });
+    tw.appendChild(back);
+    top.appendChild(tw);
+    viewEl.appendChild(top);
+
+    var page = el("div", "page");
+    var w = el("div", "wrap");
+    var inner = el("div", "inner");
+
+    var KIND = { marker: "Marker", question: "Question", group: "Group",
+                 seminar: "Seminar", content: "Page", service: "Service" };
+    setHead(v.title + " — STAN",
+            (v.sub || v.blurb || v.line || HOME_DESC).slice(0, 300),
+            SITE ? "/" + key + "/" : "/");
+    inner.appendChild(el("p", "eyebrow",
+      v.kind === "service" ? "Service · " + v.stage_label : (KIND[v.kind] || "")));
+    inner.appendChild(el("h1", null, v.title));
+    if (v.sub) inner.appendChild(el("p", "sub", v.sub));
+
+    if (v.kind === "service") {
+      inner.appendChild(bookBlock(v));
+      var fgs = el("div", "factgrid");
+      [["Who runs it", v.by], ["How long", v.time],
+       ["Status", ST_LABEL[v.status]],
+       ["What unlocks it", v.status === "ready" ? v.unlock : v.blocker]].forEach(function (p) {
+        if (!p[1]) return;
+        var d = el("div");
+        d.appendChild(el("b", null, p[0]));
+        d.appendChild(el("span", null, p[1]));
+        fgs.appendChild(d);
+      });
+      inner.appendChild(fgs);
+      if (v.detail) inner.appendChild(el("p", "lede", v.detail));
+      if (v.steps.length) {
+        inner.appendChild(h2("What happens"));
+        var ols = document.createElement("ol");
+        ols.style.cssText = "padding-left:20px;display:grid;gap:8px;font-size:16px;color:var(--ink-2)";
+        v.steps.forEach(function (x) { ols.appendChild(el("li", null, x)); });
+        inner.appendChild(ols);
+      }
+      if (v.not) {
+        inner.appendChild(h2("What it is not"));
+        var gp = el("div", "gap");
+        gp.appendChild(el("b", null, "Read this before you book."));
+        gp.appendChild(el("p", null, v.not));
+        inner.appendChild(gp);
+      }
+      inner.appendChild(h2("Where it sits"));
+      inner.appendChild(el("p", null,
+        "Everything you can read on STAN is free and stays free. What costs " +
+        "is a person's time. Peers do not interpret results or advise on what " +
+        "to take; that is the clinical step, and it is priced by the clinician " +
+        "with STAN's fee shown."));
+      var back2 = el("div", "onward");
+      var ch = el("a", "chip", "Everything that costs money here →");
+      ch.href = href("p/what-costs");
+      back2.appendChild(ch);
+      if (v.group) {
+        var gch = el("a", "chip", "The group itself →");
+        gch.href = href("g/" + v.group);
+        back2.appendChild(gch);
+      }
+      inner.appendChild(back2);
+
+      w.appendChild(inner);
+      page.appendChild(w);
+      viewEl.appendChild(page);
+      return;
+    }
+
+    if (v.kind === "ladder") {
+      inner.appendChild(el("p", "lede",
+        "STAN is set up so that the paid part funds the free part. That only " +
+        "works if the paid part is visible and honest, so here it is in full — " +
+        "what exists, what is waiting on something, and what is only an " +
+        "intention. Nothing on this list is hidden behind a conversation."));
+      v.stages.forEach(function (st) {
+        if (!st.services.length) return;
+        inner.appendChild(h2(st.label));
+        inner.appendChild(el("p", null, st.line));
+        var list = el("div", "costlist");
+        st.services.forEach(function (s) {
+          var row = el("a", "costrow " + s.status);
+          row.href = href("o/" + s.id);
+          row.appendChild(el("b", null, s.name));
+          row.appendChild(el("span", "price", s.price));
+          row.appendChild(el("span", "desc", s.line));
+          if (s.fee) row.appendChild(el("span", "desc", s.fee));
+          row.appendChild(el("span", "st",
+            s.status === "ready" ? "Ready" + (s.unlock ? " · needs only: " + s.unlock : "")
+            : ST_LABEL[s.status] + " · needs first: " + s.blocker));
+          list.appendChild(row);
+        });
+        inner.appendChild(list);
+      });
+      inner.appendChild(h2("The rules this list is held to"));
+      var rules = document.createElement("ul");
+      [
+        "Everything you can read on STAN is free and stays free.",
+        "A peer teaches you to read a panel. A peer never reads your panel. Interpretation is a clinician's, and priced by the clinician.",
+        "Where STAN takes a fee from a clinician's price, the percentage is printed on the page. Always.",
+        "No affiliate money. No supplement links. No lab kickbacks. If a lab partner is ever named, the arrangement is named with it.",
+        "Nothing sells a test without a route to someone qualified to read it."
+      ].forEach(function (t) { rules.appendChild(el("li", null, t)); });
+      inner.appendChild(rules);
+      w.appendChild(inner);
+      page.appendChild(w);
+      viewEl.appendChild(page);
+      return;
+    }
+
+    var row = el("div", "statusrow");
+    row.appendChild(statusPill(v.s));
+    if (v.units) row.appendChild(el("span", "badge absent", v.units));
+    if (v.applies && v.applies.length) {
+      row.appendChild(el("span", "badge absent", v.applies.join(" · ")));
+    }
+    inner.appendChild(row);
+
+    if (v.s === "unwritten") {
+      var gap = el("div", "gap");
+      gap.appendChild(el("b", null, "Nobody has written this yet."));
+      gap.appendChild(el("p", null,
+        v.kind === "question"
+          ? "It is catalogued, which means we know people ask it. We will not " +
+            "guess at it in the meantime — an answer here has to come from a " +
+            "source somebody has actually read."
+          : "It is in the plan. Until it is written from a source somebody has " +
+            "read, this page stays honest about being empty."));
+      inner.appendChild(gap);
+    }
+
+    if (v.kind === "marker") {
+      if (v.what) { inner.appendChild(h2("What it is")); inner.appendChild(el("p", "lede", v.what)); }
+      if (v.made) { inner.appendChild(h2("Where it comes from")); inner.appendChild(el("p", null, v.made)); }
+      if (v.controls) { inner.appendChild(h2("What controls it")); inner.appendChild(el("p", null, v.controls)); }
+      if (v.does && v.does.length) {
+        inner.appendChild(h2("What it does"));
+        var ul = document.createElement("ul");
+        v.does.forEach(function (x) { ul.appendChild(el("li", null, x)); });
+        inner.appendChild(ul);
+      }
+      if (v.high) { inner.appendChild(h2("When it is high")); inner.appendChild(el("p", null, v.high)); }
+      if (v.low) { inner.appendChild(h2("When it is low")); inner.appendChild(el("p", null, v.low)); }
+      if (v.supp) { inner.appendChild(h2("On steroids")); inner.appendChild(el("p", null, v.supp)); }
+      if (v.recov) { inner.appendChild(h2("Afterwards")); inner.appendChild(el("p", null, v.recov)); }
+      if (v.female) { inner.appendChild(h2("For women")); inner.appendChild(el("p", null, v.female)); }
+      if (v.notme && v.notme.length) {
+        inner.appendChild(h2("What this number does not tell you"));
+        var ul2 = document.createElement("ul");
+        v.notme.forEach(function (x) { ul2.appendChild(el("li", null, x)); });
+        inner.appendChild(ul2);
+      }
+      if (v.s === "unwritten" && v.willcover.length) {
+        inner.appendChild(h2("What this page will cover"));
+        var ul3 = document.createElement("ul");
+        v.willcover.forEach(function (x) { ul3.appendChild(el("li", null, x)); });
+        inner.appendChild(ul3);
+      }
+      if (v.related.length) {
+        inner.appendChild(h2("A panel is read together"));
+        var on = el("div", "onward");
+        v.related.forEach(function (r) { on.appendChild(chip(r.id, r.name)); });
+        inner.appendChild(on);
+      }
+    }
+
+    if (v.kind === "question") {
+      if (v.asked && v.asked.length) {
+        inner.appendChild(h2("Also asked as"));
+        var ua = document.createElement("ul");
+        v.asked.forEach(function (x) { ua.appendChild(el("li", null, "“" + x + "”")); });
+        inner.appendChild(ua);
+      }
+      if (v.related.length) {
+        inner.appendChild(h2("Markers this touches"));
+        var on2 = el("div", "onward");
+        v.related.forEach(function (r) { on2.appendChild(chip(r.id, r.name)); });
+        inner.appendChild(on2);
+      }
+    }
+
+    if (v.kind === "group") {
+      inner.appendChild(el("p", "lede", v.who));
+      if (v.shape.length) {
+        inner.appendChild(h2("What happens"));
+        var ol = document.createElement("ol");
+        ol.style.cssText = "padding-left:20px;display:grid;gap:8px;font-size:16px;color:var(--ink-2)";
+        v.shape.forEach(function (x) { ol.appendChild(el("li", null, x)); });
+        inner.appendChild(ol);
+      }
+      var fg = el("div", "factgrid");
+      [["Facilitated by", v.by], ["Group size", v.size],
+       ["Cameras", v.cameras], ["Joining", v.joining]].forEach(function (p) {
+        if (!p[1]) return;
+        var d = el("div");
+        d.appendChild(el("b", null, p[0]));
+        d.appendChild(el("span", null, p[1]));
+        fg.appendChild(d);
+      });
+      inner.appendChild(fg);
+      inner.appendChild(el("p", null,
+        "This group does not exist yet. It runs once there are trained " +
+        "facilitators, a crisis protocol and insurance in place — not before."));
+      if (v.service) {
+        var svc = SERVICE[v.service];
+        var wlbox = el("div", "handoff");
+        wlbox.appendChild(el("p", null,
+          "Want in when it runs? Put your name down and you hear first. " +
+          "What it costs is on the next page, not a surprise."));
+        var wla = el("a", "btn");
+        wla.href = href("o/" + v.service);
+        wla.appendChild(document.createTextNode("Join the waiting list"));
+        wla.appendChild(el("span", "arrow", "→"));
+        wlbox.appendChild(wla);
+        inner.appendChild(wlbox);
+      }
+    }
+
+    if (v.kind === "seminar") {
+      inner.appendChild(el("p", "lede", v.summary));
+      var fg2 = el("div", "factgrid");
+      [["Speaker", v.tbc ? "Not yet recruited" : v.name],
+       ["Role", v.role], ["Who it is for", v.audience],
+       ["Recording", "Goes in the library"]].forEach(function (p) {
+        if (!p[1]) return;
+        var d = el("div");
+        d.appendChild(el("b", null, p[0]));
+        d.appendChild(el("span", null, p[1]));
+        fg2.appendChild(d);
+      });
+      inner.appendChild(fg2);
+    }
+
+    if (v.kind === "content" && v.blurb) {
+      inner.appendChild(el("p", "lede", v.blurb));
+    }
+
+    if (v.offers && v.offers.length && v.s !== "unwritten") {
+      inner.appendChild(offersBlock(v));
+    }
+
+    if (v.s === "unwritten") inner.appendChild(needItBlock(v.title));
+
+    w.appendChild(inner);
+    page.appendChild(w);
+    viewEl.appendChild(page);
+  }
+
+  function currentKey() {
+    if (SITE) {
+      var path = location.pathname.replace(/^\/+|\/+$/g, "");
+      return path;
+    }
+    return location.hash.replace(/^#\/?/, "");
+  }
+
+  function route() {
+    var hash = currentKey();
+    if (hash && STAN.views[hash] !== undefined) {
+      document.body.classList.add("viewing");
+      viewEl.classList.add("on");
+      renderView(hash);
+      window.scrollTo(0, 0);
+    } else if (hash && hash.indexOf("/") !== -1) {
+      document.body.classList.add("viewing");
+      viewEl.classList.add("on");
+      renderView(hash);
+      window.scrollTo(0, 0);
+    } else {
+      document.body.classList.remove("viewing");
+      viewEl.classList.remove("on");
+      viewEl.textContent = "";
+      setHead(HOME_TITLE, HOME_DESC, "/");
+    }
+  }
+  window.addEventListener("hashchange", route);
+  window.addEventListener("popstate", route);
+
+  /* In site mode every destination is a real URL, so a normal click would
+     reload the whole page. Intercept our own links and route in place —
+     but let the browser handle anything modified, external, or a tel:/sms:
+     crisis number, which must always behave like a real link. */
+  if (SITE) {
+    document.addEventListener("click", function (e) {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey ||
+          e.shiftKey || e.altKey) return;
+      var a = e.target.closest && e.target.closest("a");
+      if (!a || a.target || a.hasAttribute("download")) return;
+      var url;
+      try { url = new URL(a.href, location.href); } catch (err) { return; }
+      if (url.origin !== location.origin) return;
+      if (url.pathname === location.pathname && url.hash) return;  /* same-page anchor */
+      /* Prerendered inner pages ship without the home block, so that 121 files
+         do not each carry a duplicate copy of it. Going home from one is a
+         real navigation rather than a client-side route. */
+      if (url.pathname === "/" && !document.getElementById("home")) return;
+      e.preventDefault();
+      history.pushState(null, "", url.pathname + url.hash);
+      route();
+      if (url.hash) {
+        var target = document.getElementById(url.hash.slice(1));
+        if (target) target.scrollIntoView();
+      }
+    });
+  }
+
+  /* -------------------------------------------------------------- looks */
+
+  /* Three arrangements of the same page, for comparing on the eye. Each look
+     is a list of things to invert. Nothing else changes: same components,
+     same copy, same data. */
+  var LOOKS = {
+    /* The chosen one: petrol opening, paper middle with petrol insets,
+       petrol close. Everything else is kept for comparison. */
+    stan:    { band: ["#sitehead", "#hero", "#sitefoot"],
+               inv: ["#routepanel", "#clinical-panel", "#seminarlist .seminar"],
+               tint: ["#groups"] },
+    paper:   { band: ["#seminars"], inv: [], tint: ["#groups"] },
+    reverse: { band: ["#sitehead", "#hero", "#connect", "#sitefoot"], inv: [],
+               tint: ["#seminars"] },
+    mixed:   { band: ["#sitefoot"],
+               inv: ["#stance-quote", "#routepanel", "#clinical-panel", "#seminarlist .seminar"],
+               tint: ["#groups"] }
+  };
+  var LOOK_KEY = "stan.look.v1";
+  var lookBtns = document.querySelectorAll("#looks button");
+
+  function applyLook(name) {
+    var look = LOOKS[name] || LOOKS.stan;
+    document.querySelectorAll(".band, .inv, section.tint").forEach(function (n) {
+      if (n.classList.contains("nextstep")) return;   /* always inverted */
+      n.classList.remove("band", "inv", "tint");
+    });
+    look.band.forEach(function (sel) {
+      document.querySelectorAll(sel).forEach(function (n) { n.classList.add("band"); });
+    });
+    look.inv.forEach(function (sel) {
+      document.querySelectorAll(sel).forEach(function (n) { n.classList.add("inv"); });
+    });
+    look.tint.forEach(function (sel) {
+      document.querySelectorAll(sel).forEach(function (n) { n.classList.add("tint"); });
+    });
+    lookBtns.forEach(function (b) {
+      b.setAttribute("aria-pressed", b.getAttribute("data-look") === name ? "true" : "false");
+    });
+    document.body.setAttribute("data-look", name);
+    try { localStorage.setItem(LOOK_KEY, name); } catch (e) {}
+  }
+  lookBtns.forEach(function (b) {
+    b.addEventListener("click", function () { applyLook(b.getAttribute("data-look")); });
+  });
+  var savedLook = "stan";
+  try { savedLook = localStorage.getItem(LOOK_KEY) || "stan"; } catch (e) {}
+  if (!LOOKS[savedLook]) savedLook = "stan";
+
+  /* -------------------------------------------------------------- state */
+
+  var st = STAN.state;
+  document.getElementById("state").textContent =
+    "Built {{BUILT}} from the STAN repository · " +
+    st.pages_live + " pages reviewed, " + st.pages_draft + " drafted, " +
+    st.pages_planned + " planned · " +
+    st.sources_approved + " of " + st.sources_total + " sources approved · " +
+    st.services_verified + " of " + st.services_total + " crisis services verified.";
+
+  route();
+
+  /* Open on a route so the page shows what it does, not an empty shell. */
+  var d = STAN.routes.default_open;
+  if (listEl) for (var i = 0; i < ROUTES.length; i++) {
+    if (ROUTES[i].id === d) { pick(ROUTES[i], buttons[i]); break; }
+  }
+  applyLook(savedLook);
+})();
+</script>

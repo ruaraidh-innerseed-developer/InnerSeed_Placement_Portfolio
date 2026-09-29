@@ -1,0 +1,107 @@
+# Question bank — reading-a-panel
+#
+# Questions assert nothing, so this file can be written and extended freely.
+# Answers are a different matter entirely: see ../schema/answer.schema.yaml.
+#
+# `variants` is what makes the search bar work. Add to it every time the unmet
+# search log shows a phrasing nobody anticipated.
+
+topic: reading-a-panel
+
+questions:
+
+  - id: what-do-these-numbers-mean
+    question: "What do all these numbers on my blood test mean?"
+    variants:
+      - "cant read my bloods"
+      - "explain my blood results"
+      - "hormone panel explained"
+    topics: [reading-a-panel]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: what-is-normal-testosterone
+    question: "What is a normal testosterone level?"
+    variants:
+      - "normal test range"
+      - "what should my testosterone be"
+      - "good testosterone level"
+    topics: [reading-a-panel]
+    markers: [total-testosterone]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+    notes: >-
+      Trap: ranges differ by lab. Answer must teach the relationship, not
+      quote a number as authoritative.
+
+  - id: normal-total-but-feel-bad
+    question: "Why is my testosterone normal but I still feel bad?"
+    variants:
+      - "in range but symptoms"
+      - "normal test low free"
+    topics: [reading-a-panel]
+    markers: [shbg, free-testosterone]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: what-is-free-testosterone
+    question: "What is free testosterone and why is it different?"
+    variants:
+      - "free vs total testosterone"
+      - "calculated free test"
+      - "bioavailable test"
+    topics: [reading-a-panel]
+    markers: [free-testosterone, shbg, albumin]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: what-should-i-ask-to-be-tested
+    question: "What should I ask my doctor to test?"
+    variants:
+      - "which bloods should i get"
+      - "what tests do i need"
+      - "full hormone panel"
+    topics: [reading-a-panel]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+
+  - id: why-different-lab-ranges
+    question: "Why do different labs give different ranges?"
+    variants:
+      - "ranges dont match"
+      - "one lab says normal another doesnt"
+    topics: [reading-a-panel]
+    origin: proposed
+    frequency: unknown
+    priority: 2
+
+  - id: what-time-for-bloods
+    question: "What time of day should I have bloods taken?"
+    variants:
+      - "when to get tested"
+      - "morning bloods"
+      - "fasted for hormone test"
+    topics: [reading-a-panel]
+    origin: proposed
+    frequency: unknown
+    priority: 2
+
+  - id: lh-undetectable
+    question: "What does it mean if my LH is undetectable?"
+    variants:
+      - "lh is zero"
+      - "no lh on my results"
+      - "suppressed lh"
+    topics: [reading-a-panel]
+    markers: [lh, total-testosterone]
+    origin: proposed
+    frequency: unknown
+    priority: 1
+    notes: >-
+      One of the most informative findings on a panel and almost never
+      explained.

@@ -1,0 +1,38 @@
+id: gains-largely-retained-three-months-after-stopping
+statement: One study found that three months after stopping, much of the muscle
+  and strength gained was still there, and that some blood abnormalities seen during
+  use had returned to normal range.
+source: taylor-2002-anabolic-steroids-athlete
+locator: Ch. 5, p. 61, 'The First Cycle' — The Science Behind the Regime; cites
+  ref 12
+quote: A recent study showed that after three months' cessation, much of the muscle
+  mass and strength gains attained with anabolic steroid use remained. This study
+  also reported that some of the biochemical abnormalities, including blood pressure,
+  lipoprotein profiles, and liver enzymes, seen while on anabolic steroids return
+  to normal range upon cessation.
+quote_verified: false
+kind: direct
+population: Unspecified in this passage beyond 'a recent study' as at 2002. The
+  underlying study (ref 12) must be obtained before this claim is used for anything;
+  the population is currently unknown, which is a serious limit.
+does_not_support:
+- Any claim that the hormonal axis recovers. The markers named are blood pressure,
+  lipoproteins and liver enzymes. Testosterone, LH and FSH are conspicuously not
+  in that list, and ASIH is precisely the case where they do not come back promptly.
+  Reading this as reassurance about recovery would be the single worst misuse of
+  this claim.
+- A claim that all abnormalities normalise. The word is 'some'.
+- A claim about anyone beyond three months, or about long-term users.
+- Any use at all until ref 12 is obtained and read. Right now STAN does not know
+  who was studied.
+topics:
+- asih
+- hpg-axis-recovery
+- cardiovascular
+extracted_by: Claude (Opus 5), from the founder's photographs of pp. 60-62
+extracted_on: '2026-09-05'
+status: draft
+notes: Read the hedges. 'Much of', 'some of the'. The absence of testosterone and
+  gonadotrophins from the list of things that normalise is the most important thing
+  on the page, and it is an absence, which is exactly the kind of thing a careless
+  reader misses. Ref 12 is the highest priority chase in the chapter.

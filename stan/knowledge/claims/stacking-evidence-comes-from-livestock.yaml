@@ -1,0 +1,31 @@
+id: stacking-evidence-comes-from-livestock
+statement: The scientific evidence for stacking multiple anabolic steroids comes
+  from research on livestock animals, with no human medical studies investigating
+  it.
+source: taylor-2002-anabolic-steroids-athlete
+locator: Ch. 5, p. 63, 'The Third through Fifth Cycles' — The Science Behind the
+  Regime; cites refs 22-26
+quote: However, there are no medical studies that have been conducted on humans
+  to investigate these effects. The available scientific evidence to support stacking
+  is derived from research conducted on livestock animals.
+quote_verified: false
+kind: direct
+population: Livestock animals. The whole significance of the claim is that the population
+  is not human.
+does_not_support:
+- Any human claim about stacking, in either direction. That is the point of the
+  claim.
+- A claim that stacking does not work. Untested is not disproven.
+- Ridicule of people who stack. They are acting on the information available to
+  them, and the absence of human research is not their fault.
+- A statement about the current evidence, which must be re-checked.
+topics:
+- harm-reduction
+- epidemiology
+extracted_by: Claude (Opus 5), from the founder's photographs of p. 63
+extracted_on: '2026-09-05'
+status: draft
+notes: 'The single most quotable line in the chapter. A practice followed by very
+  large numbers of people, and the evidence base is cattle. Handle without smugness:
+  the useful response is that the research does not exist, not that the people are
+  foolish.'

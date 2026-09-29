@@ -1,0 +1,31 @@
+id: stanozolol-non-aromatizable-by-structure
+statement: Stanozolol has a molecular alteration that makes it non-aromatizable,
+  so enzymes do not convert it to oestrogens.
+source: taylor-2002-anabolic-steroids-athlete
+locator: Ch. 5, p. 63, 'The Third through Fifth Cycles' — The Science Behind the
+  Regime; cites ref 21
+quote: Another oral anabolic steroid, stanozolol (Winstrol), has a molecular alteration
+  that makes it non-aromatizable via enzymes to estrogens.
+quote_verified: false
+kind: direct
+population: Not a population claim. A statement about the molecular structure of
+  a compound, which holds regardless of who takes it.
+does_not_support:
+- Any claim that stanozolol is therefore safer. Not converting to oestrogen removes
+  one route of effect and says nothing about the others; stanozolol is 17-alpha-alkylated
+  and the liver and lipid literature on it is not reassuring.
+- Any claim that alternating it with other compounds achieves anything. That is
+  the next sentence in the source, and the source refuses it.
+- Any claim about dose, timing, or how to use it. STAN does not publish these.
+- A claim that avoiding aromatisation is desirable. Oestradiol has functions; suppressing
+  it has its own consequences.
+topics:
+- oestradiol-management
+- pharmacology
+- harm-reduction
+extracted_by: Claude (Opus 5), from the founder's photographs of p. 63
+extracted_on: '2026-09-05'
+status: draft
+notes: TRUE, and useful as the worked example of true-but-not-the-point. The molecular
+  fact is real and referenced. Everything the locker room builds on top of it is
+  a separate question the source declines to answer.

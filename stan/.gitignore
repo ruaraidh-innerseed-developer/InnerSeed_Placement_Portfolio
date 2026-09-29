@@ -1,0 +1,7 @@
+
+# Generated static site and design exports. Rebuilt by build.py --mode site
+# and prerender.py; nothing here is a source of truth.
+dist/
+
+__pycache__/
+*.pyc
